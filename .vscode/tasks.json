@@ -1,0 +1,83 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Install dependencies",
+      "type": "shell",
+      "command": "npm.cmd",
+      "args": ["install"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "2. Start dashboard",
+      "type": "shell",
+      "command": "npm.cmd",
+      "args": ["run", "dev"],
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "next",
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Ready|Local:"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "CH2CH Dashboard"
+      }
+    },
+    {
+      "label": "3. Start local Runner",
+      "type": "shell",
+      "command": "npm.cmd",
+      "args": ["run", "runner"],
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "CH2CH Runner"
+      }
+    },
+    {
+      "label": "Check: TypeScript",
+      "type": "shell",
+      "command": "npm.cmd",
+      "args": ["run", "typecheck"],
+      "group": "test",
+      "problemMatcher": "$tsc"
+    },
+    {
+      "label": "Check: Build",
+      "type": "shell",
+      "command": "npm.cmd",
+      "args": ["run", "build"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Check: Runner syntax",
+      "type": "shell",
+      "command": "node",
+      "args": ["--check", "runner/src/runner.js"],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Open dashboard in browser",
+      "type": "shell",
+      "command": "cmd.exe",
+      "args": ["/c", "start", "http://localhost:3000"],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "never"
+      }
+    }
+  ]
+}

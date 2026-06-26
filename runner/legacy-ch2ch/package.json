@@ -1,0 +1,15 @@
+{
+  "name": "ch2ch-attendance-automation",
+  "version": "1.2.0",
+  "description": "CH2CH 2청년회 출석부 자동 체크 프로그램",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.js",
+    "install-browsers": "npx playwright install chromium"
+  },
+  "dependencies": {
+    "dotenv": "latest",
+    "playwright": "latest",
+    "xlsx": "latest"
+  }
+}
