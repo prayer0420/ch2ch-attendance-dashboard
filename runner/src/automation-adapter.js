@@ -262,17 +262,35 @@ function buildAttendanceNameSets(rows) {
   const service4List = findAttendanceListColumn(header, ["4부"]);
   const service13 = new Set();
   const service4 = new Set();
+  let service13CheckedWithoutName = 0;
+  let service4CheckedWithoutName = 0;
 
   for (const row of rows.slice(1)) {
-    if (service13List && isLikelyPersonName(row[service13List.nameColumn]) && isChecked(row[service13List.checkColumn])) {
-      service13.add(normalizeName(row[service13List.nameColumn]));
+    if (service13List && isChecked(row[service13List.checkColumn])) {
+      if (isLikelyPersonName(row[service13List.nameColumn])) {
+        service13.add(normalizeName(row[service13List.nameColumn]));
+      } else {
+        service13CheckedWithoutName += 1;
+      }
     }
-    if (service4List && isLikelyPersonName(row[service4List.nameColumn]) && isChecked(row[service4List.checkColumn])) {
-      service4.add(normalizeName(row[service4List.nameColumn]));
+    if (service4List && isChecked(row[service4List.checkColumn])) {
+      if (isLikelyPersonName(row[service4List.nameColumn])) {
+        service4.add(normalizeName(row[service4List.nameColumn]));
+      } else {
+        service4CheckedWithoutName += 1;
+      }
     }
   }
 
-  return { service13, service4 };
+  const warnings = [];
+  if (service13CheckedWithoutName) {
+    warnings.push(`오른쪽 1-3부 출석 목록에서 이름 없이 체크된 ${service13CheckedWithoutName}칸은 제외했습니다.`);
+  }
+  if (service4CheckedWithoutName) {
+    warnings.push(`오른쪽 4부 출석 목록에서 이름 없이 체크된 ${service4CheckedWithoutName}칸은 제외했습니다.`);
+  }
+
+  return { service13, service4, warnings };
 }
 
 async function downloadGoogleSheetCsv(run) {
@@ -493,12 +511,8 @@ function parseHorizontalFamilyLayout(rows) {
       const service4Cells = block.service4Columns.map((column) => row[column]);
 
       const normalizedName = normalizeName(name);
-      const service13 = attendanceLists.service13.size
-        ? attendanceLists.service13.has(normalizedName)
-        : service13Cells.some(isChecked);
-      const service4 = attendanceLists.service4.size
-        ? attendanceLists.service4.has(normalizedName)
-        : service4Cells.some(isChecked);
+      const service13 = attendanceLists.service13.has(normalizedName) || service13Cells.some(isChecked);
+      const service4 = attendanceLists.service4.has(normalizedName) || service4Cells.some(isChecked);
       if (!service13 && !service4) return;
 
       people.push({
@@ -514,6 +528,14 @@ function parseHorizontalFamilyLayout(rows) {
   }
 
   return people;
+}
+
+function buildNoAttendanceMessage(rows) {
+  const attendanceLists = buildAttendanceNameSets(rows);
+  const details = attendanceLists.warnings.length
+    ? ` ${attendanceLists.warnings.join(" ")}`
+    : "";
+  return `가장체크에서 참석 대상이 0명으로 계산되었습니다.${details} 원본 시트의 가족/이름/1-3부/4부 참석 칸을 확인하거나, 홈페이지의 가족별 체크 제어에서 직접 체크해 주세요.`;
 }
 
 function rowsFromCsv(csvText) {
@@ -537,7 +559,7 @@ function rowsFromCsv(csvText) {
   const noteIndex = findHeaderIndex(headers, ["심방기도제목", "메모", "비고", "사유"], 4);
 
   let currentFamily = "";
-  return validatePeople(verticalRows.slice(1)
+  const verticalPeople = validatePeople(verticalRows.slice(1)
     .map((row) => {
       const family = row[familyIndex] || currentFamily;
       if (row[familyIndex]) currentFamily = row[familyIndex];
@@ -552,6 +574,10 @@ function rowsFromCsv(csvText) {
     });
     })
     .filter((person) => person.family && !isIgnoredFamilyLabel(person.family) && isLikelyPersonName(person.name) && (person.service13 || person.service4)));
+  if (!verticalPeople.length) {
+    throw new Error(buildNoAttendanceMessage(rows));
+  }
+  return verticalPeople;
 }
 
 function findVerticalHeaderRow(rows) {
@@ -795,9 +821,13 @@ async function runLegacyProcess(run, reporter, people) {
 
 async function runAttendanceAutomation(run, reporter) {
   const csvText = await loadInputCsv(run, reporter);
+  const inputWarnings = buildAttendanceNameSets(parseCsv(csvText)).warnings;
+  for (const warning of inputWarnings) {
+    await reporter.event("input_warning", warning, null, "warning");
+  }
   const people = rowsFromCsv(csvText);
   if (!people.length) {
-    throw new Error("가장체크에서 참석 체크된 사람을 찾지 못했습니다. 탭 이름, 파일 형식, 1-3부/4부 체크 위치를 확인해 주세요.");
+    throw new Error(buildNoAttendanceMessage(parseCsv(csvText)));
   }
   validatePreparedPeople(people);
   prepareLegacyCsv(people);

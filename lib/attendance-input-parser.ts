@@ -12,6 +12,7 @@ export type AttendanceParseResult = {
   people: AttendancePerson[];
   previewRows: string[][];
   layout: "horizontal_family" | "vertical_table";
+  warnings: string[];
 };
 
 export type AttendanceParseOptions = {
@@ -223,17 +224,35 @@ function buildAttendanceNameSets(rows: string[][]) {
   const service4List = findAttendanceListColumn(header, ["4부"]);
   const service13 = new Set<string>();
   const service4 = new Set<string>();
+  let service13CheckedWithoutName = 0;
+  let service4CheckedWithoutName = 0;
 
   for (const row of rows.slice(1)) {
-    if (service13List && isLikelyPersonName(row[service13List.nameColumn]) && isChecked(row[service13List.checkColumn])) {
-      service13.add(normalizeName(row[service13List.nameColumn]));
+    if (service13List && isChecked(row[service13List.checkColumn])) {
+      if (isLikelyPersonName(row[service13List.nameColumn])) {
+        service13.add(normalizeName(row[service13List.nameColumn]));
+      } else {
+        service13CheckedWithoutName += 1;
+      }
     }
-    if (service4List && isLikelyPersonName(row[service4List.nameColumn]) && isChecked(row[service4List.checkColumn])) {
-      service4.add(normalizeName(row[service4List.nameColumn]));
+    if (service4List && isChecked(row[service4List.checkColumn])) {
+      if (isLikelyPersonName(row[service4List.nameColumn])) {
+        service4.add(normalizeName(row[service4List.nameColumn]));
+      } else {
+        service4CheckedWithoutName += 1;
+      }
     }
   }
 
-  return { service13, service4 };
+  const warnings: string[] = [];
+  if (service13CheckedWithoutName) {
+    warnings.push(`오른쪽 1-3부 출석 목록에서 이름 없이 체크된 ${service13CheckedWithoutName}칸은 제외했습니다.`);
+  }
+  if (service4CheckedWithoutName) {
+    warnings.push(`오른쪽 4부 출석 목록에서 이름 없이 체크된 ${service4CheckedWithoutName}칸은 제외했습니다.`);
+  }
+
+  return { service13, service4, warnings };
 }
 
 function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseOptions = {}) {
@@ -302,12 +321,8 @@ function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseO
       const service13Cells = block.service13Columns.map((column) => row[column]);
       const service4Cells = block.service4Columns.map((column) => row[column]);
       const normalizedName = normalizeName(name);
-      const service13 = attendanceLists.service13.size
-        ? attendanceLists.service13.has(normalizedName)
-        : service13Cells.some(isChecked);
-      const service4 = attendanceLists.service4.size
-        ? attendanceLists.service4.has(normalizedName)
-        : service4Cells.some(isChecked);
+      const service13 = attendanceLists.service13.has(normalizedName) || service13Cells.some(isChecked);
+      const service4 = attendanceLists.service4.has(normalizedName) || service4Cells.some(isChecked);
 
       if (!options.includeUnchecked && !service13 && !service4) return;
 
@@ -323,7 +338,7 @@ function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseO
     });
   }
 
-  return people;
+  return { people, warnings: attendanceLists.warnings };
 }
 
 function parseVerticalTable(rows: string[][], options: AttendanceParseOptions = {}) {
@@ -364,15 +379,19 @@ export function parseAttendanceRows(rows: string[][], options: AttendanceParseOp
     throw new Error("읽을 수 있는 출석 데이터 행이 없습니다.");
   }
 
+  const warnings = new Set<string>();
   for (let start = 0; start < Math.min(rows.length, 10); start += 1) {
     const candidateRows = rows.slice(start);
-    const horizontalPeople = parseHorizontalFamilyLayout(candidateRows, options);
-    if (horizontalPeople && horizontalPeople.length) {
+    const horizontalResult = parseHorizontalFamilyLayout(candidateRows, options);
+    horizontalResult?.warnings.forEach((warning) => warnings.add(warning));
+    const horizontalPeople = horizontalResult?.people ?? [];
+    if (horizontalPeople.length) {
       validatePeople(horizontalPeople);
       return {
         people: horizontalPeople,
         previewRows: candidateRows.slice(0, 8).map((row) => row.slice(0, 14)),
-        layout: "horizontal_family"
+        layout: "horizontal_family",
+        warnings: Array.from(warnings)
       };
     }
   }
@@ -381,14 +400,16 @@ export function parseAttendanceRows(rows: string[][], options: AttendanceParseOp
   const verticalRows = rows.slice(verticalStart);
   const verticalPeople = parseVerticalTable(verticalRows, options);
   if (!verticalPeople.length) {
-    throw new Error("가족/이름/1-3부/4부 체크를 찾지 못했습니다. '가장체크' 탭 형식을 확인해 주세요.");
+    const detail = warnings.size ? ` ${Array.from(warnings).join(" ")}` : "";
+    throw new Error(`가족/이름/1-3부/4부 체크를 찾지 못했습니다.${detail} '가장체크' 탭 형식을 확인해 주세요.`);
   }
   validatePeople(verticalPeople);
 
   return {
     people: verticalPeople,
     previewRows: verticalRows.slice(0, 8).map((row) => row.slice(0, 10)),
-    layout: "vertical_table"
+    layout: "vertical_table",
+    warnings: Array.from(warnings)
   };
 }
 

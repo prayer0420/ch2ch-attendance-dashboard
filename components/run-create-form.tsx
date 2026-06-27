@@ -48,6 +48,7 @@ type SourcePeopleResponse = {
   families: SourceFamily[];
   totalPeople: number;
   message: string;
+  warnings?: string[];
 };
 
 type FamilyMode = {
@@ -95,6 +96,7 @@ export function RunCreateForm() {
   const [isLoadingSource, setIsLoadingSource] = useState(false);
   const [sourcePeople, setSourcePeople] = useState<SourcePerson[]>([]);
   const [sourceMessage, setSourceMessage] = useState<string | null>(null);
+  const [sourceWarnings, setSourceWarnings] = useState<string[]>([]);
   const [familyModes, setFamilyModes] = useState<Record<string, FamilyMode>>({});
   const [error, setError] = useState<string | null>(null);
 
@@ -150,6 +152,7 @@ export function RunCreateForm() {
   function resetLoadedSource() {
     setSourcePeople([]);
     setSourceMessage(null);
+    setSourceWarnings([]);
     setFamilyModes({});
   }
 
@@ -187,6 +190,7 @@ export function RunCreateForm() {
   async function loadSourcePeople() {
     setError(null);
     setSourceMessage(null);
+    setSourceWarnings([]);
 
     if (form.dataSource === "file" && !file) {
       setError("파일 업로드 방식을 선택했다면 CSV, XLSX, XLS 또는 PDF 파일을 먼저 선택해 주세요.");
@@ -224,6 +228,7 @@ export function RunCreateForm() {
       setSourcePeople(response.people);
       setFamilyModes(initialModes);
       setSourceMessage(response.message);
+      setSourceWarnings(response.warnings ?? []);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "입력 데이터를 읽지 못했습니다.");
     } finally {
@@ -467,8 +472,28 @@ export function RunCreateForm() {
           </div>
         </div>
 
+        {sourceWarnings.length ? (
+          <div className="mt-4 rounded border border-brass/40 bg-brass/10 p-3 text-sm text-ink/75">
+            <div className="mb-1 flex items-center gap-2 font-black text-brass">
+              <AlertTriangle size={17} />
+              읽기 확인 필요
+            </div>
+            <ul className="grid gap-1">
+              {sourceWarnings.map((warning) => (
+                <li key={warning}>{warning}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+
         {sourcePeople.length ? (
           <>
+            {!effectiveTotals.total ? (
+              <div className="mt-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
+                읽은 이름은 있지만 현재 실행 대상이 0명입니다. 가족별 체크 제어에서 주일/부서를 체크하거나 원본 시트의 참석 칸을 확인해 주세요.
+              </div>
+            ) : null}
+
             <div className="mt-4 grid gap-2 text-sm sm:grid-cols-4">
               <div className="rounded border border-line bg-white p-3">
                 <p className="text-xs font-bold text-ink/55">읽은 이름</p>

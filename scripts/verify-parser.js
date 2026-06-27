@@ -46,6 +46,21 @@ assert.equal(repeatedSectionPeople.find((person) => person.name === "박예림")
 assert.equal(repeatedSectionPeople.filter((person) => person.name === "요약").length, 0);
 console.log("[OK] 중간 가족 제목행 갱신 및 우측 요약열 제외 검증 통과");
 
+const singleFamilySectionCsv = [
+  ["고은이네", "1-3부", "", "", "4부", "", "", ""],
+  ["주고은", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"],
+  ["여민이네", "", "", "", "", "", "", ""],
+  ["유민형", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"],
+  ["우석이네", "", "", "", "", "", "", ""],
+  ["박예림", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"],
+  ["양우석", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"]
+].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
+const singleFamilySectionPeople = __test.rowsFromCsv(singleFamilySectionCsv);
+assert.equal(singleFamilySectionPeople.find((person) => person.name === "유민형")?.family, "여민이네");
+assert.equal(singleFamilySectionPeople.find((person) => person.name === "박예림")?.family, "우석이네");
+assert.equal(singleFamilySectionPeople.find((person) => person.name === "양우석")?.family, "우석이네");
+console.log("[OK] 단일 가족 제목행에서도 가족명 갱신 검증 통과");
+
 const helperOnlyCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", ""],
   ["보조칸만체크", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "TRUE"],
@@ -67,6 +82,27 @@ assert.equal(attendanceListPeople.length, 1);
 assert.equal(attendanceListPeople[0].name, "목록기준");
 assert.equal(attendanceListPeople[0].service4, true);
 console.log("[OK] 오른쪽 출석 이름 목록 우선 적용 및 보조 칸 무시 검증 통과");
+
+const mergedAttendanceSourceCsv = [
+  ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
+  ["김블록", "TRUE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "", ""],
+  ["오른쪽목록기준", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "오른쪽목록기준", "TRUE"]
+].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
+const mergedAttendanceSourcePeople = __test.rowsFromCsv(mergedAttendanceSourceCsv);
+assert.equal(mergedAttendanceSourcePeople.length, 2);
+assert.equal(mergedAttendanceSourcePeople.find((person) => person.name === "김블록")?.service13, true);
+assert.equal(mergedAttendanceSourcePeople.find((person) => person.name === "오른쪽목록기준")?.service4, true);
+console.log("[OK] 오른쪽 출석 목록과 가족블록 참석칸 병합 검증 통과");
+
+const blankAttendanceListCsv = [
+  ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
+  ["미체크", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "TRUE", "", "TRUE"]
+].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
+assert.throws(
+  () => __test.rowsFromCsv(blankAttendanceListCsv),
+  /이름 없이 체크/
+);
+console.log("[OK] 이름 없는 출석 목록 체크 진단 검증 통과");
 
 const summaryRowsCsv = [
   "고은이네,1-3부,4부",

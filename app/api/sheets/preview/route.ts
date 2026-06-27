@@ -76,6 +76,7 @@ export async function POST(request: NextRequest) {
       people: parsed.people.slice(0, 20),
       totalPeople: parsed.people.length,
       layout: parsed.layout,
+      warnings: parsed.warnings,
       message: `입력 데이터에서 출석 대상 ${parsed.people.length}명을 읽었습니다.`
     });
   } catch (error) {

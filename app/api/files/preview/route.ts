@@ -122,6 +122,7 @@ export async function POST(request: NextRequest) {
       people: parsed.people.slice(0, 20),
       totalPeople: parsed.people.length,
       layout: parsed.layout,
+      warnings: parsed.warnings,
       message: `${file.name}에서 ${parsed.people.length}명을 읽었습니다.`
     });
   } catch (error) {

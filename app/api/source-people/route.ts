@@ -196,6 +196,7 @@ export async function POST(request: NextRequest) {
       families,
       totalPeople: people.length,
       layout: parsed.layout,
+      warnings: parsed.warnings,
       message: `${label}에서 가족 ${families.length}개, 이름 ${people.length}명을 읽었습니다.`
     });
   } catch (error) {
