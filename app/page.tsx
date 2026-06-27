@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ClipboardCopy, Play, RefreshCw } from "lucide-react";
+import { ClipboardCopy, Database, Play, RefreshCw } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Badge, EmptyState, Panel, SectionTitle, StatCard } from "@/components/ui";
 import { getDashboardData } from "@/lib/data";
@@ -14,10 +14,16 @@ export default async function DashboardPage() {
   return (
     <AppShell>
       <SectionTitle eyebrow={demo ? "데모 화면" : "운영 화면"} title="출석체크 대시보드">
-        <Link className="focus-ring inline-flex items-center gap-2 rounded bg-ink px-4 py-2 text-sm font-bold text-paper" href="/runs/new">
-          <Play size={16} />
-          새 실행 만들기
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link className="focus-ring inline-flex items-center gap-2 rounded border border-line bg-white px-4 py-2 text-sm font-bold text-ink" href="/database">
+            <Database size={16} />
+            DB 보기
+          </Link>
+          <Link className="focus-ring inline-flex items-center gap-2 rounded bg-ink px-4 py-2 text-sm font-bold text-paper" href="/runs/new">
+            <Play size={16} />
+            새 실행 만들기
+          </Link>
+        </div>
       </SectionTitle>
 
       {hasQueuedRun && !online ? (

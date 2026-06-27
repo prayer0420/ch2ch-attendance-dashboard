@@ -4,6 +4,7 @@ import { Activity, Database, Home, Play, Search, Settings } from "lucide-react";
 const navItems = [
   { href: "/", label: "대시보드", icon: Home },
   { href: "/runs/new", label: "실행 만들기", icon: Play },
+  { href: "/database", label: "DB 보기", icon: Database },
   { href: "/attendance", label: "출석 이력", icon: Search },
   { href: "/settings", label: "설정", icon: Settings }
 ];
