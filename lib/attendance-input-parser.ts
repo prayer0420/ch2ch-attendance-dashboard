@@ -180,7 +180,12 @@ function attendanceColumns(rows: string[][], start: number, end: number) {
     return label.includes("qr") || label.includes("큐알") || label.includes("참석") || label.includes("출석");
   });
 
-  return columns.length ? columns : [start];
+  if (columns.length) return columns;
+
+  const span = rangeColumns(start, end);
+  // Google CSV can omit the visual sub-header row. In that layout the first two
+  // cells under each service are QR and attendance; later cells are broadcast/family helpers.
+  return span.slice(0, Math.min(2, span.length));
 }
 
 function isLikelyFamilyLabel(value: unknown) {

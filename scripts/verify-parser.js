@@ -75,6 +75,24 @@ assert.equal(helperOnlyPeople.find((person) => person.name === "QR칸체크")?.s
 assert.equal(helperOnlyPeople.some((person) => person.name === "방송가족만체크"), false);
 console.log("[OK] 4부 QR/참석은 포함하고 방송/가족 보조 칸은 제외 검증 통과");
 
+const blankSubHeaderCsv = [
+  ["고은이네", "1-3부", "", "", "4부", "", "", ""],
+  ["", "", "", "", "", "", "", ""],
+  ["QR체크", "TRUE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE"],
+  ["참석체크", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE"],
+  ["방송만체크", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE", "FALSE"],
+  ["가족만체크", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE"],
+  ["네번째참석체크", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE"]
+].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
+const blankSubHeaderPeople = __test.rowsFromCsv(blankSubHeaderCsv);
+assert.equal(blankSubHeaderPeople.length, 3);
+assert.equal(blankSubHeaderPeople.some((person) => person.name === "QR체크"), true);
+assert.equal(blankSubHeaderPeople.some((person) => person.name === "참석체크"), true);
+assert.equal(blankSubHeaderPeople.some((person) => person.name === "네번째참석체크"), true);
+assert.equal(blankSubHeaderPeople.some((person) => person.name === "방송만체크"), false);
+assert.equal(blankSubHeaderPeople.some((person) => person.name === "가족만체크"), false);
+console.log("[OK] 빈 보조 제목줄에서도 앞 2칸 QR/참석만 인정 검증 통과");
+
 const attendanceListCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
   ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족", "", "", "", ""],
