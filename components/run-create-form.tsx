@@ -10,6 +10,7 @@ import {
   ListChecks,
   Play,
   RotateCcw,
+  Search,
   ShieldCheck,
   Square,
   TestTube2,
@@ -62,10 +63,30 @@ const MODE_LABEL: Record<ServiceMode, string> = {
   clear: "해제"
 };
 
+const MODE_ICON: Record<ServiceMode, typeof RotateCcw> = {
+  sheet: RotateCcw,
+  check: CheckSquare,
+  clear: XCircle
+};
+
 function applyMode(original: boolean, mode: ServiceMode) {
   if (mode === "check") return true;
   if (mode === "clear") return false;
   return original;
+}
+
+function modeButtonClass(value: ServiceMode, current: ServiceMode) {
+  const active = value === current;
+  if (!active) {
+    return "border-line bg-white text-ink/65 hover:border-ink/30 hover:text-ink";
+  }
+  if (value === "check") return "border-moss bg-moss text-white";
+  if (value === "clear") return "border-brick bg-brick text-white";
+  return "border-ink bg-ink text-paper";
+}
+
+function countLabel(count: number) {
+  return `${count}명`;
 }
 
 function countPeople(people: SourcePerson[], modes: FamilyMode) {
@@ -98,6 +119,8 @@ export function RunCreateForm() {
   const [sourceMessage, setSourceMessage] = useState<string | null>(null);
   const [sourceWarnings, setSourceWarnings] = useState<string[]>([]);
   const [familyModes, setFamilyModes] = useState<Record<string, FamilyMode>>({});
+  const [familySearch, setFamilySearch] = useState("");
+  const [showTargetsOnly, setShowTargetsOnly] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const weekText = useMemo(() => `${form.targetWeek}주`, [form.targetWeek]);
@@ -121,6 +144,17 @@ export function RunCreateForm() {
       return { family, people, modes, sheet, effective };
     });
   }, [familyModes, sourcePeople]);
+
+  const visibleGroupedFamilies = useMemo(() => {
+    const query = familySearch.replace(/\s+/g, "").toLowerCase();
+    return groupedFamilies.filter((item) => {
+      if (showTargetsOnly && item.effective.total === 0) return false;
+      if (!query) return true;
+      const familyMatch = item.family.replace(/\s+/g, "").toLowerCase().includes(query);
+      const nameMatch = item.people.some((person) => person.name.replace(/\s+/g, "").toLowerCase().includes(query));
+      return familyMatch || nameMatch;
+    });
+  }, [familySearch, groupedFamilies, showTargetsOnly]);
 
   const manualRows = useMemo(() => {
     return sourcePeople
@@ -154,6 +188,8 @@ export function RunCreateForm() {
     setSourceMessage(null);
     setSourceWarnings([]);
     setFamilyModes({});
+    setFamilySearch("");
+    setShowTargetsOnly(false);
   }
 
   function update<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
@@ -380,7 +416,7 @@ export function RunCreateForm() {
               <ShieldCheck size={18} />
               실행 주차: {weekText}
             </div>
-            <p className="mt-1 text-ink/65">4부는 참석 칸만 부서 출석으로 반영됩니다.</p>
+            <p className="mt-1 text-ink/65">QR 또는 참석 칸만 출석으로 반영합니다. 방송/가족 칸은 제외합니다.</p>
           </div>
 
           <div className="mt-5 grid gap-2">
@@ -490,111 +526,189 @@ export function RunCreateForm() {
           <>
             {!effectiveTotals.total ? (
               <div className="mt-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
-                읽은 이름은 있지만 현재 실행 대상이 0명입니다. 가족별 체크 제어에서 주일/부서를 체크하거나 원본 시트의 참석 칸을 확인해 주세요.
+                읽은 이름은 있지만 현재 실행 대상이 0명입니다. 가족별 체크 제어에서 주일/부서를 체크하거나 원본 시트의 QR/참석 칸을 확인해 주세요.
               </div>
             ) : null}
 
-            <div className="mt-4 grid gap-2 text-sm sm:grid-cols-4">
-              <div className="rounded border border-line bg-white p-3">
-                <p className="text-xs font-bold text-ink/55">읽은 이름</p>
-                <p className="mt-1 text-xl font-black">{sourcePeople.length}명</p>
-              </div>
-              <div className="rounded border border-line bg-white p-3">
-                <p className="text-xs font-bold text-ink/55">실행 대상</p>
-                <p className="mt-1 text-xl font-black">{effectiveTotals.total}명</p>
-              </div>
-              <div className="rounded border border-line bg-white p-3">
-                <p className="text-xs font-bold text-ink/55">주일</p>
-                <p className="mt-1 text-xl font-black">{effectiveTotals.sunday}명</p>
-              </div>
-              <div className="rounded border border-line bg-white p-3">
-                <p className="text-xs font-bold text-ink/55">부서</p>
-                <p className="mt-1 text-xl font-black">{effectiveTotals.department}명</p>
+            <div className="mt-4 grid gap-2 text-sm sm:grid-cols-2 xl:grid-cols-4">
+              {[
+                ["읽은 이름", countLabel(sourcePeople.length), "text-ink"],
+                ["실행 대상", countLabel(effectiveTotals.total), "text-sea"],
+                ["주일", countLabel(effectiveTotals.sunday), "text-moss"],
+                ["부서", countLabel(effectiveTotals.department), "text-brass"]
+              ].map(([label, value, tone]) => (
+                <div key={label} className="rounded border border-line bg-white p-3">
+                  <p className="text-xs font-bold text-ink/55">{label}</p>
+                  <p className={`mt-1 text-xl font-black ${tone}`}>{value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-4 flex flex-col gap-3 rounded border border-line bg-white p-3 lg:flex-row lg:items-center lg:justify-between">
+              <label className="focus-within:outline-sea flex min-w-0 flex-1 items-center gap-2 rounded border border-line bg-paper/60 px-3 py-2 text-sm focus-within:outline focus-within:outline-2 focus-within:outline-offset-2">
+                <Search size={17} className="shrink-0 text-ink/45" />
+                <input
+                  className="min-w-0 flex-1 bg-transparent outline-none"
+                  value={familySearch}
+                  onChange={(event) => setFamilySearch(event.target.value)}
+                  placeholder="가족 또는 이름 검색"
+                />
+              </label>
+              <div className="flex flex-wrap items-center gap-3 text-sm">
+                <label className="inline-flex items-center gap-2 font-bold text-ink/70">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 accent-sea"
+                    checked={showTargetsOnly}
+                    onChange={(event) => setShowTargetsOnly(event.target.checked)}
+                  />
+                  대상 있는 가족만
+                </label>
+                <span className="rounded border border-line bg-paper/70 px-2 py-1 text-xs font-bold text-ink/55">
+                  {visibleGroupedFamilies.length} / {groupedFamilies.length}가족
+                </span>
               </div>
             </div>
 
-            <div className="mt-4 max-h-[520px] overflow-auto rounded border border-line bg-white">
-              <table className="w-full min-w-[900px] border-collapse text-sm">
-                <thead className="sticky top-0 bg-paper text-left">
-                  <tr className="border-b border-line">
-                    <th className="px-3 py-2">가족</th>
-                    <th className="px-3 py-2">시트 기준</th>
-                    <th className="px-3 py-2">실행 값</th>
-                    <th className="px-3 py-2">주일</th>
-                    <th className="px-3 py-2">부서</th>
-                    <th className="px-3 py-2">가족 제어</th>
-                    <th className="px-3 py-2">이름</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {groupedFamilies.map((item) => (
-                    <tr key={item.family} className="border-b border-line/70 align-top last:border-0">
-                      <td className="px-3 py-3 font-black">{item.family}</td>
-                      <td className="px-3 py-3 text-ink/70">
-                        {item.sheet.total}명 · 주일 {item.sheet.sunday} · 부서 {item.sheet.department}
-                      </td>
-                      <td className="px-3 py-3 font-bold text-sea">
-                        {item.effective.total}명 · 주일 {item.effective.sunday} · 부서 {item.effective.department}
-                      </td>
-                      <td className="px-3 py-3">
-                        <select
-                          className="focus-ring rounded border border-line bg-white px-2 py-1"
-                          value={item.modes.sunday}
-                          onChange={(event) => updateFamilyMode(item.family, { sunday: event.target.value as ServiceMode })}
-                        >
-                          {Object.entries(MODE_LABEL).map(([value, label]) => (
-                            <option key={value} value={value}>{label}</option>
-                          ))}
-                        </select>
-                      </td>
-                      <td className="px-3 py-3">
-                        <select
-                          className="focus-ring rounded border border-line bg-white px-2 py-1"
-                          value={item.modes.department}
-                          onChange={(event) => updateFamilyMode(item.family, { department: event.target.value as ServiceMode })}
-                        >
-                          {Object.entries(MODE_LABEL).map(([value, label]) => (
-                            <option key={value} value={value}>{label}</option>
-                          ))}
-                        </select>
-                      </td>
-                      <td className="px-3 py-3">
-                        <div className="flex flex-wrap gap-1">
-                          <button
-                            type="button"
-                            className="focus-ring inline-flex items-center gap-1 rounded border border-line bg-white px-2 py-1 text-xs font-bold"
-                            onClick={() => updateFamilyMode(item.family, { sunday: "sheet", department: "sheet" })}
-                          >
-                            <RotateCcw size={14} />
-                            기준
-                          </button>
-                          <button
-                            type="button"
-                            className="focus-ring inline-flex items-center gap-1 rounded border border-moss/35 bg-moss/10 px-2 py-1 text-xs font-bold text-moss"
-                            onClick={() => updateFamilyMode(item.family, { sunday: "check", department: "check" })}
-                          >
-                            <CheckSquare size={14} />
-                            체크
-                          </button>
-                          <button
-                            type="button"
-                            className="focus-ring inline-flex items-center gap-1 rounded border border-brick/35 bg-brick/10 px-2 py-1 text-xs font-bold text-brick"
-                            onClick={() => updateFamilyMode(item.family, { sunday: "clear", department: "clear" })}
-                          >
-                            <Square size={14} />
-                            해제
-                          </button>
+            {visibleGroupedFamilies.length ? (
+              <div className="mt-4 grid gap-3 xl:grid-cols-2">
+                {visibleGroupedFamilies.map((item) => {
+                  const sundayPeople = item.people.filter((person) => applyMode(person.service13, item.modes.sunday));
+                  const departmentPeople = item.people.filter((person) => applyMode(person.service4, item.modes.department));
+                  const changed = item.modes.sunday !== "sheet" || item.modes.department !== "sheet";
+
+                  return (
+                    <article
+                      key={item.family}
+                      className={`rounded border bg-white p-4 shadow-sm ${item.effective.total ? "border-sea/35" : "border-line"}`}
+                    >
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="min-w-0">
+                          <h3 className="truncate text-lg font-black">{item.family}</h3>
+                          <p className="mt-1 text-xs font-bold text-ink/55">
+                            원본 {countLabel(item.sheet.total)} · 주일 {item.sheet.sunday} · 부서 {item.sheet.department}
+                          </p>
                         </div>
-                      </td>
-                      <td className="px-3 py-3 text-ink/65">
-                        {item.people.slice(0, 10).map((person) => person.name).join(", ")}
-                        {item.people.length > 10 ? ` 외 ${item.people.length - 10}명` : ""}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                        <div className="flex flex-wrap gap-1">
+                          <span className="rounded border border-sea/25 bg-sea/10 px-2 py-1 text-xs font-black text-sea">
+                            실행 {countLabel(item.effective.total)}
+                          </span>
+                          {changed ? (
+                            <span className="rounded border border-brass/35 bg-brass/10 px-2 py-1 text-xs font-black text-brass">
+                              수정됨
+                            </span>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <div className="mt-3 grid gap-2 md:grid-cols-2">
+                        {([
+                          { key: "sunday", label: "주일", sheet: item.sheet.sunday, effective: item.effective.sunday },
+                          { key: "department", label: "부서", sheet: item.sheet.department, effective: item.effective.department }
+                        ] as const).map((service) => (
+                          <div key={service.key} className="rounded border border-line bg-paper/45 p-2">
+                            <div className="flex items-center justify-between gap-2 text-xs">
+                              <span className="font-black">{service.label}</span>
+                              <span className="font-bold text-ink/55">
+                                원본 {service.sheet} → 실행 {service.effective}
+                              </span>
+                            </div>
+                            <div className="mt-2 grid grid-cols-3 gap-1">
+                              {(["sheet", "check", "clear"] as ServiceMode[]).map((mode) => {
+                                const Icon = MODE_ICON[mode];
+                                return (
+                                  <button
+                                    key={mode}
+                                    type="button"
+                                    className={`focus-ring inline-flex min-h-9 items-center justify-center gap-1 rounded border px-2 text-xs font-black transition ${modeButtonClass(mode, item.modes[service.key])}`}
+                                    onClick={() => updateFamilyMode(item.family, { [service.key]: mode } as Partial<FamilyMode>)}
+                                  >
+                                    <Icon size={13} />
+                                    {MODE_LABEL[mode]}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          className="focus-ring inline-flex items-center gap-1 rounded border border-line bg-white px-2 py-1 text-xs font-bold"
+                          onClick={() => updateFamilyMode(item.family, { sunday: "sheet", department: "sheet" })}
+                        >
+                          <RotateCcw size={14} />
+                          가족 원본
+                        </button>
+                        <button
+                          type="button"
+                          className="focus-ring inline-flex items-center gap-1 rounded border border-moss/35 bg-moss/10 px-2 py-1 text-xs font-bold text-moss"
+                          onClick={() => updateFamilyMode(item.family, { sunday: "check", department: "check" })}
+                        >
+                          <CheckSquare size={14} />
+                          가족 체크
+                        </button>
+                        <button
+                          type="button"
+                          className="focus-ring inline-flex items-center gap-1 rounded border border-brick/35 bg-brick/10 px-2 py-1 text-xs font-bold text-brick"
+                          onClick={() => updateFamilyMode(item.family, { sunday: "clear", department: "clear" })}
+                        >
+                          <Square size={14} />
+                          가족 해제
+                        </button>
+                      </div>
+
+                      <div className="mt-3 grid gap-3 border-t border-line pt-3 md:grid-cols-2">
+                        <div className="min-w-0">
+                          <p className="text-xs font-black text-moss">주일 대상 {countLabel(sundayPeople.length)}</p>
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            {sundayPeople.length ? (
+                              <>
+                                {sundayPeople.slice(0, 8).map((person) => (
+                                  <span key={`${item.family}-sunday-${person.name}`} className="rounded bg-moss/10 px-2 py-1 text-xs font-bold text-moss">
+                                    {person.name}
+                                  </span>
+                                ))}
+                                {sundayPeople.length > 8 ? (
+                                  <span className="rounded bg-paper px-2 py-1 text-xs font-bold text-ink/55">외 {sundayPeople.length - 8}명</span>
+                                ) : null}
+                              </>
+                            ) : (
+                              <span className="text-xs font-bold text-ink/40">없음</span>
+                            )}
+                          </div>
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-black text-sea">부서 대상 {countLabel(departmentPeople.length)}</p>
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            {departmentPeople.length ? (
+                              <>
+                                {departmentPeople.slice(0, 8).map((person) => (
+                                  <span key={`${item.family}-department-${person.name}`} className="rounded bg-sea/10 px-2 py-1 text-xs font-bold text-sea">
+                                    {person.name}
+                                  </span>
+                                ))}
+                                {departmentPeople.length > 8 ? (
+                                  <span className="rounded bg-paper px-2 py-1 text-xs font-bold text-ink/55">외 {departmentPeople.length - 8}명</span>
+                                ) : null}
+                              </>
+                            ) : (
+                              <span className="text-xs font-bold text-ink/40">없음</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="mt-4 rounded border border-dashed border-line bg-white/60 p-6 text-sm font-bold text-ink/55">
+                검색 조건에 맞는 가족이 없습니다.
+              </div>
+            )}
           </>
         ) : (
           <div className="mt-4 rounded border border-dashed border-line bg-white/50 p-6 text-sm text-ink/60">

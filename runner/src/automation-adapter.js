@@ -165,7 +165,7 @@ function findHeaderIndex(headers, candidates, fallback) {
 
 function isChecked(value) {
   const normalized = normalizeName(value);
-  return ["o", "v", "true", "yes", "y", "1", "체크", "참석", "출석", "○", "ㅇ"].includes(normalized);
+  return ["o", "v", "true", "yes", "y", "1", "체크", "참석", "출석", "✓", "✔", "☑", "✅", "○", "〇", "ㅇ"].includes(normalized);
 }
 
 function isLikelyPersonName(value) {
@@ -207,8 +207,18 @@ function rangeColumns(start, end) {
   return columns;
 }
 
-function attendanceColumn(start) {
-  return start >= 0 ? [start] : [];
+function attendanceColumns(rows, start, end) {
+  if (start < 0) return [];
+
+  const subHeader = rows[1] || [];
+  const columns = rangeColumns(start, end).filter((column) => {
+    const label = normalizeName(subHeader[column]);
+    if (!label) return false;
+    if (label.includes("방송") || label.includes("가족")) return false;
+    return label.includes("qr") || label.includes("큐알") || label.includes("참석") || label.includes("출석");
+  });
+
+  return columns.length ? columns : [start];
 }
 
 function isLikelyFamilyLabel(value) {
@@ -476,8 +486,8 @@ function parseHorizontalFamilyLayout(rows) {
       service13Start,
       service4Start,
       controlColumns: rangeColumns(service13Start, nextStart),
-      service13Columns: attendanceColumn(service13Start),
-      service4Columns: attendanceColumn(service4Start)
+      service13Columns: attendanceColumns(rows, service13Start, service4Start),
+      service4Columns: attendanceColumns(rows, service4Start, nextStart)
     };
   }).filter((block) => block.service13Start >= block.start && block.service4Start >= block.start);
 
@@ -510,9 +520,8 @@ function parseHorizontalFamilyLayout(rows) {
       const service13Cells = block.service13Columns.map((column) => row[column]);
       const service4Cells = block.service4Columns.map((column) => row[column]);
 
-      const normalizedName = normalizeName(name);
-      const service13 = attendanceLists.service13.has(normalizedName) || service13Cells.some(isChecked);
-      const service4 = attendanceLists.service4.has(normalizedName) || service4Cells.some(isChecked);
+      const service13 = service13Cells.some(isChecked);
+      const service4 = service4Cells.some(isChecked);
       if (!service13 && !service4) return;
 
       people.push({
@@ -535,7 +544,7 @@ function buildNoAttendanceMessage(rows) {
   const details = attendanceLists.warnings.length
     ? ` ${attendanceLists.warnings.join(" ")}`
     : "";
-  return `가장체크에서 참석 대상이 0명으로 계산되었습니다.${details} 원본 시트의 가족/이름/1-3부/4부 참석 칸을 확인하거나, 홈페이지의 가족별 체크 제어에서 직접 체크해 주세요.`;
+  return `가장체크에서 참석 대상이 0명으로 계산되었습니다.${details} 원본 시트의 가족/이름/1-3부/4부 QR 또는 참석 칸을 확인하거나, 홈페이지의 가족별 체크 제어에서 직접 체크해 주세요. 방송/가족 칸은 출석으로 보지 않습니다.`;
 }
 
 function rowsFromCsv(csvText) {
@@ -546,7 +555,7 @@ function rowsFromCsv(csvText) {
 
   for (let start = 0; start < Math.min(rows.length, 10); start += 1) {
     const horizontalRows = parseHorizontalFamilyLayout(rows.slice(start));
-    if (horizontalRows && horizontalRows.length) return validatePeople(horizontalRows);
+    if (horizontalRows && horizontalRows.length) return mergeDuplicatePeople(horizontalRows);
   }
 
   const verticalStart = findVerticalHeaderRow(rows);
@@ -559,7 +568,7 @@ function rowsFromCsv(csvText) {
   const noteIndex = findHeaderIndex(headers, ["심방기도제목", "메모", "비고", "사유"], 4);
 
   let currentFamily = "";
-  const verticalPeople = validatePeople(verticalRows.slice(1)
+  const verticalPeople = mergeDuplicatePeople(verticalRows.slice(1)
     .map((row) => {
       const family = row[familyIndex] || currentFamily;
       if (row[familyIndex]) currentFamily = row[familyIndex];
@@ -591,21 +600,27 @@ function findVerticalHeaderRow(rows) {
   return 0;
 }
 
-function validatePeople(people) {
-  const seen = new Set();
-  const duplicates = new Set();
+function mergeDuplicatePeople(people) {
+  const merged = new Map();
 
   for (const person of people) {
     const key = `${normalizeName(person.family)}::${normalizeName(person.name)}`;
-    if (seen.has(key)) duplicates.add(`${person.family} / ${person.name}`);
-    seen.add(key);
+    const existing = merged.get(key);
+    if (!existing) {
+      merged.set(key, { ...person });
+      continue;
+    }
+
+    existing.service13 = existing.service13 || person.service13;
+    existing.service4 = existing.service4 || person.service4;
+    existing.service13Raw = existing.service13 ? "O" : "X";
+    existing.service4Raw = existing.service4 ? "O" : "X";
+    if (person.note && !existing.note.includes(person.note)) {
+      existing.note = existing.note ? `${existing.note}; ${person.note}` : person.note;
+    }
   }
 
-  if (duplicates.size) {
-    throw new Error(`같은 가족 안에 중복된 이름이 있습니다: ${Array.from(duplicates).join(", ")}`);
-  }
-
-  return people;
+  return Array.from(merged.values());
 }
 
 function validatePreparedPeople(people) {
@@ -831,7 +846,7 @@ async function runAttendanceAutomation(run, reporter) {
   }
   validatePreparedPeople(people);
   prepareLegacyCsv(people);
-  await reporter.event("input_read_completed", `입력 자체검사 완료: 참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
+  await reporter.event("input_read_completed", `입력 자체검사 완료: QR/참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
 
   const { legacyResult } = await runLegacyProcess(run, reporter, people);
   const results = applyLegacyResult(createInitialResults(run, people), legacyResult, run.dry_run);

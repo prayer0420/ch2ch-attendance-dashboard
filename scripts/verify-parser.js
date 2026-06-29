@@ -63,36 +63,42 @@ console.log("[OK] 단일 가족 제목행에서도 가족명 갱신 검증 통�
 
 const helperOnlyCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", ""],
-  ["보조칸만체크", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "TRUE"],
-  ["참석칸체크", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"]
+  ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족"],
+  ["방송가족만체크", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "TRUE"],
+  ["참석칸체크", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE"],
+  ["QR칸체크", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"]
 ].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
 const helperOnlyPeople = __test.rowsFromCsv(helperOnlyCsv);
-assert.equal(helperOnlyPeople.length, 1);
-assert.equal(helperOnlyPeople[0].name, "참석칸체크");
-assert.equal(helperOnlyPeople[0].service4, true);
-console.log("[OK] 4부 가족/방송 보조 칸은 부서 출석에서 제외 검증 통과");
+assert.equal(helperOnlyPeople.length, 2);
+assert.equal(helperOnlyPeople.find((person) => person.name === "참석칸체크")?.service4, true);
+assert.equal(helperOnlyPeople.find((person) => person.name === "QR칸체크")?.service4, true);
+assert.equal(helperOnlyPeople.some((person) => person.name === "방송가족만체크"), false);
+console.log("[OK] 4부 QR/참석은 포함하고 방송/가족 보조 칸은 제외 검증 통과");
 
 const attendanceListCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
-  ["목록기준", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "목록기준", "TRUE"],
-  ["보조무시", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "TRUE", "", "", "", ""]
+  ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족", "", "", "", ""],
+  ["목록무시", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "목록무시", "TRUE"],
+  ["참석칸기준", "FALSE", "FALSE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "", "", "", ""]
 ].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
 const attendanceListPeople = __test.rowsFromCsv(attendanceListCsv);
 assert.equal(attendanceListPeople.length, 1);
-assert.equal(attendanceListPeople[0].name, "목록기준");
+assert.equal(attendanceListPeople[0].name, "참석칸기준");
 assert.equal(attendanceListPeople[0].service4, true);
-console.log("[OK] 오른쪽 출석 이름 목록 우선 적용 및 보조 칸 무시 검증 통과");
+assert.equal(attendanceListPeople.some((person) => person.name === "목록무시"), false);
+console.log("[OK] 오른쪽 출석 이름 목록은 무시하고 QR/참석 칸만 인정 검증 통과");
 
-const mergedAttendanceSourceCsv = [
+const strictAttendanceSourceCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
+  ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족", "", "", "", ""],
   ["김블록", "TRUE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "", ""],
-  ["오른쪽목록기준", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "오른쪽목록기준", "TRUE"]
+  ["오른쪽목록제외", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "FALSE", "", "", "오른쪽목록제외", "TRUE"]
 ].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
-const mergedAttendanceSourcePeople = __test.rowsFromCsv(mergedAttendanceSourceCsv);
-assert.equal(mergedAttendanceSourcePeople.length, 2);
-assert.equal(mergedAttendanceSourcePeople.find((person) => person.name === "김블록")?.service13, true);
-assert.equal(mergedAttendanceSourcePeople.find((person) => person.name === "오른쪽목록기준")?.service4, true);
-console.log("[OK] 오른쪽 출석 목록과 가족블록 참석칸 병합 검증 통과");
+const strictAttendanceSourcePeople = __test.rowsFromCsv(strictAttendanceSourceCsv);
+assert.equal(strictAttendanceSourcePeople.length, 1);
+assert.equal(strictAttendanceSourcePeople.find((person) => person.name === "김블록")?.service13, true);
+assert.equal(strictAttendanceSourcePeople.some((person) => person.name === "오른쪽목록제외"), false);
+console.log("[OK] 가족블록 QR/참석 칸 기준만 실행 대상 확정 검증 통과");
 
 const blankAttendanceListCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
@@ -160,11 +166,11 @@ const duplicateCsv = [
   "고은이네,주고은,TRUE,FALSE",
   "고은이네,주고은,FALSE,TRUE"
 ].join("\n");
-assert.throws(
-  () => __test.rowsFromCsv(duplicateCsv),
-  /중복된 이름/
-);
-console.log("[OK] 같은 가족 내 중복 이름 차단 검증 통과");
+const duplicatePeople = __test.rowsFromCsv(duplicateCsv);
+assert.equal(duplicatePeople.length, 1);
+assert.equal(duplicatePeople[0].service13, true);
+assert.equal(duplicatePeople[0].service4, true);
+console.log("[OK] 같은 가족 내 중복 이름은 한 명으로 병합 검증 통과");
 
 const resultFixture = [
   { family: "고은이네", name: "저장확인", service13: true, service4: false },
