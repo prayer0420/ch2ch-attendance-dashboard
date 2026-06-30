@@ -7,6 +7,18 @@ import { getRunDetail } from "@/lib/data";
 import { nextActionForRun, resultStatusLabel, runStatusLabel, saveResultLabel, statusTone } from "@/lib/status";
 import { formatDateTime } from "@/lib/utils";
 
+type FamilySummary = {
+  family: string;
+  sunday: number;
+  department: number;
+  success: number;
+  failed: number;
+  saveSuccess: number;
+  saveFailed: number;
+  corrected: string[];
+  failedNames: string[];
+};
+
 export default async function RunDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const { run, results, events, demo } = await getRunDetail(id);
@@ -23,6 +35,40 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
   const percent = run.total_count ? Math.round((run.processed_count / run.total_count) * 100) : 0;
   const failures = results.filter((result) => ["final_fail", "save_failed"].includes(result.status));
   const nextAction = nextActionForRun(run.status, events.length > 0);
+  const familySummary = Array.from(results.reduce<Map<string, FamilySummary>>((map, result) => {
+    const key = result.original_family || result.found_location || "미확인";
+    const current = map.get(key) ?? {
+      family: key,
+      sunday: 0,
+      department: 0,
+      success: 0,
+      failed: 0,
+      saveSuccess: 0,
+      saveFailed: 0,
+      corrected: [] as string[],
+      failedNames: [] as string[]
+    };
+
+    if (result.service_1_3_present) current.sunday += 1;
+    if (result.service_4_present) current.department += 1;
+    if (["primary_success", "second_pass_success", "dry_run"].includes(result.status)) current.success += 1;
+    if (["final_fail", "save_failed"].includes(result.status)) {
+      current.failed += 1;
+      current.failedNames.push(result.name);
+    }
+    if (result.save_result === "success") current.saveSuccess += 1;
+    if (result.save_result === "failed") current.saveFailed += 1;
+    if (result.status === "second_pass_success") current.corrected.push(result.name);
+    map.set(key, current);
+    return map;
+  }, new Map<string, FamilySummary>()).values());
+
+  const targetText = (result: typeof results[number]) => {
+    const targets = [];
+    if (result.service_1_3_present) targets.push("주일");
+    if (result.service_4_present) targets.push("부서");
+    return targets.length ? targets.join(", ") : "-";
+  };
 
   return (
     <AppShell>
@@ -74,12 +120,56 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
           </div>
 
           <Panel>
-            <h2 className="mb-3 text-lg font-black">최근 결과</h2>
+            <h2 className="mb-3 text-lg font-black">최종 가족별 결과</h2>
+            {familySummary.length ? (
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[820px] text-sm">
+                  <thead className="border-b border-line text-left text-xs font-black text-ink/55">
+                    <tr>
+                      <th className="py-2">가족</th>
+                      <th>주일</th>
+                      <th>부서</th>
+                      <th>성공</th>
+                      <th>실패</th>
+                      <th>저장</th>
+                      <th>특이사항</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {familySummary.map((family) => (
+                      <tr key={family.family} className="border-b border-line/70 align-top">
+                        <td className="py-3 font-black">{family.family}</td>
+                        <td>{family.sunday}명</td>
+                        <td>{family.department}명</td>
+                        <td className="font-bold text-moss">{family.success}명</td>
+                        <td className={family.failed ? "font-bold text-brick" : "text-ink/60"}>{family.failed}명</td>
+                        <td>
+                          {family.saveFailed ? (
+                            <span className="font-bold text-brick">실패 {family.saveFailed}</span>
+                          ) : family.saveSuccess ? (
+                            <span className="font-bold text-sea">성공 {family.saveSuccess}</span>
+                          ) : "-"}
+                        </td>
+                        <td className="max-w-[280px] text-xs leading-5 text-ink/65">
+                          {family.corrected.length ? `검색 보정: ${family.corrected.join(", ")}` : null}
+                          {family.failedNames.length ? `${family.corrected.length ? " / " : ""}실패: ${family.failedNames.join(", ")}` : null}
+                          {!family.corrected.length && !family.failedNames.length ? "-" : null}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : <EmptyState>아직 결과가 없습니다. Runner가 실행을 시작하면 여기에 결과가 쌓입니다.</EmptyState>}
+          </Panel>
+
+          <Panel>
+            <h2 className="mb-3 text-lg font-black">최근 처리 내역</h2>
             {results.length ? (
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[760px] text-sm">
                   <thead className="border-b border-line text-left text-xs uppercase tracking-[0.12em] text-ink/50">
-                    <tr><th className="py-2">상태</th><th>이름</th><th>원래 가족</th><th>발견 위치</th><th>1-3부</th><th>4부</th><th>저장</th></tr>
+                    <tr><th className="py-2">상태</th><th>이름</th><th>원래 가족</th><th>처리 위치</th><th>주일</th><th>부서</th><th>저장</th></tr>
                   </thead>
                   <tbody>
                     {results.slice(0, 8).map((result) => (
@@ -108,7 +198,7 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
                 {events.map((event) => (
                   <div key={event.id} className="rounded border border-line bg-white/70 p-3 text-sm">
                     <p className="font-bold">{event.message}</p>
-                    <p className="mt-1 text-xs text-ink/50">{formatDateTime(event.created_at)} · {event.event_type ?? event.level}</p>
+                    <p className="mt-1 text-xs font-bold text-ink/50">{formatDateTime(event.created_at)}</p>
                   </div>
                 ))}
               </div>
@@ -118,12 +208,25 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
           </Panel>
           <Panel>
             <h2 className="mb-3 text-lg font-black">최종 실패자</h2>
-            {failures.length ? failures.map((failure) => (
-              <div key={failure.id} className="mb-2 rounded border border-brick/30 bg-brick/5 p-3 text-sm">
-                <p className="font-bold">{failure.name}</p>
-                <p className="text-brick">{failure.failure_reason ?? "사유 없음"}</p>
+            {failures.length ? (
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[520px] text-sm">
+                  <thead className="border-b border-line text-left text-xs font-black text-ink/55">
+                    <tr><th className="py-2">이름</th><th>가족</th><th>체크</th><th>원인</th></tr>
+                  </thead>
+                  <tbody>
+                    {failures.map((failure) => (
+                      <tr key={failure.id} className="border-b border-line/70 align-top">
+                        <td className="py-3 font-black">{failure.name}</td>
+                        <td>{failure.found_location || failure.original_family || "-"}</td>
+                        <td>{targetText(failure)}</td>
+                        <td className="text-brick">{failure.failure_reason ?? "사유 없음"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            )) : <EmptyState>최종 실패자가 없습니다.</EmptyState>}
+            ) : <EmptyState>최종 실패자가 없습니다.</EmptyState>}
           </Panel>
         </div>
       </div>

@@ -58,9 +58,9 @@ type FamilyMode = {
 };
 
 const MODE_LABEL: Record<ServiceMode, string> = {
-  sheet: "시트 기준",
-  check: "체크",
-  clear: "해제"
+  sheet: "시트 원본",
+  check: "체크 예약",
+  clear: "해제 예약"
 };
 
 const MODE_ICON: Record<ServiceMode, typeof RotateCcw> = {
@@ -305,7 +305,7 @@ export function RunCreateForm() {
     }
 
     if (!manualRows.length) {
-      setError("현재 체크 상태로는 실행할 사람이 없습니다. 가족별 체크 값을 확인해 주세요.");
+      setError("현재 예약 상태로는 실행할 사람이 없습니다. 가족별 주일/부서 예약 값을 확인해 주세요.");
       return;
     }
 
@@ -471,10 +471,13 @@ export function RunCreateForm() {
           <div>
             <h2 className="flex items-center gap-2 text-lg font-black">
               <ListChecks size={20} />
-              가족별 체크 제어
+              실행 예약 조정
             </h2>
             <p className="mt-1 text-sm text-ink/65">
-              {sourceMessage ?? "시트/파일을 불러오면 가족별 주일과 부서 체크 값을 조정할 수 있습니다."}
+              {sourceMessage ?? "시트/파일을 불러오면 실제 실행 전에 가족별 주일/부서 체크 예약을 조정할 수 있습니다."}
+            </p>
+            <p className="mt-1 text-xs font-bold text-ink/50">
+              아래 버튼은 바로 CH2CH를 수정하지 않습니다. 마지막에 “실제 출석체크 시작”을 눌렀을 때 적용될 예약만 바꿉니다.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -485,7 +488,7 @@ export function RunCreateForm() {
               onClick={() => setAllFamilies("sheet")}
             >
               <RotateCcw size={16} />
-              전체 시트 기준
+              전체 원본대로
             </button>
             <button
               type="button"
@@ -494,7 +497,7 @@ export function RunCreateForm() {
               onClick={() => setAllFamilies("check")}
             >
               <CheckSquare size={16} />
-              전체 체크
+              전체 체크 예약
             </button>
             <button
               type="button"
@@ -503,7 +506,7 @@ export function RunCreateForm() {
               onClick={() => setAllFamilies("clear")}
             >
               <XCircle size={16} />
-              전체 해제
+              전체 해제 예약
             </button>
           </div>
         </div>
@@ -526,14 +529,14 @@ export function RunCreateForm() {
           <>
             {!effectiveTotals.total ? (
               <div className="mt-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
-                읽은 이름은 있지만 현재 실행 대상이 0명입니다. 가족별 체크 제어에서 주일/부서를 체크하거나 A~DP 범위의 QR/참석 칸을 확인해 주세요.
+                읽은 이름은 있지만 현재 실행 예약 대상이 0명입니다. 실행 예약 조정에서 주일/부서를 체크 예약하거나 A~DP 범위의 QR/참석 칸을 확인해 주세요.
               </div>
             ) : null}
 
             <div className="mt-4 grid gap-2 text-sm sm:grid-cols-2 xl:grid-cols-4">
               {[
                 ["읽은 이름", countLabel(sourcePeople.length), "text-ink"],
-                ["실행 대상", countLabel(effectiveTotals.total), "text-sea"],
+                ["실행 예약", countLabel(effectiveTotals.total), "text-sea"],
                 ["주일", countLabel(effectiveTotals.sunday), "text-moss"],
                 ["부서", countLabel(effectiveTotals.department), "text-brass"]
               ].map(([label, value, tone]) => (
@@ -591,7 +594,7 @@ export function RunCreateForm() {
                         </div>
                         <div className="flex flex-wrap gap-1">
                           <span className="rounded border border-sea/25 bg-sea/10 px-2 py-1 text-xs font-black text-sea">
-                            실행 {countLabel(item.effective.total)}
+                            예약 {countLabel(item.effective.total)}
                           </span>
                           {changed ? (
                             <span className="rounded border border-brass/35 bg-brass/10 px-2 py-1 text-xs font-black text-brass">
@@ -610,7 +613,7 @@ export function RunCreateForm() {
                             <div className="flex items-center justify-between gap-2 text-xs">
                               <span className="font-black">{service.label}</span>
                               <span className="font-bold text-ink/55">
-                                원본 {service.sheet} → 실행 {service.effective}
+                                시트 {service.sheet} → 예약 {service.effective}
                               </span>
                             </div>
                             <div className="mt-2 grid grid-cols-3 gap-1">
@@ -640,7 +643,7 @@ export function RunCreateForm() {
                           onClick={() => updateFamilyMode(item.family, { sunday: "sheet", department: "sheet" })}
                         >
                           <RotateCcw size={14} />
-                          가족 원본
+                          이 가족 원본대로
                         </button>
                         <button
                           type="button"
@@ -648,7 +651,7 @@ export function RunCreateForm() {
                           onClick={() => updateFamilyMode(item.family, { sunday: "check", department: "check" })}
                         >
                           <CheckSquare size={14} />
-                          가족 체크
+                          모두 체크 예약
                         </button>
                         <button
                           type="button"
@@ -656,13 +659,13 @@ export function RunCreateForm() {
                           onClick={() => updateFamilyMode(item.family, { sunday: "clear", department: "clear" })}
                         >
                           <Square size={14} />
-                          가족 해제
+                          모두 해제 예약
                         </button>
                       </div>
 
                       <div className="mt-3 grid gap-3 border-t border-line pt-3 md:grid-cols-2">
                         <div className="min-w-0">
-                          <p className="text-xs font-black text-moss">주일 대상 {countLabel(sundayPeople.length)}</p>
+                          <p className="text-xs font-black text-moss">주일 체크 예약 {countLabel(sundayPeople.length)}</p>
                           <div className="mt-2 flex flex-wrap gap-1">
                             {sundayPeople.length ? (
                               <>
@@ -681,7 +684,7 @@ export function RunCreateForm() {
                           </div>
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-black text-sea">부서 대상 {countLabel(departmentPeople.length)}</p>
+                          <p className="text-xs font-black text-sea">부서 체크 예약 {countLabel(departmentPeople.length)}</p>
                           <div className="mt-2 flex flex-wrap gap-1">
                             {departmentPeople.length ? (
                               <>
@@ -712,7 +715,7 @@ export function RunCreateForm() {
           </>
         ) : (
           <div className="mt-4 rounded border border-dashed border-line bg-white/50 p-6 text-sm text-ink/60">
-            가족 목록을 불러오면 이곳에서 가족별 주일/부서 체크와 해제를 조정할 수 있습니다.
+            가족 목록을 불러오면 이곳에서 실제 실행 전에 가족별 주일/부서 체크 예약을 조정할 수 있습니다.
           </div>
         )}
       </section>

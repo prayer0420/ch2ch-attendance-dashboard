@@ -658,6 +658,7 @@ function applyLegacyResult(results, legacyResult, dryRun) {
     if (!person || !person.ok) {
       return {
         ...result,
+        found_location: person?.foundLocation || person?.foundFamily || result.found_location,
         status: "final_fail",
         attempt_stage: "final_fail",
         save_result: "not_saved",
@@ -666,6 +667,22 @@ function applyLegacyResult(results, legacyResult, dryRun) {
     }
 
     if (dryRun) return result;
+
+    if (person.fallbackSearch) {
+      const saveResult = person.saveAttempted === false
+        ? "failed"
+        : person.saveVerified
+          ? "success"
+          : "attempted_unverified";
+      return {
+        ...result,
+        found_location: person.foundLocation || person.foundFamily || result.found_location,
+        status: person.saveAttempted === false ? "save_failed" : "second_pass_success",
+        attempt_stage: "second_pass_search",
+        save_result: saveResult,
+        failure_reason: person.saveAttempted === false ? "검색 보정 저장 실패" : null
+      };
+    }
 
     const familyResult = familySave.get(normalizeName(result.original_family)) || {
       attempted: legacyResult.finalSaved !== false,
@@ -744,7 +761,7 @@ async function runLegacyProcess(run, reporter, people) {
       if (level === "error") return true;
       const message = text.replace(/^\[[^\]]+\]\s*/, "");
       return message.startsWith("가족 결과") ||
-        message.startsWith("최종 가족별 요약") ||
+        message.startsWith("검색 보정") ||
         message.startsWith("전체 실행 중") ||
         message.startsWith("실패:");
     };
@@ -756,7 +773,7 @@ async function runLegacyProcess(run, reporter, people) {
       pending = pending.then(async () => {
         const message = text.replace(/^\[[^\]]+\]\s*/, "");
         if (isVisibleLegacyLog(text, level)) {
-          await reporter.event("legacy_log", text, null, level);
+          await reporter.event("legacy_log", message, null, level);
         }
         const familyResultMatch = message.match(/^가족 결과:\s*([^:]+):/);
         if (familyResultMatch) {

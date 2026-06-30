@@ -64,8 +64,20 @@ function splitCandidates(value = '') {
   return value.split(',').map(v => v.trim()).filter(Boolean);
 }
 
+function formatLogTime(date = new Date()) {
+  return new Intl.DateTimeFormat('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).format(date).replace(/\s+/g, ' ').trim();
+}
+
 function log(message, extra = '') {
-  const time = new Date().toISOString();
+  const time = formatLogTime();
   const line = `[${time}] ${message}${extra ? ' ' + extra : ''}`;
   console.log(line);
   fs.mkdirSync('./logs', { recursive: true });
@@ -195,6 +207,8 @@ function groupByFamily(rows) {
 function conciseFailureReason(reason) {
   const text = String(reason || '처리 실패').replace(/\s+/g, ' ').trim();
   if (!text) return '처리 실패';
+  if (text.includes('검색 보정 성공')) return '검색 보정 성공';
+  if (text.includes('필요 작업')) return text.slice(0, 120);
   if (text.includes('가족 탭 클릭 실패')) return '가족 탭 없음';
   if (text.includes('가족 화면 로딩 실패')) return '가족 화면 로딩 실패';
   if (text.includes('이름 행 찾기 실패')) return '이름 없음';
@@ -904,6 +918,15 @@ function boolText(value) {
   return value ? '체크' : '해제';
 }
 
+function targetActionText(rowInfo) {
+  const parts = [];
+  if (rowInfo.sunday === true) parts.push('주일 체크');
+  if (rowInfo.sunday === false) parts.push('주일 해제');
+  if (rowInfo.department === true) parts.push('부서 체크');
+  if (rowInfo.department === false) parts.push('부서 해제');
+  return parts.length ? `필요 작업: ${parts.join(', ')}` : '필요 작업: 없음';
+}
+
 function attendanceMismatchReason(rowInfo, state, prefix = '대조 실패') {
   const parts = [];
   if (state.sunday !== rowInfo.sunday) {
@@ -917,6 +940,212 @@ function attendanceMismatchReason(rowInfo, state, prefix = '대조 실패') {
 
 function attendanceStateMatches(rowInfo, state) {
   return state.ok && state.sunday === rowInfo.sunday && state.department === rowInfo.department;
+}
+
+async function extractFamilyFromFoundRow(found, fallback = '') {
+  const familyPattern = /[가-힣]{2,8}(?:이네|네|반|팀)/g;
+  try {
+    const text = found.rowHandle
+      ? await found.rowHandle.evaluate((tr) => tr.innerText || tr.textContent || '')
+      : await found.row.innerText({ timeout: 700 });
+    const matches = String(text || '').match(familyPattern) || [];
+    const familyLike = matches.find((value) => /이네|네$/.test(value)) || matches[0];
+    return familyLike || fallback || '';
+  } catch (_) {
+    return fallback || '';
+  }
+}
+
+async function fillMemberSearchInput(page, name) {
+  for (const ctx of allContexts(page)) {
+    try {
+      const handle = await ctx.evaluateHandle((name) => {
+        const isVisible = (el) => {
+          if (!el || !el.getClientRects || el.getClientRects().length === 0) return false;
+          const style = window.getComputedStyle(el);
+          const rect = el.getBoundingClientRect();
+          return style.visibility !== 'hidden' && style.display !== 'none' && Number(style.opacity || 1) !== 0 && rect.width > 40 && rect.height > 12;
+        };
+        const inputs = Array.from(document.querySelectorAll('input,textarea')).filter((el) => {
+          const type = String(el.getAttribute('type') || 'text').toLowerCase();
+          if (['hidden', 'checkbox', 'radio', 'button', 'submit', 'image', 'file'].includes(type)) return false;
+          if (!isVisible(el)) return false;
+          const rect = el.getBoundingClientRect();
+          const text = `${el.getAttribute('placeholder') || ''} ${el.getAttribute('name') || ''} ${el.id || ''} ${el.getAttribute('aria-label') || ''}`;
+          const nearText = el.closest('td,th,div,li,label')?.innerText || '';
+          const score =
+            (/이름|성명|초성|name/i.test(text) ? 4 : 0) +
+            (/이름|성명|초성/.test(nearText) ? 3 : 0) +
+            (rect.top < Math.max(360, window.innerHeight * 0.45) ? 2 : 0) +
+            (rect.width > 80 ? 1 : 0);
+          return score > 0;
+        }).map((el) => {
+          const rect = el.getBoundingClientRect();
+          const text = `${el.getAttribute('placeholder') || ''} ${el.getAttribute('name') || ''} ${el.id || ''} ${el.getAttribute('aria-label') || ''}`;
+          const nearText = el.closest('td,th,div,li,label')?.innerText || '';
+          const score =
+            (/이름|성명|초성|name/i.test(text) ? 4 : 0) +
+            (/이름|성명|초성/.test(nearText) ? 3 : 0) +
+            (rect.top < Math.max(360, window.innerHeight * 0.45) ? 2 : 0) +
+            (rect.width > 80 ? 1 : 0);
+          return { el, score, top: rect.top };
+        }).sort((a, b) => b.score - a.score || a.top - b.top);
+        const selected = inputs[0]?.el || null;
+        if (!selected) return null;
+        selected.focus();
+        selected.value = name;
+        selected.dispatchEvent(new Event('input', { bubbles: true }));
+        selected.dispatchEvent(new Event('change', { bubbles: true }));
+        return selected;
+      }, name);
+      const input = handle.asElement();
+      if (input) {
+        await input.press('Enter').catch(() => {});
+        return true;
+      }
+    } catch (_) {}
+  }
+  return false;
+}
+
+async function searchMemberRowGlobally(page, rowInfo, originalFamily) {
+  const searched = await fillMemberSearchInput(page, rowInfo.name);
+  if (!searched) {
+    return { found: null, reason: `검색 보정 실패: '${rowInfo.name}' 이름 검색칸을 찾지 못했습니다. ${targetActionText(rowInfo)}` };
+  }
+
+  await clickTextInAnyFrame(page, '간편검색', false, 1200).catch(() => false);
+  await shortDelay(1200);
+
+  let found = await findMemberRow(page, rowInfo.name);
+  if (!found) {
+    await clickTextInAnyFrame(page, '검색', false, 1200).catch(() => false);
+    await shortDelay(1200);
+    found = await findMemberRow(page, rowInfo.name);
+  }
+
+  if (!found) {
+    return { found: null, reason: `검색 보정 실패: 시트 ${rowInfo.sourceRow || '?'}행 '${rowInfo.name}'을 '${originalFamily}'에서도, CH2CH 이름 검색에서도 찾지 못했습니다. ${targetActionText(rowInfo)}` };
+  }
+
+  const foundFamily = await extractFamilyFromFoundRow(found, originalFamily);
+  return {
+    found,
+    foundFamily,
+    foundLocation: foundFamily && foundFamily !== originalFamily
+      ? `${foundFamily} (시트 가족: ${originalFamily})`
+      : foundFamily || originalFamily
+  };
+}
+
+async function processSearchCorrection(page, rowInfo, originalFamily) {
+  try {
+    const search = await searchMemberRowGlobally(page, rowInfo, originalFamily);
+    if (!search.found) {
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: false,
+        reason: search.reason,
+        fallbackSearch: true
+      };
+    }
+
+    const before = await readWebAttendanceState(search.found);
+    if (!before.ok) {
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: false,
+        reason: `검색 보정 대조 실패: ${before.reason}. ${targetActionText(rowInfo)}`,
+        fallbackSearch: true,
+        foundFamily: search.foundFamily,
+        foundLocation: search.foundLocation
+      };
+    }
+
+    if (CONFIG.dryRun) {
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: true,
+        reason: null,
+        fallbackSearch: true,
+        foundFamily: search.foundFamily,
+        foundLocation: search.foundLocation,
+        saveAttempted: false,
+        saveVerified: false
+      };
+    }
+
+    const sundayResult = await setCheckboxInRow(search.found, rowInfo, '주일', rowInfo.sunday, 0);
+    const departmentResult = await setCheckboxInRow(search.found, rowInfo, '부서', rowInfo.department, 1);
+    if (!sundayResult.ok || !departmentResult.ok) {
+      const reason = [sundayResult.reason, departmentResult.reason].filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: false,
+        reason: `검색 보정 실패: ${reason}. ${targetActionText(rowInfo)}`,
+        fallbackSearch: true,
+        foundFamily: search.foundFamily,
+        foundLocation: search.foundLocation
+      };
+    }
+
+    const finalState = await readWebAttendanceState(search.found);
+    if (!attendanceStateMatches(rowInfo, finalState)) {
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: false,
+        reason: attendanceMismatchReason(rowInfo, finalState, `검색 보정 최종 대조 실패 (${targetActionText(rowInfo)})`),
+        fallbackSearch: true,
+        foundFamily: search.foundFamily,
+        foundLocation: search.foundLocation
+      };
+    }
+
+    await setNoteInRow(search.found, rowInfo);
+    const saved = CONFIG.savePerFamily
+      ? await saveCurrentPage(page, `검색 보정 ${rowInfo.name}`)
+      : { attempted: true, verified: false };
+
+    if (CONFIG.savePerFamily && !saved.attempted) {
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: false,
+        reason: `검색 보정 저장 실패: ${targetActionText(rowInfo)}`,
+        fallbackSearch: true,
+        foundFamily: search.foundFamily,
+        foundLocation: search.foundLocation,
+        saveAttempted: false,
+        saveVerified: false
+      };
+    }
+
+    log('검색 보정 성공', `${rowInfo.name}: 시트 가족 ${originalFamily}, 처리 위치 ${search.foundLocation || '검색 결과'}, ${targetActionText(rowInfo)}`);
+    return {
+      family: rowInfo.family,
+      name: rowInfo.name,
+      ok: true,
+      reason: null,
+      fallbackSearch: true,
+      foundFamily: search.foundFamily,
+      foundLocation: search.foundLocation,
+      saveAttempted: saved.attempted,
+      saveVerified: saved.verified
+    };
+  } catch (err) {
+    return {
+      family: rowInfo.family,
+      name: rowInfo.name,
+      ok: false,
+      reason: `검색 보정 오류: ${err?.message || String(err)}. ${targetActionText(rowInfo)}`,
+      fallbackSearch: true
+    };
+  }
 }
 
 async function setNoteInRow(found, rowInfo) {
@@ -964,38 +1193,27 @@ async function processFamily(page, familyName, rows, options = {}) {
   await shortDelay(CONFIG.familyLoadWaitMs);
   const familyReady = await waitForFamilyMemberText(page, familyName, rows);
   if (!familyReady) {
-    const reason = `가족 화면 로딩 실패: '${familyName}' 탭을 연 뒤 시트에 있는 대상 이름이 화면에 나타나지 않았습니다. 잘못된 가족 탭이 열렸거나 CH2CH 검색 결과가 아직 로딩되지 않았을 수 있습니다.`;
-    return {
-      familyName,
-      expectedSunday,
-      expectedDepartment,
-      success: 0,
-      failed: rows.length,
-      saved: false,
-      saveVerified: false,
-      people: rows.map(row => ({ family: row.family, name: row.name, ok: false, reason }))
-    };
+    log('가족 화면 대조 경고', `'${familyName}'에서 시트 대상 이름이 바로 보이지 않아 이름 검색 보정을 함께 시도합니다.`);
   }
 
   let success = 0;
   let failed = 0;
   const people = [];
   const preparedRows = [];
+  const searchRetryRows = [];
   let finalMismatchCount = 0;
 
   for (const rowInfo of rows) {
     try {
       const found = await findMemberRow(page, rowInfo.name);
       if (!found) {
-        failed += 1;
-        const reason = `이름 행 찾기 실패: 시트 ${rowInfo.sourceRow || '?'}행 '${rowInfo.name}'을 '${familyName}' 화면에서 찾지 못했습니다.`;
-        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+        searchRetryRows.push(rowInfo);
         continue;
       }
       const currentState = await readWebAttendanceState(found);
       if (!currentState.ok) {
         failed += 1;
-        const reason = `실행 전 대조 실패: ${currentState.reason}`;
+        const reason = `실행 전 대조 실패: ${currentState.reason}. ${targetActionText(rowInfo)}`;
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
         continue;
       }
@@ -1020,7 +1238,7 @@ async function processFamily(page, familyName, rows, options = {}) {
       if (!sundayResult.ok || !departmentResult.ok) {
         failed += 1;
         const reason = [sundayResult.reason, departmentResult.reason].filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
-        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason: `${reason}. ${targetActionText(rowInfo)}` });
         continue;
       }
       const finalState = await readWebAttendanceState(found);
@@ -1044,10 +1262,19 @@ async function processFamily(page, familyName, rows, options = {}) {
   }
 
   let saved = { attempted: true, verified: CONFIG.dryRun };
-  if (CONFIG.savePerFamily) {
+  if (CONFIG.savePerFamily && preparedRows.length > 0) {
     saved = finalMismatchCount > 0
       ? { attempted: false, verified: false }
       : await saveCurrentPage(page, familyName);
+  } else if (CONFIG.savePerFamily) {
+    saved = { attempted: true, verified: CONFIG.dryRun };
+  }
+
+  for (const rowInfo of searchRetryRows) {
+    const corrected = await processSearchCorrection(page, rowInfo, familyName);
+    if (corrected.ok) success += 1;
+    else failed += 1;
+    people.push(corrected);
   }
 
   return {
