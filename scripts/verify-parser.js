@@ -93,6 +93,49 @@ assert.equal(blankSubHeaderPeople.some((person) => person.name === "방송만체
 assert.equal(blankSubHeaderPeople.some((person) => person.name === "가족만체크"), false);
 console.log("[OK] 빈 보조 제목줄에서도 앞 2칸 QR/참석만 인정 검증 통과");
 
+const explicitAttendanceHeaderCsv = [
+  ["고은이네", "1-3부", "", "", "4부", "", "", ""],
+  ["", "출석", "참석", "방송", "출석", "참석", "방송", "가족"],
+  ["출석제목만체크", "TRUE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE", "FALSE"],
+  ["참석제목체크", "FALSE", "TRUE", "FALSE", "FALSE", "TRUE", "FALSE", "FALSE"]
+].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
+const explicitAttendanceHeaderPeople = __test.rowsFromCsv(explicitAttendanceHeaderCsv);
+assert.equal(explicitAttendanceHeaderPeople.length, 1);
+assert.equal(explicitAttendanceHeaderPeople[0].name, "참석제목체크");
+assert.equal(explicitAttendanceHeaderPeople[0].service13, true);
+assert.equal(explicitAttendanceHeaderPeople[0].service4, true);
+assert.equal(explicitAttendanceHeaderPeople.some((person) => person.name === "출석제목만체크"), false);
+console.log("[OK] 출석 제목 칸은 무시하고 QR/참석 제목 칸만 인정 검증 통과");
+
+const wideHeader = Array.from({ length: 124 }, () => "");
+wideHeader[0] = "고은이네";
+wideHeader[1] = "1-3부";
+wideHeader[4] = "4부";
+wideHeader[120] = "1-3부";
+wideHeader[121] = "출석";
+wideHeader[122] = "4부";
+wideHeader[123] = "출석";
+const wideBlankHeader = Array.from({ length: 124 }, () => "");
+const onlyDqDtRow = Array.from({ length: 124 }, () => "FALSE");
+onlyDqDtRow[0] = "DQDT만체크";
+onlyDqDtRow[120] = "TRUE";
+onlyDqDtRow[121] = "TRUE";
+onlyDqDtRow[122] = "TRUE";
+onlyDqDtRow[123] = "TRUE";
+const leftSourceRow = Array.from({ length: 124 }, () => "FALSE");
+leftSourceRow[0] = "왼쪽참석체크";
+leftSourceRow[2] = "TRUE";
+leftSourceRow[121] = "TRUE";
+leftSourceRow[123] = "TRUE";
+const dqDtCsv = [wideHeader, wideBlankHeader, onlyDqDtRow, leftSourceRow]
+  .map((row) => row.map((cell) => `"${cell}"`).join(","))
+  .join("\n");
+const dqDtPeople = __test.rowsFromCsv(dqDtCsv);
+assert.equal(dqDtPeople.length, 1);
+assert.equal(dqDtPeople[0].name, "왼쪽참석체크");
+assert.equal(dqDtPeople.some((person) => person.name === "DQDT만체크"), false);
+console.log("[OK] DQ~DT 요약 칸은 완전히 무시하고 A~DP만 검증 통과");
+
 const attendanceListCsv = [
   ["고은이네", "1-3부", "", "", "4부", "", "", "", "1-3부", "출석", "4부", "출석"],
   ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족", "", "", "", ""],
@@ -124,9 +167,9 @@ const blankAttendanceListCsv = [
 ].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
 assert.throws(
   () => __test.rowsFromCsv(blankAttendanceListCsv),
-  /이름 없이 체크/
+  /A~DP/
 );
-console.log("[OK] 이름 없는 출석 목록 체크 진단 검증 통과");
+console.log("[OK] 오른쪽 출석 목록만 체크된 경우 실행 대상 없음 검증 통과");
 
 const summaryRowsCsv = [
   "고은이네,1-3부,4부",

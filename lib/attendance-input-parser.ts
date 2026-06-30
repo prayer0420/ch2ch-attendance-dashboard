@@ -19,6 +19,8 @@ export type AttendanceParseOptions = {
   includeUnchecked?: boolean;
 };
 
+const SOURCE_COLUMN_LIMIT = 120; // A through DP. DQ, DR, DS, DT are summary/helper columns.
+
 export function normalizeName(value: unknown) {
   return String(value || "").replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\s+/g, "").trim().toLowerCase();
 }
@@ -119,7 +121,7 @@ export function rowsToCsv(rows: unknown[][]) {
 
 export function isChecked(value: unknown) {
   const normalized = normalizeName(value);
-  return ["o", "v", "true", "yes", "y", "1", "체크", "참석", "출석", "✓", "✔", "☑", "✅", "○", "〇", "ㅇ"].includes(normalized);
+  return ["o", "v", "true", "yes", "y", "1", "체크", "참석", "✓", "✔", "☑", "✅", "○", "〇", "ㅇ"].includes(normalized);
 }
 
 function isLikelyPersonName(value: unknown) {
@@ -165,7 +167,7 @@ function hasAnyHeader(text: string, candidates: string[]) {
 
 function rangeColumns(start: number, end: number) {
   const columns: number[] = [];
-  for (let column = start; column < end; column += 1) columns.push(column);
+  for (let column = Math.max(0, start); column < Math.min(end, SOURCE_COLUMN_LIMIT); column += 1) columns.push(column);
   return columns;
 }
 
@@ -177,7 +179,7 @@ function attendanceColumns(rows: string[][], start: number, end: number) {
     const label = normalizeName(subHeader[column]);
     if (!label) return false;
     if (label.includes("방송") || label.includes("가족")) return false;
-    return label.includes("qr") || label.includes("큐알") || label.includes("참석") || label.includes("출석");
+    return label.includes("qr") || label.includes("큐알") || label.includes("참석");
   });
 
   if (columns.length) return columns;
@@ -225,57 +227,11 @@ function isFamilyLabelRow(row: string[], blocks: Array<{ start: number }>) {
   return blocks.filter((block) => isLikelyFamilyLabel(row[block.start])).length >= 2;
 }
 
-function findAttendanceListColumn(header: string[], serviceCandidates: string[]) {
-  for (let index = 0; index < header.length - 1; index += 1) {
-    if (!hasAnyHeader(String(header[index] || ""), serviceCandidates)) continue;
-    if (hasAnyHeader(String(header[index + 1] || ""), ["출석", "참석"])) return { nameColumn: index, checkColumn: index + 1 };
-  }
-  return null;
-}
-
-function buildAttendanceNameSets(rows: string[][]) {
-  const header = rows[0] || [];
-  const service13List = findAttendanceListColumn(header, ["1-3부", "1~3부", "1부", "2부", "3부"]);
-  const service4List = findAttendanceListColumn(header, ["4부"]);
-  const service13 = new Set<string>();
-  const service4 = new Set<string>();
-  let service13CheckedWithoutName = 0;
-  let service4CheckedWithoutName = 0;
-
-  for (const row of rows.slice(1)) {
-    if (service13List && isChecked(row[service13List.checkColumn])) {
-      if (isLikelyPersonName(row[service13List.nameColumn])) {
-        service13.add(normalizeName(row[service13List.nameColumn]));
-      } else {
-        service13CheckedWithoutName += 1;
-      }
-    }
-    if (service4List && isChecked(row[service4List.checkColumn])) {
-      if (isLikelyPersonName(row[service4List.nameColumn])) {
-        service4.add(normalizeName(row[service4List.nameColumn]));
-      } else {
-        service4CheckedWithoutName += 1;
-      }
-    }
-  }
-
-  const warnings: string[] = [];
-  if (service13CheckedWithoutName) {
-    warnings.push(`오른쪽 1-3부 출석 목록에서 이름 없이 체크된 ${service13CheckedWithoutName}칸은 제외했습니다.`);
-  }
-  if (service4CheckedWithoutName) {
-    warnings.push(`오른쪽 4부 출석 목록에서 이름 없이 체크된 ${service4CheckedWithoutName}칸은 제외했습니다.`);
-  }
-
-  return { service13, service4, warnings };
-}
-
 function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseOptions = {}) {
   const header = rows[0] || [];
-  const attendanceLists = buildAttendanceNameSets(rows);
   const familyStarts: Array<{ family: string; start: number }> = [];
 
-  for (let index = 0; index < header.length; index += 1) {
+  for (let index = 0; index < Math.min(header.length, SOURCE_COLUMN_LIMIT); index += 1) {
     const label = String(header[index] || "").trim();
     if (!label || ["1-3부", "1~3부", "4부", "출석", "이름", "성명", "가족", "가정", "가족명", "어디가족", "참석합계", "방송합계", "합계", "소계", "방문자"].includes(label)) continue;
 
@@ -290,7 +246,7 @@ function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseO
   const blockWidths = familyStarts.slice(1).map((block, index) => block.start - familyStarts[index].start);
   const blockWidth = blockWidths.length ? Math.min(...blockWidths.filter((width) => width > 0)) : header.length;
   const blocks = familyStarts.map((block, index) => {
-    const nextStart = familyStarts[index + 1]?.start ?? Math.min(header.length, block.start + blockWidth);
+    const nextStart = Math.min(familyStarts[index + 1]?.start ?? Math.min(header.length, block.start + blockWidth), SOURCE_COLUMN_LIMIT);
     const blockHeader = header.slice(block.start, nextStart).map((value) => String(value || ""));
     const service13Start = block.start + blockHeader.findIndex((value) => hasAnyHeader(value, ["1-3부", "1~3부", "1부", "2부", "3부"]));
     const service4Start = block.start + blockHeader.findIndex((value) => hasAnyHeader(value, ["4부"]));
@@ -351,7 +307,7 @@ function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseO
     });
   }
 
-  return { people, warnings: attendanceLists.warnings };
+  return { people, warnings: [] };
 }
 
 function parseVerticalTable(rows: string[][], options: AttendanceParseOptions = {}) {
@@ -414,7 +370,7 @@ export function parseAttendanceRows(rows: string[][], options: AttendanceParseOp
   const verticalPeople = mergeDuplicatePeople(parseVerticalTable(verticalRows, options));
   if (!verticalPeople.length) {
     const detail = warnings.size ? ` ${Array.from(warnings).join(" ")}` : "";
-    throw new Error(`가족/이름/1-3부/4부 QR 또는 참석 체크를 찾지 못했습니다.${detail} 방송/가족 칸은 출석으로 보지 않습니다. '가장체크' 탭 형식을 확인해 주세요.`);
+    throw new Error(`가족/이름/1-3부/4부 QR 또는 참석 체크를 찾지 못했습니다.${detail} A~DP 범위만 확인하며 DQ~DT와 출석 요약 칸은 보지 않습니다. 방송/가족 칸은 출석으로 보지 않습니다. '가장체크' 탭 형식을 확인해 주세요.`);
   }
   return {
     people: verticalPeople,

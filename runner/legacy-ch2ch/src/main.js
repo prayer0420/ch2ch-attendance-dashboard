@@ -48,7 +48,7 @@ function recordDialog(message) {
   log('브라우저 알림 자동 확인', text);
 }
 
-const YES_VALUES = new Set(['o', '○', 'ㅇ', 'y', 'yes', 'true', '1', 'v', '체크', '출석', '참석']);
+const YES_VALUES = new Set(['o', '○', 'ㅇ', 'y', 'yes', 'true', '1', 'v', '체크', '참석']);
 const NO_VALUES = new Set(['x', 'n', 'no', 'false', '0', '해제', '결석', '미출석', '불참']);
 const SKIP_VALUES = new Set(['', '-', 'skip', '건너뜀', '유지']);
 
@@ -771,16 +771,7 @@ async function waitForFamilyMemberText(page, familyName, rows) {
   return false;
 }
 
-async function setCheckboxInRow(found, rowInfo, fieldName, desired, checkboxIndex) {
-  if (desired === null) {
-    return { ok: true, skipped: true };
-  }
-
-  if (CONFIG.dryRun) {
-    return { ok: true, dryRun: true };
-  }
-
-  // 체크박스 순번이 아니라 열 제목/label/name/title의 실제 텍스트로 출석 항목을 찾습니다.
+async function accessCheckboxInRow(found, fieldName, desired = null, checkboxIndex = 0, shouldSet = false) {
   if (found.rowHandle) {
     const result = await found.rowHandle.evaluate((tr, args) => {
       const normalize = (v) => String(v || '').replace(/\s+/g, '').trim().toLowerCase();
@@ -841,18 +832,26 @@ async function setCheckboxInRow(found, rowInfo, fieldName, desired, checkboxInde
         };
       }
       const box = chosen.box;
-      if (box.checked !== args.desired) {
+      const before = Boolean(box.checked);
+      if (args.shouldSet && box.checked !== args.desired) {
         box.scrollIntoView({ block: 'center', inline: 'center' });
         box.click();
         box.dispatchEvent(new Event('change', { bubbles: true }));
       }
-      return { ok: true, count: boxes.length, matchedText: chosen.text || `순서 fallback ${chosen.index}` };
-    }, { fieldName, desired });
+      const after = Boolean(box.checked);
+      return {
+        ok: args.shouldSet ? after === args.desired : true,
+        actual: after,
+        before,
+        count: boxes.length,
+        matchedText: chosen.text || `순서 fallback ${chosen.index}`
+      };
+    }, { fieldName, desired, shouldSet });
     if (!result.ok) {
       const reason = `${fieldName} 체크박스 처리 실패`;
       return { ok: false, reason };
     }
-    return { ok: true, matchedText: result.matchedText };
+    return result;
   }
 
   const targetIndex = CONFIG.rowCheckboxOffset + checkboxIndex;
@@ -863,9 +862,61 @@ async function setCheckboxInRow(found, rowInfo, fieldName, desired, checkboxInde
     return { ok: false, reason };
   }
   const box = boxes.nth(targetIndex);
-  if (desired) await box.check({ force: true, timeout: 700 });
-  else await box.uncheck({ force: true, timeout: 700 });
-  return { ok: true };
+  const before = await box.isChecked({ timeout: 700 }).catch(() => false);
+  if (shouldSet) {
+    if (desired) await box.check({ force: true, timeout: 700 });
+    else await box.uncheck({ force: true, timeout: 700 });
+  }
+  const actual = await box.isChecked({ timeout: 700 }).catch(() => before);
+  return { ok: shouldSet ? actual === desired : true, actual, before };
+}
+
+async function setCheckboxInRow(found, rowInfo, fieldName, desired, checkboxIndex) {
+  if (desired === null) {
+    return { ok: true, skipped: true };
+  }
+
+  if (CONFIG.dryRun) {
+    const read = await accessCheckboxInRow(found, fieldName, desired, checkboxIndex, false);
+    return read.ok ? { ...read, dryRun: true } : read;
+  }
+
+  return await accessCheckboxInRow(found, fieldName, desired, checkboxIndex, true);
+}
+
+async function readWebAttendanceState(found) {
+  const sunday = await accessCheckboxInRow(found, '주일', null, 0, false);
+  const department = await accessCheckboxInRow(found, '부서', null, 1, false);
+  if (!sunday.ok || !department.ok) {
+    return {
+      ok: false,
+      reason: [sunday.reason, department.reason].filter(Boolean).join(' / ') || '웹교적 체크박스 상태 읽기 실패'
+    };
+  }
+  return {
+    ok: true,
+    sunday: Boolean(sunday.actual),
+    department: Boolean(department.actual)
+  };
+}
+
+function boolText(value) {
+  return value ? '체크' : '해제';
+}
+
+function attendanceMismatchReason(rowInfo, state, prefix = '대조 실패') {
+  const parts = [];
+  if (state.sunday !== rowInfo.sunday) {
+    parts.push(`주일 웹교적=${boolText(state.sunday)} 시트=${boolText(rowInfo.sunday)}`);
+  }
+  if (state.department !== rowInfo.department) {
+    parts.push(`부서 웹교적=${boolText(state.department)} 시트=${boolText(rowInfo.department)}`);
+  }
+  return `${prefix}: ${parts.join(', ')}`;
+}
+
+function attendanceStateMatches(rowInfo, state) {
+  return state.ok && state.sunday === rowInfo.sunday && state.department === rowInfo.department;
 }
 
 async function setNoteInRow(found, rowInfo) {
@@ -929,6 +980,8 @@ async function processFamily(page, familyName, rows, options = {}) {
   let success = 0;
   let failed = 0;
   const people = [];
+  const preparedRows = [];
+  let finalMismatchCount = 0;
 
   for (const rowInfo of rows) {
     try {
@@ -939,11 +992,44 @@ async function processFamily(page, familyName, rows, options = {}) {
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
         continue;
       }
+      const currentState = await readWebAttendanceState(found);
+      if (!currentState.ok) {
+        failed += 1;
+        const reason = `실행 전 대조 실패: ${currentState.reason}`;
+        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+        continue;
+      }
+      preparedRows.push({ rowInfo, found, before: currentState });
+    } catch (err) {
+      failed += 1;
+      const reason = err?.message || String(err);
+      people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+    }
+  }
+
+  for (const item of preparedRows) {
+    const { rowInfo, found } = item;
+    try {
+      if (CONFIG.dryRun) {
+        success += 1;
+        people.push({ family: rowInfo.family, name: rowInfo.name, ok: true, reason: null });
+        continue;
+      }
       const sundayResult = await setCheckboxInRow(found, rowInfo, '주일', rowInfo.sunday, 0);
       const departmentResult = await setCheckboxInRow(found, rowInfo, '부서', rowInfo.department, 1);
       if (!sundayResult.ok || !departmentResult.ok) {
         failed += 1;
         const reason = [sundayResult.reason, departmentResult.reason].filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
+        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+        continue;
+      }
+      const finalState = await readWebAttendanceState(found);
+      if (!attendanceStateMatches(rowInfo, finalState)) {
+        failed += 1;
+        finalMismatchCount += 1;
+        const reason = finalState.ok
+          ? attendanceMismatchReason(rowInfo, finalState, '저장 전 최종 대조 실패')
+          : `저장 전 최종 대조 실패: ${finalState.reason}`;
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
         continue;
       }
@@ -959,7 +1045,9 @@ async function processFamily(page, familyName, rows, options = {}) {
 
   let saved = { attempted: true, verified: CONFIG.dryRun };
   if (CONFIG.savePerFamily) {
-    saved = await saveCurrentPage(page, familyName);
+    saved = finalMismatchCount > 0
+      ? { attempted: false, verified: false }
+      : await saveCurrentPage(page, familyName);
   }
 
   return {

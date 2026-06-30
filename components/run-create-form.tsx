@@ -416,7 +416,7 @@ export function RunCreateForm() {
               <ShieldCheck size={18} />
               실행 주차: {weekText}
             </div>
-            <p className="mt-1 text-ink/65">QR 또는 참석 칸만 출석으로 반영합니다. 방송/가족 칸은 제외합니다.</p>
+            <p className="mt-1 text-ink/65">A~DP 범위의 QR/참석 칸만 출석으로 반영합니다. DQ~DT, 출석 요약, 방송/가족 칸은 제외합니다.</p>
           </div>
 
           <div className="mt-5 grid gap-2">
@@ -526,7 +526,7 @@ export function RunCreateForm() {
           <>
             {!effectiveTotals.total ? (
               <div className="mt-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
-                읽은 이름은 있지만 현재 실행 대상이 0명입니다. 가족별 체크 제어에서 주일/부서를 체크하거나 원본 시트의 QR/참석 칸을 확인해 주세요.
+                읽은 이름은 있지만 현재 실행 대상이 0명입니다. 가족별 체크 제어에서 주일/부서를 체크하거나 A~DP 범위의 QR/참석 칸을 확인해 주세요.
               </div>
             ) : null}
 

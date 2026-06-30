@@ -9,6 +9,7 @@ const LEGACY_DIR = path.join(ROOT_DIR, "runner", "legacy-ch2ch");
 const LEGACY_DATA_DIR = path.join(LEGACY_DIR, "data");
 const LEGACY_ATTENDANCE_FILE = path.join(LEGACY_DATA_DIR, "attendance.csv");
 const LEGACY_RESULT_FILE = path.join(LEGACY_DIR, "logs", "result.json");
+const SOURCE_COLUMN_LIMIT = 120; // A through DP. DQ, DR, DS, DT are summary/helper columns.
 
 function normalizeName(value) {
   return String(value || "").replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\s+/g, "").trim().toLowerCase();
@@ -165,7 +166,7 @@ function findHeaderIndex(headers, candidates, fallback) {
 
 function isChecked(value) {
   const normalized = normalizeName(value);
-  return ["o", "v", "true", "yes", "y", "1", "체크", "참석", "출석", "✓", "✔", "☑", "✅", "○", "〇", "ㅇ"].includes(normalized);
+  return ["o", "v", "true", "yes", "y", "1", "체크", "참석", "✓", "✔", "☑", "✅", "○", "〇", "ㅇ"].includes(normalized);
 }
 
 function isLikelyPersonName(value) {
@@ -203,7 +204,7 @@ function hasAnyHeader(text, candidates) {
 
 function rangeColumns(start, end) {
   const columns = [];
-  for (let column = start; column < end; column += 1) columns.push(column);
+  for (let column = Math.max(0, start); column < Math.min(end, SOURCE_COLUMN_LIMIT); column += 1) columns.push(column);
   return columns;
 }
 
@@ -215,7 +216,7 @@ function attendanceColumns(rows, start, end) {
     const label = normalizeName(subHeader[column]);
     if (!label) return false;
     if (label.includes("방송") || label.includes("가족")) return false;
-    return label.includes("qr") || label.includes("큐알") || label.includes("참석") || label.includes("출석");
+    return label.includes("qr") || label.includes("큐알") || label.includes("참석");
   });
 
   if (columns.length) return columns;
@@ -261,51 +262,6 @@ function isBlockFamilyLabel(row, block) {
 
 function isFamilyLabelRow(row, blocks) {
   return blocks.filter((block) => isLikelyFamilyLabel(row[block.start])).length >= 2;
-}
-
-function findAttendanceListColumn(header, serviceCandidates) {
-  for (let index = 0; index < header.length - 1; index += 1) {
-    if (!hasAnyHeader(String(header[index] || ""), serviceCandidates)) continue;
-    if (hasAnyHeader(String(header[index + 1] || ""), ["출석", "참석"])) return { nameColumn: index, checkColumn: index + 1 };
-  }
-  return null;
-}
-
-function buildAttendanceNameSets(rows) {
-  const header = rows[0] || [];
-  const service13List = findAttendanceListColumn(header, ["1-3부", "1~3부", "1부", "2부", "3부"]);
-  const service4List = findAttendanceListColumn(header, ["4부"]);
-  const service13 = new Set();
-  const service4 = new Set();
-  let service13CheckedWithoutName = 0;
-  let service4CheckedWithoutName = 0;
-
-  for (const row of rows.slice(1)) {
-    if (service13List && isChecked(row[service13List.checkColumn])) {
-      if (isLikelyPersonName(row[service13List.nameColumn])) {
-        service13.add(normalizeName(row[service13List.nameColumn]));
-      } else {
-        service13CheckedWithoutName += 1;
-      }
-    }
-    if (service4List && isChecked(row[service4List.checkColumn])) {
-      if (isLikelyPersonName(row[service4List.nameColumn])) {
-        service4.add(normalizeName(row[service4List.nameColumn]));
-      } else {
-        service4CheckedWithoutName += 1;
-      }
-    }
-  }
-
-  const warnings = [];
-  if (service13CheckedWithoutName) {
-    warnings.push(`오른쪽 1-3부 출석 목록에서 이름 없이 체크된 ${service13CheckedWithoutName}칸은 제외했습니다.`);
-  }
-  if (service4CheckedWithoutName) {
-    warnings.push(`오른쪽 4부 출석 목록에서 이름 없이 체크된 ${service4CheckedWithoutName}칸은 제외했습니다.`);
-  }
-
-  return { service13, service4, warnings };
 }
 
 async function downloadGoogleSheetCsv(run) {
@@ -463,10 +419,9 @@ async function loadInputCsv(run, reporter) {
 
 function parseHorizontalFamilyLayout(rows) {
   const header = rows[0] || [];
-  const attendanceLists = buildAttendanceNameSets(rows);
   const familyStarts = [];
 
-  for (let index = 0; index < header.length; index += 1) {
+  for (let index = 0; index < Math.min(header.length, SOURCE_COLUMN_LIMIT); index += 1) {
     const label = String(header[index] || "").trim();
     if (!label || ["1-3부", "1~3부", "4부", "출석", "이름", "성명", "가족", "가정", "가족명", "어디가족", "참석합계", "방송합계", "합계", "소계", "방문자"].includes(label)) continue;
 
@@ -481,7 +436,7 @@ function parseHorizontalFamilyLayout(rows) {
   const blockWidths = familyStarts.slice(1).map((block, index) => block.start - familyStarts[index].start);
   const blockWidth = blockWidths.length ? Math.min(...blockWidths.filter((width) => width > 0)) : header.length;
   const blocks = familyStarts.map((block, index) => {
-    const nextStart = familyStarts[index + 1]?.start ?? Math.min(header.length, block.start + blockWidth);
+    const nextStart = Math.min(familyStarts[index + 1]?.start ?? Math.min(header.length, block.start + blockWidth), SOURCE_COLUMN_LIMIT);
     const blockHeader = header.slice(block.start, nextStart).map((value) => String(value || ""));
     const service13Start = block.start + blockHeader.findIndex((value) => hasAnyHeader(value, ["1-3부", "1~3부", "1부", "2부", "3부"]));
     const service4Start = block.start + blockHeader.findIndex((value) => hasAnyHeader(value, ["4부"]));
@@ -545,11 +500,7 @@ function parseHorizontalFamilyLayout(rows) {
 }
 
 function buildNoAttendanceMessage(rows) {
-  const attendanceLists = buildAttendanceNameSets(rows);
-  const details = attendanceLists.warnings.length
-    ? ` ${attendanceLists.warnings.join(" ")}`
-    : "";
-  return `가장체크에서 참석 대상이 0명으로 계산되었습니다.${details} 원본 시트의 가족/이름/1-3부/4부 QR 또는 참석 칸을 확인하거나, 홈페이지의 가족별 체크 제어에서 직접 체크해 주세요. 방송/가족 칸은 출석으로 보지 않습니다.`;
+  return "가장체크에서 참석 대상이 0명으로 계산되었습니다. A~DP 범위의 가족/이름/1-3부/4부 QR 또는 참석 칸만 확인합니다. DQ~DT와 출석 요약 칸, 방송/가족 칸은 출석으로 보지 않습니다.";
 }
 
 function rowsFromCsv(csvText) {
@@ -841,17 +792,13 @@ async function runLegacyProcess(run, reporter, people) {
 
 async function runAttendanceAutomation(run, reporter) {
   const csvText = await loadInputCsv(run, reporter);
-  const inputWarnings = buildAttendanceNameSets(parseCsv(csvText)).warnings;
-  for (const warning of inputWarnings) {
-    await reporter.event("input_warning", warning, null, "warning");
-  }
   const people = rowsFromCsv(csvText);
   if (!people.length) {
     throw new Error(buildNoAttendanceMessage(parseCsv(csvText)));
   }
   validatePreparedPeople(people);
   prepareLegacyCsv(people);
-  await reporter.event("input_read_completed", `입력 자체검사 완료: QR/참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
+  await reporter.event("input_read_completed", `입력 자체검사 완료: A~DP 범위의 QR/참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
 
   const { legacyResult } = await runLegacyProcess(run, reporter, people);
   const results = applyLegacyResult(createInitialResults(run, people), legacyResult, run.dry_run);
