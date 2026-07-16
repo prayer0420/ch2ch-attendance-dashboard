@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ClipboardCopy, Database, Play, RefreshCw } from "lucide-react";
+import { ClipboardCopy, Database, Play, QrCode, RefreshCw, UserRoundSearch } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { Badge, EmptyState, Panel, SectionTitle, StatCard } from "@/components/ui";
 import { getDashboardData } from "@/lib/data";
@@ -15,6 +15,14 @@ export default async function DashboardPage() {
     <AppShell>
       <SectionTitle eyebrow={demo ? "데모 화면" : "운영 화면"} title="출석체크 대시보드">
         <div className="flex flex-wrap gap-2">
+          <Link className="focus-ring inline-flex items-center gap-2 rounded border border-sea/35 bg-sea/10 px-4 py-2 text-sm font-bold text-sea" href="/qr-attendance">
+            <QrCode size={16} />
+            QR 출석체크
+          </Link>
+          <Link className="focus-ring inline-flex items-center gap-2 rounded border border-line bg-white px-4 py-2 text-sm font-bold text-ink" href="/search">
+            <UserRoundSearch size={16} />
+            교인 검색
+          </Link>
           <Link className="focus-ring inline-flex items-center gap-2 rounded border border-line bg-white px-4 py-2 text-sm font-bold text-ink" href="/database">
             <Database size={16} />
             DB 보기

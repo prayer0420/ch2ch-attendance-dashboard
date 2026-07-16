@@ -103,7 +103,7 @@ class Runner {
       const results = await runAttendanceAutomation(run, reporter);
       await this.saveResults(run, results);
 
-      const finalFailCount = results.filter((result) => result.attempt_stage === "final_fail").length;
+      const finalFailCount = results.filter((result) => ["final_fail", "save_failed"].includes(result.status)).length;
       const saveFailCount = results.filter((result) => result.save_result === "failed").length;
       const unverifiedSaveCount = results.filter((result) => result.save_result === "attempted_unverified").length;
       const status = run.dry_run
@@ -116,9 +116,9 @@ class Runner {
         status,
         finished_at: new Date().toISOString(),
         processed_count: results.length,
-        primary_success_count: results.filter((result) => result.attempt_stage === "primary" && !result.failure_reason).length,
-        primary_fail_count: results.filter((result) => result.attempt_stage !== "primary" || result.failure_reason).length,
-        second_pass_success_count: results.filter((result) => result.attempt_stage && result.attempt_stage.startsWith("second_pass") && !result.failure_reason).length,
+        primary_success_count: results.filter((result) => result.status === "primary_success").length,
+        primary_fail_count: results.filter((result) => ["final_fail", "save_failed"].includes(result.status)).length,
+        second_pass_success_count: results.filter((result) => result.status === "second_pass_success").length,
         final_fail_count: finalFailCount,
         save_success_count: results.filter((result) => result.save_result === "success").length,
         save_fail_count: saveFailCount,

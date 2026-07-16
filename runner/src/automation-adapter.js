@@ -239,7 +239,7 @@ function isLikelyFamilyLabel(value) {
 
 function isIgnoredFamilyLabel(value) {
   const normalized = normalizeName(value);
-  return normalized.includes("새가족방문자") || normalized.includes("새가족반방문자");
+  return normalized.includes("방문자") || normalized.includes("새가족방문자") || normalized.includes("새가족반방문자");
 }
 
 function isBlockFamilyLabel(row, block) {
@@ -668,7 +668,7 @@ function applyLegacyResult(results, legacyResult, dryRun) {
 
     if (dryRun) return result;
 
-    if (person.fallbackSearch) {
+    if (person.fallbackSearch || person.affiliationBatch || person.finalRecheckCorrected) {
       const saveResult = person.saveAttempted === false
         ? "failed"
         : person.saveVerified
@@ -678,9 +678,9 @@ function applyLegacyResult(results, legacyResult, dryRun) {
         ...result,
         found_location: person.foundLocation || person.foundFamily || result.found_location,
         status: person.saveAttempted === false ? "save_failed" : "second_pass_success",
-        attempt_stage: "second_pass_search",
+        attempt_stage: person.finalRecheckCorrected ? "final_recheck" : person.affiliationBatch ? "affiliation_batch" : "second_pass_search",
         save_result: saveResult,
-        failure_reason: person.saveAttempted === false ? "검색 보정 저장 실패" : null
+        failure_reason: person.saveAttempted === false ? "최종 재검사 저장 실패" : null
       };
     }
 
@@ -761,7 +761,14 @@ async function runLegacyProcess(run, reporter, people) {
       if (level === "error") return true;
       const message = text.replace(/^\[[^\]]+\]\s*/, "");
       return message.startsWith("가족 결과") ||
+        message.startsWith("가족 1차 처리") ||
         message.startsWith("검색 보정") ||
+        message.startsWith("실패자 소속") ||
+        message.startsWith("실패자 재시도") ||
+        message.startsWith("최종 실패자 재시도") ||
+        message.startsWith("소속 변경 확인") ||
+        message.startsWith("소속별 보정") ||
+        message.startsWith("최종 재검사") ||
         message.startsWith("전체 실행 중") ||
         message.startsWith("실패:");
     };
@@ -775,7 +782,7 @@ async function runLegacyProcess(run, reporter, people) {
         if (isVisibleLegacyLog(text, level)) {
           await reporter.event("legacy_log", message, null, level);
         }
-        const familyResultMatch = message.match(/^가족 결과:\s*([^:]+):/);
+        const familyResultMatch = message.match(/^(?:가족 결과|가족 1차 처리):?\s*([^:]+):/);
         if (familyResultMatch) {
           await reporter.updateRun({
             current_family: familyResultMatch[1],

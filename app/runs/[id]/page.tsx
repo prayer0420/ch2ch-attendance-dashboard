@@ -19,6 +19,19 @@ type FamilySummary = {
   failedNames: string[];
 };
 
+function shortNameList(names: string[], limit = 5) {
+  if (!names.length) return "";
+  const visible = names.slice(0, limit).join(", ");
+  return names.length > limit ? `${visible} 외 ${names.length - limit}명` : visible;
+}
+
+function compactLogMessage(message: string) {
+  const text = String(message || "").replace(/\s+/g, " ").trim();
+  const familyResult = text.match(/^((?:가족 결과|가족 1차 처리)\s+[^:]+:.*?\/ 실패 \d+명)(?::.*)?( \/ 저장 실패)?$/);
+  if (familyResult) return `${familyResult[1]}${familyResult[2] ?? ""}`;
+  return text.length > 180 ? `${text.slice(0, 180)}...` : text;
+}
+
 export default async function RunDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const { run, results, events, demo } = await getRunDetail(id);
@@ -35,6 +48,7 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
   const percent = run.total_count ? Math.round((run.processed_count / run.total_count) * 100) : 0;
   const failures = results.filter((result) => ["final_fail", "save_failed"].includes(result.status));
   const nextAction = nextActionForRun(run.status, events.length > 0);
+  const isFinished = ["completed", "partial_success", "failed", "cancelled", "dry_run_completed"].includes(run.status);
   const familySummary = Array.from(results.reduce<Map<string, FamilySummary>>((map, result) => {
     const key = result.original_family || result.found_location || "미확인";
     const current = map.get(key) ?? {
@@ -94,7 +108,7 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
         ) : null}
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[1fr_360px]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_460px]">
         <div className="grid gap-4">
           <Panel>
             <div className="mb-3 flex items-center justify-between">
@@ -150,9 +164,9 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
                             <span className="font-bold text-sea">성공 {family.saveSuccess}</span>
                           ) : "-"}
                         </td>
-                        <td className="max-w-[280px] text-xs leading-5 text-ink/65">
-                          {family.corrected.length ? `검색 보정: ${family.corrected.join(", ")}` : null}
-                          {family.failedNames.length ? `${family.corrected.length ? " / " : ""}실패: ${family.failedNames.join(", ")}` : null}
+                        <td className="max-w-[320px] text-xs leading-5 text-ink/65">
+                          {family.corrected.length ? `보정 ${family.corrected.length}명: ${shortNameList(family.corrected)}` : null}
+                          {family.failedNames.length ? `${family.corrected.length ? " / " : ""}실패 ${family.failedNames.length}명: ${shortNameList(family.failedNames)}` : null}
                           {!family.corrected.length && !family.failedNames.length ? "-" : null}
                         </td>
                       </tr>
@@ -192,25 +206,13 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
 
         <div className="grid content-start gap-4">
           <Panel>
-            <h2 className="mb-3 text-lg font-black">실시간 로그</h2>
-            {events.length ? (
-              <div className="grid gap-2">
-                {events.map((event) => (
-                  <div key={event.id} className="rounded border border-line bg-white/70 p-3 text-sm">
-                    <p className="font-bold">{event.message}</p>
-                    <p className="mt-1 text-xs font-bold text-ink/50">{formatDateTime(event.created_at)}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <EmptyState>아직 로그가 없습니다. Runner가 요청을 가져가면 첫 로그가 표시됩니다.</EmptyState>
-            )}
-          </Panel>
-          <Panel>
-            <h2 className="mb-3 text-lg font-black">최종 실패자</h2>
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h2 className="text-lg font-black">최종 실패자</h2>
+              <Badge tone={failures.length ? "bad" : "good"}>{failures.length}명</Badge>
+            </div>
             {failures.length ? (
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[520px] text-sm">
+                <table className="w-full min-w-[420px] text-sm">
                   <thead className="border-b border-line text-left text-xs font-black text-ink/55">
                     <tr><th className="py-2">이름</th><th>가족</th><th>체크</th><th>원인</th></tr>
                   </thead>
@@ -220,13 +222,30 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
                         <td className="py-3 font-black">{failure.name}</td>
                         <td>{failure.found_location || failure.original_family || "-"}</td>
                         <td>{targetText(failure)}</td>
-                        <td className="text-brick">{failure.failure_reason ?? "사유 없음"}</td>
+                        <td className="max-w-[180px] break-words text-brick">{failure.failure_reason ?? "사유 없음"}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
-            ) : <EmptyState>최종 실패자가 없습니다.</EmptyState>}
+            ) : (
+              <EmptyState>{isFinished ? "최종 실패자가 없습니다." : "실행이 끝나면 최종 실패자가 여기에 표시됩니다."}</EmptyState>
+            )}
+          </Panel>
+          <Panel>
+            <h2 className="mb-3 text-lg font-black">실시간 로그</h2>
+            {events.length ? (
+              <div className="grid gap-2">
+                {events.map((event) => (
+                  <div key={event.id} className="rounded border border-line bg-white/70 p-3 text-sm">
+                    <p className="break-words font-bold leading-5">{compactLogMessage(event.message)}</p>
+                    <p className="mt-1 text-xs font-bold text-ink/50">{formatDateTime(event.created_at)}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <EmptyState>아직 로그가 없습니다. Runner가 요청을 가져가면 첫 로그가 표시됩니다.</EmptyState>
+            )}
           </Panel>
         </div>
       </div>

@@ -202,7 +202,7 @@ function isLikelyFamilyLabel(value: unknown) {
 
 function isIgnoredFamilyLabel(value: unknown) {
   const normalized = normalizeName(value);
-  return normalized.includes("새가족방문자") || normalized.includes("새가족반방문자");
+  return normalized.includes("방문자") || normalized.includes("새가족방문자") || normalized.includes("새가족반방문자");
 }
 
 function isBlockFamilyLabel(row: string[], block: { start: number; nextStart: number; service13Columns: number[]; service4Columns: number[]; controlColumns?: number[] }) {

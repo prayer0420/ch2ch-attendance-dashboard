@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { Activity, Database, Home, Play, Search, Settings } from "lucide-react";
+import { Activity, BookOpenCheck, Database, Home, LogOut, Play, QrCode, Search, Settings, UserRoundSearch } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "대시보드", icon: Home },
-  { href: "/runs/new", label: "실행 만들기", icon: Play },
+  { href: "/search", label: "교인 검색", icon: UserRoundSearch },
+  { href: "/qr-attendance", label: "QR 출석체크", icon: QrCode },
+  { href: "/runs/new", label: "출석 실행", icon: Play },
   { href: "/database", label: "DB 보기", icon: Database },
   { href: "/attendance", label: "출석 이력", icon: Search },
+  { href: "/worship-journal", label: "예배일지", icon: BookOpenCheck },
   { href: "/settings", label: "설정", icon: Settings }
 ];
 
@@ -19,7 +22,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </span>
           <span>
             <span className="block font-display text-xl font-bold">CH2CH</span>
-            <span className="text-xs text-ink/60">출석체크 관리실</span>
+            <span className="text-xs text-ink/60">출석체크 관리</span>
           </span>
         </Link>
         <nav className="mt-6 grid gap-1">
@@ -35,8 +38,12 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="absolute bottom-5 left-4 right-4 border-t border-line pt-4 text-xs leading-5 text-ink/60">
+          <a href="/api/auth/logout" className="focus-ring mb-3 flex items-center gap-2 rounded px-2 py-2 font-bold text-ink/70 hover:bg-white hover:text-ink">
+            <LogOut size={15} />
+            로그아웃
+          </a>
           <Database className="mb-2" size={16} />
-          홈페이지는 요청과 결과 확인만 담당합니다. 실제 CH2CH 클릭과 저장은 로컬 Runner가 처리합니다.
+          웹페이지는 요청과 결과 확인을 담당하고, 실제 CH2CH 클릭과 저장은 로컬 Runner가 처리합니다.
         </div>
       </aside>
       <main className="lg:pl-64">

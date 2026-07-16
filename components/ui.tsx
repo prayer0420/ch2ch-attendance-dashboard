@@ -3,7 +3,7 @@ import { clsx } from "@/lib/utils";
 export function SectionTitle({ eyebrow, title, children }: { eyebrow?: string; title: string; children?: React.ReactNode }) {
   return (
     <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-      <div>
+      <div className="min-w-0 flex-1">
         {eyebrow ? <p className="text-xs font-bold uppercase tracking-[0.16em] text-sea">{eyebrow}</p> : null}
         <h1 className="font-display text-3xl font-bold text-ink sm:text-4xl">{title}</h1>
       </div>

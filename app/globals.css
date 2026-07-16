@@ -32,3 +32,34 @@ select {
 .focus-ring {
   @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sea;
 }
+
+@layer components {
+  .journal-input-card {
+    @apply relative flex gap-4 overflow-hidden rounded border border-line bg-white/75 p-4 shadow-sm sm:p-5;
+  }
+
+  .journal-step {
+    @apply hidden size-9 shrink-0 place-items-center rounded-full border border-sea/25 bg-sea/10 font-mono text-xs font-black text-sea sm:grid;
+  }
+
+  .journal-label {
+    @apply grid gap-1.5 text-xs font-black text-ink/65;
+  }
+
+  .journal-input {
+    @apply min-h-10 min-w-0 w-full rounded border border-line bg-white px-3 py-2 text-sm text-ink outline-none transition placeholder:text-ink/30 focus:border-sea focus:ring-2 focus:ring-sea/15;
+  }
+
+  .journal-small-button {
+    @apply inline-flex shrink-0 items-center gap-1 rounded border border-line bg-white px-3 py-2 text-xs font-black text-ink transition hover:border-sea hover:text-sea;
+  }
+
+  .journal-section-title {
+    @apply border-b border-ink/20 bg-[#ece8df] px-4 py-2 text-xs font-black tracking-[0.12em] text-ink;
+  }
+}
+
+.journal-paper {
+  background-image: linear-gradient(rgba(32, 33, 29, 0.018) 1px, transparent 1px);
+  background-size: 100% 24px;
+}

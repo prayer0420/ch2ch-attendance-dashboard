@@ -492,15 +492,6 @@ export function RunCreateForm() {
             </button>
             <button
               type="button"
-              className="focus-ring inline-flex items-center gap-2 rounded border border-moss/35 bg-moss/10 px-3 py-2 text-sm font-bold text-moss disabled:opacity-50"
-              disabled={!sourcePeople.length}
-              onClick={() => setAllFamilies("check")}
-            >
-              <CheckSquare size={16} />
-              전체 체크 예약
-            </button>
-            <button
-              type="button"
               className="focus-ring inline-flex items-center gap-2 rounded border border-brick/35 bg-brick/10 px-3 py-2 text-sm font-bold text-brick disabled:opacity-50"
               disabled={!sourcePeople.length}
               onClick={() => setAllFamilies("clear")}
@@ -644,14 +635,6 @@ export function RunCreateForm() {
                         >
                           <RotateCcw size={14} />
                           이 가족 원본대로
-                        </button>
-                        <button
-                          type="button"
-                          className="focus-ring inline-flex items-center gap-1 rounded border border-moss/35 bg-moss/10 px-2 py-1 text-xs font-bold text-moss"
-                          onClick={() => updateFamilyMode(item.family, { sunday: "check", department: "check" })}
-                        >
-                          <CheckSquare size={14} />
-                          모두 체크 예약
                         </button>
                         <button
                           type="button"
