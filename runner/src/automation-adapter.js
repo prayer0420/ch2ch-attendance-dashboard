@@ -761,7 +761,11 @@ async function runLegacyProcess(run, reporter, people) {
       if (level === "error") return true;
       const message = text.replace(/^\[[^\]]+\]\s*/, "");
       return message.startsWith("가족 결과") ||
-        message.startsWith("검색 보정") ||
+        message.startsWith("시트 불일치") ||
+        message.startsWith("검색 보정 보류") ||
+        message.startsWith("저장 시작") ||
+        message.startsWith("저장 결과") ||
+        message.startsWith("저장 전 대조 경고") ||
         message.startsWith("전체 실행 중") ||
         message.startsWith("실패:");
     };
@@ -782,6 +786,11 @@ async function runLegacyProcess(run, reporter, people) {
             current_name: null,
             current_step: "가족별 출석 처리 중"
           });
+        }
+        if (message.startsWith("저장 시작")) {
+          await reporter.updateRun({ current_step: "CH2CH 저장 중" });
+        } else if (message.startsWith("저장 결과")) {
+          await reporter.updateRun({ current_step: "다음 가족 처리 준비" });
         }
       }).catch(() => {});
     };
