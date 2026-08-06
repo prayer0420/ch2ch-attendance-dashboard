@@ -17,6 +17,11 @@ export async function POST(request: NextRequest) {
     ? await request.formData()
     : await request.json() as Record<string, unknown>;
   const targetWeek = Number(readValue(input, "targetWeek"));
+  const targetYear = Number(readValue(input, "targetYear")) || new Date().getFullYear();
+  const targetDate = String(readValue(input, "targetDate") ?? "");
+  const targetDept = String(readValue(input, "targetDept") ?? "");
+  const targetCourse = String(readValue(input, "targetCourse") ?? "");
+  const targetGroup = String(readValue(input, "targetGroup") ?? "");
 
   if (!Number.isInteger(targetWeek) || targetWeek < 1 || targetWeek > 53) {
     return NextResponse.json({ error: "주차는 1주부터 53주 사이로 입력해 주세요." }, { status: 400 });
@@ -27,7 +32,13 @@ export async function POST(request: NextRequest) {
     ...mockRun,
     id: runId,
     target_week: targetWeek,
-    target_week_text: `${targetWeek}주차`,
+    target_week_text: `${targetYear}년 ${targetWeek}주차`,
+    target_year: targetYear,
+    target_date: targetDate,
+    target_dept: targetDept,
+    target_term: targetCourse,
+    target_course: targetCourse,
+    target_group: targetGroup,
     status: "dry_run_completed" as const,
     dry_run: true,
     requested_at: new Date().toISOString(),
