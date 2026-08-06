@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://ch2ch-attendance-dashboard.vercel.app/runs/new"><img src="https://img.shields.io/badge/Live%20Demo-CH2CH%20Attendance-1f6f8b?style=for-the-badge&labelColor=181a17" alt="CH2CH 출석체크 라이브 데모" /></a>
   <img src="https://img.shields.io/badge/Deploy-Vercel-000000?style=for-the-badge" alt="Vercel" />
-  <img src="https://img.shields.io/badge/Storage-Local%20Preview-5c8a72?style=for-the-badge" alt="Local preview" />
+  <img src="https://img.shields.io/badge/Queue-Supabase-3ecf8e?style=for-the-badge" alt="Supabase" />
   <img src="https://img.shields.io/badge/Stack-Next.js%20%2B%20TypeScript-111827?style=for-the-badge" alt="Next.js TypeScript" />
 </p>
 
@@ -23,7 +23,7 @@
 | 📅 일요일 주차 계산 | 실행 날짜를 일요일로 입력하면 실제 연도·주차와 날짜를 자동 표시합니다. |
 | 🧭 CH2CH 경로 입력 | 부서·과정·그룹을 직접 입력하고 출석부 경로를 확인합니다. |
 | 💾 최근 입력값 저장 | URL, 탭, 날짜, 경로 값을 브라우저에 저장해 다음 실행의 기본값으로 복원합니다. |
-| 📴 DB 없는 실행 | Supabase나 별도 데이터베이스 없이 로컬 미리보기 방식으로 동작합니다. |
+| 🔄 실행 큐·결과 저장 | Vercel이 Supabase에 요청을 등록하고 로컬 Runner가 실제 CH2CH 처리를 수행합니다. |
 
 ## 사용 방법
 
@@ -60,9 +60,9 @@
 
 상단의 전체 설정 버튼으로 모든 가족을 한 번에 원본 또는 해제 상태로 바꿀 수도 있습니다.
 
-### 5. 테스트 또는 실제 실행
+### 5. 실제 실행
 
-예약 인원과 주일·부서별 집계를 확인한 뒤 **테스트 실행 시작** 또는 **실제 출석체크 시작**을 선택합니다. 실행 결과는 로컬 미리보기로 생성되며 새로고침하면 초기화됩니다.
+예약 인원과 주일·부서별 집계를 확인한 뒤 **실제 출석체크 시작**을 선택합니다. 요청과 진행 상태, 처리 결과는 Supabase에 저장되며 로컬 Runner가 CH2CH 저장을 수행합니다.
 
 ## 화면 구성
 
@@ -70,7 +70,7 @@
 | --- | --- |
 | 입력 패널 | 데이터 소스, 탭, 일요일 날짜 입력 |
 | CH2CH 위치 | 부서·과정·그룹과 출석부 경로 입력 |
-| 실행 옵션 | 대상 불러오기, 테스트 실행, 실제 실행 |
+| 실행 옵션 | 대상 불러오기, 실제 출석체크 실행 |
 | 실행 예약 조정 | 가족별 모드, 검색, 대상 필터, 인원 집계 |
 
 ## 기술 스택
@@ -79,7 +79,7 @@
 - **입력 파서**: CSV, XLSX/XLS, PDF 파서
 - **아이콘**: lucide-react
 - **배포**: Vercel
-- **저장 방식**: 브라우저 localStorage + 로컬 실행 미리보기
+- **저장 방식**: 브라우저 localStorage + Supabase 실행 큐/결과 저장
 
 ## 프로젝트 구조
 
@@ -87,12 +87,15 @@
 .
 ├── app/
 │   ├── api/source-people/   # 시트·파일 출석 대상 파싱 API
-│   ├── api/runs/            # DB 없는 로컬 실행 미리보기 API
+│   ├── api/runs/            # Supabase 실행 큐·결과 API
 │   └── runs/new/            # 실행 생성 화면
 ├── components/
 │   └── run-create-form.tsx  # 입력·가족별 예약 조정 UI
 ├── lib/
-│   └── attendance-input-parser.ts
+│   ├── attendance-input-parser.ts
+│   └── supabase/            # 서버·브라우저 Supabase 클라이언트
+├── runner/                  # 로컬 CH2CH 실행기
+├── supabase/                # 스키마와 마이그레이션
 └── public/screenshots/      # README 화면 캡처
 ```
 
@@ -103,7 +106,10 @@ Node.js 20 이상이 필요합니다.
 ```bash
 npm install
 npm run dev
+npm run runner
 ```
+
+Windows에서는 `Start-CH2CH.cmd`를 실행하면 대시보드와 Runner가 함께 시작됩니다. 환경변수는 `.env.example`을 참고해 `.env.local`에 입력하고, Supabase SQL Editor에서 `supabase/schema.sql`을 먼저 실행해야 합니다.
 
 브라우저에서 [http://localhost:3000/runs/new](http://localhost:3000/runs/new)을 엽니다.
 
@@ -116,10 +122,11 @@ npm run build
 
 ## 데이터 및 보안
 
-- Supabase, 외부 DB, DB 마이그레이션은 사용하지 않습니다.
+- 실행 요청, 처리 로그와 결과는 Supabase에 저장합니다.
+- Supabase `service_role` 키와 CH2CH 계정은 공개 저장소에 올리지 않고 Vercel 또는 로컬 `.env.local`에만 보관합니다.
 - Google Sheets는 사용자가 입력한 URL을 읽을 때만 요청합니다.
 - 최근 폼 설정만 브라우저 `localStorage`에 저장합니다.
-- 업로드한 파일과 출석 결과를 영구 저장하지 않습니다.
+- 업로드 입력은 비공개 Supabase Storage 버킷에 저장되며 Runner만 서비스 키로 읽습니다.
 
 ## Live
 

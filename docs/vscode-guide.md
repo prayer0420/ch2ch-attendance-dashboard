@@ -3,8 +3,9 @@
 ```powershell
 npm.cmd install
 npm.cmd run dev
+npm.cmd run runner
 ```
 
-브라우저에서 `http://localhost:3000`을 엽니다. `Start-CH2CH.cmd`를 실행해도 같은 대시보드를 열 수 있습니다.
+브라우저에서 `http://localhost:3000`을 엽니다. `Start-CH2CH.cmd`를 실행하면 대시보드와 Runner가 함께 시작됩니다.
 
-이 프로젝트는 외부 데이터베이스 없이 샘플 데이터와 요청 단위의 임시 데이터만 사용합니다. 서버를 다시 시작하면 실행 결과는 초기화됩니다.
+먼저 `.env.example`을 참고해 `.env.local`에 Supabase와 CH2CH 값을 입력하고, Supabase SQL Editor에서 `supabase/schema.sql`을 실행해야 합니다. 실행 요청과 결과는 Supabase에 저장되므로 Vercel과 로컬 Runner가 같은 프로젝트 정보를 사용해야 합니다.

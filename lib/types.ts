@@ -29,6 +29,8 @@ export type AttendanceRun = {
   target_dept: string | null;
   target_term: string | null;
   target_group: string | null;
+  target_year?: number | null;
+  target_date?: string | null;
   target_week: number | null;
   target_week_text: string | null;
   dry_run: boolean;

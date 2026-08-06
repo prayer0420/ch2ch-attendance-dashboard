@@ -8,11 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "runner": "node runner/src/runner.js",
+    "runner:once": "node runner/src/runner.js --once",
     "verify:parser": "node scripts/verify-parser.js",
     "open-dashboard": "start http://localhost:3000",
     "install-browsers": "playwright install chromium"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
     "dotenv": "^16.4.7",
     "lucide-react": "^0.468.0",
     "next": "^15.0.3",

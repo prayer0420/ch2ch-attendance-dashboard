@@ -10,6 +10,7 @@ dist
 playwright-report
 test-results
 .local-runtime
+.npm-cache
 runner/legacy-ch2ch/data/attendance.csv
 runner/legacy-ch2ch/logs/
 .vercel
