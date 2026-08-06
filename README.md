@@ -1,15 +1,42 @@
-# CH2CH 출석체크 관리 홈페이지
+# CH2CH 출석체크 대시보드
 
-구글시트/CSV 기반 CH2CH 출석체크 자동화를 사용자 친화적인 관리 홈페이지, Supabase DB, 로컬 Runner 구조로 확장한 프로젝트입니다.
+> 출석 파일과 Google Sheets 자료를 확인하고, CH2CH 출석 운영 흐름을 로컬에서 미리 검토하는 도구입니다.
+> 외부 데이터베이스 없이 샘플 데이터와 요청 단위의 임시 데이터만 사용합니다.
 
-## 구조
+![Next.js](https://img.shields.io/badge/Framework-Next.js%2015-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Playwright](https://img.shields.io/badge/Automation-Playwright-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
 
-- `app/`: Next.js App Router 홈페이지와 API
-- `components/`: 대시보드, 실행 생성, 공통 UI
-- `lib/`: 타입, Supabase client, mock data, 서버 데이터 함수
-- `supabase/schema.sql`: Supabase 테이블, 인덱스, trigger, 초기 설정
-- `runner/src/runner.js`: queued 실행 요청 polling, heartbeat, 결과 저장
-- `runner/src/automation-adapter.js`: 기존 CH2CH Playwright 자동화 연결 지점
+## 주요 기능
+
+| 기능 | 설명 |
+| --- | --- |
+| 출석 대시보드 | 최근 실행, 성공/실패 통계, 샘플 결과를 한 화면에서 확인합니다. |
+| 출석 입력 | Google Sheets URL 또는 CSV/XLSX/XLS/PDF 파일을 입력할 수 있습니다. |
+| 출석 대상 판별 | 가족·이름·QR·참석 열을 분석해 출석 대상 후보를 만듭니다. |
+| QR 출석 확인 | CH2CH QR 출석 자료를 검토하는 화면을 제공합니다. |
+| 교인 검색 | 이름과 가족 기준으로 교인 정보를 검색하고 결과를 확인합니다. |
+| 예배일지 | 출석 시트와 HWP 자료에서 예배일지 초안을 생성합니다. |
+| 로컬 미리보기 | 실행 요청과 결과는 서버 메모리/샘플 데이터로만 처리되며 영구 저장되지 않습니다. |
+
+## 기술 스택
+
+- **Frontend**: Next.js 15 App Router, React 19, TypeScript, Tailwind CSS
+- **Parsing**: `xlsx`, `pdf-parse`, CSV parser
+- **UI**: `lucide-react`
+- **Automation**: Playwright 기반 로컬 기능
+
+## 프로젝트 구조
+
+```text
+.
+├── app/                  # 페이지와 API Route
+├── components/           # 대시보드 UI와 입력 폼
+├── lib/                  # 파서, 타입, 샘플 데이터
+├── public/               # 정적 파일
+├── scripts/              # 로컬 실행 스크립트
+└── docs/                 # 실행 안내
+```
 
 ## 실행
 
@@ -18,61 +45,22 @@ npm.cmd install
 npm.cmd run dev
 ```
 
-Supabase 환경변수가 없으면 데모 데이터로 화면이 표시됩니다.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 엽니다. Windows에서는 `Start-CH2CH.cmd`를 실행해도 됩니다.
 
-VS Code에서 실행하려면 [docs/vscode-guide.md](docs/vscode-guide.md)를 보면 됩니다. `Terminal → Run Task...`에서 홈페이지, Runner, 검증 명령을 선택해서 실행할 수 있습니다.
+## 환경 변수
 
-VS Code를 열지 않고 실행하려면 `Start-CH2CH.cmd`를 더블클릭합니다. 홈페이지와 Runner가 같이 켜지고 브라우저가 열립니다.
+외부 데이터베이스 연결이 없으므로 필수 환경 변수는 없습니다. `.env.example`은 이 정책을 명시하기 위한 빈 템플릿입니다.
 
-Windows 로그인 때 자동으로 켜지게 하려면 `Install-CH2CH-Startup.cmd`를 한 번 실행합니다. 자동 실행을 끄려면 `Remove-CH2CH-Startup.cmd`를 실행합니다.
+## 데이터 보존 정책
 
-## 환경변수
+- Supabase 및 기타 외부 DB를 사용하지 않습니다.
+- 실행 이력과 결과는 샘플 데이터 또는 요청 처리 중 생성된 임시 값입니다.
+- 서버를 재시작하거나 새 배포가 이루어지면 임시 결과는 사라집니다.
+- 실제 CH2CH 저장 기능을 추가할 때는 별도의 저장소와 인증 설계를 먼저 결정해야 합니다.
 
-`.env.example`을 복사해서 `.env.local`에 값을 채웁니다. Runner도 `.env.local`을 읽습니다.
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://프로젝트ID.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...
-SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
-ADMIN_EMAILS=
-
-RUNNER_MODE=true
-RUNNER_ID=main-office-pc
-RUNNER_POLL_INTERVAL_MS=3000
-ENABLE_SUPABASE=true
-CH2CH_USER=
-CH2CH_PASSWORD=
-```
-
-CH2CH 아이디/비밀번호는 로컬 Runner 환경변수에만 두고, Vercel에는 올리지 않습니다.
-
-`CH2CH_HEADLESS=false`로 두면 실제 Playwright 자동화가 연결되었을 때 브라우저가 눈에 보이게 뜹니다.
-
-## Supabase 적용
-
-Supabase SQL Editor에서 `supabase/schema.sql`을 실행합니다.
-
-운영 전에는 관리자 이메일 기반 RLS policy를 추가하세요. 현재 schema는 테이블 RLS를 켜는 단계까지 포함합니다.
-
-## Runner
-
-```powershell
-npm.cmd run runner
-```
-
-Runner는 `attendance_runs.status = 'queued'` 실행을 가져와 다음 순서로 처리합니다.
-
-```text
-queued → picked_up → running → completed / partial_success / failed / dry_run_completed
-```
-
-현재 테스트 실행은 구글시트를 CSV로 읽어 DB에 결과만 저장합니다. 실제 CH2CH Playwright 자동화는 `runner/src/automation-adapter.js`의 `runAttendanceAutomation` 함수 안에 기존 자동화 코드를 연결해야 동작합니다.
-
-## 검증 명령
+## 검증
 
 ```powershell
 npm.cmd run typecheck
 npm.cmd run build
-node --check runner/src/runner.js
-node --check runner/src/automation-adapter.js
 ```
