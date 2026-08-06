@@ -13,7 +13,6 @@ import {
   Search,
   ShieldCheck,
   Square,
-  TestTube2,
   Users,
   XCircle
 } from "lucide-react";
@@ -310,7 +309,7 @@ export function RunCreateForm() {
     }
   }
 
-  function createRunBody(testMode: boolean) {
+  function createRunBody() {
     const manualRowsJson = JSON.stringify(manualRows);
     if (form.dataSource === "file") {
       const body = new FormData();
@@ -321,7 +320,7 @@ export function RunCreateForm() {
       body.set("targetGroup", form.targetGroup);
       body.set("targetDate", form.targetDate);
       body.set("targetWeek", String(calculatedWeek.week));
-      body.set("dryRun", String(testMode));
+      body.set("dryRun", "false");
       body.set("manualRows", manualRowsJson);
       if (file) body.set("file", file);
       return { body };
@@ -334,12 +333,12 @@ export function RunCreateForm() {
         targetWeek: calculatedWeek.week,
         targetYear: calculatedWeek.year,
         manualRows,
-        dryRun: testMode
+        dryRun: false
       })
     };
   }
 
-  async function submit(testMode: boolean) {
+  async function submit() {
     setError(null);
 
     if (!sourcePeople.length) {
@@ -352,14 +351,12 @@ export function RunCreateForm() {
       return;
     }
 
-    if (!testMode) {
-      const confirmed = window.confirm(`정말 ${weekText} 출석체크를 CH2CH 교적부에 실제 저장할까요? 저장 버튼(Alt+S)까지 실행됩니다.`);
-      if (!confirmed) return;
-    }
+    const confirmed = window.confirm(`정말 ${weekText} 출석체크를 CH2CH 교적부에 실제 저장할까요? 저장 버튼(Alt+S)까지 실행됩니다.`);
+    if (!confirmed) return;
 
     setIsSubmitting(true);
     try {
-      const request = createRunBody(testMode);
+      const request = createRunBody();
       const response = await fetchJson<RunResponse>("/api/runs", { method: "POST", ...request });
       router.push(`/runs/${response.runId}`);
     } catch (submitError) {
@@ -481,18 +478,9 @@ export function RunCreateForm() {
             ) : null}
             <button
               type="button"
-              className="focus-ring inline-flex items-center justify-center gap-2 rounded bg-sea px-4 py-2 font-bold text-white disabled:opacity-60"
-              disabled={isSubmitting || isLoadingSource}
-              onClick={() => submit(true)}
-            >
-              <TestTube2 size={17} />
-              테스트 실행 시작
-            </button>
-            <button
-              type="button"
               className="focus-ring inline-flex items-center justify-center gap-2 rounded bg-ink px-4 py-2 font-bold text-paper disabled:opacity-60"
               disabled={isSubmitting || isLoadingSource}
-              onClick={() => submit(false)}
+              onClick={submit}
             >
               <Play size={17} />
               실제 출석체크 시작

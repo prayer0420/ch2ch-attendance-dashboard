@@ -39,13 +39,14 @@ export async function POST(request: NextRequest) {
     target_term: targetCourse,
     target_course: targetCourse,
     target_group: targetGroup,
-    status: "dry_run_completed" as const,
-    dry_run: true,
+    // The test workflow was removed. The local runner consumes real requests.
+    status: "queued" as const,
+    dry_run: false,
     requested_at: new Date().toISOString(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-    current_step: "로컬 미리보기 완료"
+    current_step: "실행기 연결 대기"
   };
 
-  return NextResponse.json({ runId, run, demo: true, localOnly: true });
+  return NextResponse.json({ runId, run, demo: false, localOnly: true });
 }
