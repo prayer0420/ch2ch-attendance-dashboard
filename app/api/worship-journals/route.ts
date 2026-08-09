@@ -8,6 +8,11 @@ import {
   parseHwpWorshipInfo,
   parseJournalAttendanceCsv
 } from "@/lib/worship-journal";
+import {
+  MAX_ACCOUNTING_SIZE,
+  loadAccountingFromGoogleSheet,
+  parseAccountingWorkbook
+} from "@/lib/worship-journal-accounting";
 
 export const runtime = "nodejs";
 
@@ -57,10 +62,30 @@ export async function POST(request: NextRequest) {
     const author = String(form.get("author") ?? "").trim();
     const attendanceSheetUrl = String(form.get("attendanceSheetUrl") ?? "").trim();
     const attendanceSheetTab = String(form.get("attendanceSheetTab") ?? "가장체크").trim();
+    const accountingSourceType = String(form.get("accountingSourceType") ?? "").trim();
     const hwp = form.get("hwp");
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error("예배 날짜를 선택해 주세요.");
     if (!(hwp instanceof File) || !hwp.name.toLowerCase().endsWith(".hwp")) throw new Error("2청년회 주보 HWP 파일을 선택해 주세요.");
     if (hwp.size > MAX_HWP_SIZE) throw new Error("HWP 파일은 30MB 이하만 사용할 수 있습니다.");
+
+    let accounting;
+    if (accountingSourceType === "excel") {
+      const accountingFile = form.get("accountingFile");
+      if (!(accountingFile instanceof File) || !/\.(xlsx|xls)$/i.test(accountingFile.name)) {
+        throw new Error("회계 XLSX 또는 XLS 파일을 선택해 주세요.");
+      }
+      if (accountingFile.size > MAX_ACCOUNTING_SIZE) throw new Error("회계 엑셀 파일은 15MB 이하만 사용할 수 있습니다.");
+      accounting = parseAccountingWorkbook(
+        Buffer.from(await accountingFile.arrayBuffer()),
+        date,
+        { sourceType: "excel", sourceName: accountingFile.name }
+      );
+    } else if (accountingSourceType === "google-sheet") {
+      const accountingSheetUrl = String(form.get("accountingSheetUrl") ?? "").trim();
+      accounting = await loadAccountingFromGoogleSheet(accountingSheetUrl, date);
+    } else {
+      throw new Error("회계 자료 입력 방식을 선택해 주세요.");
+    }
 
     const response = await fetch(sheetExportUrl(attendanceSheetUrl, attendanceSheetTab), { cache: "no-store" });
     const csv = await response.text();
@@ -80,6 +105,7 @@ export async function POST(request: NextRequest) {
       attendance: parseJournalAttendanceCsv(csv),
       newFamilies,
       graduates,
+      accounting,
       ...worship
     };
 

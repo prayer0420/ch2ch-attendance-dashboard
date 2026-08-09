@@ -1,5 +1,6 @@
 import { inflateRawSync } from "node:zlib";
 import { isChecked, normalizeName, parseCsv } from "@/lib/attendance-input-parser";
+import type { JournalAccounting } from "@/lib/worship-journal-accounting";
 
 export type FamilyAttendance = {
   family: string;
@@ -53,6 +54,7 @@ export type WorshipJournal = {
   sermon: { title: string; passage: string; preacher: string };
   service: WorshipService;
   announcements: string[];
+  accounting?: JournalAccounting;
 };
 
 const FAMILY_COLUMN_LIMIT = 120;

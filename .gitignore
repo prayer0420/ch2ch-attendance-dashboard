@@ -15,3 +15,4 @@ runner/legacy-ch2ch/data/attendance.csv
 runner/legacy-ch2ch/logs/
 .vercel
 .env*
+.worktrees/
