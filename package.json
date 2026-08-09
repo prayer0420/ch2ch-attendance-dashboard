@@ -11,6 +11,7 @@
     "runner": "node runner/src/runner.js",
     "runner:once": "node runner/src/runner.js --once",
     "verify:parser": "node scripts/verify-parser.js",
+    "verify:run-persistence": "node scripts/verify-run-persistence.js",
     "open-dashboard": "start http://localhost:3000",
     "install-browsers": "playwright install chromium"
   },
