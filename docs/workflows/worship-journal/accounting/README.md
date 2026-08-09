@@ -16,6 +16,8 @@
 - `엑셀 파일`: `.xlsx` 또는 `.xls`, 최대 15MB
 - `Google Sheet`: `docs.google.com/spreadsheets/d/...` 또는 `drive.google.com/file/d/...` 링크
 
+Google 링크는 로컬 서버가 원본을 내려받으므로 `링크가 있는 모든 사용자 · 뷰어` 공유가 필요합니다. 브라우저에 로그인했을 때만 열리는 비공개 링크는 사용할 수 없으며, 이 경우 엑셀로 내려받아 업로드하면 됩니다.
+
 Google 링크는 두 종류를 모두 처리합니다.
 
 1. Drive에 저장된 Office `.xlsx` 원본 다운로드

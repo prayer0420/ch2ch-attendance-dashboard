@@ -1,5 +1,7 @@
 import * as XLSX from "xlsx";
 
+export const MAX_ACCOUNTING_SIZE = 15 * 1024 * 1024;
+
 export type ThanksgivingOffering = {
   name: string;
   amount: number;
@@ -58,9 +60,18 @@ export async function loadAccountingFromGoogleSheet(
         failures.push("다운로드 대신 HTML 응답을 받았습니다.");
         continue;
       }
+      const contentLength = Number(response.headers.get("content-length") ?? 0);
+      if (contentLength > MAX_ACCOUNTING_SIZE) {
+        failures.push("회계 엑셀 파일은 15MB 이하만 사용할 수 있습니다.");
+        continue;
+      }
       const buffer = Buffer.from(await response.arrayBuffer());
       if (!buffer.length) {
         failures.push("다운로드한 파일이 비어 있습니다.");
+        continue;
+      }
+      if (buffer.length > MAX_ACCOUNTING_SIZE) {
+        failures.push("회계 엑셀 파일은 15MB 이하만 사용할 수 있습니다.");
         continue;
       }
       return parseAccountingWorkbook(buffer, date, {
