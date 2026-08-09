@@ -2,6 +2,9 @@
   "name": "ch2ch-attendance-dashboard",
   "version": "0.1.0",
   "private": true,
+  "description": "CH2CH 출석체크 Windows desktop app",
+  "author": "CH2CH",
+  "main": "desktop/main.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -14,6 +17,11 @@
     "verify:run-persistence": "node scripts/verify-run-persistence.js",
     "verify:affiliation-correction": "node scripts/verify-affiliation-correction.js",
     "verify:qr-job-queue": "node scripts/verify-qr-job-queue.js",
+    "verify:desktop-process": "node scripts/verify-desktop-process-manager.js",
+    "verify:desktop-ui": "node scripts/verify-desktop-ui-state.js",
+    "verify:desktop-package": "node scripts/verify-desktop-package.js",
+    "desktop:dev": "electron .",
+    "desktop:dist": "electron-builder --win nsis",
     "open-dashboard": "start http://localhost:3000",
     "install-browsers": "playwright install chromium"
   },
@@ -33,11 +41,45 @@
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
     "autoprefixer": "^10.4.20",
+    "electron": "^43.3.0",
+    "electron-builder": "^26.15.3",
     "eslint": "^9.15.0",
     "eslint-config-next": "^15.0.3",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
     "typescript": "^5.7.2"
+  },
+  "build": {
+    "appId": "kr.ch2ch.attendance",
+    "productName": "CH2CH 출석체크",
+    "directories": { "output": "dist" },
+    "files": ["desktop/**/*", "package.json"],
+    "extraResources": [
+      {
+        "from": ".",
+        "to": "project",
+        "filter": [
+          "**/*",
+          "!node_modules/**",
+          "!.env.local",
+          "!.env.*",
+          "!.git/**",
+          "!.local-runtime/**",
+          "!.next/**",
+          "!dist*/**"
+        ]
+      },
+      {
+        "from": "node_modules",
+        "to": "project/node_modules",
+        "filter": ["**/*", "!.cache/**"]
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "shortcutName": "CH2CH 출석체크"
+    }
   }
 }
-
