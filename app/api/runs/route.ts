@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { mockRuns } from "@/lib/mock-data";
 import { getServiceSupabase, hasSupabaseEnv } from "@/lib/supabase/server";
 import { parseAttendanceCsv, rowsToCsv } from "@/lib/attendance-input-parser";
+import { isMissingColumnError, stripOptionalRunColumns } from "@/lib/run-persistence";
 
 const ALLOWED_EXTENSIONS = new Set([".csv", ".xlsx", ".xls", ".pdf"]);
 const MAX_FILE_SIZE = 20 * 1024 * 1024;
@@ -278,12 +279,21 @@ export async function POST(request: NextRequest) {
     enable_long_absence_search: asBoolean(read("enableLongAbsenceSearch"), true)
   };
 
-  const { data, error } = await supabase!.from("attendance_runs").insert(payload).select("id,status").single();
-  if (error) {
+  let { data, error } = await supabase!.from("attendance_runs").insert(payload).select("id,status").single();
+  if (error && isMissingColumnError(error)) {
+    // Older Supabase projects may not have run-input migrations yet. Keep the
+    // source metadata in csv_file_name JSON so the Runner can still download it.
+    ({ data, error } = await supabase!
+      .from("attendance_runs")
+      .insert(stripOptionalRunColumns(payload))
+      .select("id,status")
+      .single());
+  }
+  if (error || !data) {
     if (sourceFilePath) {
       await supabase!.storage.from(INPUT_BUCKET).remove([sourceFilePath]);
     }
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error: error?.message ?? "실행 요청 저장 결과가 비어 있습니다." }, { status: 500 });
   }
   return NextResponse.json({ runId: data.id, status: data.status });
 }
