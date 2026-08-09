@@ -1,11 +1,13 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
-import { BookOpenCheck, CalendarDays, Check, ChevronRight, FileText, History, Link2, LoaderCircle, Plus, Save, Sparkles, Trash2, UserPlus, Users } from "lucide-react";
+import { BookOpenCheck, CalendarDays, Check, ChevronRight, FileSpreadsheet, FileText, History, Link2, LoaderCircle, Plus, Save, Sparkles, Trash2, UserPlus, Users } from "lucide-react";
 import type { GraduateEntry, NewFamilyEntry, WorshipJournal } from "@/lib/worship-journal";
+import { formatThanksgivingOffering, isAccountingSourceReady } from "@/lib/worship-journal-accounting";
 import { fetchJson } from "@/lib/utils";
 
 const ATTENDANCE_SHEET = "https://docs.google.com/spreadsheets/d/1DXEeV2h5lk3c8clfNBZPDw3biuqkIP1-5ENvapcVvk8/edit";
+const ACCOUNTING_SHEET = "https://docs.google.com/spreadsheets/d/1SCmg4YEDBLre3fgWCRfUS1gGL4WW1MnZ/edit?gid=1816474511#gid=1816474511";
 const blankNewFamily = (): NewFamilyEntry => ({ name: "", generation: "", inviter: "", relationship: "", note: "" });
 const blankGraduate = (): GraduateEntry => ({ name: "", generation: "", family: "" });
 
@@ -69,6 +71,24 @@ function JournalPreview({ journal }: { journal: WorshipJournal }) {
         </div>
       </section>
 
+      {journal.accounting ? <section className="border-b border-ink/25 p-4" aria-labelledby="thanksgiving-title">
+        <div className="journal-section-title -mx-4 -mt-4 mb-4 flex items-center justify-between gap-3">
+          <span id="thanksgiving-title">감사헌금</span>
+          <strong className="font-mono text-sm text-brass">{journal.accounting.total.toLocaleString("ko-KR")}원</strong>
+        </div>
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs text-ink/45">
+          <span>{journal.accounting.thanksgiving.length}건 · 감사내용 있는 내역부터 가나다순</span>
+          <span className="rounded-full border border-line bg-paper/60 px-2 py-1">{journal.accounting.sheetTab}</span>
+        </div>
+        <div className="grid gap-px overflow-hidden rounded border border-ink/20 bg-ink/20 sm:grid-cols-2">
+          {journal.accounting.thanksgiving.length ? journal.accounting.thanksgiving.map((offering, index) => (
+            <p key={`${offering.name}-${offering.amount}-${offering.note}-${index}`} className="bg-white px-3 py-2.5 text-sm leading-6">
+              {formatThanksgivingOffering(offering)}
+            </p>
+          )) : <p className="bg-white px-3 py-4 text-sm text-ink/40 sm:col-span-2">감사헌금 내역 없음</p>}
+        </div>
+      </section> : null}
+
       <div className="grid border-b border-ink/25 md:grid-cols-2 md:divide-x md:divide-ink/25">
         <section className="p-4">
           <h3 className="text-sm font-black">새가족 <span className="text-brick">{journal.newFamilies.length}명</span></h3>
@@ -128,6 +148,9 @@ export function WorshipJournalBuilder() {
   const [attendanceSheetUrl, setAttendanceSheetUrl] = useState(ATTENDANCE_SHEET);
   const [attendanceSheetTab, setAttendanceSheetTab] = useState("가장체크");
   const [hwp, setHwp] = useState<File | null>(null);
+  const [accountingSourceType, setAccountingSourceType] = useState<"excel" | "google-sheet">("excel");
+  const [accountingFile, setAccountingFile] = useState<File | null>(null);
+  const [accountingSheetUrl, setAccountingSheetUrl] = useState(ACCOUNTING_SHEET);
   const [newFamilies, setNewFamilies] = useState<NewFamilyEntry[]>([blankNewFamily()]);
   const [graduates, setGraduates] = useState<GraduateEntry[]>([blankGraduate()]);
   const [journals, setJournals] = useState<WorshipJournal[]>([]);
@@ -142,7 +165,13 @@ export function WorshipJournalBuilder() {
     }).catch(() => undefined);
   }, []);
 
-  const canRun = useMemo(() => Boolean(date && attendanceSheetUrl.trim() && attendanceSheetTab.trim() && hwp), [date, attendanceSheetTab, attendanceSheetUrl, hwp]);
+  const canRun = useMemo(() => Boolean(
+    date
+    && attendanceSheetUrl.trim()
+    && attendanceSheetTab.trim()
+    && hwp
+    && isAccountingSourceReady(accountingSourceType, accountingFile?.name ?? "", accountingSheetUrl)
+  ), [accountingFile, accountingSheetUrl, accountingSourceType, attendanceSheetTab, attendanceSheetUrl, date, hwp]);
 
   function updateNewFamily(index: number, key: keyof NewFamilyEntry, value: string) {
     setNewFamilies((current) => current.map((entry, entryIndex) => entryIndex === index ? { ...entry, [key]: value } : entry));
@@ -159,6 +188,9 @@ export function WorshipJournalBuilder() {
       const body = new FormData();
       body.set("date", date); body.set("author", author); body.set("attendanceSheetUrl", attendanceSheetUrl);
       body.set("attendanceSheetTab", attendanceSheetTab); body.set("hwp", hwp);
+      body.set("accountingSourceType", accountingSourceType);
+      if (accountingSourceType === "excel" && accountingFile) body.set("accountingFile", accountingFile);
+      if (accountingSourceType === "google-sheet") body.set("accountingSheetUrl", accountingSheetUrl);
       body.set("newFamilies", JSON.stringify(newFamilies)); body.set("graduates", JSON.stringify(graduates));
       const response = await fetchJson<{ journal: WorshipJournal; saved: boolean }>("/api/worship-journals", { method: "POST", body });
       setSelected(response.journal);
@@ -190,13 +222,27 @@ export function WorshipJournalBuilder() {
           </div></section>
 
           <section className="journal-input-card"><div className="journal-step">04</div><div className="min-w-0 flex-1">
+            <div className="mb-4 flex items-center gap-2"><FileSpreadsheet size={18} className="text-brass" /><h2 className="font-display text-xl font-bold">회계 자료</h2></div>
+            <div className="mb-3 inline-grid grid-cols-2 rounded border border-line bg-paper/70 p-1" role="tablist" aria-label="회계 자료 입력 방식">
+              <button type="button" role="tab" aria-selected={accountingSourceType === "excel"} className={`rounded px-4 py-2 text-sm font-black transition ${accountingSourceType === "excel" ? "bg-ink text-paper shadow" : "text-ink/55 hover:text-ink"}`} onClick={() => setAccountingSourceType("excel")}>엑셀 파일</button>
+              <button type="button" role="tab" aria-selected={accountingSourceType === "google-sheet"} className={`rounded px-4 py-2 text-sm font-black transition ${accountingSourceType === "google-sheet" ? "bg-ink text-paper shadow" : "text-ink/55 hover:text-ink"}`} onClick={() => setAccountingSourceType("google-sheet")}>Google Sheet</button>
+            </div>
+            {accountingSourceType === "excel" ? (
+              <label className="group flex cursor-pointer items-center justify-between gap-3 rounded border border-dashed border-brass/50 bg-brass/5 px-4 py-4 transition hover:bg-brass/10"><span className="min-w-0"><span className="block text-sm font-black">회계 엑셀 선택</span><span className="block truncate text-xs text-ink/50">{accountingFile?.name ?? "XLSX 또는 XLS 파일을 올려주세요."}</span></span><span className="rounded bg-brass px-3 py-2 text-xs font-black text-ink">파일 찾기</span><input className="sr-only" type="file" accept=".xlsx,.xls" onChange={(event: ChangeEvent<HTMLInputElement>) => setAccountingFile(event.target.files?.[0] ?? null)} /></label>
+            ) : (
+              <label className="journal-label">회계 Google Sheet 링크<input className="journal-input" type="url" value={accountingSheetUrl} onChange={(event) => setAccountingSheetUrl(event.target.value)} placeholder="https://docs.google.com/spreadsheets/d/..." /></label>
+            )}
+            <p className="mt-2 text-xs leading-5 text-ink/50">예배 날짜와 일치하는 탭을 찾아 감사헌금만 정리합니다. 같은 날짜가 여러 개면 가장 오른쪽 탭을 사용합니다.</p>
+          </div></section>
+
+          <section className="journal-input-card"><div className="journal-step">05</div><div className="min-w-0 flex-1">
             <div className="mb-4 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><UserPlus size={18} className="text-brick" /><h2 className="font-display text-xl font-bold">새가족 수기 입력</h2></div><button type="button" className="journal-small-button" onClick={() => setNewFamilies((current) => [...current, blankNewFamily()])}><Plus size={14} /> 추가</button></div>
             <div className="grid gap-2">{newFamilies.map((entry, index) => <div key={index} className="grid gap-2 rounded border border-line bg-paper/45 p-3 sm:grid-cols-[1fr_85px_1fr_1fr_1fr_auto]">
               <input className="journal-input" placeholder="이름" value={entry.name} onChange={(event) => updateNewFamily(index, "name", event.target.value)} /><input className="journal-input" placeholder="대수" value={entry.generation} onChange={(event) => updateNewFamily(index, "generation", event.target.value)} /><input className="journal-input" placeholder="인도자" value={entry.inviter} onChange={(event) => updateNewFamily(index, "inviter", event.target.value)} /><input className="journal-input" placeholder="관계" value={entry.relationship} onChange={(event) => updateNewFamily(index, "relationship", event.target.value)} /><input className="journal-input" placeholder="기타" value={entry.note} onChange={(event) => updateNewFamily(index, "note", event.target.value)} /><button type="button" className="grid size-10 place-items-center rounded border border-line text-ink/45 hover:border-brick hover:text-brick" aria-label="새가족 행 삭제" onClick={() => setNewFamilies((current) => current.length === 1 ? [blankNewFamily()] : current.filter((_, itemIndex) => itemIndex !== index))}><Trash2 size={15} /></button>
             </div>)}</div>
           </div></section>
 
-          <section className="journal-input-card"><div className="journal-step">05</div><div className="min-w-0 flex-1">
+          <section className="journal-input-card"><div className="journal-step">06</div><div className="min-w-0 flex-1">
             <div className="mb-4 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><Users size={18} className="text-moss" /><h2 className="font-display text-xl font-bold">수료자(등반)</h2></div><button type="button" className="journal-small-button" onClick={() => setGraduates((current) => [...current, blankGraduate()])}><Plus size={14} /> 추가</button></div>
             <div className="grid gap-2">{graduates.map((entry, index) => <div key={index} className="grid gap-2 rounded border border-line bg-paper/45 p-3 sm:grid-cols-[1fr_100px_1fr_auto]">
               <input className="journal-input" placeholder="이름" value={entry.name} onChange={(event) => updateGraduate(index, "name", event.target.value)} /><input className="journal-input" placeholder="대수" value={entry.generation} onChange={(event) => updateGraduate(index, "generation", event.target.value)} /><input className="journal-input" placeholder="등반 가족" value={entry.family} onChange={(event) => updateGraduate(index, "family", event.target.value)} /><button type="button" className="grid size-10 place-items-center rounded border border-line text-ink/45 hover:border-brick hover:text-brick" aria-label="수료자 행 삭제" onClick={() => setGraduates((current) => current.length === 1 ? [blankGraduate()] : current.filter((_, itemIndex) => itemIndex !== index))}><Trash2 size={15} /></button>
@@ -210,7 +256,7 @@ export function WorshipJournalBuilder() {
       </div>
 
       <aside className="min-w-0"><div className="sticky top-5 grid gap-4">
-        <section className="overflow-hidden rounded border border-line bg-ink text-paper shadow-xl"><div className="border-b border-white/10 px-5 py-5"><div className="flex items-center gap-2 text-brass"><Sparkles size={17} /><p className="text-xs font-black tracking-[0.18em]">ONE CLICK JOURNAL</p></div><h2 className="mt-3 font-display text-2xl font-bold">자료만 넣으면<br />일지는 정돈되어 남습니다.</h2></div><div className="grid gap-3 px-5 py-5 text-sm text-paper/70">{["출석 시트 3종 자동 집계", "HWP 설교·섬김 자동 추출", "광고 제목·일시만 간결하게", "날짜별 로컬 저장"].map((item) => <p key={item} className="flex items-center gap-2"><Check size={14} className="text-brass" />{item}</p>)}</div></section>
+        <section className="overflow-hidden rounded border border-line bg-ink text-paper shadow-xl"><div className="border-b border-white/10 px-5 py-5"><div className="flex items-center gap-2 text-brass"><Sparkles size={17} /><p className="text-xs font-black tracking-[0.18em]">ONE CLICK JOURNAL</p></div><h2 className="mt-3 font-display text-2xl font-bold">자료만 넣으면<br />일지는 정돈되어 남습니다.</h2></div><div className="grid gap-3 px-5 py-5 text-sm text-paper/70">{["출석 시트 3종 자동 집계", "HWP 설교·섬김 자동 추출", "감사헌금 내용·금액 자동 정리", "광고 제목·일시만 간결하게", "날짜별 로컬 저장"].map((item) => <p key={item} className="flex items-center gap-2"><Check size={14} className="text-brass" />{item}</p>)}</div></section>
         <section className="rounded border border-line bg-white/75 p-4"><div className="mb-3 flex items-center justify-between"><h2 className="flex items-center gap-2 font-display text-lg font-bold"><History size={17} /> 저장된 일지</h2><span className="text-xs font-black text-ink/40">{journals.length}</span></div><div className="grid max-h-[430px] gap-2 overflow-y-auto pr-1">{journals.length ? journals.map((journal) => <button key={journal.id} type="button" onClick={() => setSelected(journal)} className={`group flex items-center justify-between gap-3 rounded border px-3 py-3 text-left transition ${selected?.id === journal.id ? "border-sea bg-sea/10" : "border-line bg-white hover:border-ink/30"}`}><span className="min-w-0"><span className="block truncate text-sm font-black">{displayDate(journal.date)}</span><span className="mt-1 block truncate text-xs text-ink/45">{journal.sermon.title || journal.source.hwpFileName}</span></span><ChevronRight size={15} className="shrink-0 text-ink/30 transition group-hover:translate-x-0.5" /></button>) : <div className="rounded border border-dashed border-line p-5 text-center text-xs text-ink/45"><BookOpenCheck className="mx-auto mb-2" size={22} />아직 저장된 예배일지가 없습니다.</div>}</div></section>
       </div></aside>
     </div>

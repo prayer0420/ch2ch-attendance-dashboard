@@ -56,6 +56,8 @@ function accountingRows(dateLabel = "2026.06.28헌금") {
 
 const {
   accountingDownloadUrls,
+  formatThanksgivingOffering,
+  isAccountingSourceReady,
   loadAccountingFromGoogleSheet,
   parseAccountingWorkbook
 } = loadTypeScriptModule("lib/worship-journal-accounting.ts");
@@ -101,6 +103,14 @@ assert.deepEqual(accountingDownloadUrls(`https://docs.google.com/spreadsheets/d/
 ]);
 assert.throws(() => accountingDownloadUrls("https://example.com/not-a-sheet"), /올바른 Google Sheet 링크/);
 assert.equal(typeof loadAccountingFromGoogleSheet, "function", "Google Sheet loader must be exported");
+assert.equal(typeof isAccountingSourceReady, "function", "accounting input readiness helper must be exported");
+assert.equal(typeof formatThanksgivingOffering, "function", "offering formatter must be exported");
+assert.equal(isAccountingSourceReady("excel", "회계.xlsx", ""), true);
+assert.equal(isAccountingSourceReady("excel", "", "https://docs.google.com/spreadsheets/d/unused/edit"), false);
+assert.equal(isAccountingSourceReady("google-sheet", "", `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`), true);
+assert.equal(isAccountingSourceReady("google-sheet", "회계.xlsx", ""), false);
+assert.equal(formatThanksgivingOffering({ name: "박찬호", amount: 50000, note: "상반기 마침 감사" }), "박찬호 (50,000원) 상반기 마침 감사");
+assert.equal(formatThanksgivingOffering({ name: "박대성", amount: 10000, note: "" }), "박대성 (10,000원)");
 assert.throws(
   () => parseAccountingWorkbook(
     workbookBuffer([["작년 자료", accountingRows("2025.06.28헌금")]]),
