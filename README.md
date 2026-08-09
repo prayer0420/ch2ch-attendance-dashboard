@@ -143,3 +143,7 @@ npm run build
 ## Live
 
 [https://ch2ch-attendance-dashboard.vercel.app/runs/new](https://ch2ch-attendance-dashboard.vercel.app/runs/new)
+
+## 작업 이어가기
+
+다른 PC에서 현재 상태를 확인하고 작업을 이어갈 때는 [인수인계 문서](./docs/CONTINUE-HERE.md)를 먼저 읽으세요.
