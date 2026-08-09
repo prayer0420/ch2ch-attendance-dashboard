@@ -641,6 +641,7 @@ function readLegacyResult() {
 function applyLegacyResult(results, legacyResult, dryRun) {
   const people = new Map();
   const familySave = new Map();
+  const affiliationCorrections = new Map();
 
   for (const family of legacyResult.families || []) {
     familySave.set(normalizeName(family.familyName), {
@@ -652,9 +653,32 @@ function applyLegacyResult(results, legacyResult, dryRun) {
     }
   }
 
+  for (const correction of legacyResult.affiliationCorrections || []) {
+    affiliationCorrections.set(
+      `${normalizeName(correction.originalFamily)}::${normalizeName(correction.name)}`,
+      correction
+    );
+  }
+
   return results.map((result) => {
     const key = `${normalizeName(result.original_family)}::${result.normalized_name}`;
+    const correction = affiliationCorrections.get(key);
     const person = people.get(key);
+
+    if (correction) {
+      const corrected = correction.status === "corrected";
+      return {
+        ...result,
+        found_location: correction.foundLocation || correction.foundFamily || result.found_location,
+        status: corrected ? "second_pass_success" : "final_fail",
+        attempt_stage: "second_pass_search",
+        save_result: corrected
+          ? correction.saveVerified ? "success" : "attempted_unverified"
+          : "not_saved",
+        failure_reason: corrected ? null : correction.reason || "소속 보정 실패"
+      };
+    }
+
     if (!person || !person.ok) {
       return {
         ...result,
@@ -827,6 +851,17 @@ async function runAttendanceAutomation(run, reporter) {
   await reporter.event("input_read_completed", `입력 자체검사 완료: A~DP 범위의 QR/참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
 
   const { legacyResult } = await runLegacyProcess(run, reporter, people);
+  const corrections = legacyResult.affiliationCorrections || [];
+  if (corrections.length) {
+    const corrected = corrections.filter((item) => item.status === "corrected");
+    const failedCorrections = corrections.filter((item) => item.status === "failed");
+    await reporter.event(
+      "affiliation_correction_summary",
+      `소속 보정 결과: 성공 ${corrected.length}명 / 실패 ${failedCorrections.length}명` +
+        (failedCorrections.length ? ` / 실패자 ${failedCorrections.map((item) => item.name).join(", ")}` : ""),
+      { corrected, failed: failedCorrections }
+    );
+  }
   const results = applyLegacyResult(createInitialResults(run, people), legacyResult, run.dry_run);
 
   await reporter.updateRun({

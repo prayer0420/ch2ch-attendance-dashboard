@@ -5,6 +5,7 @@ import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 import { chromium } from 'playwright';
 import XLSX from 'xlsx';
+import { buildCorrectionReport, collectDeferredCorrectionTargets } from './affiliation-correction.js';
 
 const CONFIG = {
   url: process.env.CH2CH_URL || 'https://ch2ch.or.kr/login.asp',
@@ -1036,30 +1037,76 @@ async function searchMemberRowGlobally(page, rowInfo, originalFamily) {
     return { found: null, reason: `검색 보정 실패: 시트 ${rowInfo.sourceRow || '?'}행 '${rowInfo.name}'을 '${originalFamily}'에서도, CH2CH 이름 검색에서도 찾지 못했습니다. ${targetActionText(rowInfo)}` };
   }
 
-  const foundFamily = await extractFamilyFromFoundRow(found, originalFamily);
+  const foundFamily = await extractFamilyFromFoundRow(found, '');
   return {
     found,
     foundFamily,
     foundLocation: foundFamily && foundFamily !== originalFamily
       ? `${foundFamily} (시트 가족: ${originalFamily})`
-      : foundFamily || originalFamily
+      : foundFamily || ''
   };
+}
+
+async function openFoundAffiliation(page, search, rowInfo, originalFamily) {
+  const foundFamily = normalizeText(search.foundFamily || '');
+  if (!foundFamily) {
+    return {
+      ...search,
+      found: null,
+      reason: `검색 결과에서 '${rowInfo.name}'의 소속을 확인하지 못했습니다. 원래 가족 '${originalFamily}' 화면에는 자동 체크하지 않았습니다. ${targetActionText(rowInfo)}`
+    };
+  }
+  if (foundFamily === normalizeText(originalFamily)) {
+    return {
+      ...search,
+      found: null,
+      reason: `검색 결과의 소속이 원래 가족 '${originalFamily}'과 같아 보정 대상의 소속 변경을 확인할 수 없습니다. ${targetActionText(rowInfo)}`
+    };
+  }
+
+  if (!(await clickTextInAnyFrame(page, search.foundFamily, true, 2000))) {
+    return {
+      ...search,
+      found: null,
+      reason: `검색 결과에서 확인한 소속 '${search.foundFamily}' 화면으로 이동하지 못했습니다. ${targetActionText(rowInfo)}`
+    };
+  }
+  await shortDelay(700);
+  if (!(await selectAttendanceWeek(page))) {
+    return {
+      ...search,
+      found: null,
+      reason: `소속 '${search.foundFamily}' 이동 후 ${getTargetWeekLabel() || '대상 주차'} 선택에 실패했습니다. ${targetActionText(rowInfo)}`
+    };
+  }
+  const found = await findMemberRow(page, rowInfo.name);
+  if (!found) {
+    return {
+      ...search,
+      found: null,
+      reason: `소속 '${search.foundFamily}' 화면에서 '${rowInfo.name}'을 다시 찾지 못했습니다. ${targetActionText(rowInfo)}`
+    };
+  }
+  return { ...search, found };
 }
 
 async function processSearchCorrection(page, rowInfo, originalFamily) {
   try {
     const search = await searchMemberRowGlobally(page, rowInfo, originalFamily);
-    if (!search.found) {
+    const located = search.found
+      ? await openFoundAffiliation(page, search, rowInfo, originalFamily)
+      : search;
+    if (!located.found) {
       return {
         family: rowInfo.family,
         name: rowInfo.name,
         ok: false,
-        reason: search.reason,
+        reason: located.reason,
         fallbackSearch: true
       };
     }
 
-    const before = await readWebAttendanceState(search.found);
+    const before = await readWebAttendanceState(located.found);
     if (!before.ok) {
       return {
         family: rowInfo.family,
@@ -1067,8 +1114,8 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
         ok: false,
         reason: `검색 보정 대조 실패: ${before.reason}. ${targetActionText(rowInfo)}`,
         fallbackSearch: true,
-        foundFamily: search.foundFamily,
-        foundLocation: search.foundLocation
+        foundFamily: located.foundFamily,
+        foundLocation: located.foundLocation
       };
     }
 
@@ -1079,15 +1126,15 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
         ok: true,
         reason: null,
         fallbackSearch: true,
-        foundFamily: search.foundFamily,
-        foundLocation: search.foundLocation,
+        foundFamily: located.foundFamily,
+        foundLocation: located.foundLocation,
         saveAttempted: false,
         saveVerified: false
       };
     }
 
-    const sundayResult = await setCheckboxInRow(search.found, rowInfo, '주일', rowInfo.sunday, 0);
-    const departmentResult = await setCheckboxInRow(search.found, rowInfo, '부서', rowInfo.department, 1);
+    const sundayResult = await setCheckboxInRow(located.found, rowInfo, '주일', rowInfo.sunday, 0);
+    const departmentResult = await setCheckboxInRow(located.found, rowInfo, '부서', rowInfo.department, 1);
     if (!sundayResult.ok || !departmentResult.ok) {
       const reason = [sundayResult.reason, departmentResult.reason].filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
       return {
@@ -1096,12 +1143,12 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
         ok: false,
         reason: `검색 보정 실패: ${reason}. ${targetActionText(rowInfo)}`,
         fallbackSearch: true,
-        foundFamily: search.foundFamily,
-        foundLocation: search.foundLocation
+        foundFamily: located.foundFamily,
+        foundLocation: located.foundLocation
       };
     }
 
-    const finalState = await readWebAttendanceState(search.found);
+    const finalState = await readWebAttendanceState(located.found);
     if (!attendanceStateMatches(rowInfo, finalState)) {
       return {
         family: rowInfo.family,
@@ -1109,12 +1156,12 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
         ok: false,
         reason: attendanceMismatchReason(rowInfo, finalState, `검색 보정 최종 대조 실패 (${targetActionText(rowInfo)})`),
         fallbackSearch: true,
-        foundFamily: search.foundFamily,
-        foundLocation: search.foundLocation
+        foundFamily: located.foundFamily,
+        foundLocation: located.foundLocation
       };
     }
 
-    await setNoteInRow(search.found, rowInfo);
+    await setNoteInRow(located.found, rowInfo);
     const saved = CONFIG.savePerFamily
       ? await saveCurrentPage(page, `검색 보정 ${rowInfo.name}`)
       : { attempted: true, verified: false };
@@ -1126,8 +1173,8 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
         ok: false,
         reason: `검색 보정 저장 실패: ${targetActionText(rowInfo)}`,
         fallbackSearch: true,
-        foundFamily: search.foundFamily,
-        foundLocation: search.foundLocation,
+        foundFamily: located.foundFamily,
+        foundLocation: located.foundLocation,
         saveAttempted: false,
         saveVerified: false
       };
@@ -1140,8 +1187,8 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
       ok: true,
       reason: null,
       fallbackSearch: true,
-      foundFamily: search.foundFamily,
-      foundLocation: search.foundLocation,
+      foundFamily: located.foundFamily,
+      foundLocation: located.foundLocation,
       saveAttempted: saved.attempted,
       saveVerified: saved.verified
     };
@@ -1404,16 +1451,41 @@ async function main() {
     results.push(result);
   }
 
+  const correctionTargets = collectDeferredCorrectionTargets(results, grouped);
+  const affiliationCorrections = [];
+  for (const target of correctionTargets) {
+    const outcome = await processSearchCorrection(page, target.rowInfo, target.originalFamily);
+    const report = buildCorrectionReport(target, outcome);
+    affiliationCorrections.push(report);
+
+    const familyResult = results.find(result => normalizeText(result.familyName) === normalizeText(target.originalFamily));
+    const personResult = familyResult?.people?.find(person => normalizeMemberName(person.name) === normalizeMemberName(target.rowInfo.name));
+    if (personResult) {
+      personResult.deferredSearch = false;
+      personResult.fallbackSearch = true;
+      personResult.ok = Boolean(outcome.ok);
+      personResult.reason = outcome.reason || null;
+      personResult.foundFamily = outcome.foundFamily || null;
+      personResult.foundLocation = outcome.foundLocation || null;
+      personResult.saveAttempted = Boolean(outcome.saveAttempted);
+      personResult.saveVerified = Boolean(outcome.saveVerified);
+    }
+    if (familyResult && outcome.ok) {
+      familyResult.success += 1;
+      familyResult.failed = Math.max(familyResult.failed - 1, 0);
+    }
+  }
+
+  const corrected = affiliationCorrections.filter(item => item.status === 'corrected');
+  const correctionFailures = affiliationCorrections.filter(item => item.status === 'failed');
+  if (affiliationCorrections.length) {
+    log('소속 보정 결과', `성공 ${corrected.length}명 / 실패 ${correctionFailures.length}명${correctionFailures.length ? ` / 실패자 ${correctionFailures.map(item => item.name).join(', ')}` : ''}`);
+  }
+  const deferredSearch = correctionFailures;
+
   let finalSave = { attempted: true, verified: CONFIG.dryRun };
   if (!CONFIG.savePerFamily) {
     finalSave = await saveCurrentPage(page, '최종 저장');
-  }
-
-  const deferredSearch = results.flatMap(result => (result.people || [])
-    .filter(person => person.deferredSearch)
-    .map(person => ({ family: result.familyName, name: person.name, reason: person.reason })));
-  if (deferredSearch.length) {
-    log('시트 불일치 최종 목록', `${deferredSearch.length}명 / ${deferredSearch.map(person => `${person.family}:${person.name}`).join(', ')}`);
   }
 
   const summary = results.map(r => `${r.familyName}: 주일 ${r.expectedSunday ?? 0}명, 부서 ${r.expectedDepartment ?? 0}명, 실패 ${r.failed}명`).join(' / ');
@@ -1424,6 +1496,7 @@ async function main() {
     weekSelected,
     finalSaved: finalSave.attempted,
     finalSaveVerified: finalSave.verified,
+    affiliationCorrections,
     deferredSearch,
     families: results
   }, null, 2));
