@@ -31,3 +31,7 @@ Runner를 실행하기 전에 `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE
 5. `result.json`의 `affiliationCorrections`에 성공 또는 실패, 원래 가족, 발견된 소속, 저장 검증 결과, 실패 원인을 기록합니다.
 
 보정 성공은 검색만 된 경우가 아니라 체크 상태 대조까지 통과한 경우에만 인정됩니다. 실패자는 `affiliation_correction_summary` 실행 이벤트에서 이름 목록으로 확인할 수 있습니다.
+
+## Vercel QR 요청 처리
+
+Vercel의 QR 화면은 `qr_sync_jobs`에 작업을 넣고, Runner가 이를 가져와 로컬 Dashboard의 `/api/qr-attendance/worker`를 호출합니다. 로컬 PC에서 `start-local.cmd`가 실행 중일 때만 QR 명단 수집과 Google Sheet 반영이 진행됩니다.

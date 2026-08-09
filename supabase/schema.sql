@@ -136,6 +136,26 @@ create table if not exists public.runner_heartbeats (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.qr_sync_jobs (
+  id uuid primary key default gen_random_uuid(),
+  action text not null check (action in ('preview', 'apply')),
+  status text not null default 'queued' check (status in ('queued', 'picked_up', 'running', 'completed', 'failed')),
+  week integer not null,
+  sheet_url text not null,
+  sheet_tab text not null default '가장체크',
+  department text not null default '2청년회',
+  preview jsonb,
+  result jsonb,
+  error_message text,
+  runner_id text,
+  runner_hostname text,
+  requested_at timestamptz not null default now(),
+  started_at timestamptz,
+  finished_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
 drop trigger if exists set_attendance_runs_updated_at on public.attendance_runs;
 create trigger set_attendance_runs_updated_at
 before update on public.attendance_runs
@@ -161,6 +181,11 @@ create trigger set_runner_heartbeats_updated_at
 before update on public.runner_heartbeats
 for each row execute function public.set_updated_at();
 
+drop trigger if exists set_qr_sync_jobs_updated_at on public.qr_sync_jobs;
+create trigger set_qr_sync_jobs_updated_at
+before update on public.qr_sync_jobs
+for each row execute function public.set_updated_at();
+
 create index if not exists idx_attendance_runs_status on public.attendance_runs(status);
 create index if not exists idx_attendance_runs_requested_at on public.attendance_runs(requested_at desc);
 create index if not exists idx_attendance_results_run_id on public.attendance_results(run_id);
@@ -170,6 +195,7 @@ create index if not exists idx_weekly_records_family on public.attendance_weekly
 create index if not exists idx_weekly_records_name on public.attendance_weekly_records(normalized_name);
 create index if not exists idx_run_events_run_id on public.run_events(run_id);
 create index if not exists idx_run_events_created_at on public.run_events(created_at desc);
+create index if not exists idx_qr_sync_jobs_status on public.qr_sync_jobs(status, requested_at);
 
 insert into public.app_settings (key, value)
 values (
@@ -198,3 +224,4 @@ alter table public.attendance_weekly_records enable row level security;
 alter table public.run_events enable row level security;
 alter table public.app_settings enable row level security;
 alter table public.runner_heartbeats enable row level security;
+alter table public.qr_sync_jobs enable row level security;

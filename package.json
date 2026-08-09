@@ -13,6 +13,7 @@
     "verify:parser": "node scripts/verify-parser.js",
     "verify:run-persistence": "node scripts/verify-run-persistence.js",
     "verify:affiliation-correction": "node scripts/verify-affiliation-correction.js",
+    "verify:qr-job-queue": "node scripts/verify-qr-job-queue.js",
     "open-dashboard": "start http://localhost:3000",
     "install-browsers": "playwright install chromium"
   },

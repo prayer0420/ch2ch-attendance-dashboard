@@ -23,3 +23,11 @@ npm run verify:affiliation-correction
 - 검색·체크·저장 검증에 실패한 사람의 이름과 원인이 별도 결과 목록에 남는지
 
 이 검사는 실제 출석 데이터를 변경하지 않습니다. 실제 저장 실행은 별도의 Runner 실행에서만 수행합니다.
+
+## QR 요청 큐 회귀 검사
+
+```powershell
+npm run verify:qr-job-queue
+```
+
+Vercel 작업을 Runner Worker 요청으로 변환하는지와 완료·실패 결과 형식을 검사합니다.

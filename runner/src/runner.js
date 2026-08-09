@@ -7,6 +7,7 @@ const os = require("node:os");
 const { createClient } = require("@supabase/supabase-js");
 const { getRunnerConfig } = require("./env");
 const { runAttendanceAutomation } = require("./automation-adapter");
+const { buildQrWorkerPayload } = require("./qr-sync-job");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -34,7 +35,9 @@ class Runner {
       if (run) {
         await this.processRun(run);
       } else {
-        console.log("[Runner] 대기 중인 실행 요청 없음");
+        const qrJob = await this.pickQueuedQrJob();
+        if (qrJob) await this.processQrJob(qrJob);
+        else console.log("[Runner] 대기 중인 실행 요청 없음");
       }
 
       if (this.config.once) break;
@@ -88,6 +91,52 @@ class Runner {
 
     if (updateError) throw updateError;
     return picked;
+  }
+
+  async pickQueuedQrJob() {
+    const { data: job, error } = await this.supabase
+      .from("qr_sync_jobs")
+      .select("*")
+      .eq("status", "queued")
+      .order("requested_at", { ascending: true })
+      .limit(1)
+      .maybeSingle();
+    if (error) {
+      if (/qr_sync_jobs|schema cache|relation .* does not exist/i.test(error.message || "")) return null;
+      throw error;
+    }
+    if (!job) return null;
+    const { data: picked, error: updateError } = await this.supabase
+      .from("qr_sync_jobs")
+      .update({ status: "picked_up", runner_id: this.config.runnerId, runner_hostname: os.hostname(), started_at: new Date().toISOString() })
+      .eq("id", job.id)
+      .eq("status", "queued")
+      .select("*")
+      .maybeSingle();
+    if (updateError) throw updateError;
+    return picked;
+  }
+
+  async processQrJob(job) {
+    console.log(`[Runner] QR 작업 시작: ${job.id} (${job.action})`);
+    const update = (payload) => this.supabase.from("qr_sync_jobs").update(payload).eq("id", job.id);
+    try {
+      await update({ status: "running" });
+      const response = await fetch(`${this.config.dashboardUrl}/api/qr-attendance/worker`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildQrWorkerPayload(job))
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || `QR Worker HTTP ${response.status}`);
+      const { error } = await update({ status: "completed", result: payload.data, finished_at: new Date().toISOString(), error_message: null });
+      if (error) throw error;
+      console.log(`[Runner] QR 작업 완료: ${job.id}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      await update({ status: "failed", error_message: message, finished_at: new Date().toISOString() });
+      console.error(`[Runner] QR 작업 실패: ${job.id} ${message}`);
+    }
   }
 
   async processRun(run) {
