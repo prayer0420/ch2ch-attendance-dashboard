@@ -232,7 +232,7 @@ export function WorshipJournalBuilder() {
             ) : (
               <label className="journal-label">회계 Google Sheet 링크<input className="journal-input" type="url" value={accountingSheetUrl} onChange={(event) => setAccountingSheetUrl(event.target.value)} placeholder="https://docs.google.com/spreadsheets/d/..." /></label>
             )}
-            <p className="mt-2 text-xs leading-5 text-ink/50">예배 날짜와 일치하는 탭을 찾아 감사헌금만 정리합니다. 같은 날짜가 여러 개면 가장 오른쪽 탭을 사용합니다.</p>
+            <p className="mt-2 text-xs leading-5 text-ink/50">예배 날짜와 일치하는 탭을 찾아 감사헌금만 정리합니다. 같은 날짜가 여러 개면 가장 오른쪽 탭을 사용합니다.{accountingSourceType === "google-sheet" ? " 링크는 '링크가 있는 모든 사용자 · 뷰어' 공유가 필요합니다." : ""}</p>
           </div></section>
 
           <section className="journal-input-card"><div className="journal-step">05</div><div className="min-w-0 flex-1">

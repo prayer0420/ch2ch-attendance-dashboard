@@ -9,6 +9,7 @@ import {
   parseJournalAttendanceCsv
 } from "@/lib/worship-journal";
 import {
+  MAX_ACCOUNTING_SIZE,
   loadAccountingFromGoogleSheet,
   parseAccountingWorkbook
 } from "@/lib/worship-journal-accounting";
@@ -17,7 +18,6 @@ export const runtime = "nodejs";
 
 const STORE_PATH = path.join(process.cwd(), ".local-runtime", "worship-journals.json");
 const MAX_HWP_SIZE = 30 * 1024 * 1024;
-const MAX_ACCOUNTING_SIZE = 15 * 1024 * 1024;
 
 function sheetExportUrl(source: string, tab: string) {
   const match = source.match(/\/spreadsheets\/d\/([^/]+)/);

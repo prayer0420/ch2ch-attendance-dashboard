@@ -143,6 +143,21 @@ async function verifyGoogleSheetFallback() {
   assert.equal(requested.length, 2);
   assert.equal(loaded.sourceType, "google-sheet");
   assert.equal(loaded.total, 610000);
+
+  await assert.rejects(
+    () => loadAccountingFromGoogleSheet(
+      `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`,
+      "2026-06-28",
+      async () => new Response(validWorkbook, {
+        status: 200,
+        headers: {
+          "content-length": String(15 * 1024 * 1024 + 1),
+          "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        }
+      })
+    ),
+    /15MB/
+  );
 }
 
 verifyGoogleSheetFallback()
