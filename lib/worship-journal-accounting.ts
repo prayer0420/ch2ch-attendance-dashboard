@@ -27,6 +27,42 @@ export function accountingDownloadUrls(url: string): string[] {
   ];
 }
 
+export async function loadAccountingFromGoogleSheet(
+  url: string,
+  date: string,
+  fetcher: typeof fetch = fetch
+): Promise<JournalAccounting> {
+  const failures: string[] = [];
+  for (const downloadUrl of accountingDownloadUrls(url)) {
+    try {
+      const response = await fetcher(downloadUrl, { cache: "no-store" });
+      if (!response.ok) {
+        failures.push(`HTTP ${response.status}`);
+        continue;
+      }
+      const contentType = response.headers.get("content-type") ?? "";
+      if (contentType.includes("text/html")) {
+        failures.push("다운로드 대신 HTML 응답을 받았습니다.");
+        continue;
+      }
+      const buffer = Buffer.from(await response.arrayBuffer());
+      if (!buffer.length) {
+        failures.push("다운로드한 파일이 비어 있습니다.");
+        continue;
+      }
+      return parseAccountingWorkbook(buffer, date, {
+        sourceType: "google-sheet",
+        sourceName: url
+      });
+    } catch (error) {
+      failures.push(error instanceof Error ? error.message : "알 수 없는 다운로드 오류");
+    }
+  }
+
+  const detail = failures.at(-1);
+  throw new Error(`Google Sheet 회계 자료를 읽지 못했습니다. 링크 공유 및 다운로드 권한을 확인해 주세요.${detail ? ` 마지막 오류: ${detail}` : ""}`);
+}
+
 function cleanCell(value: unknown) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }

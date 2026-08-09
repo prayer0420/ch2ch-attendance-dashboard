@@ -54,7 +54,11 @@ function accountingRows(dateLabel = "2026.06.28헌금") {
   ];
 }
 
-const { accountingDownloadUrls, parseAccountingWorkbook } = loadTypeScriptModule("lib/worship-journal-accounting.ts");
+const {
+  accountingDownloadUrls,
+  loadAccountingFromGoogleSheet,
+  parseAccountingWorkbook
+} = loadTypeScriptModule("lib/worship-journal-accounting.ts");
 
 const result = parseAccountingWorkbook(
   workbookBuffer([["6월 마지막", accountingRows()]]),
@@ -96,6 +100,7 @@ assert.deepEqual(accountingDownloadUrls(`https://docs.google.com/spreadsheets/d/
   `https://docs.google.com/spreadsheets/d/${spreadsheetId}/export?format=xlsx`
 ]);
 assert.throws(() => accountingDownloadUrls("https://example.com/not-a-sheet"), /올바른 Google Sheet 링크/);
+assert.equal(typeof loadAccountingFromGoogleSheet, "function", "Google Sheet loader must be exported");
 assert.throws(
   () => parseAccountingWorkbook(
     workbookBuffer([["작년 자료", accountingRows("2025.06.28헌금")]]),
@@ -105,4 +110,34 @@ assert.throws(
   /2026-06-28 회계 탭을 찾지 못했습니다/
 );
 
-console.log("accounting parser: extraction, sorting, date selection, and URL validation passed");
+async function verifyGoogleSheetFallback() {
+  const requested = [];
+  const validWorkbook = workbookBuffer([["6월 마지막", accountingRows()]]);
+  const loaded = await loadAccountingFromGoogleSheet(
+    `https://docs.google.com/spreadsheets/d/${spreadsheetId}/edit`,
+    "2026-06-28",
+    async (url) => {
+      requested.push(String(url));
+      if (requested.length === 1) {
+        return new Response("<!DOCTYPE html><title>download confirmation</title>", {
+          status: 200,
+          headers: { "content-type": "text/html" }
+        });
+      }
+      return new Response(validWorkbook, {
+        status: 200,
+        headers: { "content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }
+      });
+    }
+  );
+  assert.equal(requested.length, 2);
+  assert.equal(loaded.sourceType, "google-sheet");
+  assert.equal(loaded.total, 610000);
+}
+
+verifyGoogleSheetFallback()
+  .then(() => console.log("accounting parser: extraction, sorting, date selection, URL validation, and download fallback passed"))
+  .catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
