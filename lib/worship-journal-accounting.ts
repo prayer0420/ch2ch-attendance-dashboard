@@ -17,6 +17,19 @@ export type JournalAccounting = AccountingSourceMeta & {
   thanksgiving: ThanksgivingOffering[];
 };
 
+export function isAccountingSourceReady(
+  sourceType: AccountingSourceMeta["sourceType"],
+  fileName: string,
+  sheetUrl: string
+) {
+  return sourceType === "excel" ? Boolean(fileName.trim()) : Boolean(sheetUrl.trim());
+}
+
+export function formatThanksgivingOffering(offering: ThanksgivingOffering) {
+  const summary = `${offering.name} (${offering.amount.toLocaleString("ko-KR")}원)`;
+  return offering.note ? `${summary} ${offering.note}` : summary;
+}
+
 export function accountingDownloadUrls(url: string): string[] {
   const match = url.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:spreadsheets\/d\/|file\/d\/)([\w-]+)/i);
   if (!match) throw new Error("올바른 Google Sheet 링크를 입력해 주세요.");
