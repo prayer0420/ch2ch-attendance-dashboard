@@ -27,6 +27,18 @@
 
 ## 사용 방법
 
+### Windows 앱으로 실행
+
+설치형 앱을 만들려면 프로젝트 폴더에서 다음을 실행합니다.
+
+```powershell
+npm install
+npm run install-browsers
+npm run desktop:dist
+```
+
+`dist/`의 `CH2CH 출석체크 Setup.exe`를 설치하면 바탕화면 아이콘으로 Dashboard와 Runner를 함께 실행할 수 있습니다. 설치 후 `.env.local`은 별도로 준비해야 하며, 앱을 종료하면 앱이 시작한 로컬 프로세스도 함께 종료합니다.
+
 ### 1. 입력 자료 선택
 
 1. **구글시트 URL** 또는 **파일 업로드**를 선택합니다.
@@ -131,3 +143,7 @@ npm run build
 ## Live
 
 [https://ch2ch-attendance-dashboard.vercel.app/runs/new](https://ch2ch-attendance-dashboard.vercel.app/runs/new)
+
+## 작업 이어가기
+
+다른 PC에서 현재 상태를 확인하고 작업을 이어갈 때는 [인수인계 문서](./docs/CONTINUE-HERE.md)를 먼저 읽으세요.

@@ -69,6 +69,10 @@ const previewCache = globalState.__qrAttendancePreviewCache ?? new Map<string, P
 globalState.__qrAttendancePreviewCache = previewCache;
 globalState.__qrAttendanceQueue ??= Promise.resolve();
 
+export function hydrateQrAttendancePreview(preview: QrAttendancePreview) {
+  previewCache.set(preview.id, { preview, expiresAt: Date.now() + PREVIEW_TTL_MS });
+}
+
 function normalize(value: unknown) {
   return String(value ?? "")
     .replace(/[\u200B-\u200D\uFEFF]/g, "")
@@ -368,7 +372,7 @@ export async function createQrAttendancePreview(input: {
       unmatched4Names: compared.unmatched4Names,
       duplicateSheetNames: compared.duplicateSheetNames
     };
-    previewCache.set(preview.id, { preview, expiresAt: Date.now() + PREVIEW_TTL_MS });
+    hydrateQrAttendancePreview(preview);
     return preview;
   });
 }

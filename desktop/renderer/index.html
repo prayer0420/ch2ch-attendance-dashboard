@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CH2CH 출석체크</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header>
+        <p class="eyebrow">LOCAL DESKTOP APP</p>
+        <h1>CH2CH 출석체크</h1>
+        <p class="intro">대시보드와 Runner를 준비하고 있습니다. 준비가 끝나면 출석체크 화면이 자동으로 열립니다.</p>
+      </header>
+      <section class="services" aria-label="서비스 상태">
+        <article class="service"><span>Dashboard</span><strong id="dashboard-state">준비 중</strong></article>
+        <article class="service"><span>Runner</span><strong id="runner-state">준비 중</strong></article>
+      </section>
+      <section id="error-box" class="error hidden" role="alert"></section>
+      <div class="actions">
+        <button id="open-dashboard" type="button">홈페이지 열기</button>
+        <button id="stop-services" type="button" class="secondary">종료</button>
+      </div>
+      <section class="logs">
+        <div class="log-heading"><h2>최근 오류 로그</h2><span id="last-updated">확인 중</span></div>
+        <pre id="logs">아직 로그를 읽는 중입니다.</pre>
+      </section>
+    </main>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

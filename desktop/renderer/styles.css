@@ -1,0 +1,24 @@
+:root { color-scheme: light; font-family: "Segoe UI", "Malgun Gothic", sans-serif; color: #191b17; background: #f5f1e8; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #f5f1e8, #e7f0ee); }
+.shell { width: min(860px, calc(100% - 48px)); margin: 0 auto; padding: 72px 0; }
+.eyebrow { margin: 0 0 12px; color: #28747a; font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+h1 { margin: 0; font-size: clamp(36px, 6vw, 64px); line-height: 1.05; letter-spacing: -.04em; }
+.intro { max-width: 620px; margin: 20px 0 0; color: #62655e; font-size: 17px; line-height: 1.7; }
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
+.service, .logs, .error { border: 1px solid #d9d2c4; border-radius: 10px; background: rgba(255,255,255,.76); box-shadow: 0 8px 24px rgba(28,32,26,.06); }
+.service { display: flex; align-items: center; justify-content: space-between; padding: 24px; }
+.service span { color: #74776f; font-weight: 700; }
+.service strong { color: #28747a; }
+.actions { display: flex; gap: 12px; margin-top: 24px; }
+button { border: 0; border-radius: 8px; padding: 14px 22px; background: #191b17; color: #fff; font: inherit; font-weight: 800; cursor: pointer; }
+button:hover { background: #28747a; }
+button.secondary { background: transparent; color: #191b17; border: 1px solid #bdb7ac; }
+.error { margin-top: 20px; padding: 16px; color: #a44839; border-color: #e4b4a8; background: #f9e9e4; line-height: 1.6; }
+.hidden { display: none; }
+.logs { margin-top: 42px; padding: 20px; }
+.log-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+h2 { margin: 0; font-size: 18px; }
+.log-heading span { color: #8a8c84; font-size: 12px; }
+pre { min-height: 150px; margin: 16px 0 0; padding: 14px; overflow: auto; border-radius: 6px; background: #20231f; color: #d7e6df; font: 12px/1.6 Consolas, monospace; white-space: pre-wrap; }
+@media (max-width: 640px) { .shell { width: min(100% - 28px, 860px); padding: 40px 0; } .services { grid-template-columns: 1fr; } .actions { flex-direction: column; } button { width: 100%; } }

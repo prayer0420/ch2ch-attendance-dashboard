@@ -47,6 +47,8 @@ type ApplyResult = {
   verificationFailures: Array<{ name: string; service: "1-3부" | "4부"; reason: string }>;
 };
 
+type QueuedJob = { queued: true; jobId: string; status: string };
+
 const DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/1DXEeV2h5lk3c8clfNBZPDw3biuqkIP1-5ENvapcVvk8/edit?usp=sharing";
 
 function isoWeek() {
@@ -108,6 +110,19 @@ export function QrAttendanceSync() {
   );
   const weekDate = useMemo(() => isoWeekSunday(week), [week]);
 
+  async function waitForJob(jobId: string) {
+    for (let attempt = 0; attempt < 180; attempt += 1) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await fetch(`/api/qr-attendance?jobId=${encodeURIComponent(jobId)}`, { cache: "no-store" });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || "QR 작업 상태를 읽지 못했습니다.");
+      const job = payload.data;
+      if (job.status === "completed") return job.preview;
+      if (job.status === "failed") throw new Error(job.error || "QR 작업에 실패했습니다.");
+    }
+    throw new Error("QR 작업이 6분 안에 끝나지 않았습니다. Runner와 작업 상태를 확인해 주세요.");
+  }
+
   async function loadPreview(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading("preview");
@@ -123,7 +138,8 @@ export function QrAttendanceSync() {
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "CH2CH QR 명단을 불러오지 못했습니다.");
-      setPreview(payload.data);
+      const data = payload.data as Preview | QueuedJob;
+      setPreview("queued" in data ? await waitForJob(data.jobId) : data);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "CH2CH QR 명단을 불러오지 못했습니다.");
     } finally {
@@ -141,11 +157,16 @@ export function QrAttendanceSync() {
         method: "POST",
         cache: "no-store",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "apply", previewId: preview.id })
+        body: JSON.stringify(
+          window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+            ? { action: "apply", previewId: preview.id }
+            : { action: "apply", preview }
+        )
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "Google Sheet 반영에 실패했습니다.");
-      setResult(payload.data);
+      const data = payload.data as ApplyResult | QueuedJob;
+      setResult("queued" in data ? await waitForJob(data.jobId) : data);
     } catch (applyError) {
       setError(applyError instanceof Error ? applyError.message : "Google Sheet 반영에 실패했습니다.");
     } finally {
