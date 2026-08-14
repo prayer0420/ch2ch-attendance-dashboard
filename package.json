@@ -14,6 +14,7 @@
     "runner": "node runner/src/runner.js",
     "runner:once": "node runner/src/runner.js --once",
     "verify:parser": "node scripts/verify-parser.js",
+    "verify:attendance-sync": "node scripts/verify-attendance-sync.js",
     "verify:run-date-default": "node scripts/verify-run-date-default.js",
     "verify:accounting": "node scripts/accounting/verify-accounting-parser.js",
     "verify:run-persistence": "node scripts/verify-run-persistence.js",

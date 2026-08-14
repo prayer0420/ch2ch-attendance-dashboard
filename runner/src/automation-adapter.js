@@ -482,8 +482,6 @@ function parseHorizontalFamilyLayout(rows) {
 
       const service13 = service13Cells.some(isChecked);
       const service4 = service4Cells.some(isChecked);
-      if (!service13 && !service4) return;
-
       people.push({
         family,
         name,
@@ -538,7 +536,7 @@ function rowsFromCsv(csvText) {
       note: row[noteIndex] || ""
     });
     })
-    .filter((person) => person.family && !isIgnoredFamilyLabel(person.family) && isLikelyPersonName(person.name) && (person.service13 || person.service4)));
+    .filter((person) => person.family && !isIgnoredFamilyLabel(person.family) && isLikelyPersonName(person.name)));
   if (!verticalPeople.length) {
     throw new Error(buildNoAttendanceMessage(rows));
   }
@@ -583,8 +581,7 @@ function validatePreparedPeople(people) {
   const invalid = people.filter((person) =>
     !person.family ||
     !person.name ||
-    isIgnoredFamilyLabel(person.family) ||
-    (person.service13 !== true && person.service4 !== true)
+    isIgnoredFamilyLabel(person.family)
   );
   if (invalid.length) {
     const samples = invalid.slice(0, 8).map((person) => `${person.family || "(가족 없음)"} / ${person.name || "(이름 없음)"}`).join(", ");
@@ -891,7 +888,8 @@ module.exports = {
     createInitialResults,
     applyLegacyResult,
     decodeInputBuffer,
-    isVerifiedAttendanceResult
+    isVerifiedAttendanceResult,
+    validatePreparedPeople
   },
   isVerifiedAttendanceResult
 };

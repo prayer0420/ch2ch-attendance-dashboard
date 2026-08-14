@@ -40,7 +40,7 @@ function parseManualRows(value: unknown): ManualAttendanceRow[] {
       service4: row?.service4 === true,
       note: String(row?.note ?? "").trim()
     }))
-    .filter((row) => row.family && row.name && (row.service13 || row.service4));
+    .filter((row) => row.family && row.name);
 }
 
 function manualRowsToCsv(rows: ManualAttendanceRow[]) {

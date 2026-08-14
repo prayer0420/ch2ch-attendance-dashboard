@@ -16,6 +16,7 @@ import {
   XCircle
 } from "lucide-react";
 import { fetchJson } from "@/lib/utils";
+import { applyAttendanceMode, buildAttendanceRunRows } from "@/lib/attendance-run-selection";
 
 type RunResponse = {
   runId: string;
@@ -67,12 +68,6 @@ const MODE_ICON: Record<ServiceMode, typeof RotateCcw> = {
   clear: XCircle
 };
 
-function applyMode(original: boolean, mode: ServiceMode) {
-  if (mode === "check") return true;
-  if (mode === "clear") return false;
-  return original;
-}
-
 function modeButtonClass(value: ServiceMode, current: ServiceMode) {
   const active = value === current;
   if (!active) {
@@ -107,8 +102,8 @@ function weekOfSunday(value: string) {
 function countPeople(people: SourcePerson[], modes: FamilyMode) {
   return people.reduce(
     (acc, person) => {
-      const sunday = applyMode(person.service13, modes.sunday);
-      const department = applyMode(person.service4, modes.department);
+      const sunday = applyAttendanceMode(person.service13, modes.sunday);
+      const department = applyAttendanceMode(person.service4, modes.department);
       if (sunday || department) acc.total += 1;
       if (sunday) acc.sunday += 1;
       if (department) acc.department += 1;
@@ -196,18 +191,7 @@ export function RunCreateForm() {
   }, [familySearch, groupedFamilies, showTargetsOnly]);
 
   const manualRows = useMemo(() => {
-    return sourcePeople
-      .map((person) => {
-        const modes = familyModes[person.family] ?? { sunday: "sheet", department: "sheet" };
-        return {
-          family: person.family,
-          name: person.name,
-          service13: applyMode(person.service13, modes.sunday),
-          service4: applyMode(person.service4, modes.department),
-          note: person.note ?? ""
-        };
-      })
-      .filter((person) => person.service13 || person.service4);
+    return buildAttendanceRunRows(sourcePeople, familyModes);
   }, [familyModes, sourcePeople]);
 
   const effectiveTotals = useMemo(() => {
@@ -582,8 +566,8 @@ export function RunCreateForm() {
             {visibleGroupedFamilies.length ? (
               <div className="mt-4 grid gap-3 xl:grid-cols-2">
                 {visibleGroupedFamilies.map((item) => {
-                  const sundayPeople = item.people.filter((person) => applyMode(person.service13, item.modes.sunday));
-                  const departmentPeople = item.people.filter((person) => applyMode(person.service4, item.modes.department));
+                  const sundayPeople = item.people.filter((person) => applyAttendanceMode(person.service13, item.modes.sunday));
+                  const departmentPeople = item.people.filter((person) => applyAttendanceMode(person.service4, item.modes.department));
                   const changed = item.modes.sunday !== "sheet" || item.modes.department !== "sheet";
 
                   return (
