@@ -8,7 +8,7 @@ npm run verify:run-persistence
 
 이 검사는 구형 `attendance_runs` 컬럼 오류만 호환 재시도 대상으로 삼고, 입력 파일 경로가 기존 `csv_file_name` JSON에 유지되는지 확인합니다.
 
-참고로 `package.json`에 남아 있는 `verify:parser`는 현재 저장소에 없는 예전 스크립트를 가리킵니다. 출석 파서 검사를 다시 복원하기 전까지는 실행하지 말고, 저장 경로 점검에는 위 명령을 사용합니다.
+`verify:parser`는 출석 파서와 실행 대상 매핑을 함께 검사하는 `verify:attendance-sync`의 호환 명령입니다.
 
 ## 소속 보정 회귀 검사
 

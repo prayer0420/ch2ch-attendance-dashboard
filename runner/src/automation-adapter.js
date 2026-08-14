@@ -216,7 +216,7 @@ function attendanceColumns(rows, start, end) {
     const label = normalizeName(subHeader[column]);
     if (!label) return false;
     if (label.includes("방송") || label.includes("가족")) return false;
-    return label.includes("참석") || label.includes("출석");
+    return label.includes("참석");
   });
 
   if (columns.length) return columns;

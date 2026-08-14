@@ -85,4 +85,32 @@ assert.deepEqual(
   ]
 );
 
+const explicitHeaders = [
+  [family, "1-3부", "", "", "4부", "", "", ""],
+  ["", "출석", "참석", "방송", "출석", "참석", "방송", "가족"],
+  ["SummaryOnly", "true", "false", "false", "true", "false", "false", "false"],
+  ["AttendOnly", "false", "true", "false", "false", "true", "false", "false"],
+  ["BroadcastOnly", "false", "false", "true", "false", "false", "true", "false"]
+].map((row) => row.map(String));
+const parsedExplicitHeaders = parseAttendanceRows(explicitHeaders, { includeUnchecked: true });
+assert.deepEqual(
+  JSON.parse(JSON.stringify(parsedExplicitHeaders.people
+    .filter(({ name }) => ["SummaryOnly", "AttendOnly", "BroadcastOnly"].includes(name))
+    .map(({ name, service13, service4 }) => ({ name, service13, service4 })))),
+  [
+    { name: "SummaryOnly", service13: false, service4: false },
+    { name: "AttendOnly", service13: true, service4: true },
+    { name: "BroadcastOnly", service13: false, service4: false }
+  ]
+);
+const adapterExplicitHeaders = __test.rowsFromCsv(
+  explicitHeaders.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")).join("\n")
+);
+assert.deepEqual(
+  adapterExplicitHeaders
+    .filter(({ service13, service4 }) => service13 || service4)
+    .map(({ name, service13, service4 }) => ({ name, service13, service4 })),
+  [{ name: "AttendOnly", service13: true, service4: true }]
+);
+
 console.log("attendance sync regression checks passed");
