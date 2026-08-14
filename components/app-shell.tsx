@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { Activity, BookOpenCheck, Home, LogOut, Play, QrCode, Search, Settings, UserRoundSearch } from "lucide-react";
+import { Activity, BookOpenCheck, Home, Play, QrCode, Settings, UserRoundSearch } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "대시보드", icon: Home },
   { href: "/search", label: "교인 검색", icon: UserRoundSearch },
   { href: "/qr-attendance", label: "QR 출석체크", icon: QrCode },
   { href: "/runs/new", label: "출석 실행", icon: Play },
-  { href: "/attendance", label: "출석 이력", icon: Search },
   { href: "/worship-journal", label: "예배일지", icon: BookOpenCheck },
   { href: "/settings", label: "설정", icon: Settings }
 ];

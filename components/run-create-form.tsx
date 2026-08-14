@@ -11,7 +11,6 @@ import {
   Play,
   RotateCcw,
   Search,
-  ShieldCheck,
   Square,
   Users,
   XCircle
@@ -105,10 +104,6 @@ function weekOfSunday(value: string) {
   return { year: sunday.getFullYear(), week: Math.ceil(day / 7) };
 }
 
-function koreanDate(value: string) {
-  return new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "long", day: "numeric", weekday: "short" }).format(new Date(`${value}T12:00:00`));
-}
-
 function countPeople(people: SourcePerson[], modes: FamilyMode) {
   return people.reduce(
     (acc, person) => {
@@ -148,9 +143,16 @@ export function RunCreateForm() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const currentSunday = mostRecentSunday();
     try {
       const saved = localStorage.getItem(SETTINGS_KEY);
-      if (saved) setForm((current) => ({ ...current, ...JSON.parse(saved) }));
+      if (saved) {
+        const parsed = JSON.parse(saved) as Partial<typeof form>;
+        const { targetDate: _savedTargetDate, ...savedSettings } = parsed;
+        setForm((current) => ({ ...current, ...savedSettings, targetDate: currentSunday }));
+      } else {
+        setForm((current) => ({ ...current, targetDate: currentSunday }));
+      }
     } catch {}
     setReady(true);
   }, []);
@@ -351,7 +353,7 @@ export function RunCreateForm() {
       return;
     }
 
-    const confirmed = window.confirm(`정말 ${weekText} 출석체크를 CH2CH 교적부에 실제 저장할까요? 저장 버튼(Alt+S)까지 실행됩니다.`);
+    const confirmed = window.confirm(`정말 ${weekText} 출석체크를 CH2CH 교적부에 실제 저장할까요?`);
     if (!confirmed) return;
 
     setIsSubmitting(true);
@@ -441,20 +443,6 @@ export function RunCreateForm() {
 
         <section className="rounded border border-line bg-white/72 p-4">
           <h2 className="text-lg font-black">실행 옵션</h2>
-          <div className="mt-4 rounded border border-brass/35 bg-brass/10 p-3 text-sm text-ink/75">
-            <AlertTriangle className="mb-2 text-brass" size={18} />
-            실제 실행은 브라우저에서 CH2CH 화면을 직접 처리하고 저장 버튼 또는 Alt+S를 실행합니다.
-          </div>
-
-          <div className="mt-5 rounded border border-sea/30 bg-white p-3 text-sm">
-            <div className="flex items-center gap-2 font-black text-sea">
-              <ShieldCheck size={18} />
-              실행 주차: {weekText}
-            </div>
-            <p className="mt-1 text-ink/65">{koreanDate(form.targetDate)} · 다음 월요일 기준 주차로 자동 계산합니다.</p>
-            <p className="mt-1 text-ink/65">CH2CH 경로: {form.targetDept} › {form.targetCourse} › {form.targetGroup} › 출석부(주별)</p>
-          </div>
-
           <div className="mt-5 grid gap-2">
             <button
               type="button"
