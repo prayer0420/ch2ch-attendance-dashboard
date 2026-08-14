@@ -3,7 +3,8 @@ const assert = require("node:assert/strict");
 (async () => {
   const {
     buildCorrectionReport,
-    collectDeferredCorrectionTargets
+    collectDeferredCorrectionTargets,
+    chooseCorrectionOutcome
   } = await import("../runner/legacy-ch2ch/src/affiliation-correction.js");
   const { __test } = require("../runner/src/automation-adapter.js");
 
@@ -88,8 +89,23 @@ const assert = require("node:assert/strict");
     affiliationCorrections: [failed]
   }, false);
   assert.equal(failedMapped[0].status, "final_fail");
-  assert.equal(failedMapped[0].attempt_stage, "second_pass_search");
+  assert.equal(failedMapped[0].attempt_stage, "final_fail");
   assert.equal(failedMapped[0].failure_reason, failed.reason);
+
+  const recoveredAfterRetry = chooseCorrectionOutcome([
+    { ok: false, reason: "검색 결과가 아직 로드되지 않음" },
+    { ok: false, reason: "소속 화면 클릭 실패" },
+    { ok: false, alreadyMatched: true, foundFamily: "재원이네", saveVerified: true }
+  ]);
+  assert.equal(recoveredAfterRetry.ok, false);
+  assert.equal(recoveredAfterRetry.alreadyMatched, true);
+
+  const alreadyMatchedReport = buildCorrectionReport(targets[0], recoveredAfterRetry);
+  assert.equal(alreadyMatchedReport.status, "corrected");
+  assert.equal(alreadyMatchedReport.alreadyMatched, true);
+  assert.equal(alreadyMatchedReport.saveVerified, true);
+  assert.equal(__test.isVerifiedAttendanceResult({ status: "second_pass_success", save_result: "success" }), true);
+  assert.equal(__test.isVerifiedAttendanceResult({ status: "final_fail", save_result: "success" }), false);
 
   console.log("affiliation correction checks passed");
 })().catch((error) => {

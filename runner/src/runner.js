@@ -6,7 +6,7 @@ dotenv.config({ path: ".env" });
 const os = require("node:os");
 const { createClient } = require("@supabase/supabase-js");
 const { getRunnerConfig } = require("./env");
-const { runAttendanceAutomation } = require("./automation-adapter");
+const { runAttendanceAutomation, isVerifiedAttendanceResult } = require("./automation-adapter");
 const { buildQrWorkerPayload } = require("./qr-sync-job");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -152,7 +152,7 @@ class Runner {
       const results = await runAttendanceAutomation(run, reporter);
       await this.saveResults(run, results);
 
-      const finalFailCount = results.filter((result) => result.attempt_stage === "final_fail").length;
+      const finalFailCount = results.filter((result) => result.status === "final_fail" || result.attempt_stage === "final_fail").length;
       const saveFailCount = results.filter((result) => result.save_result === "failed").length;
       const unverifiedSaveCount = results.filter((result) => result.save_result === "attempted_unverified").length;
       const status = run.dry_run
@@ -223,7 +223,7 @@ class Runner {
 
     const verifiedResults = run.dry_run
       ? []
-      : inserted.filter((result) => result.status === "primary_success" && result.save_result === "success");
+      : inserted.filter(isVerifiedAttendanceResult);
 
     if (!verifiedResults.length) return;
 

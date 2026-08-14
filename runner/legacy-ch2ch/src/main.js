@@ -5,7 +5,12 @@ import readline from 'readline/promises';
 import { stdin as input, stdout as output } from 'process';
 import { chromium } from 'playwright';
 import XLSX from 'xlsx';
-import { buildCorrectionReport, collectDeferredCorrectionTargets } from './affiliation-correction.js';
+import {
+  buildCorrectionReport,
+  chooseCorrectionOutcome,
+  collectDeferredCorrectionTargets,
+  isCorrectionSuccessful
+} from './affiliation-correction.js';
 
 const CONFIG = {
   url: process.env.CH2CH_URL || 'https://ch2ch.or.kr/login.asp',
@@ -20,6 +25,12 @@ const CONFIG = {
   dryRun: String(process.env.DRY_RUN || 'true').toLowerCase() === 'true',
   savePerFamily: String(process.env.SAVE_PER_FAMILY || 'true').toLowerCase() === 'true',
   saveMode: String(process.env.SAVE_MODE || 'smart').toLowerCase(), // smart | auto | click | alt-s
+  correctionRetryCount: Number.isFinite(Number(process.env.CORRECTION_RETRY_COUNT))
+    ? Math.max(1, Number(process.env.CORRECTION_RETRY_COUNT))
+    : 3,
+  correctionRetryDelayMs: Number.isFinite(Number(process.env.CORRECTION_RETRY_DELAY_MS))
+    ? Math.max(0, Number(process.env.CORRECTION_RETRY_DELAY_MS))
+    : 800,
   keepBrowserOpen: String(process.env.KEEP_BROWSER_OPEN || 'true').toLowerCase() === 'true',
   attendanceFile: process.env.ATTENDANCE_FILE || './data/attendance.csv',
   familyOrderFile: process.env.FAMILY_ORDER_FILE || './data/families.json',
@@ -745,6 +756,24 @@ async function findMemberRow(page, name) {
   return null;
 }
 
+async function findMemberRowWithRetry(page, name, attempts = 3) {
+  const totalAttempts = Math.max(1, Number(attempts) || 1);
+  for (let attempt = 1; attempt <= totalAttempts; attempt += 1) {
+    const found = await findMemberRow(page, name);
+    if (found) return found;
+    if (attempt === totalAttempts) break;
+
+    // CH2CH renders long tables lazily.  Re-scan both ends so a row outside
+    // the current viewport is not reported as missing just because the first
+    // DOM snapshot was taken too early.
+    await scrollAllContainers(page, 'start');
+    await shortDelay(250);
+    await scrollAllContainers(page, 'end');
+    await shortDelay(250);
+  }
+  return null;
+}
+
 async function readVisibleMemberTexts(page, expected = []) {
   const visible = new Set();
   let matched = 0;
@@ -1026,11 +1055,11 @@ async function searchMemberRowGlobally(page, rowInfo, originalFamily) {
   await clickTextInAnyFrame(page, '간편검색', false, 1200).catch(() => false);
   await shortDelay(1200);
 
-  let found = await findMemberRow(page, rowInfo.name);
+  let found = await findMemberRowWithRetry(page, rowInfo.name, 2);
   if (!found) {
     await clickTextInAnyFrame(page, '검색', false, 1200).catch(() => false);
     await shortDelay(1200);
-    found = await findMemberRow(page, rowInfo.name);
+    found = await findMemberRowWithRetry(page, rowInfo.name, 2);
   }
 
   if (!found) {
@@ -1047,39 +1076,107 @@ async function searchMemberRowGlobally(page, rowInfo, originalFamily) {
   };
 }
 
+async function verifyPreparedRows(preparedRows) {
+  const mismatches = [];
+  for (const item of preparedRows || []) {
+    const state = await readWebAttendanceState(item.found);
+    if (!attendanceStateMatches(item.rowInfo, state)) {
+      mismatches.push({
+        name: item.rowInfo.name,
+        reason: state.ok
+          ? attendanceMismatchReason(item.rowInfo, state, '저장 후 상태 대조 불일치')
+          : state.reason
+      });
+    }
+  }
+  return {
+    ok: mismatches.length === 0,
+    checked: (preparedRows || []).length,
+    mismatches
+  };
+}
+
+async function clickFoundAffiliation(page, search) {
+  const target = normalizeText(search.foundFamily || '');
+  if (target && search.found?.rowHandle) {
+    try {
+      const clickedInRow = await search.found.rowHandle.evaluate((tr, expected) => {
+        const normalize = (value) => String(value || '').replace(/\s+/g, '').trim();
+        const isVisible = (element) => {
+          if (!element || !element.getClientRects || element.getClientRects().length === 0) return false;
+          const style = window.getComputedStyle(element);
+          const rect = element.getBoundingClientRect();
+          return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 0 && rect.height > 0;
+        };
+        const candidates = Array.from(tr.querySelectorAll('a,button,[onclick],[role="button"],td,th'))
+          .filter(isVisible)
+          .filter((element) => normalize(element.innerText || element.textContent || element.value).includes(expected));
+        const element = candidates[0];
+        if (!element) return false;
+        element.scrollIntoView({ block: 'center', inline: 'center' });
+        element.click();
+        return true;
+      }, target);
+      if (clickedInRow) {
+        await shortDelay(700);
+        return true;
+      }
+    } catch (_) {}
+  }
+  return clickTextInAnyFrame(page, search.foundFamily, true, 2000);
+}
+
 async function openFoundAffiliation(page, search, rowInfo, originalFamily) {
   const foundFamily = normalizeText(search.foundFamily || '');
   if (!foundFamily) {
     return {
       ...search,
-      found: null,
-      reason: `검색 결과에서 '${rowInfo.name}'의 소속을 확인하지 못했습니다. 원래 가족 '${originalFamily}' 화면에는 자동 체크하지 않았습니다. ${targetActionText(rowInfo)}`
+      // The search row is still a unique name match.  Use it as a safe
+      // fallback when the affiliation label is missing, then verify the
+      // actual checkboxes before touching anything.
+      found: search.found,
+      navigationSkipped: true,
+      reason: `검색 결과에서 '${rowInfo.name}'의 소속을 확인하지 못했습니다. 검색 행의 출석 상태를 먼저 대조합니다.`
     };
   }
   if (foundFamily === normalizeText(originalFamily)) {
     return {
       ...search,
-      found: null,
-      reason: `검색 결과의 소속이 원래 가족 '${originalFamily}'과 같아 보정 대상의 소속 변경을 확인할 수 없습니다. ${targetActionText(rowInfo)}`
+      // A global search can return the original family after the table has
+      // finished loading.  It is still a valid row, so verify it instead of
+      // converting the match into a failure.
+      found: search.found,
+      navigationSkipped: true,
+      foundLocation: foundFamily,
+      reason: null
     };
   }
 
-  if (!(await clickTextInAnyFrame(page, search.foundFamily, true, 2000))) {
+  if (!(await clickFoundAffiliation(page, search))) {
     return {
       ...search,
-      found: null,
-      reason: `검색 결과에서 확인한 소속 '${search.foundFamily}' 화면으로 이동하지 못했습니다. ${targetActionText(rowInfo)}`
+      // Navigation can time out even though the search row itself already
+      // contains the requested checkbox state.  Keep the row for a state
+      // read; only a failed state read should become a hard failure.
+      found: search.found,
+      navigationFailed: true,
+      reason: `검색 결과에서 확인한 소속 '${search.foundFamily}' 화면으로 이동하지 못했습니다. 검색 행의 출석 상태를 먼저 대조합니다.`
     };
   }
   await shortDelay(700);
-  if (!(await selectAttendanceWeek(page))) {
+  let weekSelected = await selectAttendanceWeek(page);
+  if (!weekSelected) {
+    await shortDelay(800);
+    weekSelected = await selectAttendanceWeek(page);
+  }
+  if (!weekSelected) {
     return {
       ...search,
       found: null,
       reason: `소속 '${search.foundFamily}' 이동 후 ${getTargetWeekLabel() || '대상 주차'} 선택에 실패했습니다. ${targetActionText(rowInfo)}`
     };
   }
-  const found = await findMemberRow(page, rowInfo.name);
+  const found = await findMemberRowWithRetry(page, rowInfo.name, 2);
   if (!found) {
     return {
       ...search,
@@ -1090,12 +1187,29 @@ async function openFoundAffiliation(page, search, rowInfo, originalFamily) {
   return { ...search, found };
 }
 
+async function locateOriginalFamilyRow(page, rowInfo, originalFamily) {
+  if (!(await clickTextInAnyFrame(page, originalFamily, true, 1500))) return null;
+  await shortDelay(700);
+  if (!(await selectAttendanceWeek(page))) return null;
+  const found = await findMemberRowWithRetry(page, rowInfo.name, 2);
+  if (!found) return null;
+  return {
+    found,
+    foundFamily: originalFamily,
+    foundLocation: originalFamily,
+    originalFamilyRetry: true
+  };
+}
+
 async function processSearchCorrection(page, rowInfo, originalFamily) {
   try {
     const search = await searchMemberRowGlobally(page, rowInfo, originalFamily);
-    const located = search.found
+    let located = search.found
       ? await openFoundAffiliation(page, search, rowInfo, originalFamily)
       : search;
+    if (!located.found) {
+      located = await locateOriginalFamilyRow(page, rowInfo, originalFamily) || located;
+    }
     if (!located.found) {
       return {
         family: rowInfo.family,
@@ -1116,6 +1230,22 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
         fallbackSearch: true,
         foundFamily: located.foundFamily,
         foundLocation: located.foundLocation
+      };
+    }
+
+    if (attendanceStateMatches(rowInfo, before)) {
+      log('검색 보정 이미 반영됨', `${rowInfo.name}: 현재 출석 상태가 시트와 일치하여 추가 클릭 없이 성공 처리`);
+      return {
+        family: rowInfo.family,
+        name: rowInfo.name,
+        ok: true,
+        alreadyMatched: true,
+        reason: null,
+        fallbackSearch: true,
+        foundFamily: located.foundFamily,
+        foundLocation: located.foundLocation,
+        saveAttempted: false,
+        saveVerified: true
       };
     }
 
@@ -1180,6 +1310,15 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
       };
     }
 
+    let saveVerified = saved.verified;
+    if (saved.attempted && !saveVerified) {
+      const persistedState = await readWebAttendanceState(located.found);
+      saveVerified = attendanceStateMatches(rowInfo, persistedState);
+      if (saveVerified) {
+        log('저장 후 상태 대조 성공', `${rowInfo.name}: 검색 보정 후 체크 상태가 시트와 일치합니다.`);
+      }
+    }
+
     log('검색 보정 성공', `${rowInfo.name}: 시트 가족 ${originalFamily}, 처리 위치 ${search.foundLocation || '검색 결과'}, ${targetActionText(rowInfo)}`);
     return {
       family: rowInfo.family,
@@ -1190,7 +1329,7 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
       foundFamily: located.foundFamily,
       foundLocation: located.foundLocation,
       saveAttempted: saved.attempted,
-      saveVerified: saved.verified
+      saveVerified
     };
   } catch (err) {
     return {
@@ -1260,7 +1399,7 @@ async function processFamily(page, familyName, rows, options = {}) {
 
   for (const rowInfo of rows) {
     try {
-      const found = await findMemberRow(page, rowInfo.name);
+      const found = await findMemberRowWithRetry(page, rowInfo.name, 3);
       if (!found) {
         searchRetryRows.push(rowInfo);
         failed += 1;
@@ -1326,6 +1465,15 @@ async function processFamily(page, familyName, rows, options = {}) {
       log('저장 전 대조 경고', `${familyName}: ${finalMismatchCount}명 불일치가 있지만 정상 처리된 대상은 저장을 계속합니다.`);
     }
     saved = await saveCurrentPage(page, familyName);
+    if (saved.attempted && !saved.verified && !CONFIG.dryRun) {
+      const verification = await verifyPreparedRows(preparedRows);
+      if (verification.ok) {
+        saved = { ...saved, verified: true };
+        log('저장 후 상태 대조 성공', `${familyName}: ${verification.checked}명 체크 상태가 시트와 일치합니다.`);
+      } else {
+        log('저장 전 대조 경고', `${familyName}: ${verification.mismatches.length}명 상태를 다시 확인하지 못했습니다.`);
+      }
+    }
   } else if (CONFIG.savePerFamily) {
     saved = { attempted: true, verified: CONFIG.dryRun };
   }
@@ -1350,6 +1498,26 @@ async function processFamily(page, familyName, rows, options = {}) {
 async function finalSave(page) {
   if (CONFIG.savePerFamily) return;
   await saveCurrentPage(page, '최종 저장');
+}
+
+async function processSearchCorrectionWithRetry(page, target) {
+  const outcomes = [];
+  for (let attempt = 1; attempt <= CONFIG.correctionRetryCount; attempt += 1) {
+    const outcome = await processSearchCorrection(page, target.rowInfo, target.originalFamily);
+    outcomes.push(outcome);
+    if (isCorrectionSuccessful(outcome)) {
+      return { ...outcome, attempts: attempt };
+    }
+    if (attempt < CONFIG.correctionRetryCount) {
+      log('검색 보정 재시도', `${target.rowInfo.name}: ${attempt}/${CONFIG.correctionRetryCount} 실패 후 다시 검색합니다.`);
+      await shortDelay(CONFIG.correctionRetryDelayMs);
+    }
+  }
+
+  return {
+    ...chooseCorrectionOutcome(outcomes),
+    attempts: outcomes.length
+  };
 }
 
 async function waitForeverWithMessage() {
@@ -1454,7 +1622,7 @@ async function main() {
   const correctionTargets = collectDeferredCorrectionTargets(results, grouped);
   const affiliationCorrections = [];
   for (const target of correctionTargets) {
-    const outcome = await processSearchCorrection(page, target.rowInfo, target.originalFamily);
+    const outcome = await processSearchCorrectionWithRetry(page, target);
     const report = buildCorrectionReport(target, outcome);
     affiliationCorrections.push(report);
 
@@ -1470,7 +1638,7 @@ async function main() {
       personResult.saveAttempted = Boolean(outcome.saveAttempted);
       personResult.saveVerified = Boolean(outcome.saveVerified);
     }
-    if (familyResult && outcome.ok) {
+    if (familyResult && isCorrectionSuccessful(outcome)) {
       familyResult.success += 1;
       familyResult.failed = Math.max(familyResult.failed - 1, 0);
     }

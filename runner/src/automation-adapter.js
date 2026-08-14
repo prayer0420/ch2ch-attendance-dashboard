@@ -627,6 +627,14 @@ function createInitialResults(run, people) {
   }));
 }
 
+function isVerifiedAttendanceResult(result) {
+  return Boolean(
+    result &&
+    ["primary_success", "second_pass_success"].includes(result.status) &&
+    result.save_result === "success"
+  );
+}
+
 function readLegacyResult() {
   if (!fs.existsSync(LEGACY_RESULT_FILE)) {
     throw new Error("기존 자동화 결과 파일이 생성되지 않았습니다.");
@@ -671,7 +679,7 @@ function applyLegacyResult(results, legacyResult, dryRun) {
         ...result,
         found_location: correction.foundLocation || correction.foundFamily || result.found_location,
         status: corrected ? "second_pass_success" : "final_fail",
-        attempt_stage: "second_pass_search",
+        attempt_stage: corrected ? "second_pass_search" : "final_fail",
         save_result: corrected
           ? correction.saveVerified ? "success" : "attempted_unverified"
           : "not_saved",
@@ -787,6 +795,9 @@ async function runLegacyProcess(run, reporter, people) {
       return message.startsWith("가족 결과") ||
         message.startsWith("시트 불일치") ||
         message.startsWith("검색 보정 보류") ||
+        message.startsWith("검색 보정 재시도") ||
+        message.startsWith("검색 보정 이미 반영됨") ||
+        message.startsWith("저장 후 상태 대조 성공") ||
         message.startsWith("저장 시작") ||
         message.startsWith("저장 결과") ||
         message.startsWith("저장 전 대조 경고") ||
@@ -874,5 +885,13 @@ async function runAttendanceAutomation(run, reporter) {
 
 module.exports = {
   runAttendanceAutomation,
-  __test: { parseCsv, rowsFromCsv, createInitialResults, applyLegacyResult, decodeInputBuffer }
+  __test: {
+    parseCsv,
+    rowsFromCsv,
+    createInitialResults,
+    applyLegacyResult,
+    decodeInputBuffer,
+    isVerifiedAttendanceResult
+  },
+  isVerifiedAttendanceResult
 };
