@@ -112,5 +112,20 @@ assert.deepEqual(
     .map(({ name, service13, service4 }) => ({ name, service13, service4 })),
   [{ name: "AttendOnly", service13: true, service4: true }]
 );
+const qrAdapterHeaders = [
+  [family, "1-3부", "", "", "4부", "", "", ""],
+  ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족"],
+  ["QrOnly", "true", "false", "false", "true", "false", "false", "false"],
+  ["AttendOnly", "false", "true", "false", "false", "true", "false", "false"]
+].map((row) => row.map(String));
+const qrAdapterPeople = __test.rowsFromCsv(
+  qrAdapterHeaders.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")).join("\n")
+);
+assert.deepEqual(
+  qrAdapterPeople
+    .filter(({ service13, service4 }) => service13 || service4)
+    .map(({ name, service13, service4 }) => ({ name, service13, service4 })),
+  [{ name: "AttendOnly", service13: true, service4: true }]
+);
 
 console.log("attendance sync regression checks passed");
