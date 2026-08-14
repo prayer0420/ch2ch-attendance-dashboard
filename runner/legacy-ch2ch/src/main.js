@@ -11,6 +11,7 @@ import {
   collectDeferredCorrectionTargets,
   isCorrectionSuccessful
 } from './affiliation-correction.js';
+import { buildAttendanceActions } from './attendance-actions.js';
 import { verifyPreparedRowsWithFreshRows } from './attendance-verification.js';
 
 const CONFIG = {
@@ -1244,10 +1245,18 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
       };
     }
 
-    const sundayResult = await setCheckboxInRow(located.found, rowInfo, '주일', rowInfo.sunday, 0);
-    const departmentResult = await setCheckboxInRow(located.found, rowInfo, '부서', rowInfo.department, 1);
-    if (!sundayResult.ok || !departmentResult.ok) {
-      const reason = [sundayResult.reason, departmentResult.reason].filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
+    const attendanceResults = [];
+    for (const action of buildAttendanceActions(rowInfo)) {
+      attendanceResults.push(await setCheckboxInRow(
+        located.found,
+        rowInfo,
+        action.fieldName,
+        action.desired,
+        action.checkboxIndex
+      ));
+    }
+    if (attendanceResults.some(result => !result.ok)) {
+      const reason = attendanceResults.map(result => result.reason).filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
       return {
         family: rowInfo.family,
         name: rowInfo.name,
@@ -1412,11 +1421,19 @@ async function processFamily(page, familyName, rows, options = {}) {
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: true, reason: null });
         continue;
       }
-      const sundayResult = await setCheckboxInRow(found, rowInfo, '주일', rowInfo.sunday, 0);
-      const departmentResult = await setCheckboxInRow(found, rowInfo, '부서', rowInfo.department, 1);
-      if (!sundayResult.ok || !departmentResult.ok) {
+      const attendanceResults = [];
+      for (const action of buildAttendanceActions(rowInfo)) {
+        attendanceResults.push(await setCheckboxInRow(
+          found,
+          rowInfo,
+          action.fieldName,
+          action.desired,
+          action.checkboxIndex
+        ));
+      }
+      if (attendanceResults.some(result => !result.ok)) {
         failed += 1;
-        const reason = [sundayResult.reason, departmentResult.reason].filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
+        const reason = attendanceResults.map(result => result.reason).filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason: `${reason}. ${targetActionText(rowInfo)}` });
         continue;
       }
