@@ -216,15 +216,16 @@ function attendanceColumns(rows, start, end) {
     const label = normalizeName(subHeader[column]);
     if (!label) return false;
     if (label.includes("방송") || label.includes("가족")) return false;
-    return label.includes("qr") || label.includes("큐알") || label.includes("참석");
+    return label.includes("참석") || label.includes("출석");
   });
 
   if (columns.length) return columns;
 
   const span = rangeColumns(start, end);
-  // Google CSV can omit the visual sub-header row. In that layout the first two
-  // cells under each service are QR and attendance; later cells are broadcast/family helpers.
-  return span.slice(0, Math.min(2, span.length));
+  // Google CSV can omit the visual sub-header row. In that layout the first
+  // cell under each service is QR and the second cell is attendance; later
+  // cells are broadcast/family helpers. Only the attendance cell maps to web교적.
+  return span.length >= 2 ? span.slice(1, 2) : span.slice(0, 1);
 }
 
 function isLikelyFamilyLabel(value) {
@@ -498,7 +499,7 @@ function parseHorizontalFamilyLayout(rows) {
 }
 
 function buildNoAttendanceMessage(rows) {
-  return "가장체크에서 참석 대상이 0명으로 계산되었습니다. A~DP 범위의 가족/이름/1-3부/4부 QR 또는 참석 칸만 확인합니다. DQ~DT와 출석 요약 칸, 방송/가족 칸은 출석으로 보지 않습니다.";
+  return "가장체크에서 참석 대상이 0명으로 계산되었습니다. A~DP 범위의 가족/이름/1-3부/4부 참석 칸만 확인합니다. QR/방송/가족 칸과 DQ~DT 출석 요약 칸은 웹교적 출석으로 보지 않습니다.";
 }
 
 function rowsFromCsv(csvText) {
@@ -856,7 +857,7 @@ async function runAttendanceAutomation(run, reporter) {
   }
   validatePreparedPeople(people);
   prepareLegacyCsv(people);
-  await reporter.event("input_read_completed", `입력 자체검사 완료: A~DP 범위의 QR/참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
+  await reporter.event("input_read_completed", `입력 자체검사 완료: A~DP 범위의 참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
 
   const { legacyResult } = await runLegacyProcess(run, reporter, people);
   const corrections = legacyResult.affiliationCorrections || [];

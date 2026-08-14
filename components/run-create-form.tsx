@@ -519,7 +519,7 @@ export function RunCreateForm() {
           <>
             {!effectiveTotals.total ? (
               <div className="mt-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
-                읽은 이름은 있지만 현재 실행 예약 대상이 0명입니다. 실행 예약 조정에서 주일/부서를 체크 예약하거나 A~DP 범위의 QR/참석 칸을 확인해 주세요.
+                읽은 이름은 있지만 현재 실행 예약 대상이 0명입니다. 실행 예약 조정에서 주일/부서를 체크 예약하거나 A~DP 범위의 참석 칸을 확인해 주세요.
               </div>
             ) : null}
 

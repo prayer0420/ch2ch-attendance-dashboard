@@ -11,6 +11,7 @@ import {
   collectDeferredCorrectionTargets,
   isCorrectionSuccessful
 } from './affiliation-correction.js';
+import { verifyPreparedRowsWithFreshRows } from './attendance-verification.js';
 
 const CONFIG = {
   url: process.env.CH2CH_URL || 'https://ch2ch.or.kr/login.asp',
@@ -1076,26 +1077,6 @@ async function searchMemberRowGlobally(page, rowInfo, originalFamily) {
   };
 }
 
-async function verifyPreparedRows(preparedRows) {
-  const mismatches = [];
-  for (const item of preparedRows || []) {
-    const state = await readWebAttendanceState(item.found);
-    if (!attendanceStateMatches(item.rowInfo, state)) {
-      mismatches.push({
-        name: item.rowInfo.name,
-        reason: state.ok
-          ? attendanceMismatchReason(item.rowInfo, state, '저장 후 상태 대조 불일치')
-          : state.reason
-      });
-    }
-  }
-  return {
-    ok: mismatches.length === 0,
-    checked: (preparedRows || []).length,
-    mismatches
-  };
-}
-
 async function clickFoundAffiliation(page, search) {
   const target = normalizeText(search.foundFamily || '');
   if (target && search.found?.rowHandle) {
@@ -1466,7 +1447,12 @@ async function processFamily(page, familyName, rows, options = {}) {
     }
     saved = await saveCurrentPage(page, familyName);
     if (saved.attempted && !saved.verified && !CONFIG.dryRun) {
-      const verification = await verifyPreparedRows(preparedRows);
+      const verification = await verifyPreparedRowsWithFreshRows(preparedRows, {
+        findRow: (name) => findMemberRowWithRetry(page, name, 3),
+        readState: readWebAttendanceState,
+        matches: attendanceStateMatches,
+        mismatchReason: (rowInfo, state) => attendanceMismatchReason(rowInfo, state, '저장 후 상태 대조 불일치')
+      });
       if (verification.ok) {
         saved = { ...saved, verified: true };
         log('저장 후 상태 대조 성공', `${familyName}: ${verification.checked}명 체크 상태가 시트와 일치합니다.`);

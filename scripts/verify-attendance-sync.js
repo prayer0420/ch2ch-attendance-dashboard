@@ -31,6 +31,9 @@ function loadTypeScriptModule(filePath) {
 const { buildAttendanceRunRows } = loadTypeScriptModule(
   path.resolve(__dirname, "..", "lib", "attendance-run-selection.ts")
 );
+const { parseAttendanceRows } = loadTypeScriptModule(
+  path.resolve(__dirname, "..", "lib", "attendance-input-parser.ts")
+);
 const { __test } = require(path.resolve(__dirname, "..", "runner", "src", "automation-adapter.js"));
 
 const family = String.fromCodePoint(0xC7AC, 0xC6D0, 0xC774, 0xB124);
@@ -60,5 +63,26 @@ assert.deepEqual(parsed.map(({ name, service13, service4 }) => ({ name, service1
   { name: bayu, service13: false, service4: true }
 ]);
 assert.doesNotThrow(() => __test.validatePreparedPeople(parsed));
+
+const horizontal = [
+  [family, "1-3부", "", "", "4부", "", "", "", family, "1-3부", "", "", "4부", "", "", ""],
+  ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+  ["QrOnly", "true", "false", "false", "false", "false", "false", "", "", "false", "false", "false", "false", "false", "false", ""],
+  ["AttendOnly", "false", "true", "false", "false", "false", "false", "", "", "false", "true", "false", "false", "false", "false", ""],
+  ["Qr4Only", "false", "false", "false", "true", "false", "false", "", "", "false", "false", "false", "true", "false", "false", ""],
+  ["Attend4Only", "false", "false", "false", "false", "true", "false", "", "", "false", "false", "false", "false", "true", "false", ""]
+].map((row) => row.map(String));
+const parsedHorizontal = parseAttendanceRows(horizontal, { includeUnchecked: true });
+assert.deepEqual(
+  JSON.parse(JSON.stringify(parsedHorizontal.people
+    .filter(({ name }) => ["QrOnly", "AttendOnly", "Qr4Only", "Attend4Only"].includes(name))
+    .map(({ name, service13, service4 }) => ({ name, service13, service4 })))),
+  [
+    { name: "QrOnly", service13: false, service4: false },
+    { name: "AttendOnly", service13: true, service4: false },
+    { name: "Qr4Only", service13: false, service4: false },
+    { name: "Attend4Only", service13: false, service4: true }
+  ]
+);
 
 console.log("attendance sync regression checks passed");

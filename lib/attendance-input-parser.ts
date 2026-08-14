@@ -179,15 +179,16 @@ function attendanceColumns(rows: string[][], start: number, end: number) {
     const label = normalizeName(subHeader[column]);
     if (!label) return false;
     if (label.includes("방송") || label.includes("가족")) return false;
-    return label.includes("qr") || label.includes("큐알") || label.includes("참석");
+    return label.includes("참석") || label.includes("출석");
   });
 
   if (columns.length) return columns;
 
   const span = rangeColumns(start, end);
-  // Google CSV can omit the visual sub-header row. In that layout the first two
-  // cells under each service are QR and attendance; later cells are broadcast/family helpers.
-  return span.slice(0, Math.min(2, span.length));
+  // Google CSV can omit the visual sub-header row. In that layout the first
+  // cell under each service is QR and the second cell is attendance; later
+  // cells are broadcast/family helpers. Only the attendance cell maps to web교적.
+  return span.length >= 2 ? span.slice(1, 2) : span.slice(0, 1);
 }
 
 function isLikelyFamilyLabel(value: unknown) {
@@ -256,7 +257,7 @@ function parseHorizontalFamilyLayout(rows: string[][], options: AttendanceParseO
       service13Start,
       service4Start,
       controlColumns: rangeColumns(service13Start, nextStart),
-      // QR and attendance count as present. Broadcast/family helper columns never count as attendance.
+      // Only the attendance cell maps to web교적. QR is a separate scan signal.
       service13Columns: attendanceColumns(rows, service13Start, service4Start),
       service4Columns: attendanceColumns(rows, service4Start, nextStart)
     };
@@ -370,7 +371,7 @@ export function parseAttendanceRows(rows: string[][], options: AttendanceParseOp
   const verticalPeople = mergeDuplicatePeople(parseVerticalTable(verticalRows, options));
   if (!verticalPeople.length) {
     const detail = warnings.size ? ` ${Array.from(warnings).join(" ")}` : "";
-    throw new Error(`가족/이름/1-3부/4부 QR 또는 참석 체크를 찾지 못했습니다.${detail} A~DP 범위만 확인하며 DQ~DT와 출석 요약 칸은 보지 않습니다. 방송/가족 칸은 출석으로 보지 않습니다. '가장체크' 탭 형식을 확인해 주세요.`);
+    throw new Error(`가족/이름/1-3부/4부 참석 체크를 찾지 못했습니다.${detail} A~DP 범위만 확인하며 DQ~DT와 출석 요약 칸은 보지 않습니다. QR/방송/가족 칸은 웹교적 출석으로 보지 않습니다. '가장체크' 탭 형식을 확인해 주세요.`);
   }
   return {
     people: verticalPeople,
