@@ -16,6 +16,7 @@
     "verify:parser": "node scripts/verify-parser.js",
     "verify:attendance-sync": "node scripts/verify-attendance-sync.js",
     "verify:web-attendance-virtual": "node scripts/verify-web-attendance-virtual.js",
+    "verify:web-clear-targets": "node scripts/verify-web-clear-targets.js",
     "verify:save-verification": "node scripts/verify-save-verification.js",
     "verify:run-date-default": "node scripts/verify-run-date-default.js",
     "verify:accounting": "node scripts/accounting/verify-accounting-parser.js",
