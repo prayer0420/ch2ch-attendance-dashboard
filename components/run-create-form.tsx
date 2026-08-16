@@ -93,10 +93,12 @@ function mostRecentSunday() {
 
 function weekOfSunday(value: string) {
   const sunday = new Date(`${value}T12:00:00`);
-  sunday.setDate(sunday.getDate() + 4);
-  const yearStart = new Date(sunday.getFullYear(), 0, 1);
-  const day = Math.floor((sunday.getTime() - yearStart.getTime()) / 86400000) + 1;
-  return { year: sunday.getFullYear(), week: Math.ceil(day / 7) };
+  const firstSunday = new Date(sunday.getFullYear(), 0, 1, 12);
+  firstSunday.setDate(firstSunday.getDate() + ((7 - firstSunday.getDay()) % 7));
+  const elapsedWeeks = sunday < firstSunday
+    ? 0
+    : Math.floor((sunday.getTime() - firstSunday.getTime()) / (7 * 86400000));
+  return { year: sunday.getFullYear(), week: elapsedWeeks + 1 };
 }
 
 function countPeople(people: SourcePerson[], modes: FamilyMode) {
