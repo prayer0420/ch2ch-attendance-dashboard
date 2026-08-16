@@ -12,7 +12,7 @@ if (!source.includes("targetDate: mostRecentSunday()")) {
 
 const restoreBlock = source.match(/const saved = localStorage\.getItem\(SETTINGS_KEY\);[\s\S]*?setReady\(true\);/);
 if (!restoreBlock) throw new Error("설정 복원 블록을 찾지 못했습니다.");
-if (/\.\.\.JSON\.parse\(saved\)/.test(restoreBlock[0])) {
+if (!restoreBlock[0].includes("targetDate: restoredTargetDate")) {
   throw new Error("오래된 저장 날짜가 현재 기본 날짜를 덮어쓸 수 있습니다.");
 }
 

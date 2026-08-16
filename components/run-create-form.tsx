@@ -143,8 +143,11 @@ export function RunCreateForm() {
       const saved = localStorage.getItem(SETTINGS_KEY);
       if (saved) {
         const parsed = JSON.parse(saved) as Partial<typeof form>;
-        const { targetDate: _savedTargetDate, ...savedSettings } = parsed;
-        setForm((current) => ({ ...current, ...savedSettings, targetDate: currentSunday }));
+        const { targetDate: savedTargetDate, ...savedSettings } = parsed;
+        const restoredTargetDate = typeof savedTargetDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(savedTargetDate)
+          ? savedTargetDate
+          : currentSunday;
+        setForm((current) => ({ ...current, ...savedSettings, targetDate: restoredTargetDate }));
       } else {
         setForm((current) => ({ ...current, targetDate: currentSunday }));
       }

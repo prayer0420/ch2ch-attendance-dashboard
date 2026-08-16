@@ -33,6 +33,9 @@ const CONFIG = {
   correctionRetryDelayMs: Number.isFinite(Number(process.env.CORRECTION_RETRY_DELAY_MS))
     ? Math.max(0, Number(process.env.CORRECTION_RETRY_DELAY_MS))
     : 800,
+  affiliationAuditConcurrency: Number.isFinite(Number(process.env.AFFILIATION_AUDIT_CONCURRENCY))
+    ? Math.max(1, Math.min(5, Number(process.env.AFFILIATION_AUDIT_CONCURRENCY)))
+    : 3,
   keepBrowserOpen: String(process.env.KEEP_BROWSER_OPEN || 'true').toLowerCase() === 'true',
   attendanceFile: process.env.ATTENDANCE_FILE || './data/attendance.csv',
   familyOrderFile: process.env.FAMILY_ORDER_FILE || './data/families.json',
@@ -758,7 +761,7 @@ async function findMemberRow(page, name) {
   return null;
 }
 
-async function findMemberRowWithRetry(page, name, attempts = 3) {
+async function findMemberRowWithRetry(page, name, attempts = 2) {
   const totalAttempts = Math.max(1, Number(attempts) || 1);
   for (let attempt = 1; attempt <= totalAttempts; attempt += 1) {
     const found = await findMemberRow(page, name);
@@ -1478,7 +1481,7 @@ async function processFamily(page, familyName, rows, options = {}) {
 
   for (const rowInfo of rows) {
     try {
-      const found = await findMemberRowWithRetry(page, rowInfo.name, 3);
+      const found = await findMemberRowWithRetry(page, rowInfo.name, 2);
       if (!found) {
         searchRetryRows.push(rowInfo);
         failed += 1;
@@ -1554,7 +1557,7 @@ async function processFamily(page, familyName, rows, options = {}) {
     saved = await saveCurrentPage(page, familyName);
     if (saved.attempted && !saved.verified && !CONFIG.dryRun) {
       const verification = await verifyPreparedRowsWithFreshRows(preparedRows, {
-        findRow: (name) => findMemberRowWithRetry(page, name, 3),
+        findRow: (name) => findMemberRowWithRetry(page, name, 2),
         readState: readWebAttendanceState,
         matches: attendanceStateMatches,
         mismatchReason: (rowInfo, state) => attendanceMismatchReason(rowInfo, state, '저장 후 상태 대조 불일치')
@@ -1610,6 +1613,70 @@ async function processSearchCorrectionWithRetry(page, target) {
     ...chooseCorrectionOutcome(outcomes),
     attempts: outcomes.length
   };
+}
+
+async function runAffiliationAuditParallel(context, groups) {
+  const mismatches = [];
+  const missingRows = [];
+  let nextIndex = 0;
+
+  async function auditGroup(item) {
+    const auditPage = await context.newPage();
+    try {
+      const isNewcomer = isSpecialNewcomerGroup(item.family);
+      const navigated = isNewcomer
+        ? await navigateToNewcomerAttendance(auditPage, item.family)
+        : await navigateToWeeklyAttendance(auditPage);
+      if (!navigated || (!isNewcomer && !(await selectAttendanceWeek(auditPage)))) {
+        return {
+          mismatches: item.rows.map(rowInfo => buildAffiliationMismatch(
+            rowInfo,
+            item.family,
+            '',
+            `웹교적 '${item.family}' 화면으로 이동하지 못했습니다.`,
+            'not_found'
+          )),
+          missingRows: []
+        };
+      }
+
+      return compareFamilyAffiliations(auditPage, item.family, item.rows, {
+        clickFamilyTab: !isNewcomer,
+        searchMissing: true
+      });
+    } catch (err) {
+      return {
+        mismatches: item.rows.map(rowInfo => buildAffiliationMismatch(
+          rowInfo,
+          item.family,
+          '',
+          `소속 대조 오류: ${err?.message || String(err)}`,
+          'unknown'
+        )),
+        missingRows: []
+      };
+    } finally {
+      await auditPage.close().catch(() => {});
+    }
+  }
+
+  async function worker() {
+    while (true) {
+      const index = nextIndex;
+      nextIndex += 1;
+      if (index >= groups.length) return;
+      const result = await auditGroup(groups[index]);
+      mismatches.push(...result.mismatches);
+      missingRows.push(...result.missingRows.map(rowInfo => ({
+        rowInfo,
+        familyName: groups[index].family
+      })));
+    }
+  }
+
+  const workerCount = Math.min(CONFIG.affiliationAuditConcurrency, groups.length);
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+  return { mismatches, missingRows };
 }
 
 async function waitForeverWithMessage() {
@@ -1753,6 +1820,9 @@ async function main() {
     finalSave = await saveCurrentPage(page, '최종 저장');
   }
 
+  const affiliationAudit = await runAffiliationAuditParallel(context, grouped);
+  const affiliationMismatches = affiliationAudit.mismatches;
+  if (false) {
   const affiliationMismatches = [];
   const affiliationMissingRows = [];
   const normalAffiliationGroups = grouped.filter((item) => !isSpecialNewcomerGroup(item.family));
@@ -1796,6 +1866,7 @@ async function main() {
   }
   affiliationMismatches.push(...missingAffiliationRows);
 
+  }
   if (affiliationMismatches.length) {
     log('전체 소속 대조 불일치', `${affiliationMismatches.length}명: ${affiliationMismatches.map((item) => `${item.name}(시트 ${item.expectedFamily} / 웹 ${item.foundFamily || '확인 불가'})`).join(', ')}`);
   } else {
