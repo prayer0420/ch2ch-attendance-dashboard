@@ -1691,10 +1691,57 @@ async function runAffiliationAuditParallel(context, groups) {
   }
 }
 
+async function discoverWebFamilyNames(page) {
+  const discovered = new Set();
+  const familyPattern = /[가-힣]{2,10}(?:이네|네|반|팀)/g;
+  for (const ctx of allContexts(page)) {
+    try {
+      const names = await ctx.evaluate(() => {
+        const normalize = (value) => String(value || '').replace(/\s+/g, '').trim();
+        const nodes = Array.from(document.querySelectorAll('button,a,[role="button"],td,th,span,div'));
+        return nodes.flatMap((node) => {
+          const text = normalize(node.innerText || node.textContent || node.getAttribute('aria-label') || '');
+          return text.match(/[가-힣]{2,10}(?:이네|네|반|팀)/g) || [];
+        });
+      });
+      for (const name of names) {
+        const normalized = String(name || '').trim();
+        if (normalized) discovered.add(normalized);
+      }
+    } catch (_) {}
+  }
+
+  const ordered = readFamilyOrder().filter((familyName) => !isSpecialNewcomerGroup(familyName));
+  for (const familyName of discovered) {
+    if (!isSpecialNewcomerGroup(familyName) && !ordered.includes(familyName)) ordered.push(familyName);
+  }
+  return ordered;
+}
+
 async function clearAttendanceChecksOnCurrentPage(page) {
   let memberRows = 0;
   let cleared = 0;
   let failed = 0;
+
+  async function clearField(row, fieldName, checkboxIndex) {
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      const beforeHandle = await row.elementHandle().catch(() => null);
+      if (!beforeHandle) return { ok: false, cleared: false };
+      const before = await accessCheckboxInRow({ rowHandle: beforeHandle }, fieldName, null, checkboxIndex, false);
+      if (!before.ok) return { ok: false, cleared: false };
+      if (before.actual === false) return { ok: true, cleared: false };
+
+      const setHandle = await row.elementHandle().catch(() => null);
+      if (!setHandle) return { ok: false, cleared: false };
+      await accessCheckboxInRow({ rowHandle: setHandle }, fieldName, false, checkboxIndex, true);
+      await shortDelay(120);
+      const afterHandle = await row.elementHandle().catch(() => null);
+      if (!afterHandle) continue;
+      const after = await accessCheckboxInRow({ rowHandle: afterHandle }, fieldName, null, checkboxIndex, false);
+      if (after.ok && after.actual === false) return { ok: true, cleared: true };
+    }
+    return { ok: false, cleared: false };
+  }
 
   for (const ctx of allContexts(page)) {
     const rows = ctx.locator('tr');
@@ -1709,15 +1756,9 @@ async function clearAttendanceChecksOnCurrentPage(page) {
 
       memberRows += 1;
       for (const [fieldName, checkboxIndex] of [['二쇱씪', 0], ['遺??', 1]]) {
-        const result = await accessCheckboxInRow(
-          { rowHandle },
-          fieldName,
-          false,
-          checkboxIndex,
-          true
-        );
+        const result = await clearField(row, fieldName, checkboxIndex);
         if (!result.ok) failed += 1;
-        else if (result.before) cleared += 1;
+        else if (result.cleared) cleared += 1;
       }
     }
   }
@@ -1727,7 +1768,7 @@ async function clearAttendanceChecksOnCurrentPage(page) {
 
 async function processWebAttendanceClear(page) {
   const families = [];
-  const regularFamilies = readFamilyOrder().filter((familyName) => !isSpecialNewcomerGroup(familyName));
+  const regularFamilies = await discoverWebFamilyNames(page);
   const newcomerFamilies = ['새가족반', '새가족팀'];
 
   async function processFamilyPage(familyName, clickFamilyTab = true) {
