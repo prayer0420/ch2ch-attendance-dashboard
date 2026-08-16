@@ -886,11 +886,15 @@ async function runLegacyProcess(run, reporter, people) {
 
 async function runAttendanceAutomation(run, reporter) {
   if (run.data_source === "web_clear") {
+    const csvText = await loadInputCsv(run, reporter);
+    const sourcePeople = rowsFromCsv(csvText);
+    validatePreparedPeople(sourcePeople);
+    prepareLegacyCsv(sourcePeople);
     await reporter.event(
       "web_attendance_clear_started",
-      `선택한 ${run.target_week_text || `${run.target_week}주차`}의 웹교적 주일·부서 체크 해제를 시작합니다. 시트는 사용하지 않습니다.`
+      `선택한 ${run.target_week_text || `${run.target_week}주차`}의 웹교적 주일·부서 체크 해제를 시작합니다. 시트/파일에서 가족 ${new Set(sourcePeople.map((person) => person.family)).size}개를 읽었습니다.`
     );
-    const { legacyResult } = await runLegacyProcess(run, reporter, []);
+    const { legacyResult } = await runLegacyProcess(run, reporter, sourcePeople);
     const families = legacyResult.families || [];
     const failedFamilies = families.filter((family) => family.failed > 0 || family.saved === false);
     await reporter.event(

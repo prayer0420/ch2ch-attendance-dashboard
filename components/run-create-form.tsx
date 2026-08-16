@@ -304,24 +304,11 @@ export function RunCreateForm() {
 
   function createRunBody() {
     const manualRowsJson = JSON.stringify(manualRows);
-    if (form.operation === "clear_web_attendance") {
-      return {
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          dataSource: "web_clear",
-          operation: "clear_web_attendance",
-          targetWeek: calculatedWeek.week,
-          targetYear: calculatedWeek.year,
-          manualRows: [],
-          dryRun: false
-        })
-      };
-    }
 
     if (form.dataSource === "file") {
       const body = new FormData();
       body.set("dataSource", "file");
+      body.set("operation", form.operation);
       body.set("googleSheetTab", form.googleSheetTab);
       body.set("targetDept", form.targetDept);
       body.set("targetCourse", form.targetCourse);
@@ -398,7 +385,7 @@ export function RunCreateForm() {
               </div>
               {form.operation === "clear_web_attendance" ? (
                 <p className="rounded border border-brick/30 bg-brick/10 p-3 text-xs font-bold text-brick">
-                  선택한 주차의 웹교적 주일·부서 체크만 해제합니다. 시트는 읽지 않으며, 시트 내용도 변경하지 않습니다.
+                  선택한 주차의 웹교적 주일·부서 체크만 해제합니다. 선택한 시트/파일의 가족 목록만 읽고, 시트 내용은 변경하지 않습니다.
                 </p>
               ) : null}
               데이터 소스

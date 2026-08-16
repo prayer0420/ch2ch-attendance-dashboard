@@ -313,7 +313,7 @@ async function clickTextInAnyFrame(page, text, exact = false, timeoutMs = 1200, 
   for (const ctx of allContexts(page)) {
     try {
       const locator = ctx.getByText(text, { exact }).first();
-      await locator.waitFor({ state: 'visible', timeout: Math.min(timeoutMs, 800) });
+      await locator.waitFor({ state: 'visible', timeout: timeoutMs });
       await locator.click({ timeout: timeoutMs, noWaitAfter: true });
       await shortDelay();
       return true;
@@ -1725,20 +1725,25 @@ async function clearAttendanceChecksOnCurrentPage(page) {
 
   async function clearField(row, fieldName, checkboxIndex) {
     for (let attempt = 1; attempt <= 2; attempt += 1) {
-      const beforeHandle = await row.elementHandle().catch(() => null);
-      if (!beforeHandle) return { ok: false, cleared: false };
-      const before = await accessCheckboxInRow({ rowHandle: beforeHandle }, fieldName, null, checkboxIndex, false);
-      if (!before.ok) return { ok: false, cleared: false };
-      if (before.actual === false) return { ok: true, cleared: false };
+      try {
+        const beforeHandle = await row.elementHandle().catch(() => null);
+        if (!beforeHandle) continue;
+        const before = await accessCheckboxInRow({ rowHandle: beforeHandle }, fieldName, null, checkboxIndex, false);
+        if (!before.ok) continue;
+        if (before.actual === false) return { ok: true, cleared: false };
 
-      const setHandle = await row.elementHandle().catch(() => null);
-      if (!setHandle) return { ok: false, cleared: false };
-      await accessCheckboxInRow({ rowHandle: setHandle }, fieldName, false, checkboxIndex, true);
-      await shortDelay(120);
-      const afterHandle = await row.elementHandle().catch(() => null);
-      if (!afterHandle) continue;
-      const after = await accessCheckboxInRow({ rowHandle: afterHandle }, fieldName, null, checkboxIndex, false);
-      if (after.ok && after.actual === false) return { ok: true, cleared: true };
+        const setHandle = await row.elementHandle().catch(() => null);
+        if (!setHandle) continue;
+        const changed = await accessCheckboxInRow({ rowHandle: setHandle }, fieldName, false, checkboxIndex, true);
+        if (!changed.ok) continue;
+        await shortDelay(120);
+        const afterHandle = await row.elementHandle().catch(() => null);
+        if (!afterHandle) continue;
+        const after = await accessCheckboxInRow({ rowHandle: afterHandle }, fieldName, null, checkboxIndex, false);
+        if (after.ok && after.actual === false) return { ok: true, cleared: true };
+      } catch (_) {
+        await shortDelay(120);
+      }
     }
     return { ok: false, cleared: false };
   }
@@ -1750,7 +1755,7 @@ async function clearAttendanceChecksOnCurrentPage(page) {
       const row = rows.nth(rowIndex);
       const boxes = row.locator('input[type="checkbox"]');
       const boxCount = await boxes.count().catch(() => 0);
-      if (boxCount <= CONFIG.rowCheckboxOffset + 1) continue;
+      if (boxCount < 2) continue;
       const rowHandle = await row.elementHandle().catch(() => null);
       if (!rowHandle) continue;
 
@@ -1766,30 +1771,57 @@ async function clearAttendanceChecksOnCurrentPage(page) {
   return { memberRows, cleared, failed };
 }
 
-async function processWebAttendanceClear(page) {
+async function processWebAttendanceClear(page, sourceFamilyNames = null) {
   const families = [];
-  const regularFamilies = await discoverWebFamilyNames(page);
   const newcomerFamilies = ['새가족반', '새가족팀'];
+  const regularFamilies = sourceFamilyNames
+    ? Array.from(new Set(sourceFamilyNames.filter((familyName) => !isSpecialNewcomerGroup(familyName))))
+    : await discoverWebFamilyNames(page);
+  const targetNewcomerFamilies = sourceFamilyNames
+    ? Array.from(new Set(sourceFamilyNames.filter((familyName) => isSpecialNewcomerGroup(familyName))))
+    : newcomerFamilies;
+
+  log('웹교적 해제 대상 가족', `${regularFamilies.length + targetNewcomerFamilies.length}개 / ${[...regularFamilies, ...targetNewcomerFamilies].join(', ')}`);
 
   async function processFamilyPage(familyName, clickFamilyTab = true) {
     log('웹교적 주차 전체 해제 시작', familyName);
-    const navigated = clickFamilyTab
-      ? await clickTextInAnyFrame(page, familyName, true, 800, false)
-      : await navigateToNewcomerAttendance(page, familyName);
+    let navigated = false;
+    for (let attempt = 1; attempt <= 2 && !navigated; attempt += 1) {
+      navigated = clickFamilyTab
+        ? await clickTextInAnyFrame(page, familyName, true, 1800, true)
+        : await navigateToNewcomerAttendance(page, familyName);
+      if (!navigated) await shortDelay(300);
+    }
     if (!navigated) {
       families.push({ familyName, memberRows: 0, cleared: 0, failed: 1, saved: false, saveVerified: false });
       return;
     }
 
     await shortDelay(CONFIG.familyLoadWaitMs);
-    const result = await clearAttendanceChecksOnCurrentPage(page);
+    let result = await clearAttendanceChecksOnCurrentPage(page);
+    if (result.failed > 0 || result.memberRows === 0) {
+      await scrollAllContainers(page, 'start');
+      await shortDelay(250);
+      const retryResult = await clearAttendanceChecksOnCurrentPage(page);
+      result = {
+        memberRows: Math.max(result.memberRows, retryResult.memberRows),
+        cleared: result.cleared + retryResult.cleared,
+        failed: retryResult.failed
+      };
+    }
+    if (result.memberRows === 0) {
+      families.push({ familyName, ...result, failed: Math.max(1, result.failed), saved: false, saveVerified: false });
+      log('웹교적 주차 전체 해제 실패', `${familyName}: 구성원 행을 찾지 못함`);
+      return;
+    }
+
     const saved = await saveCurrentPage(page, `웹교적 ${familyName} 전체 해제`);
     families.push({ familyName, ...result, saved: saved.attempted, saveVerified: saved.verified });
     log('웹교적 주차 전체 해제', `${familyName}: ${result.cleared}칸 해제 / 실패 ${result.failed}칸`);
   }
 
   for (const familyName of regularFamilies) await processFamilyPage(familyName);
-  for (const familyName of newcomerFamilies) await processFamilyPage(familyName, false);
+  for (const familyName of targetNewcomerFamilies) await processFamilyPage(familyName, false);
   return families;
 }
 
@@ -1804,7 +1836,7 @@ async function main() {
   fs.writeFileSync(RESULT_FILE, JSON.stringify({ completed: false, families: [] }, null, 2));
 
   const webClearOnly = String(process.env.WEB_CLEAR_ONLY || 'false').toLowerCase() === 'true';
-  const rows = webClearOnly ? [] : readAttendanceRows(CONFIG.attendanceFile);
+  const rows = readAttendanceRows(CONFIG.attendanceFile);
   const attendanceRows = rows.filter((row) => row.sunday === true || row.department === true);
   const grouped = groupByFamily(rows);
   const attendanceGrouped = groupByFamily(attendanceRows);
@@ -1845,7 +1877,8 @@ async function main() {
   const weekSelected = await requiredStep('주차 선택', () => selectAttendanceWeek(page));
 
   if (webClearOnly) {
-    const families = await processWebAttendanceClear(page);
+    const sourceFamilyNames = grouped.map((item) => item.family);
+    const families = await processWebAttendanceClear(page, sourceFamilyNames);
     const failedFamilies = families.filter((family) => family.failed > 0 || family.saved === false);
     log('웹교적 주차 전체 해제 완료', `가족 ${families.length}개 / 실패 ${failedFamilies.length}개`);
     fs.writeFileSync(RESULT_FILE, JSON.stringify({
