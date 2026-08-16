@@ -221,6 +221,16 @@ function groupByFamily(rows) {
   return familyNames.map(name => ({ family: name, rows: map.get(name) }));
 }
 
+function groupByFamilyInInputOrder(rows) {
+  const map = new Map();
+  for (const row of rows) {
+    const routeFamily = getRouteFamilyName(row.family);
+    if (!map.has(routeFamily)) map.set(routeFamily, []);
+    map.get(routeFamily).push(row);
+  }
+  return Array.from(map.entries()).map(([family, familyRows]) => ({ family, rows: familyRows }));
+}
+
 function conciseFailureReason(reason) {
   const text = String(reason || '처리 실패').replace(/\s+/g, ' ').trim();
   if (!text) return '처리 실패';
@@ -1773,33 +1783,39 @@ async function clearAttendanceChecksOnCurrentPage(page) {
   return { memberRows, cleared, failed };
 }
 
-async function processWebAttendanceClear(page, sourceFamilyNames = null) {
+async function processWebAttendanceClear(page, sourceFamilyGroups = null) {
   const families = [];
   const newcomerFamilies = ['새가족반', '새가족팀'];
-  const regularFamilies = sourceFamilyNames
-    ? Array.from(new Set(sourceFamilyNames.filter((familyName) => !isSpecialNewcomerGroup(familyName))))
+  const regularFamilies = sourceFamilyGroups
+    ? sourceFamilyGroups.filter((item) => !isSpecialNewcomerGroup(item.family)).map((item) => item.family)
     : await discoverWebFamilyNames(page);
-  const targetNewcomerFamilies = sourceFamilyNames
-    ? Array.from(new Set(sourceFamilyNames.filter((familyName) => isSpecialNewcomerGroup(familyName))))
+  const targetNewcomerFamilies = sourceFamilyGroups
+    ? sourceFamilyGroups.filter((item) => isSpecialNewcomerGroup(item.family)).map((item) => item.family)
     : newcomerFamilies;
 
   log('웹교적 해제 대상 가족', `${regularFamilies.length + targetNewcomerFamilies.length}개 / ${[...regularFamilies, ...targetNewcomerFamilies].join(', ')}`);
 
-  async function processFamilyPage(familyName, clickFamilyTab = true) {
+  async function processFamilyPage(familyName, clickFamilyTab = true, expectedRows = []) {
     log('웹교적 주차 전체 해제 시작', familyName);
     let navigated = false;
-    for (let attempt = 1; attempt <= 2 && !navigated; attempt += 1) {
+    let familyReady = false;
+    for (let attempt = 1; attempt <= 2 && !familyReady; attempt += 1) {
       navigated = clickFamilyTab
         ? await clickTextInAnyFrame(page, familyName, true, 1800, true)
         : await navigateToNewcomerAttendance(page, familyName);
-      if (!navigated) await shortDelay(300);
+      if (navigated) {
+        await shortDelay(CONFIG.familyLoadWaitMs);
+        familyReady = expectedRows.length === 0 || await waitForFamilyMemberText(page, familyName, expectedRows);
+      }
+      if (!familyReady) await shortDelay(300);
     }
-    if (!navigated) {
+    if (!navigated || !familyReady) {
       families.push({ familyName, memberRows: 0, cleared: 0, failed: 1, saved: false, saveVerified: false });
+      log('웹교적 가족 화면 확인 실패', `${familyName}: 시트 가족 구성원이 화면에 나타나지 않음`);
       return;
     }
 
-    await shortDelay(CONFIG.familyLoadWaitMs);
+    if (expectedRows.length === 0) await shortDelay(CONFIG.familyLoadWaitMs);
     let result = await clearAttendanceChecksOnCurrentPage(page);
     if (result.failed > 0 || result.memberRows === 0) {
       await scrollAllContainers(page, 'start');
@@ -1822,8 +1838,15 @@ async function processWebAttendanceClear(page, sourceFamilyNames = null) {
     log('웹교적 주차 전체 해제', `${familyName}: ${result.cleared}칸 해제 / 실패 ${result.failed}칸`);
   }
 
-  for (const familyName of regularFamilies) await processFamilyPage(familyName);
-  for (const familyName of targetNewcomerFamilies) await processFamilyPage(familyName, false);
+  const targets = sourceFamilyGroups
+    ? sourceFamilyGroups
+    : [
+      ...regularFamilies.map((family) => ({ family, rows: [] })),
+      ...targetNewcomerFamilies.map((family) => ({ family, rows: [] }))
+    ];
+  for (const target of targets) {
+    await processFamilyPage(target.family, !isSpecialNewcomerGroup(target.family), target.rows || []);
+  }
   return families;
 }
 
@@ -1879,8 +1902,8 @@ async function main() {
   const weekSelected = await requiredStep('주차 선택', () => selectAttendanceWeek(page));
 
   if (webClearOnly) {
-    const sourceFamilyNames = grouped.map((item) => item.family);
-    const families = await processWebAttendanceClear(page, sourceFamilyNames);
+    const sourceFamilyGroups = groupByFamilyInInputOrder(rows);
+    const families = await processWebAttendanceClear(page, sourceFamilyGroups);
     const failedFamilies = families.filter((family) => family.failed > 0 || family.saved === false);
     log('웹교적 주차 전체 해제 완료', `가족 ${families.length}개 / 실패 ${failedFamilies.length}개`);
     fs.writeFileSync(RESULT_FILE, JSON.stringify({

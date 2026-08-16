@@ -9,8 +9,6 @@ const LEGACY_DIR = path.join(ROOT_DIR, "runner", "legacy-ch2ch");
 const LEGACY_DATA_DIR = path.join(LEGACY_DIR, "data");
 const LEGACY_ATTENDANCE_FILE = path.join(LEGACY_DATA_DIR, "attendance.csv");
 const LEGACY_RESULT_FILE = path.join(LEGACY_DIR, "logs", "result.json");
-const SOURCE_COLUMN_LIMIT = 120; // A through DP. DQ, DR, DS, DT are summary/helper columns.
-
 function normalizeName(value) {
   return String(value || "").replace(/[\u200B-\u200D\uFEFF]/g, "").replace(/\s+/g, "").trim().toLowerCase();
 }
@@ -204,7 +202,7 @@ function hasAnyHeader(text, candidates) {
 
 function rangeColumns(start, end) {
   const columns = [];
-  for (let column = Math.max(0, start); column < Math.min(end, SOURCE_COLUMN_LIMIT); column += 1) columns.push(column);
+  for (let column = Math.max(0, start); column < end; column += 1) columns.push(column);
   return columns;
 }
 
@@ -422,7 +420,7 @@ function parseHorizontalFamilyLayout(rows) {
   const header = rows[0] || [];
   const familyStarts = [];
 
-  for (let index = 0; index < Math.min(header.length, SOURCE_COLUMN_LIMIT); index += 1) {
+  for (let index = 0; index < header.length; index += 1) {
     const label = String(header[index] || "").trim();
     if (!label || ["1-3부", "1~3부", "4부", "출석", "이름", "성명", "가족", "가정", "가족명", "어디가족", "참석합계", "방송합계", "합계", "소계", "방문자"].includes(label)) continue;
 
@@ -437,7 +435,7 @@ function parseHorizontalFamilyLayout(rows) {
   const blockWidths = familyStarts.slice(1).map((block, index) => block.start - familyStarts[index].start);
   const blockWidth = blockWidths.length ? Math.min(...blockWidths.filter((width) => width > 0)) : header.length;
   const blocks = familyStarts.map((block, index) => {
-    const nextStart = Math.min(familyStarts[index + 1]?.start ?? Math.min(header.length, block.start + blockWidth), SOURCE_COLUMN_LIMIT);
+    const nextStart = Math.min(familyStarts[index + 1]?.start ?? Math.min(header.length, block.start + blockWidth), header.length);
     const blockHeader = header.slice(block.start, nextStart).map((value) => String(value || ""));
     const service13Start = block.start + blockHeader.findIndex((value) => hasAnyHeader(value, ["1-3부", "1~3부", "1부", "2부", "3부"]));
     const service4Start = block.start + blockHeader.findIndex((value) => hasAnyHeader(value, ["4부"]));
