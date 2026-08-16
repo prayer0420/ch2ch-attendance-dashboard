@@ -144,6 +144,8 @@ export async function POST(request: NextRequest) {
   const read = (key: string) => isMultipart ? input.get(key) : input[key];
 
   const dataSource = String(read("dataSource") ?? "google_sheet");
+  const operation = String(read("operation") ?? "attendance_sync");
+  const isWebClear = operation === "clear_web_attendance" || dataSource === "web_clear";
   const targetWeek = Number(read("targetWeek"));
   const targetDate = String(read("targetDate") ?? "").trim();
   const targetYear = Number(read("targetYear")) || Number(targetDate.slice(0, 4)) || new Date().getFullYear();
@@ -161,7 +163,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "주차는 1주부터 53주 사이로 입력해 주세요." }, { status: 400 });
   }
 
-  if (dataSource === "google_sheet" && !read("googleSheetUrl")) {
+  if (!isWebClear && dataSource === "google_sheet" && !read("googleSheetUrl")) {
     return NextResponse.json({ error: "구글시트 URL을 입력해 주세요." }, { status: 400 });
   }
 
@@ -184,7 +186,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  if (manualRows.length) {
+  if (!isWebClear && manualRows.length) {
     if (!hasSupabaseEnv()) {
       return NextResponse.json({ error: "가족별 체크 실행은 Supabase 저장소 연결 후 사용할 수 있습니다." }, { status: 503 });
     }
@@ -202,7 +204,7 @@ export async function POST(request: NextRequest) {
     if (uploadError) {
       return NextResponse.json({ error: `가족별 체크 데이터 저장 실패: ${uploadError.message}` }, { status: 500 });
     }
-  } else if (dataSource === "file") {
+  } else if (!isWebClear && dataSource === "file") {
     const file = read("file");
     if (!(file instanceof File)) {
       return NextResponse.json({ error: "CSV, XLSX, XLS 또는 PDF 파일을 선택해 주세요." }, { status: 400 });
@@ -230,7 +232,7 @@ export async function POST(request: NextRequest) {
     if (uploadError) {
       return NextResponse.json({ error: `파일 업로드 실패: ${uploadError.message}` }, { status: 500 });
     }
-  } else if (hasSupabaseEnv()) {
+  } else if (!isWebClear && hasSupabaseEnv()) {
     try {
       const tabName = String(read("googleSheetTab") ?? "가장체크");
       const snapshot = await downloadGoogleSheetSnapshot(String(read("googleSheetUrl") ?? ""), tabName);
@@ -253,8 +255,8 @@ export async function POST(request: NextRequest) {
 
   const payload = {
     status: "queued",
-    data_source: dataSource,
-    google_sheet_url: dataSource === "google_sheet" ? String(read("googleSheetUrl") ?? "") : null,
+    data_source: isWebClear ? "web_clear" : dataSource,
+    google_sheet_url: !isWebClear && dataSource === "google_sheet" ? String(read("googleSheetUrl") ?? "") : null,
     google_sheet_tab: String(read("googleSheetTab") ?? "가장체크"),
     csv_file_name: sourceFilePath
       ? JSON.stringify({

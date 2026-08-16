@@ -25,6 +25,7 @@ type RunResponse = {
 };
 
 type DataSource = "google_sheet" | "file";
+type RunOperation = "attendance_sync" | "clear_web_attendance";
 type ServiceMode = "sheet" | "check" | "clear";
 
 type SourcePerson = {
@@ -118,6 +119,7 @@ function countPeople(people: SourcePerson[], modes: FamilyMode) {
 export function RunCreateForm() {
   const router = useRouter();
   const [form, setForm] = useState({
+    operation: "attendance_sync" as RunOperation,
     dataSource: "google_sheet" as DataSource,
     googleSheetUrl: "",
     googleSheetTab: "가장체크",
@@ -302,6 +304,21 @@ export function RunCreateForm() {
 
   function createRunBody() {
     const manualRowsJson = JSON.stringify(manualRows);
+    if (form.operation === "clear_web_attendance") {
+      return {
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          dataSource: "web_clear",
+          operation: "clear_web_attendance",
+          targetWeek: calculatedWeek.week,
+          targetYear: calculatedWeek.year,
+          manualRows: [],
+          dryRun: false
+        })
+      };
+    }
+
     if (form.dataSource === "file") {
       const body = new FormData();
       body.set("dataSource", "file");
@@ -332,12 +349,12 @@ export function RunCreateForm() {
   async function submit() {
     setError(null);
 
-    if (!sourcePeople.length) {
+    if (form.operation === "attendance_sync" && !sourcePeople.length) {
       setError("먼저 시트/파일을 읽어서 가족 목록을 확정해 주세요.");
       return;
     }
 
-    if (!manualRows.length) {
+    if (form.operation === "attendance_sync" && !manualRows.length) {
       setError("현재 예약 상태로는 실행할 사람이 없습니다. 가족별 주일/부서 예약 값을 확인해 주세요.");
       return;
     }
@@ -363,6 +380,27 @@ export function RunCreateForm() {
         <section className="rounded border border-line bg-white/72 p-4">
           <div className="grid gap-4">
             <div className="grid gap-2 text-sm font-bold">
+              <span>작업 종류</span>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  ["attendance_sync", "시트 기준 출석체크"],
+                  ["clear_web_attendance", "웹교적 주차 전체 해제"]
+                ].map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    className={`focus-ring rounded border px-3 py-2 text-sm font-black ${form.operation === value ? "border-ink bg-ink text-paper" : "border-line bg-white text-ink"}`}
+                    onClick={() => update("operation", value as RunOperation)}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+              {form.operation === "clear_web_attendance" ? (
+                <p className="rounded border border-brick/30 bg-brick/10 p-3 text-xs font-bold text-brick">
+                  선택한 주차의 웹교적 주일·부서 체크만 해제합니다. 시트는 읽지 않으며, 시트 내용도 변경하지 않습니다.
+                </p>
+              ) : null}
               데이터 소스
               <div className="grid grid-cols-2 gap-2">
                 {[
@@ -459,8 +497,8 @@ export function RunCreateForm() {
               disabled={isSubmitting || isLoadingSource}
               onClick={submit}
             >
-              <Play size={17} />
-              실제 출석체크 시작
+              {form.operation === "clear_web_attendance" ? <XCircle size={17} /> : <Play size={17} />}
+              {form.operation === "clear_web_attendance" ? "웹교적 주차 전체 해제 시작" : "실제 출석체크 시작"}
             </button>
           </div>
 
@@ -488,7 +526,7 @@ export function RunCreateForm() {
             <button
               type="button"
               className="focus-ring inline-flex items-center gap-2 rounded border border-line bg-white px-3 py-2 text-sm font-bold disabled:opacity-50"
-              disabled={!sourcePeople.length}
+              disabled={form.operation !== "attendance_sync" || !sourcePeople.length}
               onClick={() => setAllFamilies("sheet")}
             >
               <RotateCcw size={16} />

@@ -1679,6 +1679,64 @@ async function runAffiliationAuditParallel(context, groups) {
   return { mismatches, missingRows };
 }
 
+async function clearAttendanceChecksOnCurrentPage(page) {
+  let memberRows = 0;
+  let cleared = 0;
+  let failed = 0;
+
+  for (const ctx of allContexts(page)) {
+    const rows = ctx.locator('tr');
+    const rowCount = await rows.count().catch(() => 0);
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
+      const row = rows.nth(rowIndex);
+      const boxes = row.locator('input[type="checkbox"]');
+      const boxCount = await boxes.count().catch(() => 0);
+      if (boxCount <= CONFIG.rowCheckboxOffset + 1) continue;
+
+      memberRows += 1;
+      for (const checkboxIndex of [0, 1]) {
+        const box = boxes.nth(CONFIG.rowCheckboxOffset + checkboxIndex);
+        if (!(await box.isChecked({ timeout: 700 }).catch(() => false))) continue;
+        try {
+          await box.uncheck({ force: true, timeout: 700 });
+          if (await box.isChecked({ timeout: 700 }).catch(() => true)) failed += 1;
+          else cleared += 1;
+        } catch (_) {
+          failed += 1;
+        }
+      }
+    }
+  }
+
+  return { memberRows, cleared, failed };
+}
+
+async function processWebAttendanceClear(page) {
+  const families = [];
+  const regularFamilies = readFamilyOrder().filter((familyName) => !isSpecialNewcomerGroup(familyName));
+  const newcomerFamilies = ['새가족반', '새가족팀'];
+
+  async function processFamilyPage(familyName, clickFamilyTab = true) {
+    const navigated = clickFamilyTab
+      ? await clickTextInAnyFrame(page, familyName, true, 1500)
+      : await navigateToNewcomerAttendance(page, familyName);
+    if (!navigated) {
+      families.push({ familyName, memberRows: 0, cleared: 0, failed: 1, saved: false, saveVerified: false });
+      return;
+    }
+
+    await shortDelay(CONFIG.familyLoadWaitMs);
+    const result = await clearAttendanceChecksOnCurrentPage(page);
+    const saved = await saveCurrentPage(page, `웹교적 ${familyName} 전체 해제`);
+    families.push({ familyName, ...result, saved: saved.attempted, saveVerified: saved.verified });
+    log('웹교적 주차 전체 해제', `${familyName}: ${result.cleared}칸 해제 / 실패 ${result.failed}칸`);
+  }
+
+  for (const familyName of regularFamilies) await processFamilyPage(familyName);
+  for (const familyName of newcomerFamilies) await processFamilyPage(familyName, false);
+  return families;
+}
+
 async function waitForeverWithMessage() {
   console.log('\n작업 끝. 브라우저는 닫지 않습니다. 닫으려면 터미널에서 Ctrl + C 누르세요.');
   await new Promise(() => {});
@@ -1689,12 +1747,13 @@ async function main() {
   fs.writeFileSync('./logs/run.log', '');
   fs.writeFileSync(RESULT_FILE, JSON.stringify({ completed: false, families: [] }, null, 2));
 
-  const rows = readAttendanceRows(CONFIG.attendanceFile);
+  const webClearOnly = String(process.env.WEB_CLEAR_ONLY || 'false').toLowerCase() === 'true';
+  const rows = webClearOnly ? [] : readAttendanceRows(CONFIG.attendanceFile);
   const attendanceRows = rows.filter((row) => row.sunday === true || row.department === true);
   const grouped = groupByFamily(rows);
   const attendanceGrouped = groupByFamily(attendanceRows);
 
-  if (!attendanceRows.length) {
+  if (!webClearOnly && !attendanceRows.length) {
     throw new Error('시트에서 참석으로 체크된 출석 대상이 없습니다. 방송/QR/가족 체크는 출석 대상으로 사용하지 않습니다.');
   }
   log('출석 파일 로드 완료', `전체 ${rows.length}명 / 출석 처리 대상 ${attendanceRows.length}명 / 가족 ${grouped.length}개`);
@@ -1728,6 +1787,28 @@ async function main() {
   await requiredStep('출석부 화면 이동', () => navigateToWeeklyAttendance(page));
 
   const weekSelected = await requiredStep('주차 선택', () => selectAttendanceWeek(page));
+
+  if (webClearOnly) {
+    const families = await processWebAttendanceClear(page);
+    const failedFamilies = families.filter((family) => family.failed > 0 || family.saved === false);
+    log('웹교적 주차 전체 해제 완료', `가족 ${families.length}개 / 실패 ${failedFamilies.length}개`);
+    fs.writeFileSync(RESULT_FILE, JSON.stringify({
+      completed: true,
+      operation: 'web_clear',
+      dryRun: CONFIG.dryRun,
+      weekSelected,
+      families
+    }, null, 2));
+
+    if (CONFIG.keepBrowserOpen) {
+      await waitForeverWithMessage();
+    } else {
+      await browser.close();
+      activeBrowser = null;
+      activePage = null;
+    }
+    return;
+  }
 
   const results = [];
   const normalGroups = attendanceGrouped.filter((item) => !isSpecialNewcomerGroup(item.family));

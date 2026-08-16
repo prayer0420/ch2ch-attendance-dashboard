@@ -754,6 +754,7 @@ async function runLegacyProcess(run, reporter, people) {
     CH2CH_ID: process.env.CH2CH_ID || process.env.CH2CH_USER || "",
     CH2CH_PW: process.env.CH2CH_PW || process.env.CH2CH_PASSWORD || "",
     DRY_RUN: run.dry_run ? "true" : "false",
+    WEB_CLEAR_ONLY: run.data_source === "web_clear" ? "true" : "false",
     TARGET_WEEK: String(run.target_week || ""),
     TARGET_WEEK_TEXT: run.target_week_text || "",
     ATTENDANCE_FILE: "./data/attendance.csv",
@@ -859,6 +860,22 @@ async function runLegacyProcess(run, reporter, people) {
 }
 
 async function runAttendanceAutomation(run, reporter) {
+  if (run.data_source === "web_clear") {
+    await reporter.event(
+      "web_attendance_clear_started",
+      `선택한 ${run.target_week_text || `${run.target_week}주차`}의 웹교적 주일·부서 체크 해제를 시작합니다. 시트는 사용하지 않습니다.`
+    );
+    const { legacyResult } = await runLegacyProcess(run, reporter, []);
+    const families = legacyResult.families || [];
+    const failedFamilies = families.filter((family) => family.failed > 0 || family.saved === false);
+    await reporter.event(
+      "web_attendance_clear_completed",
+      `웹교적 주차 전체 해제 완료: ${families.length}개 가족 / 실패 ${failedFamilies.length}개 가족`,
+      { families }
+    );
+    return [];
+  }
+
   const csvText = await loadInputCsv(run, reporter);
   const { allPeople, attendancePeople: people } = splitAttendanceTargets(rowsFromCsv(csvText));
   if (!allPeople.length || !people.length) {
