@@ -45,6 +45,7 @@ const CONFIG = {
   weeklyAttendanceText: process.env.WEEKLY_ATTENDANCE_TEXT || '출석부(주별)',
   targetWeek: String(process.env.TARGET_WEEK || '').trim(),
   targetWeekText: String(process.env.TARGET_WEEK_TEXT || '').trim(),
+  targetDate: String(process.env.TARGET_DATE || '').trim(),
   rowCheckboxOffset: Number(process.env.ROW_CHECKBOX_OFFSET || 1),
   loginIdSelector: process.env.LOGIN_ID_SELECTOR || '',
   loginPwSelector: process.env.LOGIN_PW_SELECTOR || '',
@@ -682,40 +683,50 @@ async function selectAttendanceWeek(page) {
     return true;
   }
   const normalizedTarget = normalizeText(targetLabel);
+  const targetWeekNumber = Number(CONFIG.targetWeek);
+  const targetDateDigits = CONFIG.targetDate.replace(/\D/g, '').slice(0, 8);
+  const deadline = Date.now() + 12000;
 
-  for (const ctx of allContexts(page)) {
-    try {
-      const selects = ctx.locator('select');
-      const selectCount = await selects.count();
-      for (let i = 0; i < selectCount; i++) {
-        const select = selects.nth(i);
-        if (!(await select.isVisible().catch(() => false))) continue;
-        const options = await select.locator('option').evaluateAll(opts => opts.map(opt => ({
-          text: opt.textContent || '',
-          value: opt.getAttribute('value') || ''
-        })));
-        const targetWeekNumber = Number(CONFIG.targetWeek);
-        const found = options.find(opt => {
-          const normalizedText = normalizeText(opt.text || '');
-          if (normalizedText === normalizedTarget) return true;
-          if (!Number.isInteger(targetWeekNumber)) return false;
-          const optionWeekMatch = normalizedText.match(/(?:^|\D)(\d{1,2})\s*주(?:차)?(?:\D|$)/);
-          return Number(optionWeekMatch?.[1]) === targetWeekNumber;
-        });
-        if (!found) continue;
-        if (found.value) await select.selectOption(found.value);
-        else await select.selectOption({ label: found.text });
-        await shortDelay(500);
-        const selectedText = await select.locator('option:checked').textContent().catch(() => '');
-        const normalizedSelected = normalizeText(selectedText || '');
-        if (normalizedSelected !== normalizeText(found.text)) {
-          log('주차 선택 검증 실패', `요청=${found.text}, 실제=${selectedText || '확인 불가'}`);
-          return false;
+  while (Date.now() < deadline) {
+    let inspectedSelect = false;
+    for (const ctx of allContexts(page)) {
+      try {
+        const selects = ctx.locator('select');
+        const selectCount = await selects.count();
+        for (let i = 0; i < selectCount; i++) {
+          const select = selects.nth(i);
+          if (!(await select.isVisible().catch(() => false))) continue;
+          inspectedSelect = true;
+          const options = await select.locator('option').evaluateAll(opts => opts.map(opt => ({
+            text: opt.textContent || '',
+            value: opt.getAttribute('value') || ''
+          })));
+          const found = options.find(opt => {
+            const normalizedText = normalizeText(opt.text || '');
+            const optionDigits = `${opt.text || ''} ${opt.value || ''}`.replace(/\D/g, '');
+            if (targetDateDigits.length === 8 && optionDigits.includes(targetDateDigits)) return true;
+            if (normalizedText === normalizedTarget) return true;
+            if (!Number.isInteger(targetWeekNumber)) return false;
+            const optionWeekMatch = normalizedText.match(/(?:^|\D)(\d{1,2})\s*주(?:차)?(?:\D|$)/);
+            return Number(optionWeekMatch?.[1]) === targetWeekNumber;
+          });
+          if (!found) continue;
+          try {
+            if (found.value) await select.selectOption(found.value);
+            else await select.selectOption({ label: found.text });
+            await shortDelay(500);
+            const selectedText = await select.locator('option:checked').textContent().catch(() => '');
+            const normalizedSelected = normalizeText(selectedText || '');
+            if (normalizedSelected === normalizeText(found.text)) {
+              log('주차 선택 완료', `${targetLabel} -> ${found.text}`);
+              return true;
+            }
+            log('주차 선택 검증 재시도', `요청=${found.text}, 실제=${selectedText || '확인 불가'}`);
+          } catch (_) {}
         }
-        log('주차 선택 완료', `${targetLabel} -> ${found.text}`);
-        return true;
-      }
-    } catch (_) {}
+      } catch (_) {}
+    }
+    await shortDelay(inspectedSelect ? 350 : 600);
   }
   log('주차 선택 실패', `${targetLabel} 옵션을 찾지 못했습니다.`);
   return false;

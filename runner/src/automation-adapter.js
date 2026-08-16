@@ -755,6 +755,7 @@ async function runLegacyProcess(run, reporter, people) {
     WEB_CLEAR_ONLY: run.data_source === "web_clear" ? "true" : "false",
     TARGET_WEEK: String(run.target_week || ""),
     TARGET_WEEK_TEXT: run.target_week_text || "",
+    TARGET_DATE: run.target_date || "",
     ATTENDANCE_FILE: "./data/attendance.csv",
     FAMILY_ORDER_FILE: "./data/families.json",
     HEADLESS: String(process.env.CH2CH_HEADLESS || "false"),
