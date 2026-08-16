@@ -103,6 +103,12 @@ assert.deepEqual(
     { name: "BroadcastOnly", service13: false, service4: false }
   ]
 );
+const splitExplicit = __test.splitAttendanceTargets(parsedExplicitHeaders.people);
+assert.equal(splitExplicit.allPeople.length, 3);
+assert.deepEqual(
+  JSON.parse(JSON.stringify(splitExplicit.attendancePeople.map(({ name }) => name))),
+  ["AttendOnly"]
+);
 const adapterExplicitHeaders = __test.rowsFromCsv(
   explicitHeaders.map((row) => row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")).join("\n")
 );

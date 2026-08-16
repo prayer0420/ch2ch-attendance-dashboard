@@ -544,6 +544,14 @@ function rowsFromCsv(csvText) {
   return verticalPeople;
 }
 
+function splitAttendanceTargets(people) {
+  const allPeople = Array.isArray(people) ? people : [];
+  return {
+    allPeople,
+    attendancePeople: allPeople.filter((person) => person.service13 === true || person.service4 === true)
+  };
+}
+
 function findVerticalHeaderRow(rows) {
   for (let index = 0; index < Math.min(rows.length, 20); index += 1) {
     const normalized = rows[index].map((cell) => normalizeName(cell));
@@ -795,6 +803,7 @@ async function runLegacyProcess(run, reporter, people) {
         message.startsWith("검색 보정 보류") ||
         message.startsWith("검색 보정 재시도") ||
         message.startsWith("검색 보정 이미 반영됨") ||
+        message.startsWith("전체 소속 대조") ||
         message.startsWith("저장 후 상태 대조 성공") ||
         message.startsWith("저장 시작") ||
         message.startsWith("저장 결과") ||
@@ -851,13 +860,16 @@ async function runLegacyProcess(run, reporter, people) {
 
 async function runAttendanceAutomation(run, reporter) {
   const csvText = await loadInputCsv(run, reporter);
-  const people = rowsFromCsv(csvText);
-  if (!people.length) {
+  const { allPeople, attendancePeople: people } = splitAttendanceTargets(rowsFromCsv(csvText));
+  if (!allPeople.length || !people.length) {
     throw new Error(buildNoAttendanceMessage(parseCsv(csvText)));
   }
-  validatePreparedPeople(people);
-  prepareLegacyCsv(people);
-  await reporter.event("input_read_completed", `입력 자체검사 완료: A~DP 범위의 참석 칸 기준으로 ${people.length}명 실행 대상 확정`);
+  validatePreparedPeople(allPeople);
+  prepareLegacyCsv(allPeople);
+  await reporter.event(
+    "input_read_completed",
+    `입력 자체검사 완료: 전체 ${allPeople.length}명 중 참석 체크 대상 ${people.length}명만 출석 처리하고, 전체 소속은 별도 대조합니다.`
+  );
 
   const { legacyResult } = await runLegacyProcess(run, reporter, people);
   const corrections = legacyResult.affiliationCorrections || [];
@@ -871,6 +883,13 @@ async function runAttendanceAutomation(run, reporter) {
       { corrected, failed: failedCorrections }
     );
   }
+  const affiliationMismatches = legacyResult.affiliationMismatches || [];
+  await reporter.event(
+    "affiliation_compare_completed",
+    `전체 명단 소속 대조 완료: ${allPeople.length}명 / 불일치 ${affiliationMismatches.length}명` +
+      (affiliationMismatches.length ? ` / ${affiliationMismatches.map((item) => item.name).join(", ")}` : ""),
+    { mismatches: affiliationMismatches }
+  );
   const results = applyLegacyResult(createInitialResults(run, people), legacyResult, run.dry_run);
 
   await reporter.updateRun({
@@ -890,6 +909,7 @@ module.exports = {
     applyLegacyResult,
     decodeInputBuffer,
     isVerifiedAttendanceResult,
+    splitAttendanceTargets,
     validatePreparedPeople
   },
   isVerifiedAttendanceResult

@@ -11,7 +11,7 @@ import {
   collectDeferredCorrectionTargets,
   isCorrectionSuccessful
 } from './affiliation-correction.js';
-import { buildAttendanceActions } from './attendance-actions.js';
+import { attendanceTargetSatisfied, buildAttendanceActions } from './attendance-actions.js';
 import { verifyPreparedRowsWithFreshRows } from './attendance-verification.js';
 
 const CONFIG = {
@@ -28,8 +28,8 @@ const CONFIG = {
   savePerFamily: String(process.env.SAVE_PER_FAMILY || 'true').toLowerCase() === 'true',
   saveMode: String(process.env.SAVE_MODE || 'smart').toLowerCase(), // smart | auto | click | alt-s
   correctionRetryCount: Number.isFinite(Number(process.env.CORRECTION_RETRY_COUNT))
-    ? Math.max(1, Number(process.env.CORRECTION_RETRY_COUNT))
-    : 3,
+    ? Math.min(2, Math.max(1, Number(process.env.CORRECTION_RETRY_COUNT)))
+    : 2,
   correctionRetryDelayMs: Number.isFinite(Number(process.env.CORRECTION_RETRY_DELAY_MS))
     ? Math.max(0, Number(process.env.CORRECTION_RETRY_DELAY_MS))
     : 800,
@@ -961,10 +961,8 @@ function boolText(value) {
 function targetActionText(rowInfo) {
   const parts = [];
   if (rowInfo.sunday === true) parts.push('주일 체크');
-  if (rowInfo.sunday === false) parts.push('주일 해제');
   if (rowInfo.department === true) parts.push('부서 체크');
-  if (rowInfo.department === false) parts.push('부서 해제');
-  return parts.length ? `필요 작업: ${parts.join(', ')}` : '필요 작업: 없음';
+  return parts.length ? `필요 작업: ${parts.join(', ')}` : '필요 작업: 없음(소속 대조만)';
 }
 
 function attendanceMismatchReason(rowInfo, state, prefix = '대조 실패') {
@@ -979,7 +977,7 @@ function attendanceMismatchReason(rowInfo, state, prefix = '대조 실패') {
 }
 
 function attendanceStateMatches(rowInfo, state) {
-  return state.ok && state.sunday === rowInfo.sunday && state.department === rowInfo.department;
+  return attendanceTargetSatisfied(rowInfo, state);
 }
 
 async function extractFamilyFromFoundRow(found, fallback = '') {
@@ -1246,7 +1244,7 @@ async function processSearchCorrection(page, rowInfo, originalFamily) {
     }
 
     const attendanceResults = [];
-    for (const action of buildAttendanceActions(rowInfo)) {
+    for (const action of buildAttendanceActions(rowInfo, { onlyPresent: true })) {
       attendanceResults.push(await setCheckboxInRow(
         located.found,
         rowInfo,
@@ -1356,6 +1354,97 @@ async function setNoteInRow(found, rowInfo) {
   await inputBox.fill(rowInfo.note, { timeout: 700 });
 }
 
+function buildAffiliationMismatch(rowInfo, expectedFamily, foundFamily, reason, status = 'different') {
+  return {
+    name: rowInfo.name,
+    expectedFamily,
+    foundFamily: foundFamily || null,
+    status,
+    reason
+  };
+}
+
+async function compareFamilyAffiliations(page, familyName, rows, options = {}) {
+  const mismatches = [];
+  const missingRows = [];
+  const clickFamilyTab = options.clickFamilyTab !== false;
+
+  if (clickFamilyTab && !(await clickTextInAnyFrame(page, familyName, true, 1500))) {
+    return {
+      mismatches: rows.map((rowInfo) => buildAffiliationMismatch(
+        rowInfo,
+        familyName,
+        '',
+        `웹교적 '${familyName}' 화면으로 이동하지 못했습니다.`,
+        'not_found'
+      )),
+      missingRows: []
+    };
+  }
+
+  await shortDelay(CONFIG.familyLoadWaitMs);
+  for (const rowInfo of rows) {
+    const found = await findMemberRowWithRetry(page, rowInfo.name, 2);
+    if (!found) {
+      missingRows.push(rowInfo);
+      continue;
+    }
+
+    const foundFamily = await extractFamilyFromFoundRow(found, familyName);
+    if (foundFamily && normalizeText(foundFamily) !== normalizeText(familyName)) {
+      mismatches.push(buildAffiliationMismatch(
+        rowInfo,
+        familyName,
+        foundFamily,
+        `소속 불일치: 시트=${familyName}, 웹교적=${foundFamily}`
+      ));
+    }
+  }
+
+  if (options.searchMissing === false) return { mismatches, missingRows };
+  return { mismatches: [...mismatches, ...await resolveMissingAffiliations(page, missingRows, familyName)], missingRows: [] };
+}
+
+async function resolveMissingAffiliations(page, missingRows, expectedFamily) {
+  const mismatches = [];
+  // 가족 화면에서 누락된 사람만 이름 검색으로 확인합니다. 검색 결과는 읽기만
+  // 하고, 소속 화면 이동이나 체크박스 클릭 및 저장은 수행하지 않습니다.
+  for (const rowInfo of missingRows) {
+    const search = await searchMemberRowGlobally(page, rowInfo, expectedFamily);
+    if (!search.found) {
+      mismatches.push(buildAffiliationMismatch(
+        rowInfo,
+        expectedFamily,
+        '',
+        `웹교적 전체 검색에서도 '${rowInfo.name}'을 찾지 못했습니다.`,
+        'not_found'
+      ));
+      continue;
+    }
+
+    if (!search.foundFamily) {
+      mismatches.push(buildAffiliationMismatch(
+        rowInfo,
+        expectedFamily,
+        '',
+        `웹교적 검색 결과에서 '${rowInfo.name}'의 소속을 확인하지 못했습니다.`,
+        'unknown'
+      ));
+      continue;
+    }
+
+    if (normalizeText(search.foundFamily) !== normalizeText(expectedFamily)) {
+      mismatches.push(buildAffiliationMismatch(
+        rowInfo,
+        expectedFamily,
+        search.foundFamily,
+        `소속 불일치: 시트=${expectedFamily}, 웹교적=${search.foundFamily}`
+      ));
+    }
+  }
+  return mismatches;
+}
+
 async function processFamily(page, familyName, rows, options = {}) {
   const expectedSunday = rows.filter(row => row.sunday === true).length;
   const expectedDepartment = rows.filter(row => row.department === true).length;
@@ -1422,7 +1511,7 @@ async function processFamily(page, familyName, rows, options = {}) {
         continue;
       }
       const attendanceResults = [];
-      for (const action of buildAttendanceActions(rowInfo)) {
+      for (const action of buildAttendanceActions(rowInfo, { onlyPresent: true })) {
         attendanceResults.push(await setCheckboxInRow(
           found,
           rowInfo,
@@ -1534,9 +1623,14 @@ async function main() {
   fs.writeFileSync(RESULT_FILE, JSON.stringify({ completed: false, families: [] }, null, 2));
 
   const rows = readAttendanceRows(CONFIG.attendanceFile);
+  const attendanceRows = rows.filter((row) => row.sunday === true || row.department === true);
   const grouped = groupByFamily(rows);
+  const attendanceGrouped = groupByFamily(attendanceRows);
 
-  log('출석 파일 로드 완료', `총 ${rows.length}명 / 가족 ${grouped.length}개`);
+  if (!attendanceRows.length) {
+    throw new Error('시트에서 참석으로 체크된 출석 대상이 없습니다. 방송/QR/가족 체크는 출석 대상으로 사용하지 않습니다.');
+  }
+  log('출석 파일 로드 완료', `전체 ${rows.length}명 / 출석 처리 대상 ${attendanceRows.length}명 / 가족 ${grouped.length}개`);
   log('실행 모드', CONFIG.dryRun ? 'DRY_RUN=true 미리보기, 실제 저장 안 함' : 'DRY_RUN=false 실제 체크/저장');
   log('저장 방식', `SAVE_PER_FAMILY=${CONFIG.savePerFamily}, SAVE_MODE=${CONFIG.saveMode}`);
 
@@ -1569,9 +1663,9 @@ async function main() {
   const weekSelected = await requiredStep('주차 선택', () => selectAttendanceWeek(page));
 
   const results = [];
-  const normalGroups = grouped.filter((item) => !isSpecialNewcomerGroup(item.family));
+  const normalGroups = attendanceGrouped.filter((item) => !isSpecialNewcomerGroup(item.family));
   const specialOrder = ['새가족반', '새가족팀'];
-  const newcomerGroups = grouped
+  const newcomerGroups = attendanceGrouped
     .filter((item) => isSpecialNewcomerGroup(item.family))
     .sort((a, b) => specialOrder.indexOf(a.family) - specialOrder.indexOf(b.family));
 
@@ -1659,6 +1753,55 @@ async function main() {
     finalSave = await saveCurrentPage(page, '최종 저장');
   }
 
+  const affiliationMismatches = [];
+  const affiliationMissingRows = [];
+  const normalAffiliationGroups = grouped.filter((item) => !isSpecialNewcomerGroup(item.family));
+  const newcomerAffiliationGroups = grouped
+    .filter((item) => isSpecialNewcomerGroup(item.family))
+    .sort((a, b) => specialOrder.indexOf(a.family) - specialOrder.indexOf(b.family));
+
+  for (const item of normalAffiliationGroups) {
+    const comparison = await compareFamilyAffiliations(page, item.family, item.rows, { searchMissing: false });
+    affiliationMismatches.push(...comparison.mismatches);
+    affiliationMissingRows.push(...comparison.missingRows.map((rowInfo) => ({ rowInfo, familyName: item.family })));
+  }
+  for (const item of newcomerAffiliationGroups) {
+    const navigated = await navigateToNewcomerAttendance(page, item.family);
+    if (!navigated) {
+      affiliationMismatches.push(...item.rows.map((rowInfo) => buildAffiliationMismatch(
+        rowInfo,
+        item.family,
+        '',
+        `새가족 > ${item.family} 화면으로 이동하지 못했습니다.`,
+        'not_found'
+      )));
+      continue;
+    }
+    const comparison = await compareFamilyAffiliations(page, item.family, item.rows, {
+      clickFamilyTab: false,
+      searchMissing: false
+    });
+    affiliationMismatches.push(...comparison.mismatches);
+    affiliationMissingRows.push(...comparison.missingRows.map((rowInfo) => ({ rowInfo, familyName: item.family })));
+  }
+
+  const missingByFamily = new Map();
+  for (const item of affiliationMissingRows) {
+    if (!missingByFamily.has(item.familyName)) missingByFamily.set(item.familyName, []);
+    missingByFamily.get(item.familyName).push(item.rowInfo);
+  }
+  const missingAffiliationRows = [];
+  for (const [familyName, missingRows] of missingByFamily) {
+    missingAffiliationRows.push(...await resolveMissingAffiliations(page, missingRows, familyName));
+  }
+  affiliationMismatches.push(...missingAffiliationRows);
+
+  if (affiliationMismatches.length) {
+    log('전체 소속 대조 불일치', `${affiliationMismatches.length}명: ${affiliationMismatches.map((item) => `${item.name}(시트 ${item.expectedFamily} / 웹 ${item.foundFamily || '확인 불가'})`).join(', ')}`);
+  } else {
+    log('전체 소속 대조 완료', `전체 ${rows.length}명 중 시트와 웹교적 소속 불일치 0명`);
+  }
+
   const summary = results.map(r => `${r.familyName}: 주일 ${r.expectedSunday ?? 0}명, 부서 ${r.expectedDepartment ?? 0}명, 실패 ${r.failed}명`).join(' / ');
   log('최종 가족별 요약', summary);
   fs.writeFileSync(RESULT_FILE, JSON.stringify({
@@ -1668,6 +1811,7 @@ async function main() {
     finalSaved: finalSave.attempted,
     finalSaveVerified: finalSave.verified,
     affiliationCorrections,
+    affiliationMismatches,
     deferredSearch,
     families: results
   }, null, 2));

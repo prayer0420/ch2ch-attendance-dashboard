@@ -1,7 +1,7 @@
 const assert = require("node:assert/strict");
 
 (async () => {
-  const { buildAttendanceActions } = await import(
+  const { attendanceTargetSatisfied, buildAttendanceActions } = await import(
     "../runner/legacy-ch2ch/src/attendance-actions.js"
   );
   const { verifyPreparedRowsWithFreshRows } = await import(
@@ -17,14 +17,14 @@ const assert = require("node:assert/strict");
   const webRows = sourceRows.map((row) => ({
     family: row.family,
     name: row.name,
-    sunday: false,
-    department: false,
+    sunday: row.name === "SundayOnly" || row.name === "DepartmentOnly" || row.name === "BroadcastOnly",
+    department: row.name === "SundayOnly" || row.name === "BroadcastOnly",
     broadcast: row.broadcast === true
   }));
   let saveCount = 0;
 
   function applyAttendanceActions(row, rowInfo) {
-    for (const action of buildAttendanceActions(rowInfo)) {
+    for (const action of buildAttendanceActions(rowInfo, { onlyPresent: true })) {
       const webFieldByIndex = ["sunday", "department", "broadcast"];
       const webField = webFieldByIndex[action.checkboxIndex];
       assert.ok(
@@ -43,10 +43,7 @@ const assert = require("node:assert/strict");
 
   for (const rowInfo of sourceRows) {
     if (!rowInfo.sunday && !rowInfo.department) {
-      assert.deepEqual(buildAttendanceActions(rowInfo), [
-        { fieldName: "주일", desired: false, checkboxIndex: 0 },
-        { fieldName: "부서", desired: false, checkboxIndex: 1 }
-      ]);
+      assert.deepEqual(buildAttendanceActions(rowInfo, { onlyPresent: true }), []);
       continue;
     }
     const row = webRows.find((candidate) => candidate.name === rowInfo.name);
@@ -68,8 +65,7 @@ const assert = require("node:assert/strict");
       sunday: row.sunday,
       department: row.department
     }),
-    matches: (rowInfo, state) =>
-      state.sunday === rowInfo.sunday && state.department === rowInfo.department,
+    matches: attendanceTargetSatisfied,
     mismatchReason: (rowInfo, state) =>
       `${rowInfo.name}: 기대 주일=${rowInfo.sunday}, 부서=${rowInfo.department}; ` +
       `실제 주일=${state.sunday}, 부서=${state.department}`
@@ -81,10 +77,10 @@ const assert = require("node:assert/strict");
   assert.deepEqual(
     webRows.map(({ name, sunday, department, broadcast }) => ({ name, sunday, department, broadcast })),
     [
-      { name: "SundayOnly", sunday: true, department: false, broadcast: false },
-      { name: "DepartmentOnly", sunday: false, department: true, broadcast: false },
+      { name: "SundayOnly", sunday: true, department: true, broadcast: false },
+      { name: "DepartmentOnly", sunday: true, department: true, broadcast: false },
       { name: "BothServices", sunday: true, department: true, broadcast: false },
-      { name: "BroadcastOnly", sunday: false, department: false, broadcast: true }
+      { name: "BroadcastOnly", sunday: true, department: true, broadcast: true }
     ]
   );
 
@@ -93,8 +89,7 @@ const assert = require("node:assert/strict");
   const failedVerification = await verifyPreparedRowsWithFreshRows(preparedRows, {
     findRow: async (name) => persistedRows.find((row) => row.name === name) || null,
     readState: async (row) => ({ ok: true, sunday: row.sunday, department: row.department }),
-    matches: (rowInfo, state) =>
-      state.sunday === rowInfo.sunday && state.department === rowInfo.department,
+    matches: attendanceTargetSatisfied,
     mismatchReason: (rowInfo, state) =>
       `${rowInfo.name}: 기대 주일=${rowInfo.sunday}, 부서=${rowInfo.department}; ` +
       `실제 주일=${state.sunday}, 부서=${state.department}`
@@ -104,7 +99,7 @@ const assert = require("node:assert/strict");
   assert.deepEqual(failedVerification.mismatches, [
     {
       name: "DepartmentOnly",
-      reason: "DepartmentOnly: 기대 주일=false, 부서=true; 실제 주일=false, 부서=false"
+      reason: "DepartmentOnly: 기대 주일=false, 부서=true; 실제 주일=true, 부서=false"
     }
   ]);
 
