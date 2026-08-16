@@ -887,12 +887,20 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
         return { box, index, text, identity: normalize(identity), cellIndex };
       });
       const matched = candidates.filter((candidate) => aliases.some((alias) => candidate.text.includes(normalize(alias))));
+      const headerCellIndexes = new Set();
+      for (const headerRow of headerRows) {
+        Array.from(headerRow.cells || []).forEach((cell, index) => {
+          const headerText = normalize(cell.innerText || cell.textContent || '');
+          if (aliases.some((alias) => headerText.includes(normalize(alias)))) headerCellIndexes.add(index);
+        });
+      }
+      const columnMatches = candidates.filter((candidate) => headerCellIndexes.has(candidate.cellIndex));
       const controlPattern = /select|checkall|allcheck|rowcheck|membercheck|선택|전체/;
       const controlCandidates = candidates.filter((candidate) => controlPattern.test(candidate.identity) || controlPattern.test(candidate.text));
       const attendanceCandidates = controlCandidates.length
         ? candidates.filter((candidate) => !controlCandidates.includes(candidate))
         : candidates;
-      const fallbackOffset = controlCandidates.length === 0 && candidates.length >= 4 ? 1 : 0;
+      const fallbackOffset = controlCandidates.length === 0 && candidates.length >= 3 ? 1 : 0;
       const fallback = attendanceCandidates[args.checkboxIndex + fallbackOffset]
         || attendanceCandidates[args.checkboxIndex]
         || candidates[args.checkboxIndex]
@@ -900,7 +908,11 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
       // Explicit column/header labels are authoritative. If the old page has
       // no usable labels, use the first two attendance columns and leave any
       // broadcast/control checkbox untouched.
-      const chosen = matched.length === 1 ? matched[0] : fallback;
+      const chosen = columnMatches.length === 1
+        ? columnMatches[0]
+        : matched.length === 1
+          ? matched[0]
+          : fallback;
       if (!chosen) {
         return {
           ok: false,
@@ -924,12 +936,14 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
         actual: after,
         before,
         count: boxes.length,
-        matchedText: chosen.text || `순서 fallback ${chosen.index}`
+        matchedText: chosen.text || `순서 fallback ${chosen.index}`,
+        chosenIndex: chosen.index,
+        cellIndex: chosen.cellIndex
       };
     }, { fieldName, desired, shouldSet });
     if (!result.ok) {
       const reason = `${fieldName} 체크박스 처리 실패`;
-      return { ok: false, reason };
+      return { ...result, ok: false, reason };
     }
     return result;
   }
@@ -1747,6 +1761,48 @@ async function clearAttendanceChecksOnCurrentPage(page) {
   let failed = 0;
 
   async function clearField(row, fieldName, checkboxIndex) {
+    async function uncheckSelectedBox(selection) {
+      const cellIndex = Number(selection?.cellIndex);
+      const chosenIndex = Number(selection?.chosenIndex);
+      const candidates = [];
+
+      if (Number.isInteger(cellIndex) && cellIndex >= 0) {
+        const cellBox = row
+          .locator('td,th')
+          .nth(cellIndex)
+          .locator('input[type="checkbox"]:visible')
+          .first();
+        if (await cellBox.count().catch(() => 0) > 0) candidates.push(cellBox);
+      }
+
+      if (Number.isInteger(chosenIndex) && chosenIndex >= 0) {
+        const rowBox = row.locator('input[type="checkbox"]:visible').nth(chosenIndex);
+        if (await rowBox.count().catch(() => 0) > 0) candidates.push(rowBox);
+      }
+
+      for (const checkbox of candidates) {
+        const checked = await checkbox.isChecked({ timeout: 1200 }).catch(() => null);
+        if (checked === false) return true;
+        if (checked !== true) continue;
+
+        try {
+          await checkbox.scrollIntoViewIfNeeded({ timeout: 1200 });
+          await checkbox.uncheck({ force: true, timeout: 1800 });
+        } catch (_) {
+          try {
+            await checkbox.click({ force: true, timeout: 1800 });
+          } catch (_) {
+            continue;
+          }
+        }
+
+        const after = await checkbox.isChecked({ timeout: 1200 }).catch(() => true);
+        if (after === false) return true;
+      }
+
+      return false;
+    }
+
     for (let attempt = 1; attempt <= 2; attempt += 1) {
       try {
         const beforeHandle = await row.elementHandle().catch(() => null);
@@ -1755,11 +1811,18 @@ async function clearAttendanceChecksOnCurrentPage(page) {
         if (!before.ok) continue;
         if (before.actual === false) return { ok: true, cleared: false };
 
-        const setHandle = await row.elementHandle().catch(() => null);
-        if (!setHandle) continue;
-        const changed = await accessCheckboxInRow({ rowHandle: setHandle }, fieldName, false, checkboxIndex, true);
-        if (!changed.ok) continue;
-        await shortDelay(120);
+        // Use the exact cell selected by the header-aware read. Playwright's
+        // uncheck fires the page's real input/change handlers, unlike only
+        // assigning `checked = false` inside evaluate().
+        let changed = await uncheckSelectedBox(before);
+        if (!changed) {
+          const setHandle = await row.elementHandle().catch(() => null);
+          if (!setHandle) continue;
+          const direct = await accessCheckboxInRow({ rowHandle: setHandle }, fieldName, false, checkboxIndex, true);
+          changed = direct.ok;
+        }
+        if (!changed) continue;
+        await shortDelay(180);
         const afterHandle = await row.elementHandle().catch(() => null);
         if (!afterHandle) continue;
         const after = await accessCheckboxInRow({ rowHandle: afterHandle }, fieldName, null, checkboxIndex, false);
@@ -1783,7 +1846,7 @@ async function clearAttendanceChecksOnCurrentPage(page) {
       if (!rowHandle) continue;
 
       memberRows += 1;
-      for (const [fieldName, checkboxIndex] of [['二쇱씪', 0], ['遺??', 1]]) {
+      for (const [fieldName, checkboxIndex] of [['주일', 0], ['부서', 1]]) {
         const result = await clearField(row, fieldName, checkboxIndex);
         if (!result.ok) failed += 1;
         else if (result.cleared) cleared += 1;
