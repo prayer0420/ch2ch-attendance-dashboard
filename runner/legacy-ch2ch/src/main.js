@@ -848,38 +848,38 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
         const cell = box.closest('td,th');
         const cellIndex = rowCells.indexOf(cell);
         const label = box.id ? document.querySelector(`label[for="${CSS.escape(box.id)}"]`) : null;
-        const rawIdentity = [
+        const identity = [
           box.name,
           box.id,
           box.title,
           box.getAttribute('aria-label'),
-          label?.innerText,
-          cell?.innerText
+          label?.innerText
         ].filter(Boolean).join(' ');
         const headerTexts = cellIndex >= 0
           ? headerRows.map((row) => row.cells?.[cellIndex]?.innerText || row.cells?.[cellIndex]?.textContent || '')
           : [];
         const text = normalize([
-          rawIdentity,
+          identity,
+          cell?.innerText,
           ...headerTexts
         ].filter(Boolean).join(' '));
-        return { box, index, text, rawIdentity: normalize(rawIdentity), cellIndex };
+        return { box, index, text, identity: normalize(identity), cellIndex };
       });
       const matched = candidates.filter((candidate) => aliases.some((alias) => candidate.text.includes(normalize(alias))));
-      const rolePattern = args.fieldName === '주일' ? /presence[_-]?a|presencea/ : /presence[_-]?b|presenceb/;
-      const roleMatches = candidates.filter((candidate) => rolePattern.test(candidate.rawIdentity) || rolePattern.test(candidate.text));
-      const matchedRole = matched.filter((candidate) => rolePattern.test(candidate.rawIdentity) || rolePattern.test(candidate.text));
-      const fallbackIndex = boxes.length >= 3
-        ? (args.fieldName === '주일' ? 1 : 2)
-        : (args.fieldName === '주일' ? 0 : 1);
-      const fallback = candidates[fallbackIndex] || null;
-      const chosen = matchedRole.length === 1
-        ? matchedRole[0]
-        : roleMatches.length === 1
-          ? roleMatches[0]
-          : matched.length === 1
-            ? matched[0]
-            : fallback;
+      const controlPattern = /select|checkall|allcheck|rowcheck|membercheck|선택|전체/;
+      const controlCandidates = candidates.filter((candidate) => controlPattern.test(candidate.identity) || controlPattern.test(candidate.text));
+      const attendanceCandidates = controlCandidates.length
+        ? candidates.filter((candidate) => !controlCandidates.includes(candidate))
+        : candidates;
+      const fallbackOffset = controlCandidates.length === 0 && candidates.length >= 4 ? 1 : 0;
+      const fallback = attendanceCandidates[args.checkboxIndex + fallbackOffset]
+        || attendanceCandidates[args.checkboxIndex]
+        || candidates[args.checkboxIndex]
+        || null;
+      // Explicit column/header labels are authoritative. If the old page has
+      // no usable labels, use the first two attendance columns and leave any
+      // broadcast/control checkbox untouched.
+      const chosen = matched.length === 1 ? matched[0] : fallback;
       if (!chosen) {
         return {
           ok: false,
@@ -893,6 +893,8 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
       if (args.shouldSet && box.checked !== args.desired) {
         box.scrollIntoView({ block: 'center', inline: 'center' });
         box.click();
+        if (box.checked !== args.desired) box.checked = args.desired;
+        box.dispatchEvent(new Event('input', { bubbles: true }));
         box.dispatchEvent(new Event('change', { bubbles: true }));
       }
       const after = Boolean(box.checked);
