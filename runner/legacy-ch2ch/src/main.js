@@ -11,7 +11,10 @@ import {
   collectDeferredCorrectionTargets,
   isCorrectionSuccessful
 } from './affiliation-correction.js';
-import { getWebClearTargetFamilies } from './web-clear-targets.js';
+import {
+  getWebClearTargetFamilies,
+  getWebTargetFamilyName
+} from './web-clear-targets.js';
 import { attendanceTargetSatisfied, buildAttendanceActions } from './attendance-actions.js';
 import { verifyPreparedRowsWithFreshRows } from './attendance-verification.js';
 
@@ -206,7 +209,7 @@ function groupByFamily(rows) {
   const order = readFamilyOrder();
   const map = new Map();
   for (const row of rows) {
-    const routeFamily = getRouteFamilyName(row.family);
+    const routeFamily = getWebTargetFamilyName(row.family);
     if (!map.has(routeFamily)) map.set(routeFamily, []);
     map.get(routeFamily).push(row);
   }
@@ -250,15 +253,8 @@ function logFamilyResult(result) {
   }
 }
 
-function getRouteFamilyName(familyName) {
-  const normalized = normalizeText(familyName);
-  if (normalized.startsWith('새가족반')) return '새가족반';
-  if (normalized.startsWith('새가족팀')) return '새가족팀';
-  return String(familyName || '').trim();
-}
-
 function isSpecialNewcomerGroup(familyName) {
-  return familyName === '새가족반' || familyName === '새가족팀';
+  return familyName === '새가족반';
 }
 
 function readFamilyOrder() {
@@ -1917,13 +1913,23 @@ async function main() {
   const webClearOnly = String(process.env.WEB_CLEAR_ONLY || 'false').toLowerCase() === 'true';
   const rows = readAttendanceRows(CONFIG.attendanceFile);
   const attendanceRows = rows.filter((row) => row.sunday === true || row.department === true);
-  const grouped = groupByFamily(rows);
-  const attendanceGrouped = groupByFamily(attendanceRows);
+  const webTargetFamilyNames = getWebClearTargetFamilies(rows);
+  const webTargetFamilySet = new Set(webTargetFamilyNames);
+  const grouped = groupByFamily(rows).filter((item) => webTargetFamilySet.has(item.family));
+  const attendanceGrouped = groupByFamily(attendanceRows)
+    .filter((item) => webTargetFamilySet.has(item.family));
 
   if (!webClearOnly && !attendanceRows.length) {
     throw new Error('시트에서 참석으로 체크된 출석 대상이 없습니다. 방송/QR/가족 체크는 출석 대상으로 사용하지 않습니다.');
   }
-  log('출석 파일 로드 완료', `전체 ${rows.length}명 / 출석 처리 대상 ${attendanceRows.length}명 / 가족 ${grouped.length}개`);
+  log(
+    '출석 파일 로드 완료',
+    `전체 ${rows.length}명 / 출석 처리 대상 ${attendanceRows.length}명 / 웹 대상 가족 ${webTargetFamilyNames.length}개`
+  );
+  log(
+    '출석 저장 대상 가족',
+    `${attendanceGrouped.length}개 / ${attendanceGrouped.map((item) => item.family).join(', ') || '없음'} / 기준=시트 가족명, 참석 체크 인원만`
+  );
   log('실행 모드', CONFIG.dryRun ? 'DRY_RUN=true 미리보기, 실제 저장 안 함' : 'DRY_RUN=false 실제 체크/저장');
   log('저장 방식', `SAVE_PER_FAMILY=${CONFIG.savePerFamily}, SAVE_MODE=${CONFIG.saveMode}`);
 
@@ -1956,8 +1962,7 @@ async function main() {
   const weekSelected = await requiredStep('주차 선택', () => selectAttendanceWeek(page));
 
   if (webClearOnly) {
-    const sourceFamilyNames = getWebClearTargetFamilies(rows);
-    const families = await processWebAttendanceClear(page, sourceFamilyNames);
+    const families = await processWebAttendanceClear(page, webTargetFamilyNames);
     const failedFamilies = families.filter((family) => family.failed > 0 || family.saved === false);
     log('웹교적 주차 전체 해제 완료', `가족 ${families.length}개 / 실패 ${failedFamilies.length}개`);
     fs.writeFileSync(RESULT_FILE, JSON.stringify({
@@ -1980,7 +1985,7 @@ async function main() {
 
   const results = [];
   const normalGroups = attendanceGrouped.filter((item) => !isSpecialNewcomerGroup(item.family));
-  const specialOrder = ['새가족반', '새가족팀'];
+  const specialOrder = ['새가족반'];
   const newcomerGroups = attendanceGrouped
     .filter((item) => isSpecialNewcomerGroup(item.family))
     .sort((a, b) => specialOrder.indexOf(a.family) - specialOrder.indexOf(b.family));

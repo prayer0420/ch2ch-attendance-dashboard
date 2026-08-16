@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 
 (async () => {
-  const { getWebClearTargetFamilies } = await import(
+  const { getWebClearTargetFamilies, getWebTargetFamilyName } = await import(
     '../runner/legacy-ch2ch/src/web-clear-targets.js'
   );
 
@@ -20,6 +20,8 @@ const assert = require('node:assert/strict');
     getWebClearTargetFamilies(['새가족팀', '재용이네', '재용이네', '새가족반']),
     ['새가족반', '재용이네']
   );
+  assert.equal(getWebTargetFamilyName('새가족팀\n공부중'), '새가족반');
+  assert.equal(getWebTargetFamilyName(' 재용이네 '), '재용이네');
 
   console.log('web clear target family checks passed');
 })().catch((error) => {
