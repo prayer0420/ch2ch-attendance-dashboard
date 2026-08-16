@@ -11,6 +11,13 @@ const { buildQrWorkerPayload } = require("./qr-sync-job");
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+class RunCancelledError extends Error {
+  constructor() {
+    super("RUN_CANCELLED");
+    this.name = "RunCancelledError";
+  }
+}
+
 class Runner {
   constructor(config) {
     this.config = config;
@@ -133,6 +140,16 @@ class Runner {
       if (error) throw error;
       console.log(`[Runner] QR 작업 완료: ${job.id}`);
     } catch (error) {
+      if (false) {
+        await reporter.updateRun({
+          status: "cancelled",
+          finished_at: new Date().toISOString(),
+          current_step: "사용자 요청으로 실행 중지",
+          error_message: null
+        });
+        await reporter.event("cancelled", "사용자 요청으로 실행을 중지했습니다.");
+        return;
+      }
       const message = error instanceof Error ? error.message : String(error);
       await update({ status: "failed", error_message: message, finished_at: new Date().toISOString() });
       console.error(`[Runner] QR 작업 실패: ${job.id} ${message}`);
@@ -149,7 +166,22 @@ class Runner {
       await reporter.event("runner_picked_up", "Runner가 실행 요청을 가져감");
       await reporter.updateRun({ status: "running", current_step: "자동화 시작" });
 
-      const results = await runAttendanceAutomation(run, reporter);
+      let results;
+      try {
+        results = await runAttendanceAutomation(run, reporter);
+      } catch (error) {
+        if (error instanceof RunCancelledError || error?.code === "RUN_CANCELLED") {
+          await reporter.updateRun({
+            status: "cancelled",
+            finished_at: new Date().toISOString(),
+            current_step: "사용자 요청으로 실행 중지",
+            error_message: null
+          });
+          await reporter.event("cancelled", "사용자 요청으로 실행을 중지했습니다.");
+          return;
+        }
+        throw error;
+      }
       await this.saveResults(run, results);
 
       const finalFailCount = results.filter((result) => result.status === "final_fail" || result.attempt_stage === "final_fail").length;
@@ -210,6 +242,15 @@ class Runner {
           context
         });
         if (error) throw error;
+      },
+      isCancelled: async () => {
+        const { data, error } = await this.supabase
+          .from("attendance_runs")
+          .select("status")
+          .eq("id", runId)
+          .maybeSingle();
+        if (error) throw error;
+        return data?.status === "cancelled";
       }
     };
   }

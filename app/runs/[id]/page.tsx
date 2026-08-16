@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { AutoRefresh } from "@/components/auto-refresh";
 import { PageActions } from "@/components/page-actions";
+import { RunStopButton } from "@/components/run-stop-button";
 import { Badge, EmptyState, Panel, SectionTitle, StatCard } from "@/components/ui";
 import { getRunDetail } from "@/lib/data";
 import { nextActionForRun, resultStatusLabel, runStatusLabel, saveResultLabel, statusTone } from "@/lib/status";
@@ -90,6 +91,7 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
       <SectionTitle eyebrow={demo ? "데모 화면" : "실행 상세"} title={`${run.target_week_text ?? `${run.target_week}주`} 진행상황`}>
         <div className="flex flex-wrap gap-2">
           <AutoRefresh enabled={["queued", "picked_up", "running", "saving"].includes(run.status)} />
+          {!isFinished ? <RunStopButton runId={id} /> : null}
           <Link className="focus-ring rounded bg-ink px-4 py-2 text-sm font-bold text-paper" href={`/runs/${id}/results`}>결과 전체 보기</Link>
         </div>
       </SectionTitle>

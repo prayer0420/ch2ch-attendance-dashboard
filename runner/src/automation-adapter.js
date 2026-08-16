@@ -780,6 +780,12 @@ async function runLegacyProcess(run, reporter, people) {
 
   await reporter.event("legacy_started", run.dry_run ? "기존 CH2CH 자동화를 테스트 모드로 실행합니다." : "기존 CH2CH 자동화를 실제 저장 모드로 실행합니다.");
 
+  if (await reporter.isCancelled()) {
+    const error = new Error("RUN_CANCELLED");
+    error.code = "RUN_CANCELLED";
+    throw error;
+  }
+
   await new Promise((resolve, reject) => {
     const child = spawn(process.execPath, ["src/main.js"], {
       cwd: LEGACY_DIR,
@@ -789,10 +795,22 @@ async function runLegacyProcess(run, reporter, people) {
     });
     const timeoutMs = Number(process.env.AUTOMATION_TIMEOUT_MS || 30 * 60 * 1000);
     let timedOut = false;
+    let cancellationRequested = false;
+    let cancellationTimer = null;
     const timeout = setTimeout(() => {
       timedOut = true;
       child.kill();
     }, timeoutMs);
+
+    cancellationTimer = setInterval(() => {
+      reporter.isCancelled()
+        .then((cancelled) => {
+          if (!cancelled || cancellationRequested) return;
+          cancellationRequested = true;
+          child.kill();
+        })
+        .catch(() => {});
+    }, 1500);
 
     let pending = Promise.resolve();
 
@@ -844,12 +862,19 @@ async function runLegacyProcess(run, reporter, people) {
     child.stderr.on("data", (chunk) => String(chunk).split(/\r?\n/).forEach((line) => handleLine(line, "error")));
     child.on("error", (error) => {
       clearTimeout(timeout);
+      if (cancellationTimer) clearInterval(cancellationTimer);
       reject(error);
     });
     child.on("close", (code) => {
       clearTimeout(timeout);
+      if (cancellationTimer) clearInterval(cancellationTimer);
       pending.finally(() => {
         if (timedOut) reject(new Error(`자동화가 ${Math.round(timeoutMs / 60000)}분 제한 시간을 초과해 중단되었습니다.`));
+        else if (cancellationRequested) {
+          const error = new Error("RUN_CANCELLED");
+          error.code = "RUN_CANCELLED";
+          reject(error);
+        }
         else if (code === 0) resolve();
         else reject(new Error(`기존 CH2CH 자동화가 종료 코드 ${code}로 끝났습니다.`));
       });

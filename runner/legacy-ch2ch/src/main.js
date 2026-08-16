@@ -314,7 +314,7 @@ async function clickTextInAnyFrame(page, text, exact = false, timeoutMs = 1200, 
     try {
       const locator = ctx.getByText(text, { exact }).first();
       await locator.waitFor({ state: 'visible', timeout: Math.min(timeoutMs, 800) });
-      await locator.click({ timeout: timeoutMs });
+      await locator.click({ timeout: timeoutMs, noWaitAfter: true });
       await shortDelay();
       return true;
     } catch (_) {}
@@ -1704,18 +1704,20 @@ async function clearAttendanceChecksOnCurrentPage(page) {
       const boxes = row.locator('input[type="checkbox"]');
       const boxCount = await boxes.count().catch(() => 0);
       if (boxCount <= CONFIG.rowCheckboxOffset + 1) continue;
+      const rowHandle = await row.elementHandle().catch(() => null);
+      if (!rowHandle) continue;
 
       memberRows += 1;
-      for (const checkboxIndex of [0, 1]) {
-        const box = boxes.nth(CONFIG.rowCheckboxOffset + checkboxIndex);
-        if (!(await box.isChecked({ timeout: 700 }).catch(() => false))) continue;
-        try {
-          await box.uncheck({ force: true, timeout: 700 });
-          if (await box.isChecked({ timeout: 700 }).catch(() => true)) failed += 1;
-          else cleared += 1;
-        } catch (_) {
-          failed += 1;
-        }
+      for (const [fieldName, checkboxIndex] of [['二쇱씪', 0], ['遺??', 1]]) {
+        const result = await accessCheckboxInRow(
+          { rowHandle },
+          fieldName,
+          false,
+          checkboxIndex,
+          true
+        );
+        if (!result.ok) failed += 1;
+        else if (result.before) cleared += 1;
       }
     }
   }
@@ -1729,8 +1731,9 @@ async function processWebAttendanceClear(page) {
   const newcomerFamilies = ['새가족반', '새가족팀'];
 
   async function processFamilyPage(familyName, clickFamilyTab = true) {
+    log('웹교적 주차 전체 해제 시작', familyName);
     const navigated = clickFamilyTab
-      ? await clickTextInAnyFrame(page, familyName, true, 1500)
+      ? await clickTextInAnyFrame(page, familyName, true, 800, false)
       : await navigateToNewcomerAttendance(page, familyName);
     if (!navigated) {
       families.push({ familyName, memberRows: 0, cleared: 0, failed: 1, saved: false, saveVerified: false });
