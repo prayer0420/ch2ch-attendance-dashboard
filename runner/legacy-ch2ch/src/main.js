@@ -1619,9 +1619,17 @@ async function runAffiliationAuditParallel(context, groups) {
   const mismatches = [];
   const missingRows = [];
   let nextIndex = 0;
+  const auditBrowser = await chromium.launch({ headless: true, slowMo: CONFIG.slowMo });
+  const auditContext = await auditBrowser.newContext({
+    storageState: await context.storageState(),
+    ignoreHTTPSErrors: true,
+    viewport: { width: 1700, height: 950 },
+    acceptDownloads: false
+  });
+  pageDialogAutoAccept(auditContext);
 
   async function auditGroup(item) {
-    const auditPage = await context.newPage();
+    const auditPage = await auditContext.newPage();
     try {
       const isNewcomer = isSpecialNewcomerGroup(item.family);
       const navigated = isNewcomer
@@ -1675,8 +1683,12 @@ async function runAffiliationAuditParallel(context, groups) {
   }
 
   const workerCount = Math.min(CONFIG.affiliationAuditConcurrency, groups.length);
-  await Promise.all(Array.from({ length: workerCount }, () => worker()));
-  return { mismatches, missingRows };
+  try {
+    await Promise.all(Array.from({ length: workerCount }, () => worker()));
+    return { mismatches, missingRows };
+  } finally {
+    await auditBrowser.close().catch(() => {});
+  }
 }
 
 async function clearAttendanceChecksOnCurrentPage(page) {
