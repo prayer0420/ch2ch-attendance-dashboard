@@ -210,6 +210,7 @@ function groupByFamily(rows) {
   const map = new Map();
   for (const row of rows) {
     const routeFamily = getWebTargetFamilyName(row.family);
+    if (!routeFamily) continue;
     if (!map.has(routeFamily)) map.set(routeFamily, []);
     map.get(routeFamily).push(row);
   }
@@ -254,7 +255,7 @@ function logFamilyResult(result) {
 }
 
 function isSpecialNewcomerGroup(familyName) {
-  return familyName === '새가족반';
+  return familyName === '새가족반' || familyName === '새가족팀';
 }
 
 function readFamilyOrder() {
@@ -1858,7 +1859,7 @@ async function processWebAttendanceClear(page, sourceFamilyNames = null) {
   async function processFamilyPage(familyName) {
     log('웹교적 주차 전체 해제 시작', familyName);
     let navigated = false;
-    const isNewcomer = familyName === '새가족반';
+    const isNewcomer = isSpecialNewcomerGroup(familyName);
     for (let attempt = 1; attempt <= 2 && !navigated; attempt += 1) {
       navigated = isNewcomer
         ? await navigateToNewcomerAttendance(page, familyName)
@@ -1985,7 +1986,7 @@ async function main() {
 
   const results = [];
   const normalGroups = attendanceGrouped.filter((item) => !isSpecialNewcomerGroup(item.family));
-  const specialOrder = ['새가족반'];
+  const specialOrder = ['새가족팀', '새가족반'];
   const newcomerGroups = attendanceGrouped
     .filter((item) => isSpecialNewcomerGroup(item.family))
     .sort((a, b) => specialOrder.indexOf(a.family) - specialOrder.indexOf(b.family));

@@ -238,7 +238,9 @@ function isLikelyFamilyLabel(value) {
 
 function isIgnoredFamilyLabel(value) {
   const normalized = normalizeName(value);
-  return normalized.includes("새가족방문자") || normalized.includes("새가족반방문자");
+  return normalized.includes("새가족방문자")
+    || normalized.includes("새가족반방문자")
+    || normalized.includes("새가족팀방문자");
 }
 
 function isBlockFamilyLabel(row, block) {

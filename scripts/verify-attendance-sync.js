@@ -118,6 +118,16 @@ assert.deepEqual(
     .map(({ name, service13, service4 }) => ({ name, service13, service4 })),
   [{ name: "AttendOnly", service13: true, service4: true }]
 );
+const newcomerRows = __test.rowsFromCsv([
+  "family,name,sunday,department",
+  '"새가족반\n방문자",홍길동,O,O',
+  '"새가족팀\n방문자",김철수,O,O',
+  '"새가족반\n공부중",김선빈,X,O'
+].join("\n"));
+assert.deepEqual(
+  newcomerRows.map(({ family, name }) => ({ family, name })),
+  [{ family: "새가족반\n공부중", name: "김선빈" }]
+);
 const qrAdapterHeaders = [
   [family, "1-3부", "", "", "4부", "", "", ""],
   ["", "QR", "참석", "방송", "QR", "참석", "방송", "가족"],

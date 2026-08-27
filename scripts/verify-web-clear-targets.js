@@ -15,12 +15,15 @@ const assert = require('node:assert/strict');
     { family: '민석이네', name: '중복 가족', sunday: false, department: false }
   ];
 
-  assert.deepEqual(getWebClearTargetFamilies(rows), ['민석이네', '새가족반', '건우이네']);
+  assert.deepEqual(getWebClearTargetFamilies(rows), ['민석이네', '새가족반', '새가족팀', '건우이네']);
   assert.deepEqual(
     getWebClearTargetFamilies(['새가족팀', '재용이네', '재용이네', '새가족반']),
-    ['새가족반', '재용이네']
+    ['새가족팀', '재용이네', '새가족반']
   );
-  assert.equal(getWebTargetFamilyName('새가족팀\n공부중'), '새가족반');
+  assert.equal(getWebTargetFamilyName('새가족팀\n공부중'), '새가족팀');
+  assert.equal(getWebTargetFamilyName('새가족반\n공부중'), '새가족반');
+  assert.equal(getWebTargetFamilyName('새가족반\n방문자'), '');
+  assert.equal(getWebTargetFamilyName('새가족방문자'), '');
   assert.equal(getWebTargetFamilyName(' 재용이네 '), '재용이네');
 
   console.log('web clear target family checks passed');
