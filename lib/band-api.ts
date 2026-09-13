@@ -1,4 +1,4 @@
-const TARGET_NAME = "2026 임원밴드";
+const TARGET_NAME = process.env.BAND_TARGET_NAME?.trim() || "2026 임원밴드";
 const API_BASE = "https://openapi.band.us";
 
 type Band = {
@@ -54,20 +54,30 @@ export async function resolveTargetBand(options: BandApiOptions = {}): Promise<B
   return matches[0];
 }
 
-export async function publishToTargetBand(content: string, options: BandApiOptions = {}) {
+export async function checkTargetBandPosting(options: BandApiOptions = {}) {
   const accessToken = getAccessToken(options.accessToken);
   const band = await resolveTargetBand({ accessToken });
-  const permissionParams = new URLSearchParams({
+  const params = new URLSearchParams({
     access_token: accessToken,
     band_key: band.band_key,
     permissions: "posting",
   });
-  const permission = await bandRequest<{ permissions?: string[]; permission?: string[] }>(
-    `/v2/band/permissions?${permissionParams}`,
+  const result = await bandRequest<{ permissions?: string[]; permission?: string[] }>(
+    `/v2/band/permissions?${params}`,
   );
-  const permissions = permission.permissions ?? permission.permission ?? [];
+  const permissions = result.permissions ?? result.permission ?? [];
 
-  if (!permissions.includes("posting")) {
+  return {
+    band,
+    canPost: permissions.includes("posting"),
+  };
+}
+
+export async function publishToTargetBand(content: string, options: BandApiOptions = {}) {
+  const accessToken = getAccessToken(options.accessToken);
+  const { band, canPost } = await checkTargetBandPosting({ accessToken });
+
+  if (!canPost) {
     throw new Error(`이 BAND 계정에는 "${TARGET_NAME}" 글쓰기 권한이 없습니다.`);
   }
 

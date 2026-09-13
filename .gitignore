@@ -16,3 +16,6 @@ runner/legacy-ch2ch/logs/
 .vercel
 .env*
 .worktrees/
+__pycache__/
+*.py[cod]
+extras/server-migration/qa/

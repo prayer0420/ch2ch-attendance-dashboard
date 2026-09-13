@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
@@ -15,6 +15,7 @@ import {
   UsersRound
 } from "lucide-react";
 import { Badge, Panel } from "@/components/ui";
+import { DEFAULT_ATTENDANCE_SHEET_URL, readAttendanceSheetUrl, saveAttendanceSheetUrl } from "@/lib/attendance-sheet-preference";
 
 type Preview = {
   id: string;
@@ -48,8 +49,6 @@ type ApplyResult = {
 };
 
 type QueuedJob = { queued: true; jobId: string; status: string };
-
-const DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/1DXEeV2h5lk3c8clfNBZPDw3biuqkIP1-5ENvapcVvk8/edit?usp=sharing";
 
 function isoWeek() {
   const now = new Date();
@@ -97,12 +96,22 @@ function NameList({ title, names, tone }: { title: string; names: string[]; tone
 
 export function QrAttendanceSync() {
   const [week, setWeek] = useState(isoWeek());
-  const [sheetUrl, setSheetUrl] = useState(DEFAULT_SHEET_URL);
+  const [sheetUrl, setSheetUrl] = useState(DEFAULT_ATTENDANCE_SHEET_URL);
+  const [sheetUrlReady, setSheetUrlReady] = useState(false);
   const [sheetTab, setSheetTab] = useState("가장체크");
   const [preview, setPreview] = useState<Preview | null>(null);
   const [result, setResult] = useState<ApplyResult | null>(null);
   const [loading, setLoading] = useState<"preview" | "apply" | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSheetUrl(readAttendanceSheetUrl());
+    setSheetUrlReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (sheetUrlReady) saveAttendanceSheetUrl(sheetUrl);
+  }, [sheetUrl, sheetUrlReady]);
 
   const unmatched = useMemo(
     () => [...new Set([...(preview?.unmatched13Names ?? []), ...(preview?.unmatched4Names ?? [])])],

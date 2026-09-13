@@ -8,6 +8,8 @@ export type ThanksgivingOffering = {
   note: string;
 };
 
+export type PurposeOffering = ThanksgivingOffering;
+
 export type AccountingSourceMeta = {
   sourceType: "excel" | "google-sheet";
   sourceName: string;
@@ -15,8 +17,13 @@ export type AccountingSourceMeta = {
 
 export type JournalAccounting = AccountingSourceMeta & {
   sheetTab: string;
+  sundayTotal: number;
+  thanksgivingTotal: number;
+  purposeTotal: number;
   total: number;
+  sunday?: ThanksgivingOffering[];
   thanksgiving: ThanksgivingOffering[];
+  purpose: PurposeOffering[];
 };
 
 export function isAccountingSourceReady(
@@ -91,25 +98,6 @@ function cleanCell(value: unknown) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
 
-function includesTargetDate(value: string, date: string) {
-  const match = date.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!match) throw new Error("회계 자료를 찾을 예배 날짜가 올바르지 않습니다.");
-  const [, year, monthText, dayText] = match;
-  const month = Number(monthText);
-  const day = Number(dayText);
-  const fullDatePatterns = [
-    new RegExp(`${year}\\s*[.\\/-]\\s*0?${month}\\s*[.\\/-]\\s*0?${day}(?!\\d)`),
-    new RegExp(`${year}\\s*년\\s*0?${month}\\s*월\\s*0?${day}\\s*일`)
-  ];
-  if (fullDatePatterns.some((pattern) => pattern.test(value))) return true;
-  if (/\d{4}\s*(?:[.\/-]|년)/.test(value)) return false;
-  const shortDatePatterns = [
-    new RegExp(`(?:^|[^\\d])0?${month}\\s*[.\\/-]\\s*0?${day}(?!\\d)`),
-    new RegExp(`(?:^|[^\\d])0?${month}\\s*월\\s*0?${day}\\s*일`)
-  ];
-  return shortDatePatterns.some((pattern) => pattern.test(value));
-}
-
 function normalizeAmount(value: unknown) {
   if (typeof value === "number") return Number.isFinite(value) ? Math.round(value) : 0;
   const normalized = cleanCell(value).replace(/[^\d.-]/g, "");
@@ -120,46 +108,60 @@ function normalizeAmount(value: unknown) {
 
 function isSummaryLabel(value: string) {
   const normalized = value.replace(/\s+/g, "");
-  return /^(온라인|현장|온라인계|현장계|감사헌금총계|헌금총계|합계|소계)$/.test(normalized);
+  return /^(온라인|현장|온라인계|현장계|주일헌금총계|감사헌금총계|목적헌금총계|헌금총계|총계|합계|소계)$/.test(normalized);
+}
+
+export function sortThanksgivingOfferings(offerings: ThanksgivingOffering[]) {
+  return [...offerings].sort((left, right) => {
+    const noteOrder = Number(Boolean(right.note.trim())) - Number(Boolean(left.note.trim()));
+    return noteOrder || left.name.localeCompare(right.name, "ko-KR");
+  });
 }
 
 function sheetRows(sheet: XLSX.WorkSheet) {
   return XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, raw: false, defval: "" });
 }
 
-function findDatedSheet(workbook: XLSX.WorkBook, date: string) {
-  const selected = workbook.SheetNames.map((sheetName, sheetIndex) => {
-    const sheet = workbook.Sheets[sheetName];
-    if (!sheet) return null;
-    const rows = sheetRows(sheet);
-    const dateScope = [sheetName, ...rows.slice(0, 8).flat().map(cleanCell)].join(" ");
-    return includesTargetDate(dateScope, date) ? { sheetName, sheetIndex, rows } : null;
-  }).filter((candidate): candidate is NonNullable<typeof candidate> => Boolean(candidate)).at(-1);
-
-  if (!selected) {
-    throw new Error(`${date} 회계 탭을 찾지 못했습니다. 발견된 탭: ${workbook.SheetNames.join(", ") || "없음"}`);
-  }
-  return selected;
+function findLatestSheet(workbook: XLSX.WorkBook) {
+  const sheetName = workbook.SheetNames.at(-1);
+  const sheet = sheetName ? workbook.Sheets[sheetName] : undefined;
+  if (!sheetName || !sheet) throw new Error("회계 파일의 마지막 탭을 찾지 못했습니다.");
+  return { sheetName, rows: sheetRows(sheet) };
 }
 
-function parseThanksgiving(rows: unknown[][]) {
+function parseOfferingSection(rows: unknown[][], label: string, required = false) {
   const cells = rows.flatMap((row, rowIndex) => row.map((value, columnIndex) => ({ rowIndex, columnIndex, value })));
-  const header = cells.find(({ value }) => cleanCell(value).replace(/\s+/g, "").includes("감사헌금"));
-  if (!header) throw new Error("선택한 회계 탭에서 감사헌금 표제를 찾지 못했습니다.");
+  const headers = cells.filter(({ value }) => cleanCell(value).replace(/\s+/g, "") === label);
+  if (!headers.length) {
+    if (required) throw new Error(`선택한 회계 탭에서 ${label} 표제를 찾지 못했습니다.`);
+    return [];
+  }
 
-  const thanksgiving = rows.slice(header.rowIndex + 1).flatMap<ThanksgivingOffering>((row) => {
+  const offerings = headers.flatMap((header) => rows.slice(header.rowIndex + 1,
+    headers.find((next) => next.rowIndex > header.rowIndex && next.columnIndex === header.columnIndex)?.rowIndex
+  ).flatMap<ThanksgivingOffering>((row) => {
     const name = cleanCell(row[header.columnIndex]);
     const amount = normalizeAmount(row[header.columnIndex + 1]);
-    const note = cleanCell(row[header.columnIndex + 2]);
-    if (!name || amount <= 0 || isSummaryLabel(name)) return [];
+    const note = label === "감사헌금" ? cleanCell(row[header.columnIndex + 2]) : "";
+    if (!name || isSummaryLabel(name) || /^(주일헌금|감사헌금|목적헌금)$/.test(name)) return [];
+    if (amount < 0) throw new Error(`${label} ${name}: 음수 금액을 확인해 주세요.`);
     return [{ name, amount, note }];
-  });
+  }));
 
-  thanksgiving.sort((left, right) => {
-    const noteOrder = Number(Boolean(right.note)) - Number(Boolean(left.note));
-    return noteOrder || left.name.localeCompare(right.name, "ko-KR");
-  });
-  return thanksgiving;
+  return label === "감사헌금" ? sortThanksgivingOfferings(offerings) : offerings.sort((a, b) => a.name.localeCompare(b.name, "ko-KR"));
+}
+
+function findSectionTotal(rows: unknown[][], label: string, offerings: ThanksgivingOffering[]) {
+  const target = `${label}총계`;
+  for (const row of rows) {
+    const labelIndex = row.findIndex((value) => cleanCell(value).replace(/\s+/g, "") === target);
+    if (labelIndex < 0) continue;
+    for (let offset = 1; offset <= 3; offset += 1) {
+      const amount = normalizeAmount(row[labelIndex + offset]);
+      if (amount > 0) return amount;
+    }
+  }
+  return offerings.reduce((sum, offering) => sum + offering.amount, 0);
 }
 
 export function parseAccountingWorkbook(
@@ -174,12 +176,26 @@ export function parseAccountingWorkbook(
     throw new Error("회계 엑셀 파일을 읽지 못했습니다. XLSX 또는 XLS 형식인지 확인해 주세요.");
   }
 
-  const selected = findDatedSheet(workbook, date);
-  const thanksgiving = parseThanksgiving(selected.rows);
+  const selected = findLatestSheet(workbook);
+  const sunday = parseOfferingSection(selected.rows, "주일헌금");
+  const thanksgiving = parseOfferingSection(selected.rows, "감사헌금", true);
+  const purpose = parseOfferingSection(selected.rows, "목적헌금");
+  const sundayTotal = findSectionTotal(selected.rows, "주일헌금", sunday);
+  const thanksgivingTotal = findSectionTotal(selected.rows, "감사헌금", thanksgiving);
+  const purposeTotal = findSectionTotal(selected.rows, "목적헌금", purpose);
+  for (const [label, entries, total] of [["주일헌금", sunday, sundayTotal], ["감사헌금", thanksgiving, thanksgivingTotal], ["목적헌금", purpose, purposeTotal]] as const) {
+    const sum = entries.reduce((value, entry) => value + entry.amount, 0);
+    if (sum !== total) throw new Error(`${selected.sheetName} ${label}: 명단 합계 ${sum.toLocaleString("ko-KR")}원과 원본 총계 ${total.toLocaleString("ko-KR")}원이 다릅니다. 원본의 누락·금액·합계 수식을 확인해 주세요.`);
+  }
   return {
     ...source,
     sheetTab: selected.sheetName,
-    total: thanksgiving.reduce((sum, offering) => sum + offering.amount, 0),
-    thanksgiving
+    sundayTotal,
+    thanksgivingTotal,
+    purposeTotal,
+    total: sundayTotal + thanksgivingTotal + purposeTotal,
+    sunday,
+    thanksgiving,
+    purpose
   };
 }

@@ -1,0 +1,250 @@
+# 작업 세션 기록
+
+이 파일에는 전체 대화를 복사하지 않고, 작업을 이어가는 데 필요한 결정·실행 결과·다음 단계만 기록한다.
+
+기록할 때는 지나친 요약을 피하고 트랙명, 단계, 명령어, 경로, IP, 포트, 서비스, 상태값, 오류 문구, 판단 근거, 다음 명령을 검색 가능한 형태로 남긴다.
+
+## 2026-09-11 — QEMU Oracle Linux 10 SSH 준비
+
+- 정확한 프로젝트 경로 확인:
+  `C:\Users\ekzm8\OneDrive\바탕 화면\OneDrive\문서\등촌프로젝트`
+- 다음 인수인계 문서를 읽고 맥락을 확인함:
+  - `AGENTS.md`
+  - `extras/server-migration/CODEX_MASTER_HANDOFF.md`
+  - `extras/qemu-oracle-linux/QEMU_ORACLE_LINUX_HANDOFF.md`
+- QEMU Oracle Linux 10 VM에서 사용자가 `ip addr` 실행함.
+- 결과:
+  - 인터페이스 `enp0s2`
+  - 주소 `10.0.2.15/24`
+  - QEMU NAT 네트워크 정상 확인
+- 다음 확인 명령:
+  `Test-NetConnection 127.0.0.1 -Port 2222`
+- Windows PowerShell 결과: `TcpTestSucceeded : True`
+- 판단: QEMU의 Windows `127.0.0.1:2222` 포트 전달은 정상
+- 다음 확인 명령: VM에서 `systemctl status sshd --no-pager`
+- VM 결과: `sshd.service`가 `Active: active (running)` 상태
+- VM SSH 수신 확인: `Server listening on 0.0.0.0 port 22`, `Server listening on :: port 22`
+- 판단: 게스트 SSH 서버가 정상 실행 중이며 게스트 22/tcp에서 수신 대기
+- 다음 확인 명령: Windows PowerShell에서 `ssh -p 2222 test1@127.0.0.1`
+- 비밀번호는 기록하지 않는다.
+- Windows SSH 결과: 접속 성공, `Last login: Fri Sep 11 21:19:36 2026` 표시
+- 호스트 키 결과: `[127.0.0.1]:2222` ED25519 키가 Windows `known_hosts`에 추가됨
+- 판단: QEMU NAT 포트 전달, 게스트 `sshd`, 사용자 `test1` 인증이 모두 정상
+- SSH 세션에서 `hostname` 결과: `localhost.localdomain`
+- 사용자가 `localhost`를 붙여넣었고 셸에서 `-bash: localhost: command not found` 발생
+- 판단: 붙여넣기 자체는 성공했으며, 출력값 `localhost.localdomain`을 명령처럼 실행한 것이 원인
+- 환경 구조 보정: Codex는 사용자 노트북, QEMU와 Oracle Linux VM은 Google Chrome Remote Desktop으로 접속한 회사 컴퓨터에 있음
+- `127.0.0.1:2222`는 회사 컴퓨터의 loopback 주소이며 사용자 노트북에서 직접 접근하는 주소가 아님
+- 파일·클립보드 이동 경로는 사용자 노트북 ↔ RDP 클립보드 ↔ 회사 컴퓨터 ↔ QEMU/VM으로 구분해야 함
+- 정정: 원격 방식은 RDP가 아니라 Google Chrome Remote Desktop
+- Google Remote Desktop 화면에서 `클립보드 동기화`가 체크되어 있고 회사 컴퓨터의 다른 앱에서는 작동함
+- QEMU 창에서만 호스트→게스트 붙여넣기가 안 됨
+- 판단: QEMU GTK 클립보드 공유 옵션이 별도로 꺼져 있을 가능성이 높음
+- 예정 설정: 안전한 VM 종료 후 QEMU 실행 옵션에 `-display gtk,clipboard=on` 추가
+- `systemctl poweroff` 실행 결과: VM 정상 종료, SSH 연결 정상 종료
+- 다음 단계: 회사 컴퓨터 PowerShell에서 QEMU를 `-display gtk,clipboard=on`으로 재실행
+- TCG 원본 qcow2를 보존하고 `meritz-ol10-01-whpx.qcow2` 시험 복사본 생성
+- `-cpu x86-64-v3` 시험 실패: 현재 QEMU 빌드에 해당 CPU 모델 이름이 없음
+- `-cpu help` 결과에서 `host`, `max`, `Broadwell-v4` 등 사용 가능한 모델 확인
+- WHPX `-cpu max -smp 4` 시험 실패: `warning: Ignoring request for interrupt vector 0`, `WHPX: Unexpected VP exit code 4`
+- QEMU 공식 문서와 upstream 동일 오류 사례를 조사하여 Hyper-V APIC/인터럽트 처리 문제 가능성 확인
+- 우회 설정 `-accel whpx,kernel-irqchip=off -cpu max -smp 4`로 복사본 부팅 성공
+- PuTTY SSH 로그인 성공
+- 게스트 `lscpu` 확인 결과:
+  - CPU 4개, 온라인 CPU `0-3`
+  - 모델 `Intel(R) Core(TM) Ultra 7 155H`
+  - Hypervisor vendor `Microsoft`
+  - Virtualization type `full`
+  - `avx2`, `avx`, `fma`, `bmi1`, `bmi2`, `aes`, `xsave` 플래그 확인
+- 판단: WHPX 하드웨어 가속 성공. Hyper-V irqchip만 끄고 QEMU가 인터럽트를 처리하는 우회 구성
+- 다음 확인: `systemctl is-system-running`
+
+## 2026-09-12 — OL10 APP/DB 기반 완성·소스 사전검증·현장문서 체계화
+
+- 트랙: C — Windows QEMU Oracle Linux 10 로컬 사전실습
+- APP VM:
+  - hostname `meritz-ol10-01`
+  - PuTTY `127.0.0.1:2222`
+  - 사설 IP `192.168.50.10/24`
+  - 프로필 `app-private`
+  - 4 vCPU, 8GiB 할당
+- DB VM:
+  - hostname `meritz-db01`
+  - PuTTY `127.0.0.1:2223`
+  - 사설 IP `192.168.50.20/24`
+  - 프로필 `db-private`
+  - 2 vCPU, 6GiB 할당
+- QEMU socket network:
+  - 회사 Windows `127.0.0.1:12345`
+  - APP가 `listen`, DB가 `connect`
+  - 이 포트는 DB 업무 포트가 아니라 두 VM의 `enp0s3`를 연결하는 가상 랜선
+- APP↔DB 양방향 ping 성공
+- 최초 `192.16.50.10` 오타로 ping 100% loss가 발생했고 `192.168.50.10`으로 수정해 성공
+- 양쪽 `Wired connection 1`의 `AUTOCONNECT`를 `no`로 변경
+- `app-private`, `db-private`는 `AUTOCONNECT=yes` 유지
+- PuTTY 붙여넣기 제어문자 `^[[200~`, 끝의 `~` 때문에 command not found/argument 오류가 있었으며 깨끗하게 다시 입력해 정상 처리
+- DB clone identity 분리:
+  - hostname 변경
+  - 기존 SSH host key를 `/etc/ssh/hostkey-before-db-clone-20260911/`에 보존
+  - `sudo ssh-keygen -A`로 RSA/ECDSA/ED25519 재생성
+  - DB ED25519 fingerprint `SHA256:eV2fRXK/HzrceUIMtV50TlIGutj8G3L3f2pbQsEM5y4`
+- OS 실측:
+  - Oracle Linux Server 10.0
+  - UEK8 `6.12.0-100.28.2.el10uek.x86_64`
+  - SELinux `Enforcing`
+  - firewalld `active`
+  - APP 메모리 약 7.3GiB, DB 약 5.3GiB
+  - 양쪽 루트 XFS 여유 약 42GiB
+- 활성 repository: `ol10_UEKR8`, `ol10_appstream`, `ol10_baseos_latest`
+- APP에서 Java 21, Maven 3.9.9, Podman 5.8.2를 설치할 수 있으나 Java 8은 기본 저장소에서 확인되지 않음
+- DB에서 MariaDB 10.11.18은 제공되며 Redis는 기본 조회에서 확인되지 않음
+- clean baseline 백업:
+  - `C:\Users\c\QEMU VMs\meritz-ol10-01\baseline-20260912-preinstall\meritz-app-baseline.qcow2`
+  - `C:\Users\c\QEMU VMs\meritz-ol10-01\baseline-20260912-preinstall\meritz-db-baseline.qcow2`
+  - 각 크기 `2,289,827,840` bytes
+  - 원본 대비 SHA256 비교 결과 `AppBackupVerified=True`, `DbBackupVerified=True`
+- 소스 사전검증:
+  - 위치 `C:\Users\c\Downloads\meritz-main\meritz`
+  - 약 5,168개 파일, Java 약 2,711개
+  - Java 1.8, Spring Boot 2.3.0.RELEASE
+  - Maven 멀티모듈, 서비스 packaging JAR
+  - MariaDB JDBC driver 2.7.5
+  - Elasticsearch REST High Level Client 7.8.0
+  - Vue 2.6.11, Webpack 3
+  - 완성 업무 JAR/WAR 미포함
+- 과거 배포문서 식별:
+  - `docs/99.ETC/aicc_chatbot_deploy_manual.md`
+  - `docs/99.ETC/b2b_aicc_easycms_deploy_manual.md`
+  - CentOS 7.6·Gradle·WAR·JBoss/WildFly 절차로 현재 Maven/JAR 소스와 불일치
+- MariaDB 결정:
+  - 로컬 1차 target은 OL10 저장소 10.11.18
+  - 기존 10.6 dump를 logical restore하여 문자셋·collation·SQL mode·권한·CMS CRUD 검증
+  - 고객사 제품 인증이 10.6을 요구하면 OL10 지원과 패키지 공급을 별도 확인
+- Elasticsearch 결정:
+  - 현재 7.8 기능·client·plugin·index 기준정보를 먼저 확보
+  - raw datadir 복사 금지, Snapshot/Restore 사용
+  - OS 전환과 Elastic major upgrade를 가능한 한 별도 변경으로 분리
+  - 목표 Elastic 버전은 OL10 지원, 고객사 정책, client/Logstash/Kibana/plugin 호환성을 확인 후 승인
+- 작성·갱신한 핵심 문서:
+  - `docs/current/MERITZ_OL10_PREFLIGHT_RAW.md`
+  - `docs/current/MERITZ_OL10_PREFLIGHT_DETAIL.md`
+  - `docs/current/MERITZ_OL10_COMPATIBILITY_ASSESSMENT.md`
+  - `docs/current/MERITZ_OL10_FIELD_PRACTICE_MASTER_GUIDE.md`
+  - `docs/meritz-ol10/README.md`
+  - `docs/meritz-ol10/practice/PRACTICE_01_FOUNDATION_AND_PREFLIGHT.md`
+  - `docs/meritz-ol10/practice/PRACTICE_02_BUILD_AND_DATABASE.md`
+  - `docs/meritz-ol10/practice/PRACTICE_03_FULL_STACK_AND_CMS.md`
+  - `docs/meritz-ol10/field/MONDAY_2026-09-14_FIELD_START.md`
+  - `docs/meritz-ol10/field/INCIDENT_QUICK_INDEX.md`
+- 상세 preflight 보고서에서 일반 `key:` 및 `key :` 값도 마스킹했고 수집 스크립트 sanitizer를 보강함
+- 다음 단계:
+  - 실습 2회차 JDK 8 공급방식 확정
+  - APP JDK 8·Maven 설치와 버전 증적
+  - 소스 전송 및 checksum
+  - 최초 Maven reactor build 결과 보존
+  - DB MariaDB 10.11 구성과 logical restore·CRUD
+- 비밀번호·토큰·개인키·고객 개인정보는 기록하지 않음
+- DB VM MariaDB를 `13306/tcp`로 변경하는 과정에서 SELinux `name_bind` 거부를 확인했고, `mysqld_port_t` 등록 후 정상 기동했다. APP 한정 firewalld rich rule과 DB dump 129개 table 복원까지 완료했다.
+- CMS `tc` profile의 DB 주소를 DB VM으로 변경해 재빌드했고 JAR `BOOT-INF/classes` 반영을 확인했다.
+- 기존 native Redis 5.0.8의 실행 계정 `admin`과 `/application/redis`·`/logs/redis` 경로를 기준으로 APP VM에 Redis 5.0.8을 compile/install했다.
+- APP VM에 `7000`, `7001`, `7002` 3-master Redis cluster를 구성했다. `cluster_state:ok`, 16,384 slots 전체 할당, 다른 node를 통한 test key 조회 성공을 확인했다.
+- CMS와 common의 `tc` profile Redis 주소를 로컬 cluster 세 node로 변경했다. Redis systemd 자동기동은 아직 남아 있다.
+- 월요일 사전점검표에 Redis 원본의 실행 계정, UID/GID, 실행방식, binary/config/data/log/PID 경로, AOF/RDB, cluster port·bus port, systemd unit을 먼저 확인하고 실제 원본 구조대로 재현하는 절차를 추가했다. native Redis 환경과 Docker Redis 시험환경을 섞지 않도록 명시했다.
+- 원본 ZooKeeper process 조회 결과 Solr에 포함된 ZooKeeper `3.6.1`, 실행 계정 `admin`, Java 8, 설정 `/application/solr/zk/conf/zoo.cfg`, ID `/application/solr/zk/data/myid`, 로그 `/logs/solr/zk`를 확인했다.
+- 로컬 QEMU에서는 같은 APP VM에 ZooKeeper 3개를 구성하기로 했다. 월요일에는 3개 node가 서로 다른 IP인지, 한 IP의 native process인지, container별 network인지 확인한 뒤 동일 포트 사용 가능 여부를 결정하도록 현장 점검표에 추가했다.
+- 원본 `zookeeper-env.sh`의 PID·로그 경로가 서버당 한 instance 기준으로 고정된 사실을 초기 기동 전에 놓쳐, zk2·zk3가 zk1 PID를 읽고 `already running as process 9035`로 오판하는 시행착오가 발생했다. 첫 process를 정상 종료했으며 같은 host multi-instance에서는 instance별 config directory와 PID·로그 경로까지 분리해야 한다는 점을 현장 점검표에 추가했다.
+- 수정한 `zoo1.cfg~zoo3.cfg`가 실제 실행용 `conf-zk1~conf-zk3/zoo.cfg`에 반영되지 않은 두 번째 시행착오를 실제 실행 경로 조회로 발견했다. 올바른 설정을 복사한 뒤 `zk1:2181=follower`, `zk2:2182=leader`, `zk3:2183=follower`로 ZooKeeper 3-node quorum 구성을 완료했다.
+- 이후 모든 제품은 실제 원본 설정 파일을 직접 찾아 현재 값을 확인하고, 원본을 보존한 뒤 `vi`로 필요한 값만 수정하는 현장형 절차로 안내하기로 확정했다. 긴 설정 전체 붙여넣기와 원본에 없는 편의 파일 자동 생성은 기본 절차에서 제외했다.
+- 원본 Solr 7.6.0 runtime을 index data/PID/log 제외 archive로 QEMU에 전송했다. 복사된 원본 Java 경로가 OL10에 없어 기동 전 실패한 뒤 Corretto 8 실제 경로로 수정해 버전 확인에 성공했다.
+- QEMU 한 host에서 Solr 3개를 `8983/8984/8985`와 node별 PID/home/log 경로로 분리하고 local ZooKeeper ensemble의 `/solr`에 연결했다. SolrCloud `liveNodes=3`, `collections=0`으로 runtime 구성을 완료했으며 다음 단계는 configset과 collection data 복원이다.
+- Solr backup 6개를 Restore해 문서 수와 alias를 확인했다. 이후 애플리케이션 설정에서 `zk.hosts`뿐 아니라 `solr.url`, `solr.urls`, `createNodeSetNode1~3`도 함께 변경해야 하는데 이를 처음에 놓친 실수를 기록했다. 월요일에는 활성 profile의 전체 Solr 설정과 옛 hostname 참조를 전수 검색하도록 가이드를 보강했다.
+- 추가 확정:
+  - 소스의 `aicc_chatbot_deploy_manual.md`, `b2b_aicc_easycms_deploy_manual.md`는 사용자가 현재 메리츠에는 틀린 과거 매뉴얼이라고 확인함
+  - 이번 실습에서 해당 Gradle·WAR·JBoss 절차를 사용하지 않음
+  - 로컬 1차 ELK 시험은 Elasticsearch 7.8 계열과 애플리케이션 client 7.8.0을 유지해 OS 변경 영향부터 확인
+  - ES 7.8 최종 장기운영 승인과 Elastic major upgrade는 별도 의사결정으로 유지
+  - Windows `tar`와 `127.0.0.1:2222` SCP는 로컬 QEMU 실습 전용이며 고객사 현장 절차로 사용하지 않음
+  - 고객사에서는 승인된 CI/CD·빌드서버·artifact repository·SFTP/중계·보안반입·미러링 경로를 확인하고 checksum으로 검증
+- 실습 2회차 Java/build 결과:
+  - Amazon Corretto 8u504 RPM 다운로드 및 AWS 공식 SHA256 일치 확인
+  - `java -version`, `javac -version`: `1.8.0_504`
+  - Maven `3.9.9-3` 설치 시 Red Hat Java 21이 함께 설치되고 Maven runtime이 Java 21로 선택됨
+  - Java 21을 삭제하지 않고 alternatives의 java/javac를 Corretto 8로 선택
+  - `~/.mavenrc`에 `JAVA_HOME=/usr/lib/jvm/java-1.8.0-amazon-corretto`를 기록하여 Maven을 Java 8로 고정
+  - Windows source archive `C:\Users\c\Downloads\meritz-source-20260912.tar.gz`, `68,293,923` bytes
+  - source archive SHA256 `3A9598B651891E0487226664F5E94CD38483E9EFD7AF787CA13684ACEC47C543`, APP 전송 후 일치
+  - APP `/home/test1/meritz`, 파일 5,168개, 142M
+  - OL10 Minimal에 `tar`가 없어 `tar: command not found` 발생; OL10 repository에서 tar 설치 후 해제 성공
+  - 최초 build `mvn clean package -DskipTests |& tee ~/build-01.log`
+  - root와 8개 module 전체 SUCCESS, `BUILD SUCCESS`, 총 1분 22초
+  - deprecated API와 unchecked operation warning은 존재하지만 build 실패는 없음
+  - 판정: Oracle Linux 10 + Corretto 8u504 + Maven 3.9.9에서 현재 Maven source build 호환성 통과
+- 실습 2회차 JAR·MariaDB 진행 결과:
+  - Maven build 후 JAR 8개 생성 확인: `chat-ui` 108M, `cms` 159M, `common` 584K, `engine` 99M, `gateway` 100M, `master` 137M, `persistence` 1.9M, `scheduler` 115M
+  - 현장 핵심 작업 우선 원칙에 따라 JAR manifest와 개별 SHA256 추가 검사는 즉시 수행하지 않고 오류 발생 시 진단 항목으로 보류
+  - DB VM `meritz-db01`에서 `sudo dnf install -y mariadb-server` 완료
+  - 설치 버전: `mariadb Ver 15.1 Distrib 10.11.18-MariaDB`
+  - `systemctl is-active mariadb` 결과 `active`
+  - 버전 결정: 로컬 1차 실습은 OL10 repository의 MariaDB 10.11.18을 유지하고 기존 10.6.7 logical dump 호환성과 CMS 기능을 검증. 고객사 현장은 승인 BOM과 mirror 제공 버전을 우선 확인
+  - 변경 전 runtime 확인: `sudo mariadb -e "select @@port,@@bind_address;"` 결과 port `3306`, bind_address `NULL`
+  - 실제 listener 확인: `sudo ss -lntp | grep 3306` 결과 `0.0.0.0:3306`, `[::]:3306`
+  - DB 설정 원본 확인: `/etc/my.cnf.d/mariadb-server.cnf`의 `[mysqld]`에 port·bind-address 명시 없음
+  - APP 요구값 확인: `/home/test1/meritz/cms/src/main/resources/application-tc.yml`에 `jdbc:mariadb://mariadb1:13306/meritz_easycms`
+  - 판단: DB 수신 주소는 이미 모든 interface로 열려 있으므로 변경하지 않고 port만 `3306 → 13306`으로 변경 예정
+  - 변경 방식: package 기본 파일을 직접 수정하지 않고 `/etc/my.cnf.d/meritz.cnf` drop-in을 사용해 변경값과 원복 지점을 분리
+  - 환경 혼동 사례: APP VM에서 `/etc/my.cnf.d/mariadb-server.cnf`를 조회해 `No such file or directory`가 발생했으며, MariaDB 설정 확인은 DB VM `meritz-db01`에서 수행해야 함을 재확인
+  - 다음 명령: DB VM에서 `sudo vi /etc/my.cnf.d/meritz.cnf`, 내용은 `[mysqld]`와 `port=13306`; 저장 확인 후 MariaDB 재시작 및 `13306` listener 검증
+  - 향후 안내 원칙: 현장에서 직접 확인할 수 있도록 변경 전에 현재 runtime 값과 프로젝트 요구값을 먼저 보여주고, 차이·변경 이유·적용 결과 순서로 설명
+- 2026-09-12 ELK 진행:
+  - 원본 `elk78_runtime.tar.gz`를 QEMU APP VM으로 반입했고 SHA256 `07055a8c0b61eed42ff08630e4b5f8939d41aca0e7f37d2a8592512940b37a0f` 일치를 확인했다.
+  - archive 구성은 Elasticsearch 7.8.0과 Kibana이며 Logstash는 없다. 고객사에서 Kibana는 설치돼 있으나 미기동이라는 사용자 확인에 따라 로컬에서도 우선 기동하지 않는다.
+  - 단일 binary `/application/elk/bin/elasticsearch`와 node별 config/data/log/tmp/PID를 사용해 같은 VM에 ES 3개를 구성했다. HTTP `9200/9201/9202`, transport `9300/9301/9302`, heap은 각 512M다.
+  - kernel `vm.max_map_count=1048576`, admin nofile hard `524288`; 수동 start process에 soft `65536`을 적용했다.
+  - 최종 cluster health `green`, 3 nodes/3 data nodes, master `es1`, pending task와 unassigned shard 0. 세 HTTP endpoint에서 동일한 cluster와 node 목록을 확인했다.
+  - 다음 단계는 `cluster.initial_master_nodes` 제거 후 원본 Elasticsearch snapshot repo 반입, repository 등록, `meritz_20260910` restore다.
+- Elasticsearch snapshot restore 완료:
+  - `meritz_migration_repo` read-only 등록 성공, `meritz_20260910` restore를 `include_global_state=false`로 수행했다.
+  - 6/6 primary shard 성공, cluster green, 3 nodes, active primary 6, active shard 12, unassigned 0.
+  - snapshot에는 Kibana/APM/ILM system index 6개만 있고 업무 로그 데이터는 없다.
+- Logstash 사전조사:
+  - 애플리케이션의 `logstash` appender는 `RollingFileAppender`이며 서비스별 `/logs/...` 파일을 생성한다. Logstash가 해당 파일을 읽어 ES로 보내는 구조로 판단했다.
+  - ES client Java 코드는 host1/2/3에 공통 port 하나를 적용하므로 QEMU 한 IP의 9200/9201/9202를 모두 표현하지 못한다. 고객사 서로 다른 3개 IP의 공통 9200 구조에서는 문제없다.
+  - 공식 Logstash 7.8.0 tar를 내려받아 gzip 및 SHA512를 검증하고 `/application/elk/logstash-7.8.0`으로 해제했다. 원본 archive numeric owner `631:503` 정리가 다음 작업이다.
+  - 조회 중 출력된 RSA private key는 기록하지 않았으며 실제 credential이면 승인된 절차로 교체 여부를 확인해야 한다.
+- Logstash 7.8.0 설치·시험 완료:
+  - `/application/elk/logstash`, 실행계정 `admin`, Corretto 8, heap 512M, API `127.0.0.1:9600`, 상태 green.
+  - `meritz-practice` pipeline 문법검사 `Configuration OK`, worker 1.
+  - `/logs/elk/practice-input/meritz-test.log`의 시험 이벤트가 `meritz-logstash-practice-2026.09.12`에 1건 적재되고 검색됐다.
+  - 판정: OL10에서 Logstash 7.8.0 file input → Elasticsearch 7.8.0 3-node output 경로 정상. 실제 서비스 로그 연동은 앱 기동 후 수행.
+- 2026-09-13 애플리케이션 연결 설정 진행:
+  - Scheduler `tc` profile의 Redis, JDBC, DB username, Elasticsearch 대표 endpoint를 실습 환경에 맞춤.
+  - CMS Scheduler URL을 `192.168.50.10:8580/scheduler`로 변경함.
+  - CMS Master URL, Master 내부 서비스 URL, Gateway Engine URL, Scheduler Master URL은 다음 순서로 직접 확인·수정 예정.
+  - 1회차 전체 변경·검증·시행착오를 `FULL_BUILD_RUN_01_CHANGE_CHECKLIST.md`로 별도 작성함.
+  - 조회 출력에 인증키가 포함됐으나 값은 문서화하지 않음. 이후 설정 조회 범위를 필요한 YAML block으로 제한함.
+  - CMS·Master·Gateway·Scheduler·Engine·Chat-UI의 내부 서비스 URL을 QEMU APP 주소와 각 서비스 포트로 변경함.
+  - 브라우저가 해석할 수 있는 Chat-UI resource/simulator/client URL의 `localhost`도 `192.168.50.10:8480`으로 변경함.
+- 전체 재빌드 성공 후 Master 기동:
+  - source와 JAR 내부 DB password hash가 동일함을 비밀값 미출력 방식으로 확인함.
+  - 실습 DB 계정 비밀번호 불일치와 shell `read -p` 오사용으로 `1045 Access denied`가 반복됐으며, 올바른 YAML 값으로 DB 계정을 맞춰 해결함.
+  - Master는 Java 8, profile `tc,core-tc`, 실습 heap 128M/384M으로 기동됐고 Undertow `8380`, `Started MasterApplication`을 확인함.
+  - Hibernate가 시작 중 다수의 FK DDL을 실행했으므로 고객사 사전 Gate에 `ddl-auto`와 DB 변경 승인 확인을 추가함.
+- CMS 로그인과 학습 진단:
+  - CMS 로그인 화면은 정상 표시됐지만 멀티테넌트 datasource가 DB 테이블 `tbl_manage_schema.prefix_url`의 원본 `mariadb:3306`을 사용해 로그인에 실패함. target `192.168.50.20:13306`으로 변경함.
+  - `tbl_manage_schema.password`는 CMS `EncryptionService`가 복호화하는 암호문인데 평문으로 변경해 JDBC가 `using password: NO`로 접속한 시행착오가 있었음. 원본 dump를 임시 schema로 복원해 암호문만 되살리고 URL은 target 값으로 유지했으며 CMS 로그인에 성공함.
+  - 원본 Xen 웹 주소는 HAProxy 80번 기준이지만 로컬 QEMU에는 HAProxy가 없고 APP 사설 IP가 Windows에 직접 라우팅되지 않음. Windows와 APP의 hosts를 구분하고 CMS 8280·Chat-UI 8480 SSH tunnel을 사용함.
+  - Chat-UI endpoint 자체는 HTTP 200이나 `channelCache is null`, `failed create session`으로 “서비스 이용 불가”가 표시됨.
+  - CMS 학습은 dialog 생성과 Solr alias/collection 선택까지 정상이나 ZooKeeper 사전 업로드가 `writeDictionary msg=null`, `upload result: 9999`로 실패함.
+  - 실제 configset 사전은 ZooKeeper chroot `/solr/configs/chat-base-config/lang`에 존재하지만 `application-core-tc.yml`의 직접 ZK 주소에는 `/solr`가 누락됨. `zk.hosts` ensemble 뒤에 `/solr`를 추가하고 CMS 의존 빌드·재배포·재기동 후 재검증하는 단계임.
+
+### 2026-09-13 1회차 기능시험 최종 결과
+
+- ZK client 주소에 `/solr`를 반영한 뒤 사전 파일 6종 upload 결과가 `9999 → 0`으로 바뀌었다.
+- CMS 학습은 다음 단계에서 `engine1/2/3` 이름 해석 실패로 중단됐다. CMS와 Master의 Engine URL 3개를 실습 APP `192.168.50.10:8180`으로 변경하고 재빌드·재배포했다.
+- Engine은 TC_CALLBOT STANDBY/TEST에 대해 `Completed Learning Engine`을 기록했다. 재부팅 직후의 `not found Learn Cache`는 학습 전 과거 로그로 판정했다.
+- Chat-UI는 `gateway:8081`을 해석하지 못해 `failed create session`, `sessionKey:null`을 반환했다. Chat-UI `application-tc.yml`의 Gateway domain을 `192.168.50.10:8081/gateway`로 변경하여 세션 기능을 정상화했다.
+- Windows 웹 문제는 세 종류로 분리했다: QEMU 종료로 2222/2223 자체가 없음, stale SSH가 8280만 listen하고 전달하지 않음, CMS가 private IP 기반 simulator URL을 브라우저에 전달함.
+- QEMU 재기동은 APP가 socket 12345를 먼저 listen한 뒤 DB가 connect해야 한다. 순서가 어긋난 상태에서는 양쪽 enp0s3가 UP이어도 Ping과 DB port 연결이 실패했다.
+- 기존 Master로 인해 `Port 8380 was already in use`가 발생했다. PID file 대신 실제 listen PID를 종료한 후 새 JAR을 기동해 해결했다.
+- 최종적으로 CMS 로그인, 학습, Engine 반영, Chat-UI 세션 동작을 확인했다.
+- 후속 보류: Scheduler `entityManagerFactory` bean, Engine `ClassPathResource.getFile()` fat JAR 문제, systemd/재부팅 자동기동 정리.

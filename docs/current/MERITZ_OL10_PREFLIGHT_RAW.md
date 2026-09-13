@@ -1,0 +1,7301 @@
+﻿# Meritz Oracle Linux 10 preflight inventory
+
+- Collected: 2026-09-12 00:51:52 +09:00
+- Source: `C:\Users\c\Downloads\meritz-main\meritz`
+- Files: 5168
+- Total bytes: 135140148
+- Safety: source files were read only; likely secret-bearing lines are redacted.
+
+## Top-level entries
+- DIR  `chat-ui` (0 bytes)
+- DIR  `cms` (0 bytes)
+- DIR  `common` (0 bytes)
+- DIR  `docs` (0 bytes)
+- DIR  `engine` (0 bytes)
+- DIR  `gateway` (0 bytes)
+- DIR  `libs` (0 bytes)
+- DIR  `master` (0 bytes)
+- DIR  `persistence` (0 bytes)
+- DIR  `scheduler` (0 bytes)
+- FILE `.dockerignore` (80 bytes)
+- FILE `.gitignore` (945 bytes)
+- FILE `pom.xml` (8578 bytes)
+
+## File extensions
+- `.java`: 2711
+- `.tgz`: 1203
+- `.png`: 482
+- `.html`: 224
+- `.js`: 144
+- `.vue`: 85
+- `.xml`: 55
+- `.yml`: 43
+- `.http`: 36
+- `.json`: 34
+- `.css`: 32
+- `.map`: 19
+- `.properties`: 16
+- `.md`: 16
+- `.xlsx1`: 8
+- `.jpg`: 7
+- `.ttf`: 5
+- `.eot`: 5
+- `.woff`: 5
+- `<none>`: 5
+- `.log`: 4
+- `.rive`: 4
+- `.ico`: 3
+- `.sql`: 2
+- `.gif`: 2
+- `.mp4`: 2
+- `.yaml`: 2
+- `.sh`: 1
+- `.conf`: 1
+- `.jar`: 1
+- `.editorconfig`: 1
+- `.yarnrc`: 1
+- `.babelrc`: 1
+- `.dockerignore`: 1
+- `.gitignore`: 1
+- `.lock`: 1
+- `.sql_log`: 1
+- `.bak`: 1
+- `.keep`: 1
+- `.git-41973fcc70392864c7a469cf5dcd875b88b93d4a`: 1
+
+## Maven modules and coordinates
+- `chat-ui\pom.xml` | groupId=`` artifactId=`chat-ui` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `cms\pom.xml` | groupId=`` artifactId=`cms` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `common\pom.xml` | groupId=`` artifactId=`common` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `engine\pom.xml` | groupId=`` artifactId=`engine` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `gateway\pom.xml` | groupId=`` artifactId=`gateway` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `master\pom.xml` | groupId=`` artifactId=`master` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `persistence\pom.xml` | groupId=`` artifactId=`persistence` version=`0.0.1-SNAPSHOT` packaging=`jar`
+- `pom.xml` | groupId=`com.kt.aicc` artifactId=`ktbot` version=`0.0.1-SNAPSHOT` packaging=`pom`
+- `scheduler\pom.xml` | groupId=`` artifactId=`scheduler` version=`0.0.1-SNAPSHOT` packaging=`jar`
+
+## Maven dependency coordinates
+- `ch.qos.logback:logback-core:${logback.version}`
+- `com.fasterxml.jackson.core:jackson-annotations:${jackson.version}`
+- `com.fasterxml.jackson.core:jackson-core:${jackson.version}`
+- `com.fasterxml.jackson.core:jackson-databind:${jackson.version}`
+- `com.fasterxml.jackson.dataformat:jackson-dataformat-xml:${jackson.version}`
+- `com.github.ulisesbocchio:jasypt-spring-boot:2.1.0`
+- `com.google.code.gson:gson:${gson.version}`
+- `com.google.guava:guava:${guava.version}`
+- `com.jayway.jsonpath:json-path:${jsonPath.version}`
+- `com.kt.aicc:common:${project.version}`
+- `com.kt.aicc:persistence:${project.version}`
+- `com.navercorp.lucy:lucy-xss:${lucyXss.version}`
+- `com.navercorp.lucy:lucy-xss-servlet:${lucyXssServlet.version}`
+- `commons-io:commons-io:2.11.0`
+- `javax.cache:cache-api:${cacheApi.version}`
+- `javax.inject:javax.inject:${inject.version}`
+- `javax.servlet:servlet-api:2.5`
+- `javax.websocket:javax.websocket-api:${websocket-api.version}`
+- `junit:junit:4.12`
+- `net.logstash.logback:logstash-logback-encoder:${logstashLogback.version}`
+- `nl.captcha:simplecaptcha:1.2.1`
+- `org.apache.commons:commons-collections4:${commonsCollection.version}`
+- `org.apache.commons:commons-lang3:${commonsLang.version}`
+- `org.apache.commons:commons-text:${commonsText.version}`
+- `org.apache.httpcomponents:httpclient:4.5.13`
+- `org.apache.poi:ooxml-schemas:${apachePoiOoxmlSchema.version}`
+- `org.apache.poi:poi:${apachePoi.version}`
+- `org.apache.poi:poi-ooxml:${apachePoi.version}`
+- `org.apache.zookeeper:zookeeper:${zk.version}`
+- `org.ehcache:ehcache:${ehcache.version}`
+- `org.elasticsearch.client:elasticsearch-rest-high-level-client:${es.version}`
+- `org.elasticsearch:elasticsearch:${es.version}`
+- `org.jasypt:jasypt:1.9.2`
+- `org.json:json:20160810`
+- `org.json:json:20220320`
+- `org.liquibase:liquibase-core:${liquibase.version}`
+- `org.mariadb.jdbc:mariadb-java-client:${mariadbVersion}`
+- `org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpring.version}`
+- `org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.3`
+- `org.mybatis:mybatis:3.5.5`
+- `org.mybatis:mybatis-spring:2.0.5`
+- `org.postgresql:postgresql:${postgresql.version}`
+- `org.quartz-scheduler:quartz:${quertz.version}`
+- `org.springframework.batch:spring-batch-core:<managed>`
+- `org.springframework.boot:spring-boot-devtools:<managed>`
+- `org.springframework.boot:spring-boot-starter:<managed>`
+- `org.springframework.boot:spring-boot-starter-actuator:<managed>`
+- `org.springframework.boot:spring-boot-starter-batch:<managed>`
+- `org.springframework.boot:spring-boot-starter-cache:<managed>`
+- `org.springframework.boot:spring-boot-starter-data-jpa:<managed>`
+- `org.springframework.boot:spring-boot-starter-jdbc:<managed>`
+- `org.springframework.boot:spring-boot-starter-security:<managed>`
+- `org.springframework.boot:spring-boot-starter-test:<managed>`
+- `org.springframework.boot:spring-boot-starter-thymeleaf:<managed>`
+- `org.springframework.boot:spring-boot-starter-undertow:<managed>`
+- `org.springframework.boot:spring-boot-starter-validation:<managed>`
+- `org.springframework.boot:spring-boot-starter-web:<managed>`
+- `org.springframework.boot:spring-boot-starter-webflux:<managed>`
+- `org.springframework.cloud:spring-cloud-starter-netflix-zuul:${zuul.version}`
+- `org.springframework.data:spring-data-redis:<managed>`
+- `org.springframework.session:spring-session-data-redis:<managed>`
+- `org.springframework:spring-websocket:${spring-websocket.version}`
+- `org.thymeleaf.extras:thymeleaf-extras-springsecurity5:<managed>`
+- `redis.clients:jedis:${jedis.version}`
+
+## Build, deployment, configuration, and database files
+- `chat-ui\pom.xml` (2667 bytes)
+- `chat-ui\src\main\resources\application-dev.yml` (1294 bytes)
+- `chat-ui\src\main\resources\application-prod.yml` (1302 bytes)
+- `chat-ui\src\main\resources\application-tc.yml` (1283 bytes)
+- `chat-ui\src\main\resources\messages.properties` (9218 bytes)
+- `chat-ui\src\main\resources\messages_en.properties` (9218 bytes)
+- `chat-ui\src\main\resources\messages_ko.properties` (9218 bytes)
+- `cms\Dockerfile` (549 bytes)
+- `cms\pom.xml` (4771 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@babel-runtime-7.11.2.tgz` (18064 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-runtime-6.23.0.tgz` (5353 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-runtime-6.26.0.tgz` (13371 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-runtime-22.4.4.tgz` (12071 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-runtime-0.10.5.tgz` (7986 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-runtime-0.11.1.tgz` (7823 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-runtime-0.13.7.tgz` (8378 bytes)
+- `cms\src\main\app.chatflow\package.json` (2780 bytes)
+- `cms\src\main\app.chatflow\package-lock.json` (554739 bytes)
+- `cms\src\main\app.chatflow\README.md` (553 bytes)
+- `cms\src\main\app.chatflow\yarn.lock` (379258 bytes)
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\BotDeploy.java` (375 bytes)
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java` (12026 bytes)
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\DeployWebController.java` (5931 bytes)
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployService.java` (238 bytes)
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployServiceImpl.java` (2272 bytes)
+- `cms\src\main\resources\application-dev.yml` (4395 bytes)
+- `cms\src\main\resources\application-prod.yml` (4449 bytes)
+- `cms\src\main\resources\application-tb.yml` (4296 bytes)
+- `cms\src\main\resources\application-tc.yml` (4299 bytes)
+- `cms\src\main\resources\changelog\db.changelog-tenant.yaml` (179 bytes)
+- `cms\src\main\resources\changelog\example.yaml` (1658 bytes)
+- `cms\src\main\resources\changelog\version\tenant-schema-table-1.0.sql` (124373 bytes)
+- `cms\src\main\resources\i18n\messages.properties` (91837 bytes)
+- `cms\src\main\resources\i18n\messages_en.properties` (91020 bytes)
+- `cms\src\main\resources\i18n\messages_en_US.properties` (91086 bytes)
+- `cms\src\main\resources\i18n\messages_ko.properties` (2 bytes)
+- `cms\src\main\resources\i18n\messages_ko_KR.properties` (91020 bytes)
+- `cms\src\main\resources\jboss-deployment-structure.xml` (427 bytes)
+- `cms\src\main\resources\sh\solrBackup.sh` (191 bytes)
+- `cms\src\main\resources\sql\create-user-schema.sql` (1821 bytes)
+- `cms\src\main\resources\templates\log\deploy\deployList.html` (19947 bytes)
+- `common\pom.xml` (3082 bytes)
+- `common\src\main\java\com\kt\aicc\ktbot\common\README.log` (0 bytes)
+- `common\src\main\java\com\kt\aicc\ktbot\common\type\DeployStatus.java` (431 bytes)
+- `common\src\main\java\com\kt\aicc\ktbot\common\type\DeployType.java` (417 bytes)
+- `common\src\main\resources\application-core.yml` (2244 bytes)
+- `common\src\main\resources\application-core-dev.yml` (2608 bytes)
+- `common\src\main\resources\application-core-local.yml` (2590 bytes)
+- `common\src\main\resources\application-core-prod.yml` (2622 bytes)
+- `common\src\main\resources\application-core-tb.yml` (2524 bytes)
+- `common\src\main\resources\application-core-tc.yml` (2611 bytes)
+- `common\src\main\resources-dev\application-core.yml` (2268 bytes)
+- `common\src\main\resources-local\application-core.yml` (2255 bytes)
+- `common\src\main\resources-prod\application-core.yml` (2268 bytes)
+- `docs\01.API\readme.log` (8153 bytes)
+- `docs\99.ETC\aicc_chatbot_deploy_manual.md` (14091 bytes)
+- `docs\99.ETC\aicc_chatbot_deploy_manual_20210520.html` (51686 bytes)
+- `docs\99.ETC\b2b_aicc_easycms_deploy_manual.md` (12589 bytes)
+- `docs\99.ETC\EasyCMS_deploy_manual.md` (16569 bytes)
+- `docs\99.ETC\EasyCMS_deploy_manual_20210527.html` (34640 bytes)
+- `docs\99.ETC\EasyCMS_deploy_manual_20210531.html` (34640 bytes)
+- `engine\pom.xml` (2881 bytes)
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDeployController.java` (1949 bytes)
+- `engine\src\main\resources\application-dev.yml` (717 bytes)
+- `engine\src\main\resources\application-prod.yml` (725 bytes)
+- `engine\src\main\resources\application-tb.yml` (715 bytes)
+- `engine\src\main\resources\application-tc.yml` (715 bytes)
+- `engine\src\main\resources\jboss-deployment-structure.xml` (427 bytes)
+- `engine\src\main\resources\messages\message.properties` (1157 bytes)
+- `engine\src\main\resources\messages\message_en_US.properties` (1157 bytes)
+- `engine\src\main\resources\messages\message_ko_KR.properties` (1157 bytes)
+- `engine\src\main\resources-dev\application.yml` (709 bytes)
+- `engine\src\main\resources-local\application.yml` (1624 bytes)
+- `engine\src\main\resources-prod\application.yml` (710 bytes)
+- `gateway\pom.xml` (2831 bytes)
+- `gateway\src\main\resources\application-dev.yml` (4884 bytes)
+- `gateway\src\main\resources\application-prod.yml` (4874 bytes)
+- `gateway\src\main\resources\application-tb.yml` (4882 bytes)
+- `gateway\src\main\resources\application-tc.yml` (4852 bytes)
+- `gateway\src\main\resources\jboss-deployment-structure.xml` (427 bytes)
+- `gateway\src\main\resources\logstash\logstash.conf` (533 bytes)
+- `gateway\src\main\resources\messages\message.properties` (109 bytes)
+- `gateway\src\main\resources-dev\application.yml` (4876 bytes)
+- `gateway\src\main\resources-local\application.yml` (4719 bytes)
+- `gateway\src\main\resources-prod\application.yml` (4876 bytes)
+- `libs\simplecaptcha-1.2.1.jar` (2007760 bytes)
+- `master\Dockerfile` (297 bytes)
+- `master\pom.xml` (4809 bytes)
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\BotDeploy.java` (378 bytes)
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java` (15210 bytes)
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageDeployService.java` (393 bytes)
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageDeployServiceImpl.java` (1075 bytes)
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployService.java` (241 bytes)
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployServiceImpl.java` (2275 bytes)
+- `master\src\main\resources\application.yml` (3090 bytes)
+- `master\src\main\resources\application-dev.yml` (3010 bytes)
+- `master\src\main\resources\application-dev-tb.yml` (3476 bytes)
+- `master\src\main\resources\application-han.yml` (3481 bytes)
+- `master\src\main\resources\application-prod.yml` (3071 bytes)
+- `master\src\main\resources\application-tc.yml` (3074 bytes)
+- `master\src\main\resources\i18n\messages.properties` (76645 bytes)
+- `master\src\main\resources\i18n\messages_en.properties` (76288 bytes)
+- `master\src\main\resources\i18n\messages_en_US.properties` (76241 bytes)
+- `master\src\main\resources\i18n\messages_ko_KR.properties` (76241 bytes)
+- `master\src\main\resources\jboss-deployment-structure.xml` (427 bytes)
+- `persistence\pom.xml` (2966 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\learn\DeployDto.java` (3558 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\learn\ManageDeployDto.java` (1323 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\bot\learn\Deploy.java` (2979 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\bot\learn\DeployCriteria.java` (121 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\manage\ManageDeploy.java` (1366 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\README.log` (0 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\bot\learn\DeployRepository.java` (1208 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\bot\learn\DeployRepositoryCustom.java` (428 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\bot\learn\DeployRepositoryImpl.java` (5641 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\manage\ManageDeployRepository.java` (516 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\learn\DeployService.java` (1360 bytes)
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\learn\DeployServiceImpl.java` (4259 bytes)
+- `persistence\src\main\resources\application.yml` (743 bytes)
+- `pom.xml` (8578 bytes)
+- `scheduler\pom.xml` (2837 bytes)
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ReservationDeployJob.java` (7824 bytes)
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\config\batch\ReservationDeployJobConfig.java` (1912 bytes)
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\config\quartz\ReservationDeployConfig.java` (3337 bytes)
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageDeployService.java` (270 bytes)
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageDeployServiceImpl.java` (824 bytes)
+- `scheduler\src\main\resources\application-dev.yml` (4934 bytes)
+- `scheduler\src\main\resources\application-prod.yml` (4810 bytes)
+- `scheduler\src\main\resources\application-tc.yml` (4875 bytes)
+- `scheduler\src\main\resources-dev\application.yml` (4664 bytes)
+- `scheduler\src\main\resources-local\application.yml` (4540 bytes)
+- `scheduler\src\main\resources-prod\application.yml` (4536 bytes)
+
+## Runtime and endpoint clues (sensitive values redacted)
+- `pom.xml:29` <java.version>1.8</java.version>
+- `pom.xml:40` <redis.version>0.7.2</redis.version>
+- `pom.xml:42` <embbedRedis.version>0.7.2</embbedRedis.version>
+- `pom.xml:51` <postgresql.version>42.2.5</postgresql.version>
+- `pom.xml:61` <mariadbVersion>2.7.5</mariadbVersion>
+- `pom.xml:119` <artifactId>spring-data-redis</artifactId>
+- `pom.xml:122` <groupId>org.postgresql</groupId>
+- `pom.xml:123` <artifactId>postgresql</artifactId>
+- `pom.xml:124` <version>${postgresql.version}</version>
+- `pom.xml:137` <groupId>org.apache.zookeeper</groupId>
+- `pom.xml:138` <artifactId>zookeeper</artifactId>
+- `pom.xml:162` <groupId>redis.clients</groupId>
+- `pom.xml:201` <groupId>org.elasticsearch.client</groupId>
+- `pom.xml:202` <artifactId>elasticsearch-rest-high-level-client</artifactId>
+- `pom.xml:206` <groupId>org.elasticsearch</groupId>
+- `pom.xml:207` <artifactId>elasticsearch</artifactId>
+- `pom.xml:251` <groupId>org.mariadb.jdbc</groupId>
+- `pom.xml:252` <artifactId>mariadb-java-client</artifactId>
+- `pom.xml:253` <version>${mariadbVersion}</version>
+- `pom.xml:267` <source>${java.version}</source>
+- `pom.xml:268` <target>${java.version}</target>
+- `chat-ui\pom.xml:68` <source>${java.version}</source>
+- `chat-ui\pom.xml:69` <target>${java.version}</target>
+- `cms\pom.xml:89` <artifactId>spring-session-data-redis</artifactId>
+- `cms\pom.xml:121` <source>${java.version}</source>
+- `cms\pom.xml:122` <target>${java.version}</target>
+- `cms\src\main\resources\application-dev.yml:16` ## redis session
+- `cms\src\main\resources\application-dev.yml:18` store-type: redis
+- `cms\src\main\resources\application-dev.yml:19` redis:
+- `cms\src\main\resources\application-dev.yml:21` nodes: redis1:7000,redis2:7001,redis3:7002
+- `cms\src\main\resources\application-dev.yml:31` datasource:
+- `cms\src\main\resources\application-dev.yml:32` platform: mariadb
+- `cms\src\main\resources\application-dev.yml:33` url: jdbc:mariadb://10.92.89.119:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `cms\src\main\resources\application-dev.yml:36` driver-class-name: org.mariadb.jdbc.Driver
+- `cms\src\main\resources\application-dev.yml:37` type: com.zaxxer.hikari.HikariDataSource
+- `cms\src\main\resources\application-dev.yml:51` database-platform: org.hibernate.dialect.MariaDB103Dialect
+- `cms\src\main\resources\application-dev.yml:94` solr:
+- `cms\src\main\resources\application-dev.yml:95` backup: ${user.home}/script/solrBackup.sh
+- `cms\src\main\resources\application-dev.yml:108` elasticsearch:
+- `cms\src\main\resources\application-dev.yml:170` datasource-cache:
+- `cms\src\main\resources\application-prod.yml:16` ## redis session
+- `cms\src\main\resources\application-prod.yml:18` store-type: redis
+- `cms\src\main\resources\application-prod.yml:19` redis:
+- `cms\src\main\resources\application-prod.yml:21` nodes: redis1:7000,redis2:7000,redis3:7000
+- `cms\src\main\resources\application-prod.yml:31` datasource:
+- `cms\src\main\resources\application-prod.yml:32` platform: mariadb
+- `cms\src\main\resources\application-prod.yml:33` url: jdbc:mariadb://10.92.20.202:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `cms\src\main\resources\application-prod.yml:36` driver-class-name: org.mariadb.jdbc.Driver
+- `cms\src\main\resources\application-prod.yml:37` type: com.zaxxer.hikari.HikariDataSource
+- `cms\src\main\resources\application-prod.yml:51` database-platform: org.hibernate.dialect.MariaDB103Dialect
+- `cms\src\main\resources\application-prod.yml:94` solr:
+- `cms\src\main\resources\application-prod.yml:95` backup: ${user.home}/script/solrBackup.sh
+- `cms\src\main\resources\application-prod.yml:110` elasticsearch:
+- `cms\src\main\resources\application-prod.yml:172` datasource-cache:
+- `cms\src\main\resources\application-tb.yml:16` ## redis session
+- `cms\src\main\resources\application-tb.yml:18` store-type: redis
+- `cms\src\main\resources\application-tb.yml:19` redis:
+- `cms\src\main\resources\application-tb.yml:21` nodes: redis1:7000,redis2:7001,redis3:7002
+- `cms\src\main\resources\application-tb.yml:30` datasource:
+- `cms\src\main\resources\application-tb.yml:31` platform: mariadb
+- `cms\src\main\resources\application-tb.yml:32` url: jdbc:mariadb://10.92.89.119:13306/meritz_tb?characterEncoding=UTF-8&serverTimezone=UTC
+- `cms\src\main\resources\application-tb.yml:35` driver-class-name: org.mariadb.jdbc.Driver
+- `cms\src\main\resources\application-tb.yml:36` type: com.zaxxer.hikari.HikariDataSource
+- `cms\src\main\resources\application-tb.yml:45` database: mysql
+- `cms\src\main\resources\application-tb.yml:93` solr:
+- `cms\src\main\resources\application-tb.yml:94` backup: ${user.home}/script/solrBackup.sh
+- `cms\src\main\resources\application-tb.yml:107` elasticsearch:
+- `cms\src\main\resources\application-tb.yml:169` datasource-cache:
+- `cms\src\main\resources\application-tc.yml:16` ## redis session
+- `cms\src\main\resources\application-tc.yml:18` store-type: redis
+- `cms\src\main\resources\application-tc.yml:19` redis:
+- `cms\src\main\resources\application-tc.yml:21` nodes: redis1:7000,redis2:7000,redis3:7000
+- `cms\src\main\resources\application-tc.yml:30` datasource:
+- `cms\src\main\resources\application-tc.yml:31` platform: mariadb
+- `cms\src\main\resources\application-tc.yml:32` url: jdbc:mariadb://mariadb1:13306/meritz_easycms?characterEncoding=UTF-8&serverTimezone=UTC
+- `cms\src\main\resources\application-tc.yml:35` driver-class-name: org.mariadb.jdbc.Driver
+- `cms\src\main\resources\application-tc.yml:36` type: com.zaxxer.hikari.HikariDataSource
+- `cms\src\main\resources\application-tc.yml:45` database: mysql
+- `cms\src\main\resources\application-tc.yml:93` solr:
+- `cms\src\main\resources\application-tc.yml:94` backup: ${user.home}/script/solrBackup.sh
+- `cms\src\main\resources\application-tc.yml:109` elasticsearch:
+- `cms\src\main\resources\application-tc.yml:171` datasource-cache:
+- `cms\src\main\resources\sh\solrBackup.sh:5` curl -o ${FILE_NAME} "http://solr2:8983/solr/${COLLECTION_NAME}/select?q=*:*&fl=DOCID,INTENT,QUESTION_BODY,INTENT_TYPE&wt=csv&rows=1000000000"
+- `common\pom.xml:79` <source>${java.version}</source>
+- `common\pom.xml:80` <target>${java.version}</target>
+- `common\src\main\resources\application-core-dev.yml:2` # = Redis Property
+- `common\src\main\resources\application-core-dev.yml:4` redis:
+- `common\src\main\resources\application-core-dev.yml:9` hosts: redis1:7000,redis2:7001,redis3:7002
+- `common\src\main\resources\application-core-dev.yml:15` # Solr Property
+- `common\src\main\resources\application-core-dev.yml:17` solr:
+- `common\src\main\resources\application-core-dev.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources\application-core-dev.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources\application-core-dev.yml:33` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources\application-core-dev.yml:34` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources\application-core-dev.yml:35` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources\application-core-dev.yml:37` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `common\src\main\resources\application-core-dev.yml:43` solr:
+- `common\src\main\resources\application-core-dev.yml:44` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources\application-core-local.yml:2` # = Redis Property
+- `common\src\main\resources\application-core-local.yml:4` redis:
+- `common\src\main\resources\application-core-local.yml:15` # Solr Property
+- `common\src\main\resources\application-core-local.yml:17` solr:
+- `common\src\main\resources\application-core-local.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources\application-core-local.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources\application-core-local.yml:33` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources\application-core-local.yml:34` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources\application-core-local.yml:35` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources\application-core-local.yml:37` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `common\src\main\resources\application-core-local.yml:43` solr:
+- `common\src\main\resources\application-core-local.yml:44` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources\application-core-prod.yml:2` # = Redis Property
+- `common\src\main\resources\application-core-prod.yml:4` redis:
+- `common\src\main\resources\application-core-prod.yml:9` hosts: redis1:7000,redis2:7000,redis3:7000
+- `common\src\main\resources\application-core-prod.yml:15` # Solr Property
+- `common\src\main\resources\application-core-prod.yml:17` solr:
+- `common\src\main\resources\application-core-prod.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources\application-core-prod.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources\application-core-prod.yml:33` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources\application-core-prod.yml:34` createNodeSetNode2: solr2:8983_solr
+- `common\src\main\resources\application-core-prod.yml:35` createNodeSetNode3: solr3:8983_solr
+- `common\src\main\resources\application-core-prod.yml:37` urls: http://solr1:8983/solr,http://solr2:8983/solr,http://solr3:8983/solr
+- `common\src\main\resources\application-core-prod.yml:43` solr:
+- `common\src\main\resources\application-core-prod.yml:44` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources\application-core-tb.yml:2` # = Redis Property
+- `common\src\main\resources\application-core-tb.yml:4` redis:
+- `common\src\main\resources\application-core-tb.yml:15` # Solr Property
+- `common\src\main\resources\application-core-tb.yml:17` solr:
+- `common\src\main\resources\application-core-tb.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources\application-core-tb.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources\application-core-tb.yml:33` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources\application-core-tb.yml:34` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources\application-core-tb.yml:35` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources\application-core-tb.yml:37` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `common\src\main\resources\application-core-tb.yml:43` solr:
+- `common\src\main\resources\application-core-tb.yml:44` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources\application-core-tc.yml:2` # = Redis Property
+- `common\src\main\resources\application-core-tc.yml:4` redis:
+- `common\src\main\resources\application-core-tc.yml:9` hosts: redis1:7000,redis2:7000,redis3:7000
+- `common\src\main\resources\application-core-tc.yml:15` # Solr Property
+- `common\src\main\resources\application-core-tc.yml:17` solr:
+- `common\src\main\resources\application-core-tc.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources\application-core-tc.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources\application-core-tc.yml:33` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources\application-core-tc.yml:34` createNodeSetNode2: solr2:8983_solr
+- `common\src\main\resources\application-core-tc.yml:35` createNodeSetNode3: solr3:8983_solr
+- `common\src\main\resources\application-core-tc.yml:37` urls: http://solr1:8983/solr,http://solr2:8983/solr,http://solr3:8983/solr
+- `common\src\main\resources\application-core-tc.yml:43` solr:
+- `common\src\main\resources\application-core-tc.yml:44` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources\application-core.yml:2` # = Redis Property
+- `common\src\main\resources\application-core.yml:4` redis:
+- `common\src\main\resources\application-core.yml:9` hosts: redis1:7000,redis2:7001,redis3:7002
+- `common\src\main\resources\application-core.yml:15` # Solr Property
+- `common\src\main\resources\application-core.yml:17` solr:
+- `common\src\main\resources\application-core.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources\application-core.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources\application-core.yml:31` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources\application-core.yml:32` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources\application-core.yml:33` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources\application-core.yml:35` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `common\src\main\resources\application-core.yml:41` solr:
+- `common\src\main\resources\application-core.yml:42` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources-dev\application-core.yml:2` # = Redis Property
+- `common\src\main\resources-dev\application-core.yml:4` redis:
+- `common\src\main\resources-dev\application-core.yml:9` hosts: redis1:7000,redis2:7001,redis3:7002
+- `common\src\main\resources-dev\application-core.yml:15` # Solr Property
+- `common\src\main\resources-dev\application-core.yml:17` solr:
+- `common\src\main\resources-dev\application-core.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources-dev\application-core.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources-dev\application-core.yml:33` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources-dev\application-core.yml:34` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources-dev\application-core.yml:35` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources-dev\application-core.yml:37` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `common\src\main\resources-dev\application-core.yml:43` solr:
+- `common\src\main\resources-dev\application-core.yml:44` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources-local\application-core.yml:2` # = Redis Property
+- `common\src\main\resources-local\application-core.yml:4` redis:
+- `common\src\main\resources-local\application-core.yml:9` hosts: redis1
+- `common\src\main\resources-local\application-core.yml:15` # Solr Property
+- `common\src\main\resources-local\application-core.yml:17` solr:
+- `common\src\main\resources-local\application-core.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources-local\application-core.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources-local\application-core.yml:30` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources-local\application-core.yml:31` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources-local\application-core.yml:32` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources-local\application-core.yml:36` urls: http://solr1:8983/solr,http://solr2:8983/solr,http://solr3:8985/solr
+- `common\src\main\resources-local\application-core.yml:42` solr:
+- `common\src\main\resources-local\application-core.yml:43` backup: ${user.home}/script/solrBackup.sh
+- `common\src\main\resources-prod\application-core.yml:2` # = Redis Property
+- `common\src\main\resources-prod\application-core.yml:4` redis:
+- `common\src\main\resources-prod\application-core.yml:9` hosts: redis1:7000,redis2:7001,redis3:7002
+- `common\src\main\resources-prod\application-core.yml:15` # Solr Property
+- `common\src\main\resources-prod\application-core.yml:17` solr:
+- `common\src\main\resources-prod\application-core.yml:18` url: http://solr1:8983/solr
+- `common\src\main\resources-prod\application-core.yml:21` zookeeperApi: /zookeeper
+- `common\src\main\resources-prod\application-core.yml:32` createNodeSetNode1: solr1:8983_solr
+- `common\src\main\resources-prod\application-core.yml:33` createNodeSetNode2: solr2:8984_solr
+- `common\src\main\resources-prod\application-core.yml:34` createNodeSetNode3: solr3:8985_solr
+- `common\src\main\resources-prod\application-core.yml:36` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `common\src\main\resources-prod\application-core.yml:42` solr:
+- `common\src\main\resources-prod\application-core.yml:43` backup: ${user.home}/script/solrBackup.sh
+- `docs\03.Models\kt_chatbot_session_specification.md:1` # Chatbot Redis Session Data Model Specification
+- `docs\03.Models\kt_chatbot_session_specification.md:8` ### 1. Redis Session Model
+- `docs\99.ETC\aicc_chatbot_deploy_manual.md:25` prd-escredis01        | redis1<br>solr1<br>es1 | CentOS 7.6 | 8 |32G |        | 10.213.177.70     | redis<br>solr<br>Elasticsearch<br>zookeeper     |
+- `docs\99.ETC\aicc_chatbot_deploy_manual.md:26` prd-escredis02        | redis2<br>solr2<br>es2 | CentOS 7.6 | 8 |32G |        | 10.213.177.71    | redis<br>solr<br>Elasticsearch<br>zookeeper      |
+- `docs\99.ETC\aicc_chatbot_deploy_manual.md:27` prd-escredis03        | redis3<br>solr3<br>es3 | CentOS 7.6 | 8 |32G |        | 10.213.177.72    | redis<br>solr<br>Elasticsearch<br>zookeeper      |
+- `docs\99.ETC\aicc_chatbot_deploy_manual.md:44` 검증 관리        | 검증 관리 질문내용 검색 결과 및 형태소 분석 검색 후 Solr와 일치하는지 확인 |
+- `docs\99.ETC\b2b_aicc_easycms_deploy_manual.md:12` DB      | Web, AP      | CentOS 7.6  | 인텔 제온 골드 6226 12C/24T 2.7G x 2  | 256G   | 600GB x 2 | 203.254.128.227   | postgres 11<br>redis<br>solr<br>zookeeper          |
+- `docs\99.ETC\b2b_aicc_easycms_deploy_manual.md:13` 대화엔진  | DB, 검색엔진  | CentOS 7.6  | 인텔 제온 골드 5222 4C/8T 3.8G x 2    | 64G    | 600GB x 2 | 203.254.128.229   | nginx<br>wildfly<br>logstach<br>elasticsearch<br>kibana | EasyCMS
+- `docs\99.ETC\b2b_aicc_easycms_deploy_manual.md:30` 검증 관리        | 검증 관리 질문내용 검색 결과 및 형태소 분석 검색 후 Solr와 일치하는지 확인 |
+- `docs\99.ETC\EasyCMS_deploy_manual.md:25` prd-escredis01        | redis1<br>solr1<br>es1 | CentOS 7.6 | 8 |32G |        | 10.213.177.70     | redis<br>solr<br>Elasticsearch<br>zookeeper     |
+- `docs\99.ETC\EasyCMS_deploy_manual.md:26` prd-escredis02        | redis2<br>solr2<br>es2 | CentOS 7.6 | 8 |32G |        | 10.213.177.71    | redis<br>solr<br>Elasticsearch<br>zookeeper      |
+- `docs\99.ETC\EasyCMS_deploy_manual.md:27` prd-escredis03        | redis3<br>solr3<br>es3 | CentOS 7.6 | 8 |32G |        | 10.213.177.72    | redis<br>solr<br>Elasticsearch<br>zookeeper      |
+- `docs\99.ETC\EasyCMS_deploy_manual.md:59` 검증 관리           | 검증 관리 질문내용 검색 결과 및 형태소 분석 검색 후 Solr와 일치하는지 확인 |
+- `engine\pom.xml:73` <source>${java.version}</source>
+- `engine\pom.xml:74` <target>${java.version}</target>
+- `engine\src\main\resources\application-dev.yml:26` solr:
+- `engine\src\main\resources\application-prod.yml:26` solr:
+- `engine\src\main\resources\application-tb.yml:26` solr:
+- `engine\src\main\resources\application-tc.yml:26` solr:
+- `engine\src\main\resources-dev\application.yml:26` solr:
+- `engine\src\main\resources-local\application.yml:12` redis:
+- `engine\src\main\resources-local\application.yml:17` hosts: redis1
+- `engine\src\main\resources-local\application.yml:23` # Solr Property
+- `engine\src\main\resources-local\application.yml:25` solr:
+- `engine\src\main\resources-local\application.yml:26` url: http://solr1:8983/solr
+- `engine\src\main\resources-local\application.yml:29` zookeeperApi: /zookeeper
+- `engine\src\main\resources-local\application.yml:37` createNodeSetNode1: solr1:8983_solr
+- `engine\src\main\resources-local\application.yml:38` createNodeSetNode2: solr2:8984_solr
+- `engine\src\main\resources-local\application.yml:39` createNodeSetNode3: solr3:8985_solr
+- `engine\src\main\resources-local\application.yml:43` urls: http://solr1:8983/solr,http://solr2:8984/solr,http://solr3:8985/solr
+- `engine\src\main\resources-local\application.yml:49` solr:
+- `engine\src\main\resources-local\application.yml:50` backup: ${user.home}/script/solrBackup.sh
+- `engine\src\main\resources-prod\application.yml:26` solr:
+- `gateway\pom.xml:70` <source>${java.version}</source>
+- `gateway\pom.xml:71` <target>${java.version}</target>
+- `gateway\src\main\resources\application-dev.yml:32` elastic:
+- `gateway\src\main\resources\application-dev.yml:133` # = Elasticsearch Property
+- `gateway\src\main\resources\application-dev.yml:136` elasticsearch:
+- `gateway\src\main\resources\application-prod.yml:32` elastic:
+- `gateway\src\main\resources\application-prod.yml:133` # = Elasticsearch Property
+- `gateway\src\main\resources\application-prod.yml:136` elasticsearch:
+- `gateway\src\main\resources\application-tb.yml:32` elastic:
+- `gateway\src\main\resources\application-tb.yml:133` # = Elasticsearch Property
+- `gateway\src\main\resources\application-tb.yml:136` elasticsearch:
+- `gateway\src\main\resources\application-tc.yml:32` elastic:
+- `gateway\src\main\resources\application-tc.yml:133` # = Elasticsearch Property
+- `gateway\src\main\resources\application-tc.yml:136` elasticsearch:
+- `gateway\src\main\resources\logstash\logstash.conf:24` elasticsearch {
+- `gateway\src\main\resources-dev\application.yml:32` elastic:
+- `gateway\src\main\resources-dev\application.yml:133` # = Elasticsearch Property
+- `gateway\src\main\resources-dev\application.yml:136` elasticsearch:
+- `gateway\src\main\resources-local\application.yml:29` elastic:
+- `gateway\src\main\resources-local\application.yml:129` # = Elasticsearch Property
+- `gateway\src\main\resources-local\application.yml:132` elasticsearch:
+- `gateway\src\main\resources-prod\application.yml:32` elastic:
+- `gateway\src\main\resources-prod\application.yml:133` # = Elasticsearch Property
+- `gateway\src\main\resources-prod\application.yml:136` elasticsearch:
+- `master\pom.xml:89` <artifactId>spring-session-data-redis</artifactId>
+- `master\pom.xml:121` <source>${java.version}</source>
+- `master\pom.xml:122` <target>${java.version}</target>
+- `master\src\main\resources\application-dev-tb.yml:10` ## redis session
+- `master\src\main\resources\application-dev-tb.yml:12` store-type: redis
+- `master\src\main\resources\application-dev-tb.yml:13` redis:
+- `master\src\main\resources\application-dev-tb.yml:23` datasource:
+- `master\src\main\resources\application-dev-tb.yml:24` platform: mariadb
+- `master\src\main\resources\application-dev-tb.yml:25` url: jdbc:mariadb://localhost:13306/meritz
+- `master\src\main\resources\application-dev-tb.yml:28` driver-class-name: org.mariadb.jdbc.Driver
+- `master\src\main\resources\application-dev-tb.yml:29` type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-dev-tb.yml:38` database: mysql
+- `master\src\main\resources\application-dev-tb.yml:44` #  datasource:
+- `master\src\main\resources\application-dev-tb.yml:46` #    url: jdbc:postgresql://127.0.0.1:5432/meritz
+- `master\src\main\resources\application-dev-tb.yml:49` #    driver-class-name: org.postgresql.Driver
+- `master\src\main\resources\application-dev-tb.yml:50` #    type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-dev-tb.yml:59` #    database: POSTGRESQL
+- `master\src\main\resources\application-dev-tb.yml:60` #    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+- `master\src\main\resources\application-dev-tb.yml:107` solr:
+- `master\src\main\resources\application-dev-tb.yml:108` backup: ${user.home}/script/solrBackup.sh
+- `master\src\main\resources\application-dev-tb.yml:121` elasticsearch:
+- `master\src\main\resources\application-dev.yml:10` ## redis session
+- `master\src\main\resources\application-dev.yml:12` store-type: redis
+- `master\src\main\resources\application-dev.yml:13` redis:
+- `master\src\main\resources\application-dev.yml:15` nodes: redis1:7000,redis2:7001,redis3:7002
+- `master\src\main\resources\application-dev.yml:24` datasource:
+- `master\src\main\resources\application-dev.yml:25` platform: mariadb
+- `master\src\main\resources\application-dev.yml:26` url: jdbc:mariadb://10.92.89.119:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `master\src\main\resources\application-dev.yml:29` driver-class-name: org.mariadb.jdbc.Driver
+- `master\src\main\resources\application-dev.yml:30` type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-dev.yml:39` database: mysql
+- `master\src\main\resources\application-dev.yml:85` solr:
+- `master\src\main\resources\application-dev.yml:86` backup: ${user.home}/script/solrBackup.sh
+- `master\src\main\resources\application-dev.yml:99` elasticsearch:
+- `master\src\main\resources\application-han.yml:12` ## redis session
+- `master\src\main\resources\application-han.yml:14` store-type: redis
+- `master\src\main\resources\application-han.yml:15` redis:
+- `master\src\main\resources\application-han.yml:25` datasource:
+- `master\src\main\resources\application-han.yml:26` platform: mariadb
+- `master\src\main\resources\application-han.yml:27` url: jdbc:mariadb://localhost:13306/han
+- `master\src\main\resources\application-han.yml:30` driver-class-name: org.mariadb.jdbc.Driver
+- `master\src\main\resources\application-han.yml:31` type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-han.yml:40` database: mysql
+- `master\src\main\resources\application-han.yml:47` #  datasource:
+- `master\src\main\resources\application-han.yml:49` #    url: jdbc:postgresql://127.0.0.1:5432/meritz
+- `master\src\main\resources\application-han.yml:52` #    driver-class-name: org.postgresql.Driver
+- `master\src\main\resources\application-han.yml:53` #    type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-han.yml:62` #    database: POSTGRESQL
+- `master\src\main\resources\application-han.yml:63` #    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+- `master\src\main\resources\application-han.yml:109` solr:
+- `master\src\main\resources\application-han.yml:110` backup: ${user.home}/script/solrBackup.sh
+- `master\src\main\resources\application-han.yml:123` elasticsearch:
+- `master\src\main\resources\application-prod.yml:10` ## redis session
+- `master\src\main\resources\application-prod.yml:12` store-type: redis
+- `master\src\main\resources\application-prod.yml:13` redis:
+- `master\src\main\resources\application-prod.yml:15` nodes: redis1:7000,redis2:7000,redis3:7000
+- `master\src\main\resources\application-prod.yml:24` datasource:
+- `master\src\main\resources\application-prod.yml:25` platform: mariadb
+- `master\src\main\resources\application-prod.yml:26` url: jdbc:mariadb://10.92.20.202:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `master\src\main\resources\application-prod.yml:29` driver-class-name: org.mariadb.jdbc.Driver
+- `master\src\main\resources\application-prod.yml:30` type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-prod.yml:39` database: mysql
+- `master\src\main\resources\application-prod.yml:85` solr:
+- `master\src\main\resources\application-prod.yml:86` backup: ${user.home}/script/solrBackup.sh
+- `master\src\main\resources\application-prod.yml:101` elasticsearch:
+- `master\src\main\resources\application-tc.yml:10` ## redis session
+- `master\src\main\resources\application-tc.yml:12` store-type: redis
+- `master\src\main\resources\application-tc.yml:13` redis:
+- `master\src\main\resources\application-tc.yml:15` nodes: redis1:7000,redis2:7000,redis3:7000
+- `master\src\main\resources\application-tc.yml:24` datasource:
+- `master\src\main\resources\application-tc.yml:25` platform: mariadb
+- `master\src\main\resources\application-tc.yml:26` url: jdbc:mariadb://mariadb1:13306/meritz_easycms?characterEncoding=UTF-8&serverTimezone=UTC
+- `master\src\main\resources\application-tc.yml:29` driver-class-name: org.mariadb.jdbc.Driver
+- `master\src\main\resources\application-tc.yml:30` type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application-tc.yml:39` database: mysql
+- `master\src\main\resources\application-tc.yml:85` solr:
+- `master\src\main\resources\application-tc.yml:86` backup: ${user.home}/script/solrBackup.sh
+- `master\src\main\resources\application-tc.yml:101` elasticsearch:
+- `master\src\main\resources\application-tc.yml:144` elasticsearch:
+- `master\src\main\resources\application.yml:10` #  ## redis session
+- `master\src\main\resources\application.yml:12` #    store-type: redis
+- `master\src\main\resources\application.yml:13` #  redis:
+- `master\src\main\resources\application.yml:15` #      nodes: redis1:7000,redis2:7001,redis3:7002
+- `master\src\main\resources\application.yml:23` #  datasource:
+- `master\src\main\resources\application.yml:25` #    url: jdbc:postgresql://10.213.177.14:5444/aicc_chatdb
+- `master\src\main\resources\application.yml:28` #    driver-class-name: org.postgresql.Driver
+- `master\src\main\resources\application.yml:29` #    type: com.zaxxer.hikari.HikariDataSource
+- `master\src\main\resources\application.yml:38` #    database: POSTGRESQL
+- `master\src\main\resources\application.yml:39` #    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+- `master\src\main\resources\application.yml:85` #  solr:
+- `master\src\main\resources\application.yml:86` #    backup: ${user.home}/script/solrBackup.sh
+- `master\src\main\resources\application.yml:99` #elasticsearch:
+- `persistence\pom.xml:76` <source>${java.version}</source>
+- `persistence\pom.xml:77` <target>${java.version}</target>
+- `persistence\src\main\resources\application.yml:6` #  datasource:
+- `persistence\src\main\resources\application.yml:8` #    url:  jdbc:postgresql://localhost:5432/ktalk
+- `persistence\src\main\resources\application.yml:11` #    driver-class-name:  org.postgresql.Driver
+- `persistence\src\main\resources\application.yml:12` #    type: com.zaxxer.hikari.HikariDataSource
+- `scheduler\pom.xml:73` <source>${java.version}</source>
+- `scheduler\pom.xml:74` <target>${java.version}</target>
+- `scheduler\src\main\resources\application-dev.yml:23` dialect: org.hibernate.dialect.MySQL5Dialect
+- `scheduler\src\main\resources\application-dev.yml:35` redis:
+- `scheduler\src\main\resources\application-dev.yml:37` nodes: redis1:7000,redis2:7001,redis3:7002
+- `scheduler\src\main\resources\application-dev.yml:40` datasource-cache:
+- `scheduler\src\main\resources\application-dev.yml:46` datasource:
+- `scheduler\src\main\resources\application-dev.yml:47` url: jdbc:mariadb://10.92.89.119:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `scheduler\src\main\resources\application-dev.yml:60` datasource:
+- `scheduler\src\main\resources\application-dev.yml:68` elasticsearch:
+- `scheduler\src\main\resources\application-prod.yml:23` dialect: org.hibernate.dialect.MySQL5Dialect
+- `scheduler\src\main\resources\application-prod.yml:35` redis:
+- `scheduler\src\main\resources\application-prod.yml:37` nodes: redis1:7000,redis2:7000,redis3:7000
+- `scheduler\src\main\resources\application-prod.yml:40` datasource-cache:
+- `scheduler\src\main\resources\application-prod.yml:46` datasource:
+- `scheduler\src\main\resources\application-prod.yml:47` url: jdbc:mariadb://10.92.20.202:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `scheduler\src\main\resources\application-prod.yml:60` datasource:
+- `scheduler\src\main\resources\application-prod.yml:68` elasticsearch:
+- `scheduler\src\main\resources\application-tc.yml:23` dialect: org.hibernate.dialect.MySQL5Dialect
+- `scheduler\src\main\resources\application-tc.yml:35` redis:
+- `scheduler\src\main\resources\application-tc.yml:40` datasource-cache:
+- `scheduler\src\main\resources\application-tc.yml:46` datasource:
+- `scheduler\src\main\resources\application-tc.yml:47` platform: mariadb
+- `scheduler\src\main\resources\application-tc.yml:48` url: jdbc:mariadb://mariadb1:13306/meritz_easycms?characterEncoding=UTF-8&serverTimezone=UTC
+- `scheduler\src\main\resources\application-tc.yml:51` driver-class-name: org.mariadb.jdbc.Driver
+- `scheduler\src\main\resources\application-tc.yml:52` type: com.zaxxer.hikari.HikariDataSource
+- `scheduler\src\main\resources\application-tc.yml:63` datasource:
+- `scheduler\src\main\resources\application-tc.yml:71` elasticsearch:
+- `scheduler\src\main\resources-dev\application.yml:23` dialect: org.hibernate.dialect.MariaDB103Dialect
+- `scheduler\src\main\resources-dev\application.yml:35` redis:
+- `scheduler\src\main\resources-dev\application.yml:37` nodes: redis1:7000,redis2:7001,redis3:7002
+- `scheduler\src\main\resources-dev\application.yml:40` datasource-cache:
+- `scheduler\src\main\resources-dev\application.yml:46` datasource:
+- `scheduler\src\main\resources-dev\application.yml:47` url: jdbc:mariadb://10.92.89.119:13306/meritz_db?characterEncoding=UTF-8&serverTimezone=UTC
+- `scheduler\src\main\resources-dev\application.yml:60` datasource:
+- `scheduler\src\main\resources-dev\application.yml:68` elasticsearch:
+- `scheduler\src\main\resources-local\application.yml:19` dialect: org.hibernate.dialect.MySQL5Dialect
+- `scheduler\src\main\resources-local\application.yml:31` redis:
+- `scheduler\src\main\resources-local\application.yml:33` nodes: redis1:5000
+- `scheduler\src\main\resources-local\application.yml:36` datasource-cache:
+- `scheduler\src\main\resources-local\application.yml:42` datasource:
+- `scheduler\src\main\resources-local\application.yml:43` url: jdbc:mariadb://localhost:13306/songsiwook
+- `scheduler\src\main\resources-local\application.yml:56` datasource:
+- `scheduler\src\main\resources-local\application.yml:64` elasticsearch:
+- `scheduler\src\main\resources-prod\application.yml:19` dialect: org.hibernate.dialect.MariaDB103Dialect
+- `scheduler\src\main\resources-prod\application.yml:31` redis:
+- `scheduler\src\main\resources-prod\application.yml:33` nodes: redis1:7000,redis2:7001,redis3:7002
+- `scheduler\src\main\resources-prod\application.yml:36` datasource-cache:
+- `scheduler\src\main\resources-prod\application.yml:42` datasource:
+- `scheduler\src\main\resources-prod\application.yml:43` url: jdbc:mariadb://localhost:13306/meritz_db
+- `scheduler\src\main\resources-prod\application.yml:56` datasource:
+- `scheduler\src\main\resources-prod\application.yml:64` elasticsearch:
+
+## Oracle Linux portability clues
+- `pom.xml:49` <logstashLogback.version>5.2</logstashLogback.version>
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\DiagnosisController.java:24` private DiagnosisService monitoringService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\DiagnosisController.java:28` public DiagnosisController(DiagnosisService monitoringService, RestTemplate restTemplate) {
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\DiagnosisController.java:29` this.monitoringService = monitoringService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:64` private final WebService webService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:65` private ChannelCacheService channelCacheService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:66` private BotCacheService botCacheService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:69` public UiController(WebService webService,
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:70` ChannelCacheService channelCacheService,
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:71` BotCacheService botCacheService,
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:73` this.webService = webService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:74` this.channelCacheService = channelCacheService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\controller\UiController.java:75` this.botCacheService = botCacheService;
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\services\WebService.java:13` public interface WebService {
+- `chat-ui\src\main\java\com\kt\aicc\ktbot\chatui\services\WebServiceImpl.java:29` public class WebServiceImpl implements WebService {
+- `chat-ui\src\main\resources\logging-dev-config.xml:5` <property name="LOG_DIR" value="/logs/chatui/ecms_chat-ui11"/>
+- `chat-ui\src\main\resources\logging-local-config.xml:5` <property name="LOG_DIR" value="/logs/ui"/>
+- `chat-ui\src\main\resources\logging-prod-config.xml:3` <property name="LOG_DIR" value="/logs/ui"/>
+- `chat-ui\src\main\resources\logging-tc-config.xml:3` <property name="LOG_DIR" value="/logs/chat-ui"/>
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:46` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:47` private TenantService tenantService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:49` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:50` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:56` private ManageTenantBotService manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:57` private CmsCategoryBotService cmsCategoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:59` private RedisService redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:63` public MasterCache(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:64` IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:65` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:66` ManageTenantBotService manageTenantBotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:67` TenantService tenantService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:68` CmsCategoryBotService cmsCategoryBotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:69` RedisService redisService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:70` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:71` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:72` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:73` this.manageTenantBotService = manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:74` this.tenantService = tenantService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:75` this.cmsCategoryBotService = cmsCategoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\cache\MasterCache.java:76` this.redisService = redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\config\liquibase\DynamicDataSourceBasedMultiTenantSpringLiquibase.java:33` private EncryptionService encryptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\config\liquibase\DynamicDataSourceBasedMultiTenantSpringLiquibase.java:96` public EncryptionService getEncryptionService() {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\config\liquibase\DynamicDataSourceBasedMultiTenantSpringLiquibase.java:100` public void setEncryptionService(EncryptionService encryptionService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\config\liquibase\DynamicDataSourceBasedMultiTenantSpringLiquibase.java:101` this.encryptionService = encryptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\config\tenant\DynamicDataSourceBasedMultiTenantConnectionProvider.java:37` private EncryptionService encryptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\DiagnosisController.java:26` private DiagnosisService monitoringService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\DiagnosisController.java:29` public DiagnosisController(RestTemplate restTemplate, DiagnosisService monitoringService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\DiagnosisController.java:31` this.monitoringService = monitoringService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\TestVoiceSvcController.java:18` private VoiceBotService voiceBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\TestVoiceSvcController.java:21` public TestVoiceSvcController(VoiceBotService voiceBotService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\TestVoiceSvcController.java:22` this.voiceBotService = voiceBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:47` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:48` private BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:49` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:50` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:74` public B2bBotController(BotService botService, BotScheduleService botScheduleService, CodeService codeService, ChatCacheService chatCacheService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:75` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:76` this.botScheduleService = botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:77` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:78` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:389` Boolean onService = (Boolean) param.get("onService");
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:390` if(onService == null) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:391` log.error("onService Info is not found");
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\B2bBotController.java:392` return new ResultEntity<>("1404", "onService Info is not found");
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:54` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:55` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:56` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:57` private IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:58` private ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:59` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:62` public B2bChannelController(ChatChannelService chatChannelService, BotService botService, IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:63` IntroService introService, ChannelPlatformService channelPlatformService, ChatCacheService chatCacheService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:64` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:65` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:66` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:67` this.introService = introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:68` this.channelPlatformService = channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\bot\channel\B2bChannelController.java:69` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:32` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:33` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:34` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:37` public B2bChatNodeController(BotService botService, IntentService intentService, ChatNodeService chatNodeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:38` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:39` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\chatnode\B2bChatNodeController.java:40` this.chatNodeService = chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:56` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:57` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:58` private IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:59` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:60` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:63` public B2bIntentController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:64` IntentService intentsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:65` IntentScheduleService intentScheduleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:66` SentenceService sentenceService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:67` ChatCacheService chatCacheService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:68` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:69` this.intentService = intentsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:70` this.intentScheduleService = intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:71` this.sentenceService = sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:72` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\intent\B2bIntentController.java:219` this.onService = onService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:58` private ChatHistoryService chatHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:59` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:60` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:68` public B2bChatHistoryController(BotService botService, ChatHistoryService chatHistoryService, ChatChannelService chatChannelService, MasterCache masterCache) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:69` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:70` this.chatHistoryService = chatHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bChatHistoryController.java:71` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bNoAnswerHistoryController.java:42` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bNoAnswerHistoryController.java:43` private NoAnswerHistoryService noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bNoAnswerHistoryController.java:47` public B2bNoAnswerHistoryController(BotService botService, NoAnswerHistoryService noAnswerHistoryService, MasterCache masterCache) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bNoAnswerHistoryController.java:48` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bNoAnswerHistoryController.java:49` this.noAnswerHistoryService = noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bXroShotHistoryController.java:30` private final XroShotHistoryService xroShotHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bXroShotHistoryController.java:34` public B2bXroShotHistoryController(XroShotHistoryService xroShotHistoryService,MasterCache masterCache) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\logging\B2bXroShotHistoryController.java:35` this.xroShotHistoryService = xroShotHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:32` ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:33` BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:35` ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:37` public B2bParameterController(ParameterService parameterService, BotService botService, ChatCacheService chatCacheService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:38` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:39` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\parameter\B2bParameterController.java:41` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:42` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:43` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:44` private DialogStatisticsService dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:45` private UserStatisticsService userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:50` public B2bChannelStatisticsController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:51` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:52` DialogStatisticsService dialogStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:53` UserStatisticsService userStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:54` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:55` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:56` this.dialogStatisticsService = dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:57` this.userStatisticsService = userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsByCallController.java:35` private final DialogStatisticsService dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsByCallController.java:37` public B2bDialogStatisticsByCallController(DialogStatisticsService dialogStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsByCallController.java:38` this.dialogStatisticsService = dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:40` private DialogStatisticsService dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:46` public B2bDialogStatisticsController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:47` DialogStatisticsService dialogStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:48` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:49` this.dialogStatisticsService = dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\satisfaction\B2bSatisfactionStatistic.java:31` private SatisfactionStatisticsService satisfactionStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\satisfaction\B2bSatisfactionStatistic.java:32` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\satisfaction\B2bSatisfactionStatistic.java:37` public B2bSatisfactionStatistic(SatisfactionStatisticsService satisfactionStatisticsService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\satisfaction\B2bSatisfactionStatistic.java:38` this.satisfactionStatisticsService = satisfactionStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\satisfaction\B2bSatisfactionStatistic.java:39` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:38` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:39` private Top10DialogStatisticsService top10DialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:45` public B2bTop10DialogStatisticsController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:46` Top10DialogStatisticsService top10DialogStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:47` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:48` this.top10DialogStatisticsService = top10DialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:51` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:52` private UsageStatisticsService usageStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:55` public B2bUsageStatisticsController(UsageStatisticsService usageStatisticsService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:56` this.usageStatisticsService = usageStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:57` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\user\B2bUserStatisticsController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\user\B2bUserStatisticsController.java:40` private UserStatisticsService userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\user\B2bUserStatisticsController.java:43` public B2bUserStatisticsController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\user\B2bUserStatisticsController.java:44` UserStatisticsService userStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\user\B2bUserStatisticsController.java:45` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\b2b\statistics\user\B2bUserStatisticsController.java:46` this.userStatisticsService = userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:51` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:52` private SatisfactionSurveyService satisfactionSurveyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:53` private UserStatisticsService userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:54` private DialogStatisticsService dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:55` private NoAnswerHistoryService noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:58` public DashboardController(BotService botService, SatisfactionSurveyService satisfactionSurveyService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:59` UserStatisticsService userStatisticsService, DialogStatisticsService dialogStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:60` NoAnswerHistoryService noAnswerHistoryService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:61` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:62` this.satisfactionSurveyService = satisfactionSurveyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:63` this.userStatisticsService = userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:64` this.dialogStatisticsService = dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\DashboardController.java:65` this.noAnswerHistoryService = noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\additionalServiceCode\AdditionalServiceCodeController.java:30` private AdditionalProductService additionalProductService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\additionalServiceCode\AdditionalServiceCodeController.java:32` public AdditionalServiceCodeController(AdditionalProductService additionalProductService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\additionalServiceCode\AdditionalServiceCodeController.java:33` this.additionalProductService = additionalProductService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\customer\CustomerController.java:40` private CustomerService customerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\customer\CustomerController.java:41` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\customer\CustomerController.java:44` public CustomerController(CustomerService customerService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\customer\CustomerController.java:45` this.customerService = customerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\customer\CustomerController.java:46` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\monitoring\MonitoringController.java:30` private MonitoringService monitoringService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\monitoring\MonitoringController.java:31` private static CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\monitoring\MonitoringController.java:32` public MonitoringController(MonitoringService monitoringService,CodeService codeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\monitoring\MonitoringController.java:33` this.monitoringService = monitoringService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\permission\MenuPermissionController.java:24` AuthMenuService authMenuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\permission\MenuPermissionController.java:29` AuthMenuService authMenuService
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\permission\MenuPermissionController.java:32` this.authMenuService = authMenuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\template\ChannelTemplateController.java:30` private static ChannelTemplateService channelTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\template\ChannelTemplateController.java:33` public ChannelTemplateController(ChannelTemplateService channelTemplateService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\template\ChannelTemplateController.java:34` this.channelTemplateService = channelTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:61` private UserService userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:64` private LdapService ldapService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:66` private XroshotMessageService xroshotMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:68` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:71` private ManageTenantBotService manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:134` public UserController(UserService userService, UserServiceTelOtp userServiceTelOtp,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:135` <REDACTED sensitive line>
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:136` MasterCache masterCache, LampLogger lampLogger, XroshotMessageService xroshotMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:137` RestTemplate restTemplate, CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:139` BotCacheCreateService cacheCreateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:140` ManageTenantBotService manageTenantBotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:143` this.userService = userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:146` this.ldapService = ldapService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:149` this.xroshotMessageService = xroshotMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:151` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\user\UserController.java:154` this.manageTenantBotService = manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:51` private static CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:52` private static VoiceBotLineService voiceBotLineService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:54` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:62` public VoiceBotLineController(CodeService codeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:63` VoiceBotLineService voiceBotLineService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:64` ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:65` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:66` this.voiceBotLineService = voiceBotLineService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\admin\voiceBotLine\VoiceBotLineController.java:68` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\batch\JobBatchLogController.java:54` private JobBatchLogService jobBatchLogService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\batch\JobBatchLogController.java:55` private CodeGroupService codeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\batch\JobBatchLogController.java:58` public JobBatchLogController(JobBatchLogService jobBatchLogService, CodeGroupService codeGroupService, MasterRestUtils masterRestUtils) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\batch\JobBatchLogController.java:59` this.jobBatchLogService = jobBatchLogService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\batch\JobBatchLogController.java:60` this.codeGroupService = codeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:133` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:134` private SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:135` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:136` private LearningInfoService learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:137` private LearningService learningService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:139` private SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:140` private BotCacheService botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:141` private RiveCacheService riveCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:143` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:144` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:145` private ChannelQuestionService channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:146` private ChannelFallbackQuestionService channelFallbackQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:147` private ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:148` private ChannelCacheService channelCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:149` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:150` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:151` private ApiCacheService apiCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:154` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:155` //    private PermissionService permissionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:156` private UserService userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:157` //    private GroupService groupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:158` private NoticeService noticeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:159` private NoticeChannelService noticeChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:160` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:161` private IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:162` private DeployService deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:163` private BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:164` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:165` private VoiceBotService voiceBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:166` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:167` private CustomerService customerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:168` private MenuService menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:170` private AuthMenuService authMenuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:171` private ManageTenantBotService manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:172` private TenantAccessRightService tenantAccessRightService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:174` private MasterManageService masterManageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:176` private NeFunctionCacheService neFunctionCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:177` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:178` private NamedEntityValueFunctionService namedEntityValueFunctionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:180` private CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:196` BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:197` SolrService solrService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:198` CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:199` LearningInfoService learningInfoService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:200` LearningService learningService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:202` SolrLearnService solrLearnService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:203` BotCacheService botCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:204` RiveCacheService riveCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:206` BotApiService botApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:207` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:208` ChannelQuestionService channelQuestionService, ChannelFallbackQuestionService channelFallbackQuestionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:209` ChannelPlatformService channelPlatformService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:210` ChannelCacheService channelCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:211` BotApiParameterService botApiParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:212` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:213` ApiCacheService apiCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:216` IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:217` //                         PermissionService permissionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:218` UserService userService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotController.java:219` //                         GroupService groupService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:29` private final BotExportService botExportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:30` private final BotImportService botImportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:31` private final BotCloneService botCloneService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:33` private final CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:35` public BotExportImportController(BotExportService botExportService, BotImportService botImportService, BotCloneService botCloneService, MasterCache masterCache
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:36` , CheckChatNodeService checkChatNodeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:37` this.botExportService = botExportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:38` this.botImportService = botImportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:39` this.botCloneService = botCloneService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotExportImportController.java:41` this.checkChatNodeService = checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:28` private BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:29` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:30` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:34` BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:35` BotScheduleService botScheduleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:36` ChatCacheService chatCacheService
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:38` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:39` this.botScheduleService = botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\BotScheduleController.java:40` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:73` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:74` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:75` private ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:76` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:77` private IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:80` private ChannelQuestionService channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:83` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:84` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:85` private VoiceBotLineService voiceBotLineService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:89` public ChatChannelController(ChatChannelService chatChannelService, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:90` ChannelPlatformService channelPlatformService, IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:91` IntroService introService, ChannelQuestionService channelQuestionService, ChatCacheService chatCacheService, CmsMessageService cmsMessageService,VoiceBotLineService voiceBotLineService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:92` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:93` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:94` this.channelPlatformService = channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:95` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:96` this.introService = introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:97` this.channelQuestionService = channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:102` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\channel\ChatChannelController.java:103` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\code\BotCodeController.java:38` private BotCodeGroupService botCodeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\code\BotCodeController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\code\BotCodeController.java:42` public BotCodeController(BotCodeGroupService botCodeGroupService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\code\BotCodeController.java:43` this.botCodeGroupService = botCodeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\code\BotCodeController.java:44` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\colliision\ConfusionMatrixController.java:43` private final ConfusionMatrixService confusionMatrixService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\colliision\ConfusionMatrixController.java:48` public ConfusionMatrixController(ConfusionMatrixService confusionMatrixService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\colliision\ConfusionMatrixController.java:49` this.confusionMatrixService = confusionMatrixService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\dictionary\BotDictionaryController.java:58` private BotDictionaryService dictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\dictionary\BotDictionaryController.java:59` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\dictionary\BotDictionaryController.java:66` public BotDictionaryController(BotDictionaryService dictionaryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\dictionary\BotDictionaryController.java:67` BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\dictionary\BotDictionaryController.java:68` this.dictionaryService = dictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\dictionary\BotDictionaryController.java:69` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:57` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:58` private FormDynamicService formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:59` private FormDynamicValueService formDynamicValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:60` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:61` private DynamicFormService dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:62` private DynamicFormValueService dynamicFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:68` public FormDynamicController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:69` FormDynamicService formDynamicService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:70` FormDynamicValueService formDynamicValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:71` CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:72` DynamicFormService dynamicFormService, DynamicFormValueService dynamicFormValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:73` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:74` this.formDynamicService = formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:75` this.formDynamicValueService = formDynamicValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:76` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:77` this.dynamicFormService = dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\formdynamic\FormDynamicController.java:78` this.dynamicFormValueService = dynamicFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:68` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:69` private IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:70` private IntroRecommendService introRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:71` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:72` private IntroImageService introImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:79` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:82` public IntroController(BotService botService, IntroService introService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:83` IntroRecommendService introRecommendService, IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:84` IntroImageService introImageService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:85` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:86` this.introService = introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:87` this.introRecommendService = introRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:88` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:89` this.introImageService = introImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\intro\IntroController.java:95` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:59` private NoticeService noticeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:61` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:63` private NoticeChannelService noticeChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:65` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:69` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:72` public NoticeController(NoticeService noticeService, BotService botService, NoticeChannelService noticeChannelService, ChatChannelService chatChannelService, CmsMessageService cmsMessageService ) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:73` this.noticeService = noticeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:74` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:75` this.noticeChannelService = noticeChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:76` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\notice\NoticeController.java:78` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:60` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:61` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:62` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:64` private SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:65` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:69` public SmsTemplateController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:70` SmsTemplateService smsTemplateService, SmsTemplateValueService smsTemplateValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:71` SmsFormService smsFormService, SmsFormValueService smsFormValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:72` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:73` this.smsTemplateService = smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:74` this.smsTemplateValueService = smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:75` this.smsFormService = smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\smsform\SmsTemplateController.java:76` this.smsFormValueService = smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:57` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:58` private TemplateService templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:59` private TemplateValueService templateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:60` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:66` public TemplateController(BotService botService, TemplateService templateService, TemplateValueService templateValueService, CmsMessageService cmsMessageService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:67` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:68` this.templateService = templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:69` this.templateValueService = templateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\bot\template\TemplateController.java:70` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeController.java:24` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeController.java:27` public CodeController(CodeService codeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeController.java:28` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeGroupController.java:47` private CodeGroupService codeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeGroupController.java:48` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeGroupController.java:52` public CodeGroupController(CodeGroupService codeGroupService, BotService botService, MasterRestUtils masterRestUtils) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeGroupController.java:53` this.codeGroupService = codeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\code\CodeGroupController.java:54` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:154` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:155` private BotCacheService botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:156` private SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:159` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:160` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:161` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:162` private ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:163` private ChannelQuestionService channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:164` private ChannelFallbackQuestionService channelFallbackQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:165` private ChannelCacheService channelCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:166` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:167` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:168` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:169` //    private PermissionService permissionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:170` private UserService userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:171` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:172` private IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:173` private IntroRecommendService introRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:175` private CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:176` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:177` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:178` private NamedEntityValueTagService namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:179` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:180` private SentenceNerService sentenceNerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:181` private IntentParameterService intentParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:182` private IntroImageService introImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:183` private BotDictionaryService botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:184` private FormDynamicService formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:185` private FormDynamicValueService formDynamicValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:186` private BotCodeGroupService botCodeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:187` private BotCopyHistoryService botCopyHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:188` private IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:190` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:191` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:192` private ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:193` private ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:194` private BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:195` private QuickReplyService quickReplyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:196` private ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:197` private ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:198` private ChatNodeSlideService chatNodeSlideService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:199` private SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:200` private SplitNodeService splitNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:201` private BubbleTextService bubbleTextService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:202` private BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:203` private BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:204` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:205` private SlideButtonService slideButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:206` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:207` private SlotQuestionService slotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:208` private SlotOptionService slotOptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:209` private SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:210` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:211` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:212` private BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:213` private SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:214` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:216` private MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:217` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\BotCopyController.java:218` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:89` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:90` private SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:91` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:92` private SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:93` private BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:94` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:95` private ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:96` private ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:97` private ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:98` private IntentParameterService intentParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:99` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:100` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:101` private NamedEntityValueTagService namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:102` private SentenceNerService sentenceNerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:103` private SlotOptionService slotOptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:104` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:105` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:106` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:107` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:108` private CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:109` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:110` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:111` private IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:113` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:114` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:115` private BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:116` private QuickReplyService quickReplyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:117` private ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:118` private ChatNodeSlideService chatNodeSlideService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:119` private SplitNodeService splitNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:120` private BubbleTextService bubbleTextService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:121` private BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:122` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:123` private SlideButtonService slideButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:124` private SlotQuestionService slotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:126` private SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:127` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:129` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:130` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:132` private MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:133` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:134` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:135` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:137` private ChatNodeParamService chatNodeParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:138` private DynamicViewService dynamicViewService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:139` private DynamicViewValueService dynamicViewValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:140` private TemplateService templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:141` private TemplateValueService templateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:143` private ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:144` private ConfirmEntityValueService confirmEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:145` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:147` private final IntentClassificationEntityService intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:150` public DialogCopyController(IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:151` SplitNodeConditionService splitNodeConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:152` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:153` SlotNodeService slotNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:154` BubbleTextParamService bubbleTextParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:155` ChatNodeSlideParamService chatNodeSlideParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:156` ApiNodeRequestService apiNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\DialogCopyController.java:157` ApiNodeResponseService apiNodeResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:120` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:121` private SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:122` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:123` private SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:124` private BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:125` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:126` private ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:127` private ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:128` private ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:129` private IntentParameterService intentParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:130` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:131` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:132` private NamedEntityValueTagService namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:133` private SentenceNerService sentenceNerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:134` private SlotOptionService slotOptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:135` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:136` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:137` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:138` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:139` private CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:140` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:141` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:142` private IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:144` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:145` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:146` private BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:147` private QuickReplyService quickReplyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:148` private ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:149` private ChatNodeSlideService chatNodeSlideService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:150` private SplitNodeService splitNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:151` private BubbleTextService bubbleTextService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:152` private BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:153` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:154` private SlideButtonService slideButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:155` private SlotQuestionService slotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:157` private SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:158` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:160` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:161` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:163` private MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:164` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:165` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:166` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:168` private ChatNodeParamService chatNodeParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:169` private DynamicViewService dynamicViewService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:170` private DynamicViewValueService dynamicViewValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:171` private TemplateService templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:172` private TemplateValueService templateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:174` private ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:175` private ConfirmEntityValueService confirmEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:176` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:179` private final IntentClassificationEntityService intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:180` private final IntentClassificationEntityValueService intentClassificationEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:181` private final IntentClassificationEntityValueTagService intentClassificationEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:184` public PresetCopyController(IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:185` SplitNodeConditionService splitNodeConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:186` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:187` SlotNodeService slotNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:188` BubbleTextParamService bubbleTextParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\copy\PresetCopyController.java:189` ChatNodeSlideParamService chatNodeSlideParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\file\FileUploadRestController.java:44` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\file\FileUploadRestController.java:46` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\file\FileUploadRestController.java:48` public FileUploadRestController(CodeService codeService, ChatImageService chatImageService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\file\FileUploadRestController.java:49` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\file\FileUploadRestController.java:50` this.chatImageService = chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:90` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:91` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:92` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:94` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:95` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:102` public ApiController(BotService botService, ChatCacheService chatCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:103` BotApiService botApiService, ApiNodeService apiNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:104` EnumMapper enumMapper, CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:107` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:108` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:109` this.botApiService = botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:110` this.apiNodeService = apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\api\ApiController.java:112` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:85` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:86` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:88` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:89` private BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:90` private BubbleTextService bubbleTextService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:91` private ChatNodeSlideService chatNodeSlideService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:92` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:93` private BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:94` private SlideButtonService slideButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:95` private ChipService chipService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:96` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:97` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:98` private ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:99` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:100` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:101` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:102` private ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:103` private ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:104` private ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:105` private IntentParameterService intentParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:106` private SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:107` private SlotQuestionService slotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:108` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:109` private SlotOptionService slotOptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:110` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:111` private SplitNodeService splitNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:112` private SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:113` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:114` private BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:115` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:116` private DynamicViewValueService dynamicViewValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:117` private DynamicViewService dynamicViewService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:118` private TemplateService templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:119` private TemplateValueService templateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:120` private ChatNodeHistoryService chatNodeHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:121` private QuickReplyService quickReplyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:123` private FormDynamicService formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:124` private FormDynamicValueService formDynamicValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:126` private DynamicFormService dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:127` private DynamicFormValueService dynamicFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:128` private SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:129` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:130` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:131` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:138` private CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:140` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:142` private MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:143` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:144` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:145` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:146` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:147` private ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:148` private ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:152` public ChatNodeController(BotService botService, IntentService intentService, ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:153` EnumMapper enumMapper, ChatChannelService chatChannelService, BubbleService bubbleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:154` BubbleTextService bubbleTextService, ChatNodeSlideService chatNodeSlideService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:155` ChatImageService chatImageService, BubbleButtonService bubbleButtonService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:156` SlideButtonService slideButtonService, ChipService chipService, ApiNodeService apiNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:157` ReturnNodeService returnNodeService, BotApiService botApiService, BotApiParameterService botApiParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ChatNodeController.java:158` ApiNodeRequestService apiNodeRequestService, BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\CheckStatusController.java:50` private final CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\CheckStatusController.java:52` public CheckStatusController(CheckChatNodeService checkChatNodeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\CheckStatusController.java:53` this.checkChatNodeService = checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:29` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:30` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:32` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:33` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:34` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:35` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:36` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:37` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:39` private CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:41` public ConnectionController(IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:42` ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:43` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:44` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:45` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:46` ApiNodeService apiNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:47` BotApiService botApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:48` ReturnNodeService returnNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:49` ChatCacheService chatCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:50` CheckChatNodeService checkChatNodeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:52` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:53` this.chatNodeService = chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:54` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:55` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:56` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:57` this.apiNodeService = apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:58` this.botApiService = botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:59` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\chatflow\ConnectionController.java:64` this.checkChatNodeService = checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:78` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:79` private ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:80` private ConfirmEntityValueService confirmEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:81` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:82` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:83` private SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:91` public ConfirmEntityController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:92` ConfirmEntityService confirmEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:93` ConfirmEntityValueService confirmEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:94` CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:95` SolrLearnService solrLearnService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:96` ConfirmSlotService confirmSlotService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:97` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:98` this.confirmEntityService = confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:99` this.confirmEntityValueService = confirmEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:100` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:101` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:102` this.confirmSlotService = confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:37` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:38` private CmsCategoryBotService categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:40` private PremadeMappingService premadeMappingService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:43` public DialogPresetController(IntentService intentService, CmsCategoryBotService categoryBotService, BotService botService, PremadeMappingService premadeMappingService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:44` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:45` this.categoryBotService = categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:46` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:47` this.premadeMappingService = premadeMappingService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:197` log.error("Service Exception : {}", se.getMessage());
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\dialog\DialogPresetController.java:218` log.error("Service Exception : {}", se.getMessage());
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:88` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:89` private final IntentClassificationEntityService intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:90` private final IntentClassificationEntityValueService intentClassificationEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:91` private final IntentClassificationEntityValueTagService intentClassificationEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:92` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:93` private final SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:95` public IntentClassificationEntityController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:96` IntentClassificationEntityService intentClassificationEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:97` IntentClassificationEntityValueService intentClassificationEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:98` IntentClassificationEntityValueTagService intentClassificationEntityValueTagService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:99` CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:100` SolrLearnService solrLearnService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:101` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:102` this.intentClassificationEntityService = intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:103` this.intentClassificationEntityValueService = intentClassificationEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:104` this.intentClassificationEntityValueTagService = intentClassificationEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:105` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\intentclassification\IntentClassificationEntityController.java:106` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:87` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:88` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:89` private final NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:90` private final NamedEntityValueTagService namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:91` private final NamedEntityValueFunctionService namedEntityValueFunctionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:92` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:93` private final SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:95` public NamedEntityController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:96` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:97` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:98` NamedEntityValueTagService namedEntityValueTagService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:99` CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:100` SolrLearnService solrLearnService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:101` NamedEntityValueFunctionService namedEntityValueFunctionService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:102` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:103` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:104` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:105` this.namedEntityValueTagService = namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:106` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityController.java:107` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:31` //    private final NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:32` //    private final NamedEntityValueTagService namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:33` //    private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:34` //    private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:36` //    public NamedEntityValueTagController(NamedEntityValueService namedEntityValueService, NamedEntityValueTagService namedEntityValueTagService, CmsMessageService cmsMessageService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:37` //        this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:38` //        this.namedEntityValueTagService = namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:39` //        this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:40` //        this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:41` ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:42` BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:43` ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:44` IntentParameterService intentParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:45` ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:46` ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:47` ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:48` SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:49` BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:50` SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:51` CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:53` ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:54` ChatNodeParamService chatNodeParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:55` DynamicViewValueService dynamicViewValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:56` DynamicFormValueService dynamicFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:57` ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:59` public ParameterController(ParameterService parameterService, BotService botService, BubbleTextParamService bubbleTextParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:60` ChatNodeSlideParamService chatNodeSlideParamService, IntentParameterService intentParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:61` ReturnNodeRequestService returnNodeRequestService, ApiNodeRequestService apiNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:62` ApiNodeResponseService apiNodeResponseService, SplitNodeConditionService splitNodeConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:63` CmsMessageService cmsMessageService, SlotNodeService slotNodeService, ChatCacheService chatCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:64` ChatNodeParamService chatNodeParamService, DynamicViewValueService dynamicViewValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:65` DynamicFormValueService dynamicFormValueService, ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService ) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:66` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:67` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:68` this.bubbleTextParamService = bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:69` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:70` this.intentParameterService = intentParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:71` this.returnNodeRequestService = returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:72` this.apiNodeRequestService = apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:73` this.apiNodeResponseService = apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:74` this.splitNodeConditionService = splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:75` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:76` this.slotNodeService = slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:78` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:79` this.chatNodeParamService = chatNodeParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:80` this.dynamicViewValueService = dynamicViewValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:81` this.dynamicFormValueService = dynamicFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\parameter\ParameterController.java:82` this.chatNodeSlotQuestionParamService = chatNodeSlotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:68` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:70` private SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:72` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:74` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:76` private VerificationService verificationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:78` private ConfirmVerificationService confirmVerificationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:80` private ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:82` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:84` private NamedEntityValueTagService namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:86` private BotDictionaryService botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:93` public VerificationController(BotService botService, SolrService solrService, IntentService intentService, NamedEntityService namedEntityService, VerificationService verificationService, ConfirmEntityService confirmEntityService, ConfirmVerificationService confirmVerificationService, NamedEntityValueService namedEntityValueService, NamedEntityValueTagService namedEntityValueTagService, BotDictionaryService botDictionaryService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:94` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:95` this.solrService = solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:96` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:97` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:98` this.verificationService = verificationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:99` this.confirmEntityService = confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:100` this.confirmVerificationService = confirmVerificationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:101` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:102` this.namedEntityValueTagService = namedEntityValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\knowledge\verification\VerificationController.java:103` this.botDictionaryService = botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ApiHistoryController.java:43` private ApiHistoryService apiHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ApiHistoryController.java:44` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ApiHistoryController.java:48` public ApiHistoryController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ApiHistoryController.java:49` ApiHistoryService apiHistoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ApiHistoryController.java:51` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ApiHistoryController.java:52` this.apiHistoryService = apiHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:45` private final ChatHistoryService chatHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:46` private final NluHistoryService nluHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:47` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:51` public ChatHistoryController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:52` ChatHistoryService chatHistoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:53` NluHistoryService nluHistoryService, LampLogger lampLogger) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:54` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:55` this.chatHistoryService = chatHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatHistoryController.java:56` this.nluHistoryService = nluHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatNodeHistoryController.java:31` private ChatNodeHistoryService chatNodeHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatNodeHistoryController.java:32` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatNodeHistoryController.java:35` public ChatNodeHistoryController(ChatNodeHistoryService chatNodeHistoryService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatNodeHistoryController.java:36` this.chatNodeHistoryService = chatNodeHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ChatNodeHistoryController.java:37` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:43` private final ConfusionMatrixInfoService confusionMatrixInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:44` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:45` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:48` public ConfusionMatrixHistoryController(ConfusionMatrixInfoService confusionMatrixInfoService, BotService botService, CmsMessageService cmsMessageService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:49` this.confusionMatrixInfoService = confusionMatrixInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:50` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ConfusionMatrixHistoryController.java:51` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:50` private DeployService deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:51` private LearningInfoService learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:52` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:53` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:54` private LearningService learningService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:57` public DeployController(DeployService deployService, BotService botService, LearningInfoService learningInfoService, CodeService codeService, LearningService learningService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:58` this.deployService = deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:59` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:60` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:61` this.learningInfoService = learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\DeployController.java:62` this.learningService = learningService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\IntentHistoryController.java:30` private IntentHistoryService intentHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\IntentHistoryController.java:31` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\IntentHistoryController.java:34` public IntentHistoryController(IntentHistoryService intentHistoryService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\IntentHistoryController.java:35` this.intentHistoryService = intentHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\IntentHistoryController.java:36` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\LearningInfoController.java:31` private LearningInfoService learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\LearningInfoController.java:32` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\LearningInfoController.java:35` public LearningInfoController(LearningInfoService learningInfoService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\LearningInfoController.java:36` this.learningInfoService = learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\LearningInfoController.java:37` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:56` private final NluHistoryService nluHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:57` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:58` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:62` public NluHistoryController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:63` NluHistoryService nluHistoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:64` NamedEntityService namedEntityService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:65` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:66` this.nluHistoryService = nluHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NluHistoryController.java:67` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:51` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:52` private NoAnswerHistoryService noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:53` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:54` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:57` public NoAnswerHistoryController(BotService botService, NoAnswerHistoryService noAnswerHistoryService, IntentService intentService, SentenceService sentenceService, NoAnswerRepository noAnswerRepository) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:58` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:59` this.noAnswerHistoryService = noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:60` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\NoAnswerHistoryController.java:61` this.sentenceService = sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:49` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:50` private SatisfactionSurveyService satisfactionSurveyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:51` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:54` public SatisfactionHistoryController(BotService botService, SatisfactionSurveyService satisfactionSurveyService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:55` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:56` this.satisfactionSurveyService = satisfactionSurveyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\SatisfactionHistoryController.java:57` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioHistoryController.java:44` private ScenarioHistoryService scenarioHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioHistoryController.java:45` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioHistoryController.java:49` public ScenarioHistoryController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioHistoryController.java:50` ScenarioHistoryService scenarioHistoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioHistoryController.java:52` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioHistoryController.java:53` this.scenarioHistoryService = scenarioHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioStatusHistoryController.java:23` private final ScenarioStatusHistoryService scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioStatusHistoryController.java:25` public ScenarioStatusHistoryController(ScenarioStatusHistoryService scenarioStatusHistoryService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\logging\ScenarioStatusHistoryController.java:26` this.scenarioStatusHistoryService = scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryBotController.java:52` private CmsCategoryBotService categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryBotController.java:54` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryBotController.java:59` public CategoryBotController(CmsCategoryBotService categoryBotService, IntentService intentService, MasterCache masterCache) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryBotController.java:60` this.categoryBotService = categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryBotController.java:61` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:49` private CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:51` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:52` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:55` public CategoryController(CategoryService categoryService, BotService botService, IntentService intentService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:56` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:57` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\category\CategoryController.java:58` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:82` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:84` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:86` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:88` private IntentHistoryService intentHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:90` private CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:92` private CategoryBotService categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:94` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:98` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:100` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:102` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:104` private SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:106` private IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:108` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:110` private ChatCacheService chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:112` private CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:117` public IntentController(BotService botService, IntentService intentsService, SentenceService sentenceService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:118` IntentHistoryService intentHistoryService, CategoryService categoryService, NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:119` CategoryBotService categoryBotService, ReturnNodeServiceImpl returnNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:120` CmsMessageService cmsMessageService, ChatChannelService chatChannelService, ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:121` SolrLearnService solrLearnService, IntentScheduleService intentScheduleService, ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:122` ChatCacheService chatCacheService, CheckChatNodeService checkChatNodeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:123` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:124` this.intentService = intentsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:125` this.sentenceService = sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:126` this.intentHistoryService = intentHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:127` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:128` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:129` this.categoryBotService = categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:130` this.returnNodeService = returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:131` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:132` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:133` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:134` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:135` this.intentScheduleService = intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:136` this.chatNodeService = chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:137` this.chatCacheService = chatCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\nlu\intent\IntentController.java:138` this.checkChatNodeService = checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:54` private LearnRecommendService learnRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:55` private CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:56` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:57` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:58` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:61` public RecommendController(LearnRecommendService learnRecommendService, BotService botService, IntentService intentService, CategoryService categoryService, SentenceService sentenceService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:62` this.learnRecommendService = learnRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:63` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:64` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:65` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\recommend\RecommendController.java:66` this.sentenceService = sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\satisfaction\SatisfactionSurveyController.java:40` private SatisfactionSurveyService satisfactionSurveyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\satisfaction\SatisfactionSurveyController.java:41` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\satisfaction\SatisfactionSurveyController.java:44` public SatisfactionSurveyController(SatisfactionSurveyService satisfactionSurveyService, IntentService intentService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\satisfaction\SatisfactionSurveyController.java:45` this.satisfactionSurveyService = satisfactionSurveyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\satisfaction\SatisfactionSurveyController.java:46` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:6` import com.kt.aicc.ktbot.cms.services.multi_tenantcy.DDLNativeQueryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:43` private final SchemaService schemaService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:44` private final DDLNativeQueryService queryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:45` private final EncryptionService encryptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:49` public SchemaController(SchemaService schemaService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:50` EncryptionService encryptionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:51` DDLNativeQueryService queryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:53` this.schemaService = schemaService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:54` this.encryptionService = encryptionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\schema\SchemaController.java:55` this.queryService = queryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:48` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:49` private AdditionalServiceJoinStatisticsService additionalServiceJoinStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:52` public AdditionalServiceJoinStatisticsController(BotService botService, AdditionalServiceJoinStatisticsService additionalServiceJoinStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:53` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:54` this.additionalServiceJoinStatisticsService = additionalServiceJoinStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:46` private AnswerLinkStatisticsService answerLinkStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:47` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:48` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:51` public AnswerLinkStatisticsController(AnswerLinkStatisticsService answerLinkStatisticsService, BotService botService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:52` this.answerLinkStatisticsService = answerLinkStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:53` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:54` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\api\ApiStatisticsController.java:46` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\api\ApiStatisticsController.java:47` private ApiStatisticsService apiStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\api\ApiStatisticsController.java:50` public ApiStatisticsController(BotService botService, ApiStatisticsService apiStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\api\ApiStatisticsController.java:51` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\api\ApiStatisticsController.java:52` this.apiStatisticsService = apiStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:40` private final ScenarioStatusHistoryService scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:41` private final CampaignPlanService campaignPlanService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:42` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:45` public CampaignStatisticsController(ScenarioStatusHistoryService scenarioStatusHistoryService, CampaignPlanService campaignPlanService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:46` this.scenarioStatusHistoryService = scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:47` this.campaignPlanService = campaignPlanService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaign\CampaignStatisticsController.java:48` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaignPlan\CampaignPlanController.java:29` private final CampaignPlanService campaignPlanService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaignPlan\CampaignPlanController.java:30` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaignPlan\CampaignPlanController.java:33` public CampaignPlanController(CampaignPlanService campaignPlanService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaignPlan\CampaignPlanController.java:34` this.campaignPlanService = campaignPlanService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\campaignPlan\CampaignPlanController.java:35` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:50` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:52` private DialogStatisticsService dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:53` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:54` private ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:57` public DialogStatisticsController(BotService botService, MasterCache masterCache, DialogStatisticsService dialogStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:58` ChatChannelService chatChannelService,ChannelPlatformService channelPlatformService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:59` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:61` this.dialogStatisticsService = dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\dialog\DialogStatisticsController.java:62` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:37` private final ScenarioStatusHistoryService scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:38` private final IBScenarioSituationService ibScenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:42` public IBStatisticsController(ScenarioStatusHistoryService scenarioStatusHistoryService, IBScenarioSituationService ibScenarioSituationService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:43` this.scenarioStatusHistoryService = scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:44` this.ibScenarioSituationService = ibScenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\ibstatistics\IBStatisticsController.java:45` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:42` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:43` private KnowledgeStatisticsService knowledgeStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:46` public KnowledgeStatisticsController(BotService botService, KnowledgeStatisticsService knowledgeStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:47` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:48` this.knowledgeStatisticsService = knowledgeStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:46` private PaymentStatisticsService paymentStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:47` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:48` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:51` public PaymentStatisticsController(PaymentStatisticsService paymentStatisticsService, BotService botService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:52` this.paymentStatisticsService = paymentStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:53` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\payment\PaymentStatisticsController.java:54` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:56` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:57` private ScenarioStatisticsService scenarioStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:58` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:59` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:60` private ScenarioNodeStatisticsService scenarioNodeStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:63` public ScenarioStatisticsController(BotService botService, ScenarioStatisticsService scenarioStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:64` ChatChannelService chatChannelService, IntentService intentService, ScenarioNodeStatisticsService scenarioNodeStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:65` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:66` this.scenarioStatisticsService = scenarioStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:67` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:68` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenario\ScenarioStatisticsController.java:69` this.scenarioNodeStatisticsService = scenarioNodeStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenarioPattern\ScenarioPatternStatisticsRestController.java:24` private final ScenarioPatternStatisticsService scenarioPatternStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenarioPattern\ScenarioPatternStatisticsRestController.java:25` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenarioPattern\ScenarioPatternStatisticsRestController.java:29` public ScenarioPatternStatisticsRestController(ScenarioPatternStatisticsService scenarioPatternStatisticsService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenarioPattern\ScenarioPatternStatisticsRestController.java:30` this.scenarioPatternStatisticsService = scenarioPatternStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\scenarioPattern\ScenarioPatternStatisticsRestController.java:31` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:46` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:47` private SimpleStatisticsService simpleStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:48` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:51` public SimpleStatisticsController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:52` SimpleStatisticsService simpleStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:53` ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:54` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:55` this.simpleStatisticsService = simpleStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\simple\SimpleStatisticsController.java:56` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\situation\ScenarioSituationController.java:29` private final ScenarioSituationService scenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\situation\ScenarioSituationController.java:30` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\situation\ScenarioSituationController.java:34` public ScenarioSituationController(BotService botService, ScenarioSituationService scenarioSituationService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\situation\ScenarioSituationController.java:35` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\situation\ScenarioSituationController.java:36` this.scenarioSituationService = scenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\slot\SlotStatisticsController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\slot\SlotStatisticsController.java:40` private SlotStatisticsService slotStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\slot\SlotStatisticsController.java:43` public SlotStatisticsController(BotService botService, SlotStatisticsService slotStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\slot\SlotStatisticsController.java:44` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\slot\SlotStatisticsController.java:45` this.slotStatisticsService = slotStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:45` private SatisfactionStatisticsService satisfactionStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:46` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:47` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:50` public SatisfactionStatisticsController(SatisfactionStatisticsService satisfactionStatisticsService, BotService botService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:51` this.satisfactionStatisticsService = satisfactionStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:52` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:53` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:42` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:43` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:44` private Top10DialogStatisticsService top10DialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:48` public Top10DialogStatisticsController(BotService botService, Top10DialogStatisticsService top10DialogStatisticsService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:49` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:50` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\top10\Top10DialogStatisticsController.java:51` this.top10DialogStatisticsService = top10DialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\user\UserStatisticsController.java:42` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\user\UserStatisticsController.java:43` private UserStatisticsService userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\user\UserStatisticsController.java:46` public UserStatisticsController(BotService botService, UserStatisticsService userStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\user\UserStatisticsController.java:47` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\statistics\user\UserStatisticsController.java:48` this.userStatisticsService = userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\MultiTenancyBotController.java:21` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\MultiTenancyBotController.java:23` public MultiTenancyBotController(BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\MultiTenancyBotController.java:24` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\PremadeMappingController.java:27` private final PremadeMappingService premadeMappingService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\PremadeMappingController.java:30` public PremadeMappingController(PremadeMappingService premadeMappingService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\PremadeMappingController.java:31` this.premadeMappingService = premadeMappingService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\TenantController.java:5` import com.kt.aicc.ktbot.cms.services.multi_tenantcy.DDLNativeQueryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\TenantController.java:35` private final TenantService tenantService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\TenantController.java:36` private final DDLNativeQueryService queryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\TenantController.java:39` public TenantController(TenantService tenantService, DDLNativeQueryService queryService, MasterCache masterCache) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\TenantController.java:40` this.tenantService = tenantService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tenant\TenantController.java:41` this.queryService = queryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tts\TtsVoiceController.java:39` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tts\TtsVoiceController.java:40` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tts\TtsVoiceController.java:43` public TtsVoiceController(ParameterService parameterService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tts\TtsVoiceController.java:44` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\rest\tts\TtsVoiceController.java:45` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\HistoryController.java:28` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\HistoryController.java:32` public HistoryController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\HistoryController.java:34` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\LoginWebController.java:88` CaptchaManager capt = new CaptchaManager();
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\LoginWebController.java:94` CaptchaManager capt = new CaptchaManager();
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\admin\permission\PermissionWebController.java:32` private final MenuService menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\admin\permission\PermissionWebController.java:36` public PermissionWebController(MenuService menuService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\admin\permission\PermissionWebController.java:39` this.menuService = menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:41` private CustomerService customerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:42` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:46` public BotWebController(//                            CustomerService customerService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:47` //                            CustomerService customerService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:48` CodeService codeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:52` //        this.customerService = customerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\BotWebController.java:53` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:48` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:50` private final CmsCategoryBotService categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:52` private final MenuService menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:53` //    private final GroupService groupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:56` public BotCategoryWebController(CategoryBotServiceExcel categoryBotServiceExcel, BotService botService, CmsCategoryBotService categoryBotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:57` CategoryBotController categoryBotController, MenuService menuService
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:58` //                                    GroupService groupService
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:60` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:62` this.categoryBotService = categoryBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:64` this.menuService = menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\botCategory\BotCategoryWebController.java:65` //        this.groupService = groupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\channel\ChannelSimulatorWebController.java:27` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\channel\ChannelSimulatorWebController.java:30` public ChannelSimulatorWebController(ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\channel\ChannelSimulatorWebController.java:33` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\code\BotWebCodeController.java:19` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\code\BotWebCodeController.java:22` public BotWebCodeController(BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\bot\code\BotWebCodeController.java:23` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\api\ApiWebController.java:43` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\api\ApiWebController.java:45` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\api\ApiWebController.java:48` public ApiWebController(EnumMapper enumMapper, CodeService codeService, MasterCache masterCache, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\api\ApiWebController.java:50` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\api\ApiWebController.java:52` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\category\CategoryWebController.java:49` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\category\CategoryWebController.java:51` private final CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\category\CategoryWebController.java:55` public CategoryWebController(CategoryServiceExcel categoryServiceExcel, BotService botService, CategoryService categoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\category\CategoryWebController.java:57` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\category\CategoryWebController.java:59` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\parameter\ParameterWebController.java:43` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\parameter\ParameterWebController.java:44` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\parameter\ParameterWebController.java:47` public ParameterWebController(EnumMapper enumMapper, BotService botservice, ParameterService parameterService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\parameter\ParameterWebController.java:49` this.botService = botservice;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\knowledge\parameter\ParameterWebController.java:50` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\BatchHistoryWebController.java:17` private CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\BatchHistoryWebController.java:20` public BatchHistoryWebController(CodeService codeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\BatchHistoryWebController.java:21` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:31` private final ConfusionMatrixInfoService confusionMatrixInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:32` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:33` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:36` public ConfusionMatrixHistoryWebController(ConfusionMatrixInfoService confusionMatrixInfoService, BotService botService, CmsMessageService cmsMessageService){
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:37` this.confusionMatrixInfoService = confusionMatrixInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:38` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\ConfusionMatrixHistoryWebController.java:39` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\DeployWebController.java:33` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\DeployWebController.java:34` private DeployService deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\DeployWebController.java:37` public DeployWebController(DeployService deployService, BotService botService, EnumMapper enumMapper) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\DeployWebController.java:38` this.deployService = deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\DeployWebController.java:39` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:41` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:42` private final NoAnswerHistoryService noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:43` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:50` public NoAnswerHistoryWebController(BotService botService, NoAnswerHistoryService noAnswerHistoryService, CmsMessageService cmsMessageService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:51` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:52` this.noAnswerHistoryService = noAnswerHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\logging\NoAnswerHistoryWebController.java:53` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:46` private final ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:47` private final ConfirmEntityValueService confirmEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:48` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:52` public confirmEntityWebController(EnumMapper enumMapper, ConfirmEntityService confirmEntityService, BotService botService, ConfirmEntityValueService confirmEntityValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:54` this.confirmEntityService = confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:55` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\confirmentity\confirmEntityWebController.java:56` this.confirmEntityValueService = confirmEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:115` private final CodeService codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:117` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:118` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:119` private final SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:120` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:121` private final CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:122` private final ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:123` private final BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:124` private final BubbleTextService bubbleTextService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:125` private final BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:126` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:127` private IntentHistoryService intentHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:130` public IntentWebController(CodeService codeService, EnumMapper enumMapper,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:131` BotService botService, IntentService intentService, CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:132` SentenceService sentenceService, CategoryService categoryService, ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:133` BubbleService bubbleService, BubbleTextService bubbleTextService, BubbleButtonService bubbleButtonService, NamedEntityService namedEntityService, IntentHistoryService intentHistoryService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:134` this.codeService = codeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:136` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:137` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:138` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:139` this.sentenceService = sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:140` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:141` this.chatNodeService = chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:142` this.bubbleService = bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:143` this.bubbleTextService = bubbleTextService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:144` this.bubbleButtonService = bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:145` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intent\IntentWebController.java:146` this.intentHistoryService = intentHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:56` private final IntentClassificationEntityService intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:57` private final IntentClassificationEntityValueService intentClassificationEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:58` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:62` public IntentClassificationEntityWebController(EnumMapper enumMapper, IntentClassificationEntityService intentClassificationEntityService, BotService botService, IntentClassificationEntityValueService intentClassificationEntityValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:64` this.intentClassificationEntityService = intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:65` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\intentclassification\IntentClassificationEntityWebController.java:66` this.intentClassificationEntityValueService = intentClassificationEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:53` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:54` private final NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:55` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:59` public NamedEntityWebController(EnumMapper enumMapper, NamedEntityService namedEntityService, BotService botService, NamedEntityValueService namedEntityValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:61` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:62` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\nlu\namedentity\NamedEntityWebController.java:63` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\recommend\RecommendWebController.java:36` private LearnRecommendService learnRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\recommend\RecommendWebController.java:37` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\recommend\RecommendWebController.java:43` public RecommendWebController (BotService botService, LearnRecommendService learnRecommendService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\recommend\RecommendWebController.java:44` this.learnRecommendService = learnRecommendService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\recommend\RecommendWebController.java:45` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsWebController.java:54` private AdditionalServiceJoinStatisticsService additionalServiceJoinStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsWebController.java:55` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsWebController.java:58` public AdditionalServiceJoinStatisticsWebController(EnumMapper enumMapper, BotService botService, AdditionalServiceJoinStatisticsService additionalServiceJoinStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsWebController.java:60` this.additionalServiceJoinStatisticsService = additionalServiceJoinStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsWebController.java:61` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\answerLink\AnswerLinkStatisticsWebController.java:48` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\answerLink\AnswerLinkStatisticsWebController.java:49` private AnswerLinkStatisticsService answerLinkStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\answerLink\AnswerLinkStatisticsWebController.java:53` public AnswerLinkStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\answerLink\AnswerLinkStatisticsWebController.java:54` AnswerLinkStatisticsService answerLinkStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\answerLink\AnswerLinkStatisticsWebController.java:56` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\answerLink\AnswerLinkStatisticsWebController.java:57` this.answerLinkStatisticsService = answerLinkStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:54` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:55` private final ApiStatisticsService apiStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:56` private final RedisService redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:59` public ApiStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:60` ApiStatisticsService apiStatisticsService, RedisService redisService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:62` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:63` this.apiStatisticsService = apiStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\api\ApiStatisticsWebController.java:64` this.redisService = redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:66` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:67` private final DialogStatisticsService dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:68` private final CmsToCmsRestService cmsToCmsRestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:72` public DialogStatisticsWebController( EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:73` DialogStatisticsService dialogStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:74` CmsToCmsRestService cmsToCmsRestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:77` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:78` this.dialogStatisticsService = dialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\dialog\DialogStatisticsWebController.java:79` this.cmsToCmsRestService = cmsToCmsRestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\ByTaskWebController.java:28` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\ByTaskWebController.java:29` private ScenarioStatusHistoryService scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\ByTaskWebController.java:33` public ByTaskWebController(BotService botService, ScenarioStatusHistoryService scenarioStatusHistoryService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\ByTaskWebController.java:34` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\ByTaskWebController.java:35` this.scenarioStatusHistoryService = scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:39` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:40` private IBScenarioSituationService scenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:42` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:47` public IbScenarioSituationWebController(BotService botService, IBScenarioSituationService scenarioSituationService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:48` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:49` this.scenarioSituationService = scenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\IbScenarioSituationWebController.java:50` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\SearchLogNameWebController.java:27` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\SearchLogNameWebController.java:28` private ScenarioStatusHistoryService scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\SearchLogNameWebController.java:32` public SearchLogNameWebController(BotService botService, ScenarioStatusHistoryService scenarioStatusHistoryService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\SearchLogNameWebController.java:33` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\ibstatistics\SearchLogNameWebController.java:34` this.scenarioStatusHistoryService = scenarioStatusHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\knowledge\KnowledgeStatisticsWebController.java:51` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\knowledge\KnowledgeStatisticsWebController.java:52` private KnowledgeStatisticsService knowledgeStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\knowledge\KnowledgeStatisticsWebController.java:57` public KnowledgeStatisticsWebController(EnumMapper enumMapper, BotService botService, KnowledgeStatisticsService knowledgeStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\knowledge\KnowledgeStatisticsWebController.java:59` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\knowledge\KnowledgeStatisticsWebController.java:60` this.knowledgeStatisticsService = knowledgeStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\payment\PaymentStatisticsWebController.java:54` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\payment\PaymentStatisticsWebController.java:55` private PaymentStatisticsService paymentStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\payment\PaymentStatisticsWebController.java:58` public PaymentStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\payment\PaymentStatisticsWebController.java:59` PaymentStatisticsService paymentStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\payment\PaymentStatisticsWebController.java:61` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\payment\PaymentStatisticsWebController.java:62` this.paymentStatisticsService = paymentStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\satisfaction\SatisfactionStatisticsWebController.java:47` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\satisfaction\SatisfactionStatisticsWebController.java:48` private SatisfactionStatisticsService satisfactionStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\satisfaction\SatisfactionStatisticsWebController.java:51` public SatisfactionStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\satisfaction\SatisfactionStatisticsWebController.java:52` SatisfactionStatisticsService satisfactionStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\satisfaction\SatisfactionStatisticsWebController.java:54` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\satisfaction\SatisfactionStatisticsWebController.java:55` this.satisfactionStatisticsService = satisfactionStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:54` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:55` private final ScenarioStatisticsService scenarioStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:56` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:57` private final RedisService redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:60` public ScenarioStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:61` ScenarioStatisticsService scenarioStatisticsService, IntentService intentService,RedisService redisService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:63` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:64` this.scenarioStatisticsService = scenarioStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:65` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenario\ScenarioStatisticsWebController.java:66` this.redisService = redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenarioPattern\ScenarioPatternStatisticsWebController.java:35` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenarioPattern\ScenarioPatternStatisticsWebController.java:37` private ScenarioPatternStatisticsService scenarioPatternStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenarioPattern\ScenarioPatternStatisticsWebController.java:44` public ScenarioPatternStatisticsWebController(EnumMapper enumMapper, BotService botService, ScenarioPatternStatisticsService scenarioPatternStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenarioPattern\ScenarioPatternStatisticsWebController.java:45` this.scenarioPatternStatisticsService = scenarioPatternStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\scenarioPattern\ScenarioPatternStatisticsWebController.java:47` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\simple\SimpleStatisticsWebController.java:36` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\simple\SimpleStatisticsWebController.java:37` private SimpleStatisticsService simpleStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\simple\SimpleStatisticsWebController.java:42` public SimpleStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\simple\SimpleStatisticsWebController.java:43` SimpleStatisticsService simpleStatisticsService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\simple\SimpleStatisticsWebController.java:45` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\simple\SimpleStatisticsWebController.java:46` this.simpleStatisticsService = simpleStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:37` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:38` private ScenarioSituationService scenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:40` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:45` public ScenarioSituationWebController(BotService botService, ScenarioSituationService scenarioSituationService, ChatChannelService chatChannelService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:46` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:47` this.scenarioSituationService = scenarioSituationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\situation\ScenarioSituationWebController.java:49` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:46` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:47` private final SlotStatisticsService slotStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:48` private final RedisService redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:51` public SlotStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:52` SlotStatisticsService slotStatisticsService, RedisService redisService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:54` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:55` this.slotStatisticsService = slotStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\slot\SlotStatisticsWebController.java:56` this.redisService = redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\top10\Top10DialogStatisticsWebController.java:35` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\top10\Top10DialogStatisticsWebController.java:36` private Top10DialogStatisticsService top10DialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\top10\Top10DialogStatisticsWebController.java:42` public Top10DialogStatisticsWebController(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\top10\Top10DialogStatisticsWebController.java:43` Top10DialogStatisticsService top10DialogStatisticsService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\top10\Top10DialogStatisticsWebController.java:45` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\top10\Top10DialogStatisticsWebController.java:46` this.top10DialogStatisticsService = top10DialogStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:59` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:60` private final UserStatisticsService userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:61` private final RedisService redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:64` public UserStatisticsWebController(EnumMapper enumMapper, BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:65` UserStatisticsService userStatisticsService, RedisService redisService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:67` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:68` this.userStatisticsService = userStatisticsService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\statistics\user\UserStatisticsWebController.java:69` this.redisService = redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:40` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:41` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:42` private final TtsVoiceService ttsVoiceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:45` public TtsVoiceWebController(BotService botService, IntentService intentService, TtsVoiceService ttsVoiceService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:46` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:47` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\controller\web\tts\TtsVoiceWebController.java:48` this.ttsVoiceService = ttsVoiceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\channel\IntroRecommendToSlideConverter.java:19` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\channel\IntroRecommendToSlideConverter.java:21` public IntroRecommendToSlideConverter(String resourceLocation, IntentService intentService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\channel\IntroRecommendToSlideConverter.java:23` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\channel\StartRecommendConverter.java:19` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\channel\StartRecommendConverter.java:21` public StartRecommendConverter(String resourceLocation, IntentService intentService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\channel\StartRecommendConverter.java:23` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\knowledge\chatflow\ChatNodeConverter.java:154` ApiNodeService apiNodeService = BeanContext.get(ApiNodeService.class);
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\knowledge\chatflow\ChatNodeConverter.java:155` if (apiNodeService != null){
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:26` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:27` private ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:28` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:29` private ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:33` public EngineApiConverter(BotApiParameterService botApiParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:34` ApiNodeRequestService apiNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:35` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:36` ApiNodeResponseService apiNodeResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:39` this.botApiParameterService = botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:40` this.apiNodeRequestService = apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:41` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\EngineApiConverter.java:42` this.apiNodeResponseService = apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaConverter.java:20` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaConverter.java:21` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaConverter.java:25` public ApiMetaConverter(BotApiParameterService botApiParameterService, BotApiResponseService botApiResponseService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaConverter.java:26` this.botApiParameterService = botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaConverter.java:27` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaRequestConverter.java:15` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaRequestConverter.java:18` public ApiMetaRequestConverter(BotApiParameterService botApiParameterService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaRequestConverter.java:19` this.botApiParameterService = botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaResponseConverter.java:14` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaResponseConverter.java:16` public ApiMetaResponseConverter(BotApiResponseService botApiResponseService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\api\meta\ApiMetaResponseConverter.java:17` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\ChatDialogIntentConverter.java:13` private final IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\ChatDialogIntentConverter.java:15` public ChatDialogIntentConverter(IntentScheduleService intentScheduleService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\ChatDialogIntentConverter.java:16` this.intentScheduleService = intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:56` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:57` private BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:58` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:60` private ChatNodeSlideService chatNodeSlideService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:61` private QuickReplyService quickReplyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:62` private SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:63` private SplitNodeService splitNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:64` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:65` private SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:66` private ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:67` private ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:68` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:69` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:70` private ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:71` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:72` private ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:73` private DynamicViewService dynamicViewService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:74` private DynamicFormService dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:75` private SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:76` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:77` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:78` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:84` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:85` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:86` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:87` private MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:88` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:89` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:90` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:91` private ChatNodeSlotQuestionParamService slotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:92` private ChatNodeParamService chatNodeParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:93` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:94` private IntentSatisfactionService intentSatisfactionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:95` public EngineReplyConverter(Bot bot, IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:96` BubbleService bubbleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:97` ChatImageService chatImageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:98` BubbleButtonService bubbleButtonService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:99` ChatNodeSlideService chatNodeSlideService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:100` QuickReplyService quickReplyService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:101` SlotNodeService slotNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:102` SplitNodeService splitNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:103` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:104` SplitNodeConditionService splitNodeConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:105` ReturnNodeService returnNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:106` ReturnNodeRequestService returnNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:107` ApiNodeService apiNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:108` BotApiParameterService botApiParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:109` ApiNodeRequestService apiNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:110` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:111` ApiNodeResponseService apiNodeResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:112` DynamicViewService dynamicViewService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:113` DynamicFormService dynamicFormService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:114` SmsFormService smsFormService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:115` SmsFormValueService smsFormValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:116` SmsTemplateService smsTemplateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:117` SmsTemplateValueService smsTemplateValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:123` MultiSlotConditionService multiSlotConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:124` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:125` ConfirmSlotService confirmSlotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyConverter.java:126` MultiSlotQuestionService multiSlotQuestionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:32` private BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:33` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:37` private BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:39` public EngineReplyMessageConverter(BubbleButtonService bubbleButtonService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:40` ChatImageService chatImageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:43` BubbleTextParamService bubbleTextParamService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:44` this.bubbleButtonService = bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:45` this.chatImageService = chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplyMessageConverter.java:49` this.bubbleTextParamService = bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplySlideConverter.java:27` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplySlideConverter.java:31` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplySlideConverter.java:33` public EngineReplySlideConverter(ChatImageService chatImageService, String resourceLocation, List<Parameter> parameters, ChatNodeSlideParamService chatNodeSlideParamService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplySlideConverter.java:34` this.chatImageService = chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\EngineReplySlideConverter.java:38` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:21` private SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:22` private SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:23` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:26` SmsFormValueService smsFormValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:27` SmsTemplateService smsTemplateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:28` SmsTemplateValueService smsTemplateValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:30` this.smsFormValueService = smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:31` this.smsTemplateService = smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormConverter.java:32` this.smsTemplateValueService = smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormItemConverter.java:17` private SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormItemConverter.java:19` SmsTemplateValueService smsTemplateValueService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\basic\SMSFormItemConverter.java:21` this.smsTemplateValueService = smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:16` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:17` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:19` public MultiSlotConditionDetailEntityConverter(NamedEntityValueService namedEntityValueService, ParameterService parameterService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:20` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:21` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:18` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:19` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:20` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:23` public MultiSlotConditionEntityConverter(MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:25` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:26` ParameterService parameterService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:27` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:28` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotConditionEntityConverter.java:29` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotQuestionContentEntityConverter.java:19` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotQuestionContentEntityConverter.java:21` public MultiSlotQuestionContentEntityConverter(List<SlotNode> slotNodes, ParameterService parameterService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\MultiSlotQuestionContentEntityConverter.java:23` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:35` private final NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:37` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:38` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:40` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:41` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:42` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:43` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:44` private ChatNodeSlotQuestionParamService slotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:45` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:47` public SlotEntityConverter(Bot bot, NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:49` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:50` ChatImageService chatImageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:52` MultiSlotConditionService multiSlotConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:53` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:54` ConfirmSlotService confirmSlotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:55` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:56` ChatNodeSlotQuestionParamService slotQuestionParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:57` NamedEntityService namedEntityService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:59` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:61` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:62` this.chatImageService = chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:64` this.multiSlotConditionService = multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:65` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:66` this.confirmSlotService = confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:67` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:68` this.slotQuestionParamService = slotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotEntityConverter.java:69` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:23` private SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:24` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:26` private DynamicFormService dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:27` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:28` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:30` private MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:31` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:32` private ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:33` private MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:34` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:35` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:36` private ChatNodeSlotQuestionParamService slotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:37` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:40` SlotNodeService slotNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:41` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:43` DynamicFormService dynamicFormService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:44` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:45` ChatImageService chatImageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:47` MultiSlotConditionService multiSlotConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:48` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:49` ConfirmSlotService confirmSlotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:50` MultiSlotQuestionService multiSlotQuestionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:51` MultiSlotQuestionContentService multiSlotQuestionContentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:52` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:53` ChatNodeSlotQuestionParamService slotQuestionParamService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:54` NamedEntityService namedEntityService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:56` this.slotNodeService = slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:57` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:59` this.dynamicFormService = dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:60` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:61` this.chatImageService = chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:63` this.multiSlotConditionService = multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:64` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:65` this.confirmSlotService = confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:66` this.multiSlotQuestionService = multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:67` this.multiSlotQuestionContentService = multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:68` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:69` this.slotQuestionParamService = slotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotGroupConverter.java:70` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotItemConverter.java:18` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotItemConverter.java:19` private ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotItemConverter.java:23` public SlotItemConverter(NamedEntityValueService namedEntityValueService, ChatImageService chatImageService, String resourceLocation) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotItemConverter.java:24` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\slot\SlotItemConverter.java:25` this.chatImageService = chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitConditionConverter.java:23` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitConditionConverter.java:28` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitConditionConverter.java:32` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitEntityConverter.java:22` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitEntityConverter.java:23` private SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitEntityConverter.java:28` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitEntityConverter.java:29` SplitNodeConditionService splitNodeConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitEntityConverter.java:33` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\rive\split\SplitEntityConverter.java:34` this.splitNodeConditionService = splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\search\SearchRecommendConverter.java:11` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\search\SearchRecommendConverter.java:13` public SearchRecommendConverter(IntentService intentService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\converter\search\SearchRecommendConverter.java:14` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\entity\log\LampLogEntity.java:11` private String service = "PG084401";
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\entity\log\LampLogEntity.java:36` this.service = service;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:50` private MasterManageService masterManageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:51` private BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:52` private RedisService redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:67` public CmsFilter(MasterCache masterCache, EnumMapper enumMapper, MasterManageService masterManageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:68` BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:69` RedisService redisService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:72` this.masterManageService = masterManageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:73` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\filter\CmsFilter.java:74` this.redisService = redisService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\multi_tenancy\utils\EncryptionService.java:3` public interface EncryptionService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\multi_tenancy\utils\EncryptionServiceImpl.java:15` public class EncryptionServiceImpl implements EncryptionService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:52` private UserService userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:57` private final ManageTenantBotService manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:59` private MasterManageService masterManageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:106` private LdapService ldapService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:108` private AuthMenuService authMenuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:115` UserService userService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:120` LdapService ldapService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:122` MasterManageService masterManageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:123` ManageTenantBotService manageTenantBotService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:124` AuthMenuService authMenuService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:129` this.userService = userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:134` this.ldapService = ldapService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:136` this.masterManageService = masterManageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:137` this.manageTenantBotService = manageTenantBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:138` this.authMenuService = authMenuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\CustomAuthenticationProvider.java:204` //                    CaptchaManager capt = new CaptchaManager();
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationFailureHandler.java:23` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationFailureHandler.java:26` public LoginAuthenticationFailureHandler(LampLogger lampLogger, CmsMessageService cmsMessageService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationFailureHandler.java:28` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationSuccessHandler.java:30` private CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationSuccessHandler.java:31` private UserService userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationSuccessHandler.java:34` public LoginAuthenticationSuccessHandler(LampLogger lampLogger, CmsMessageService cmsMessageService, UserService userService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationSuccessHandler.java:36` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\security\LoginAuthenticationSuccessHandler.java:37` this.userService = userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\LdapService.java:7` public interface LdapService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\LdapServiceImpl.java:26` public class LdapServiceImpl implements LdapService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCacheCreateService.java:5` public interface BotCacheCreateService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCacheCreateServiceImpl.java:39` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCacheCreateServiceImpl.java:42` private final BotCacheService botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCacheCreateServiceImpl.java:46` public BotCacheCreateServiceImpl(BotService botService, MasterCache masterCache, BotCacheService botCacheService, EngineProperty engineProperty, RestTemplate restTemplate) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCacheCreateServiceImpl.java:47` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCacheCreateServiceImpl.java:49` this.botCacheService = botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCloneService.java:12` public interface BotCloneService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCloneServiceImpl.java:33` private final BotExportService botExportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCloneServiceImpl.java:34` private final BotImportService botImportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCloneServiceImpl.java:36` public BotCloneServiceImpl(RestTemplate restTemplate, BotExportService botExportService, BotImportService botImportService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCloneServiceImpl.java:38` this.botExportService = botExportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotCloneServiceImpl.java:39` this.botImportService = botImportService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportService.java:21` public interface BotExportService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:67` public class BotExportServiceImpl implements BotExportService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:71` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:72` private final BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:73` private final BotCodeGroupService botCodeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:74` private final CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:75` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:76` private final IntentClassificationEntityService intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:78` private final ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:79` private final ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:80` private final BotDictionaryService botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:81` private final SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:82` private final BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:84` private final TemplateService templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:85` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:86` private final FormDynamicService formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:87` private final ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:88` private final IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:90` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:91` private final ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:92` private final ChannelQuestionService channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:95` public BotExportServiceImpl(BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:96` BotScheduleService botScheduleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:97` BotCodeGroupService botCodeGroupService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:98` CategoryService categoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:99` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:100` IntentClassificationEntityService intentClassificationEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:102` ConfirmEntityService confirmEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:103` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:104` BotDictionaryService botDictionaryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:105` SmsTemplateService smsTemplateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:106` BotApiService botApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:108` TemplateService templateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:109` IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:110` FormDynamicService formDynamicService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:111` ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:112` IntroService introService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:114` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:115` ChannelPlatformService channelPlatformService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:116` ChannelQuestionService channelQuestionService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:117` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:118` this.botScheduleService = botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:119` this.botCodeGroupService = botCodeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:120` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:121` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:122` this.intentClassificationEntityService = intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:124` this.confirmEntityService = confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:125` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:126` this.botDictionaryService = botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:127` this.smsTemplateService = smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:128` this.botApiService = botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:130` this.templateService = templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:131` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:132` this.formDynamicService = formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:133` this.chatNodeService = chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:134` this.introService = introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:136` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:137` this.channelPlatformService = channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotExportServiceImpl.java:138` this.channelQuestionService = channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportService.java:11` public interface BotImportService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:83` public class BotImportServiceImpl implements BotImportService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:89` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:90` private final BotCacheService botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:91` private final SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:95` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:96` private final BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:97` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:99` private final UserService userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:100` private final ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:101` private final IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:102` private final CategoryService categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:103` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:104` private final IntentClassificationEntityService intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:106` private final BotDictionaryService botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:107` private final BotCodeGroupService botCodeGroupService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:108` private final BotCopyHistoryService botCopyHistoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:109` private final ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:110` private final SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:112` private final BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:113` private final TemplateService templateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:114` private final ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:115` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:118` private final FormDynamicService formDynamicService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:120` private final CheckChatNodeService checkChatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:127` BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:128` SolrService solrService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:129` CmsMessageService cmsMessageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:130` BotCacheService botCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:132` BotApiService botApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:135` IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:137` UserService userService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:138` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:139` IntroService introService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:140` CategoryService categoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:141` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:142` IntentClassificationEntityService intentClassificationEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:144` BotDictionaryService botDictionaryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:145` BotCodeGroupService botCodeGroupService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:146` BotCopyHistoryService botCopyHistoryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:147` ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:148` SmsTemplateService smsTemplateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:150` BotScheduleService botScheduleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:151` TemplateService templateService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:152` ConfirmEntityService confirmEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:153` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:156` FormDynamicService formDynamicService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:158` CheckChatNodeService checkChatNodeService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:161` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:162` this.solrService = solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:163` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:164` this.botCacheService = botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:166` this.botApiService = botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:169` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:171` this.userService = userService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:172` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:173` this.introService = introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:174` this.categoryService = categoryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:175` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:176` this.intentClassificationEntityService = intentClassificationEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\BotImportServiceImpl.java:178` this.botDictionaryService = botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningService.java:8` public interface LearningService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:58` public class LearningServiceImpl implements LearningService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:62` private final LearningInfoService learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:63` private final SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:64` private final SolrDeployService solrDeployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:65` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:66` private final RiveCacheService riveCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:69` private final DeployService deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:71` private final NeFunctionCacheService neFunctionCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:76` LearningInfoService learningInfoService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:77` SolrLearnService solrLearnService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:78` SolrDeployService solrDeployService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:79` BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:80` RiveCacheService riveCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:83` DeployService deployService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:85` NeFunctionCacheService neFunctionCacheService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:86` this.learningInfoService = learningInfoService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:87` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:88` this.solrDeployService = solrDeployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:89` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:90` this.riveCacheService = riveCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:93` this.deployService = deployService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\bot\LearningServiceImpl.java:95` this.neFunctionCacheService = neFunctionCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheService.java:10` public interface ChatCacheService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:67` public class ChatCacheServiceImpl implements ChatCacheService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:70` private final BotCacheService botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:71` private final EngineApiService engineApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:72` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:74` private final BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:75` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:76` private final ChannelCacheService channelCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:77` private final ChannelQuestionService channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:78` private final IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:79` private final BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:80` private final BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:81` private final ApiCacheService apiCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:82` private final IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:83` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:84` private final ChannelFallbackQuestionService channelFallbackQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:85` private final SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:92` BotCacheService botCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:93` EngineApiService engineApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:94` BotService botService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:96` BotScheduleService botScheduleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:97` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:98` ChannelCacheService channelCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:99` ChannelQuestionService channelQuestionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:100` IntentScheduleService intentScheduleService, BotApiParameterService botApiParameterService, BotApiResponseService botApiResponseService, ApiCacheService apiCacheService, IntroService introService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:101` IntentService intentService, ChannelFallbackQuestionService channelFallbackQuestionService, SolrLearnService solrLearnService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:102` this.botCacheService = botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:103` this.engineApiService = engineApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:104` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:106` this.botScheduleService = botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:107` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:108` this.channelCacheService = channelCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:109` this.channelQuestionService = channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:110` this.intentScheduleService = intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:111` this.botApiParameterService = botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:112` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:113` this.apiCacheService = apiCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:114` this.introService = introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:116` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:117` this.channelFallbackQuestionService = channelFallbackQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatCacheServiceImpl.java:118` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:50` private final ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:51` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:52` private final ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:53` private final BubbleService bubbleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:54` private final QuickReplyService quickReplyService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:55` private final ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:56` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:57` private final ChatNodeSlideService chatNodeSlideService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:58` private final SlotNodeService slotNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:59` private final SplitNodeConditionService splitNodeConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:60` private final BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:61` private final BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:62` private final BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:63` private final ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:64` private final ApiNodeRequestService apiNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:65` private final ApiNodeResponseService apiNodeResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:66` private final BubbleButtonService bubbleButtonService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:67` private final SplitNodeService splitNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:68` private final ChatImageService chatImageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:69` private final ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:70` private final ReturnNodeRequestService returnNodeRequestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:71` private final NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:72` private final SmsFormService smsFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:73` private final SmsFormValueService smsFormValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:74` private final SmsTemplateService smsTemplateService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:75` private final SmsTemplateValueService smsTemplateValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:76` private final DynamicViewService dynamicViewService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:77` private final DynamicFormService dynamicFormService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:78` private final IntentScheduleService intentScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:79` private final MultiSlotConditionService multiSlotConditionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:80` private final MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:81` private final ConfirmSlotService confirmSlotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:82` private final MultiSlotQuestionService multiSlotQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:83` private final MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:84` private final BubbleTextParamService bubbleTextParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:85` private final ChatNodeSlideParamService chatNodeSlideParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:86` private final ChatNodeSlotQuestionParamService slotQuestionParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:87` private final ChatNodeParamService chatNodeParamService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:88` private final IntentSatisfactionService intentSatisfactionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:95` public ChatflowGeneratorImpl(ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:96` IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:97` ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:98` BubbleService bubbleService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:99` QuickReplyService quickReplyService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:100` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:101` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:102` ChatNodeSlideService chatNodeSlideService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:103` SlotNodeService slotNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:104` SplitNodeConditionService splitNodeConditionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:105` BotApiService botApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:106` BotApiParameterService botApiParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:107` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:108` ApiNodeService apiNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:109` ApiNodeRequestService apiNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:110` ApiNodeResponseService apiNodeResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:111` BubbleButtonService bubbleButtonService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:112` SplitNodeService splitNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:113` ChatImageService chatImageService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:114` ReturnNodeService returnNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorImpl.java:115` ReturnNodeRequestService returnNodeRequestService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeService.java:14` public interface CheckChatNodeService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:40` public class CheckChatNodeServiceImpl implements CheckChatNodeService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:43` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:44` private ChatNodeService chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:46` private ReturnNodeService returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:47` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:48` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:49` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:50` private ApiNodeService apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:51` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:53` public CheckChatNodeServiceImpl(IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:54` ChatNodeService chatNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:55` ReturnNodeService returnNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:56` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:57` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:58` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:59` ApiNodeService apiNodeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:60` BotApiService botApiService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:61` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:62` this.chatNodeService = chatNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:63` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:64` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:65` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:66` this.apiNodeService = apiNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:67` this.botApiService = botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\CheckChatNodeServiceImpl.java:68` this.returnNodeService = returnNodeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\EngineApiService.java:7` public interface EngineApiService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\chatflow\EngineApiServiceImpl.java:18` public class EngineApiServiceImpl implements EngineApiService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\common\CmsMessageService.java:3` public interface CmsMessageService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryService.java:8` public interface DDLNativeQueryService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:38` public class DDLNativeQueryServiceImpl implements DDLNativeQueryService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:40` private static final Logger log = LoggerFactory.getLogger(DDLNativeQueryServiceImpl.class);
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:55` private final CmsToCmsRestService cmsToCmsRestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:56` private final MenuService menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:61` public DDLNativeQueryServiceImpl(EntityManagerFactory emf, ChangeLogParser changeLogParser, CmsToCmsRestService cmsToCmsRestService,MenuService menuService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:64` this.cmsToCmsRestService = cmsToCmsRestService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:65` this.menuService = menuService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:78` executeNativeQuery(createUserSchemaQuery);
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:137` return getResultNativeQuery(query);
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:151` .forEach(this::executeNativeQuery);
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:216` private void executeNativeQuery(String query){
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:221` em.createNativeQuery(query).executeUpdate();
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:233` private List<String> getResultNativeQuery(String query){
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\DDLNativeQueryServiceImpl.java:239` result = em.createNativeQuery(query).getResultList();
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\MasterManageService.java:8` public interface MasterManageService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\MasterManageServiceImpl.java:32` public class MasterManageServiceImpl implements MasterManageService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\MasterManageServiceImpl.java:39` private TenantAccessRightService tenantAccessRightService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\MasterManageServiceImpl.java:46` TenantAccessRightService tenantAccessRightService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\multi_tenantcy\MasterManageServiceImpl.java:50` this.tenantAccessRightService = tenantAccessRightService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\CmsToCmsRestService.java:8` public interface CmsToCmsRestService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationService.java:15` public interface ConfirmVerificationService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationServiceImpl.java:46` public class ConfirmVerificationServiceImpl implements ConfirmVerificationService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationServiceImpl.java:50` private final SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationServiceImpl.java:51` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationServiceImpl.java:55` public ConfirmVerificationServiceImpl(SolrService solrService, BotService botService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationServiceImpl.java:57` this.solrService = solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\ConfirmVerificationServiceImpl.java:58` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationService.java:15` public interface VerificationService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:49` public class VerificationServiceImpl implements VerificationService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:52` private final CmsMessageService cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:53` private final SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:54` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:55` private final NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:56` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:65` public VerificationServiceImpl(CmsMessageService cmsMessageService, SolrService solrService, BotService botService, NamedEntityService namedEntityService, IntentService intentService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:66` this.cmsMessageService = cmsMessageService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:67` this.solrService = solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:68` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:69` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\rest\knowledge\verification\VerificationServiceImpl.java:70` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployService.java:6` public interface SolrDeployService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployServiceImpl.java:14` public class SolrDeployServiceImpl implements SolrDeployService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployServiceImpl.java:18` private final SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployServiceImpl.java:21` public SolrDeployServiceImpl(SolrService solrService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrDeployServiceImpl.java:22` this.solrService = solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnService.java:16` public interface SolrLearnService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:45` public class SolrLearnServiceImpl implements SolrLearnService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:48` private SolrService solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:49` private SentenceService sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:50` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:51` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:52` private BotDictionaryService botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:53` private SentenceNerService sentenceNerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:54` private ConfirmEntityService confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:55` private IntentClassificationEntityService intentClassificationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:56` private IntentClassificationEntityValueService intentClassificationValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:57` private IntentClassificationEntityValueTagService intentClassificationValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:70` public SolrLearnServiceImpl(SolrService solrService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:71` SentenceService sentenceService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:72` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:73` BotDictionaryService botDictionaryService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:74` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:75` SentenceNerService sentenceNerService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:76` ConfirmEntityService confirmEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:77` IntentClassificationEntityService intentClassificationService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:78` IntentClassificationEntityValueService intentClassificationValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:79` IntentClassificationEntityValueTagService intentClassificationValueTagService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:80` this.solrService = solrService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:81` this.sentenceService = sentenceService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:82` this.namedEntityService = namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:83` this.botDictionaryService = botDictionaryService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:84` this.namedEntityValueService = namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:85` this.sentenceNerService = sentenceNerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:86` this.confirmEntityService = confirmEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:87` this.intentClassificationService = intentClassificationService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:88` this.intentClassificationValueService = intentClassificationValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:89` this.intentClassificationValueTagService = intentClassificationValueTagService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\solr\SolrLearnServiceImpl.java:276` log.info("Completed, Learning Department Data(from Service Server)");
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceService.java:17` public interface TtsVoiceService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:46` public class TtsVoiceServiceImpl implements TtsVoiceService {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:49` private final BotService botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:50` private final IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:62` public TtsVoiceServiceImpl(BotService botService, IntentService intentService, TtsUrlProperty ttsUrlProperty){
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:63` this.botService = botService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:64` this.intentService = intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:327` //Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:328` //conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like  Gecko) Chrome/65.0.3325.181 Safari/537.36");
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\services\tts\TtsVoiceServiceImpl.java:515` //jsonObj.put("appDomain", "escms.kt-aicc.com");		//Application 이름 + '.' + Domain 코드 예. "mc.None"
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:106` private SolrLearnService solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:107` private BotCacheService botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:108` private RiveCacheService riveCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:109` private BotApiService botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:110` private ChatChannelService chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:111` private ChannelPlatformService channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:112` private ChannelCacheService channelCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:113` private BotApiParameterService botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:114` private BotApiResponseService botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:115` private ApiCacheService apiCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:117` private NoticeService noticeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:118` private NoticeChannelService noticeChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:119` private ParameterService parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:121` private IntroService introService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:122` private IntentService intentService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:123` private ChannelQuestionService channelQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:124` private ChannelFallbackQuestionService channelFallbackQuestionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:125` private BotScheduleService botScheduleService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:126` private VoiceBotService voiceBotService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:127` private CustomerService customerService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:129` private NeFunctionCacheService neFunctionCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:130` private NamedEntityService namedEntityService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:131` private NamedEntityValueService namedEntityValueService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:132` private NamedEntityValueFunctionService namedEntityValueFunctionService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:156` SolrLearnService solrLearnService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:157` BotCacheService botCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:158` RiveCacheService riveCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:159` BotApiService botApiService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:160` ChatChannelService chatChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:161` ChannelPlatformService channelPlatformService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:162` ChannelCacheService channelCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:163` BotApiParameterService botApiParameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:164` BotApiResponseService botApiResponseService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:165` ApiCacheService apiCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:167` NoticeService noticeService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:168` NoticeChannelService noticeChannelService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:169` ParameterService parameterService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:171` IntroService introService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:172` IntentService intentService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:173` ChannelQuestionService channelQuestionService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:174` ChannelFallbackQuestionService channelFallbackQuestionService,BotScheduleService botScheduleService, final String comment,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:177` VoiceBotService voiceBotService, CustomerService customerService, MasterCache masterCache,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:178` NeFunctionCacheService neFunctionCacheService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:179` NamedEntityService namedEntityService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:180` NamedEntityValueService namedEntityValueService,
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:181` NamedEntityValueFunctionService namedEntityValueFunctionService) {
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:184` this.solrLearnService = solrLearnService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:185` this.botCacheService = botCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:186` this.riveCacheService = riveCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:187` this.botApiService = botApiService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:188` this.chatChannelService = chatChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:189` this.channelPlatformService = channelPlatformService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:190` this.channelCacheService = channelCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:191` this.botApiParameterService = botApiParameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:192` this.botApiResponseService = botApiResponseService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:193` this.apiCacheService = apiCacheService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:195` this.noticeService = noticeService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:196` this.noticeChannelService = noticeChannelService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:197` this.parameterService = parameterService;
+- `cms\src\main\java\com\kt\aicc\ktbot\cms\utils\LearningProgressJob.java:199` this.introService = introService;
+- `cms\src\main\resources\application-dev.yml:27` #      location: /application/cms/meritz_data/upload_tmp
+- `cms\src\main\resources\application-dev.yml:61` dir: /application/cms/data/upload/rive
+- `cms\src\main\resources\application-dev.yml:63` dir: /application/cms/meritz_data/images
+- `cms\src\main\resources\application-dev.yml:90` base-path: /application/cms/data/bot
+- `cms\src\main\resources\application-dev.yml:91` rive-path: /application/cms/data/bot/rive
+- `cms\src\main\resources\application-prod.yml:27` #      location: /application/cms/meritz_data/upload_tmp
+- `cms\src\main\resources\application-prod.yml:61` dir: /application/cms/data/upload/rive
+- `cms\src\main\resources\application-prod.yml:63` dir: /application/cms/meritz_data/images
+- `cms\src\main\resources\application-prod.yml:90` base-path: /application/cms/data/bot
+- `cms\src\main\resources\application-prod.yml:91` rive-path: /application/cms/data/bot/rive
+- `cms\src\main\resources\application-tb.yml:60` dir: /application/cms/data/upload/rive
+- `cms\src\main\resources\application-tb.yml:62` dir: /application/cms/meritz_data/images
+- `cms\src\main\resources\application-tb.yml:89` base-path: /application/cms/data/bot
+- `cms\src\main\resources\application-tb.yml:90` rive-path: /application/cms/data/bot/rive
+- `cms\src\main\resources\application-tc.yml:60` dir: /application/cms/data/upload/rive
+- `cms\src\main\resources\application-tc.yml:62` dir: /application/cms/meritz_data/images
+- `cms\src\main\resources\application-tc.yml:89` base-path: /application/cms/data/bot
+- `cms\src\main\resources\application-tc.yml:90` rive-path: /application/cms/data/bot/rive
+- `cms\src\main\resources\logging-dev-config.xml:4` <property name="LOG_DIR" value="/logs/cms/ecms_cms11"/>
+- `cms\src\main\resources\logging-prod-config.xml:4` <property name="LOG_DIR" value="/logs/cms"/>
+- `cms\src\main\resources\logging-tb-config.xml:4` <property name="LOG_DIR" value="/logs/cms/ecms_cms11"/>
+- `cms\src\main\resources\logging-tc-config.xml:4` <property name="LOG_DIR" value="/logs/cms"/>
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\ProfileTest.java:14` //    XroshotMessageService xroshotMessageService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\RedisServiceTest.java:15` RedisService redisService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\SolrTest.java:44` SolrService solrService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\SolrTest.java:47` SolrLearnService solrLearnService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\SolrTest.java:53` NamedEntityService namedEntityService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\repositories\SentenceRepositoryTest.java:24` SentenceService sentenceService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\repositories\SentenceRepositoryTest.java:27` IntentService intentService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\CategoryServiceTest.java:21` CategoryService categoryService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\CategoryServiceTest.java:24` BotService botService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\ChannelServiceTest.java:23` ChatChannelService chatChannelService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\ChannelServiceTest.java:25` BotService botService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\CmsMessageTest.java:18` CmsMessageService cmsMessageService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\IntentServiceTest.java:24` IntentService intentService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\IntentServiceTest.java:27` BotService botService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\MasterRestServiceTest.java:42` httpHeaders.set("User-Agent", " Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36");
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\bot\ImportTest.java:33` CodeService codeService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\bot\ImportTest.java:62` //        String contentType = "json/application";
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\cache\ChannelCacheServiceTest.java:22` ChannelCacheService channelCacheService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorTest.java:28` BotService botService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatflowGeneratorTest.java:31` SplitNodeService splitNodeService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatNodeServiceTest.java:25` IntentService intentService;
+- `cms\src\test\java\com\kt\aicc\ktbot\cms\services\chatflow\ChatNodeServiceTest.java:28` BotService botService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\entity\history\DetailChatHistory.java:27` private String service = "CO007701";
+- `common\src\main\java\com\kt\aicc\ktbot\common\entity\history\DetailChatHistory.java:112` this.service = service;
+- `common\src\main\java\com\kt\aicc\ktbot\common\entity\log\EngineLampLogEntity.java:30` this.service = service;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\AdapterApiService.java:7` public interface AdapterApiService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\AdapterApiServiceImpl.java:21` public class AdapterApiServiceImpl implements AdapterApiService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\EsbApiService.java:8` public interface EsbApiService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\EsbApiServiceImpl.java:28` public class EsbApiServiceImpl implements EsbApiService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\EsbApiServiceImpl.java:33` // 기간계일 경우 필요 Service ID
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\ExternalApiService.java:13` public interface ExternalApiService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\ExternalApiServiceImpl.java:22` public class ExternalApiServiceImpl implements ExternalApiService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\VoiceBotService.java:12` public interface VoiceBotService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\VoiceBotServiceImpl.java:23` public class VoiceBotServiceImpl implements VoiceBotService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\api\VoiceBotServiceImpl.java:79` log.error("Exception, during calling voiceBotService API");
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\BaseCacheServiceImpl.java:11` private RedisService redisService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\BaseCacheServiceImpl.java:15` public BaseCacheServiceImpl(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\BaseCacheServiceImpl.java:16` this.redisService = redisService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\api\ApiCacheService.java:13` public class ApiCacheService extends BaseCacheServiceImpl<ApiMeta> {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\api\ApiCacheService.java:15` private RedisService redisService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\api\ApiCacheService.java:17` public ApiCacheService(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\api\ApiCacheService.java:19` this.redisService = redisService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\bot\BotCacheService.java:9` public class BotCacheService extends BaseCacheServiceImpl<BotCache> {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\bot\BotCacheService.java:11` public BotCacheService(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\bot\ChannelCacheService.java:9` public class ChannelCacheService extends BaseCacheServiceImpl<ChannelCache> {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\bot\ChannelCacheService.java:13` public ChannelCacheService(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\neFunction\NeFunctionCacheService.java:11` public class NeFunctionCacheService extends BaseCacheServiceImpl<NeFunctionCache> {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\neFunction\NeFunctionCacheService.java:12` public NeFunctionCacheService(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\rive\RiveCacheService.java:10` public class RiveCacheService extends BaseCacheServiceImpl<RiveCache> {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\cache\rive\RiveCacheService.java:11` public RiveCacheService(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\ApiHistoryLoggerImpl.java:29` private final EngineLampLoggingService lampLoggingService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\ApiHistoryLoggerImpl.java:31` public ApiHistoryLoggerImpl(EngineLampLoggingService lampLoggingService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\ApiHistoryLoggerImpl.java:32` this.lampLoggingService = lampLoggingService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\EngineLampLoggingService.java:25` public class EngineLampLoggingService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\LoggingService.java:48` private EngineLampLoggingService lampLoggingService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\LoggingService.java:51` public LoggingService(HostConfig hostConfig, EngineLampLoggingService lampLoggingService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\logging\LoggingService.java:53` this.lampLoggingService = lampLoggingService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\message\XroshotMessageService.java:7` public interface XroshotMessageService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\message\XroshotMessageServiceImpl.java:25` public class XroshotMessageServiceImpl implements XroshotMessageService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\monitoring\DiagnosisService.java:8` public interface DiagnosisService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\monitoring\DiagnosisServiceImpl.java:19` public class DiagnosisServiceImpl implements DiagnosisService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\redis\RedisService.java:10` public interface RedisService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\redis\RedisServiceImpl.java:12` public class RedisServiceImpl implements RedisService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\session\ChatSessionService.java:6` public interface ChatSessionService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\session\ChatSessionServiceImpl.java:12` public class ChatSessionServiceImpl implements ChatSessionService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\session\ChatSessionServiceImpl.java:13` private final RedisService redisService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\session\ChatSessionServiceImpl.java:19` public ChatSessionServiceImpl(RedisService redisService) {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\session\ChatSessionServiceImpl.java:20` this.redisService = redisService;
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\solr\SolrService.java:10` public interface SolrService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\solr\SolrServiceImpl.java:48` public class SolrServiceImpl implements SolrService {
+- `common\src\main\java\com\kt\aicc\ktbot\common\services\solr\SolrServiceImpl.java:1838` case NATIVE_KOR_NUM_WITH_STR:
+- `common\src\main\java\com\kt\aicc\ktbot\common\type\nlp\ApiContentType.java:50` MULTIPART_ALTERNATIVE("multipart/alternative"),
+- `common\src\main\java\com\kt\aicc\ktbot\common\type\solr\NumberNeType.java:8` NATIVE_KOR_NUM_WITH_STR("(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)\\s*(요|이요)?"),
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\bot\BotAgent.java:18` private RiveCacheService riveCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\bot\BotAgent.java:20` public BotAgent(RiveCacheService riveCacheService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\bot\BotAgent.java:21` this.riveCacheService = riveCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\DiagnosisController.java:21` private DiagnosisService monitoringService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\DiagnosisController.java:23` public DiagnosisController(RestTemplate restTemplate, DiagnosisService monitoringService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\DiagnosisController.java:25` this.monitoringService = monitoringService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineAutocompleteController.java:28` private ChatSessionService chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineAutocompleteController.java:29` private SolrService solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineAutocompleteController.java:31` public EngineAutocompleteController(ChatSessionService chatSessionService, SolrService solrService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineAutocompleteController.java:32` this.chatSessionService = chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineAutocompleteController.java:33` this.solrService = solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineChatController.java:21` private ChatService chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineChatController.java:25` public EngineChatController(ChatService chatService, MessageSource messageSource) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineChatController.java:26` this.chatService = chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDeployController.java:18` private ChatService chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDeployController.java:20` public EngineDeployController(ChatService chatService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDeployController.java:21` this.chatService = chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDialogConfigController.java:20` private ChatService chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDialogConfigController.java:22` public EngineDialogConfigController(ChatService chatService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineDialogConfigController.java:23` this.chatService = chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineExamineController.java:23` private ChatService chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineExamineController.java:25` public EngineExamineController(ChatService chatService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineExamineController.java:26` this.chatService = chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineReviewController.java:29` private CmsApiService cmsApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineReviewController.java:30` private ChatSessionService chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineReviewController.java:33` public EngineReviewController(CmsApiService cmsApiService, ChatSessionService chatSessionService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineReviewController.java:34` this.cmsApiService = cmsApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineReviewController.java:35` this.chatSessionService = chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:46` private ChatSessionService chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:47` private BotCacheService botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:48` private SolrService solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:49` private ChatService chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:51` public EngineSearchController(ChatSessionService chatSessionService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:52` BotCacheService botCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:53` SolrService solrService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:54` ChatService chatService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:55` this.chatSessionService = chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:56` this.botCacheService = botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:57` this.solrService = solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\controllers\EngineSearchController.java:58` this.chatService = chatService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\converter\message\ReplyToTalkResponseConverter.java:47` private ApiCacheService apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\converter\message\ReplyToTalkResponseConverter.java:50` private BotCacheService botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\converter\message\ReplyToTalkResponseConverter.java:53` ApiCacheService apiCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\converter\message\ReplyToTalkResponseConverter.java:55` BotCacheService botCacheService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\converter\message\ReplyToTalkResponseConverter.java:57` this.apiCacheService = apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\converter\message\ReplyToTalkResponseConverter.java:59` this.botCacheService = botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatService.java:16` public interface ChatService {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:83` public class ChatServiceImpl implements ChatService {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:86` private BotCacheService botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:87` private RiveCacheService riveCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:88` private ChannelCacheService channelCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:89` private ChatSessionService chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:93` private SolrService solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:96` private LoggingService loggingService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:98` private NeFunctionCacheService neFunctionCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:99` private ApiCacheService apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:101` private VoiceBotService voiceBotService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:134` BotCacheService botCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:135` RiveCacheService riveCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:136` ChannelCacheService channelCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:137` ChatSessionService chatSessionService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:141` SolrService solrService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:144` LoggingService loggingService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:145` NeFunctionCacheService neFunctionCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:146` ApiCacheService apiCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:148` VoiceBotService voiceBotService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:150` this.botCacheService = botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:151` this.riveCacheService = riveCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:152` this.channelCacheService = channelCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:153` this.chatSessionService = chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:157` this.solrService = solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:160` this.loggingService = loggingService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:161` this.neFunctionCacheService = neFunctionCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:162` this.apiCacheService = apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ChatServiceImpl.java:164` this.voiceBotService = voiceBotService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\CmsApiService.java:7` public interface CmsApiService {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\CmsApiServiceImpl.java:16` public class CmsApiServiceImpl implements CmsApiService {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:86` private BotCacheService botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:87` private ChannelCacheService channelCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:89` private ApiCacheService apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:90` private SolrService solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:96` private ChatSessionService chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:98` private XroshotMessageService xroshotMessageService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:99` private LoggingService loggingService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:101` public EngineChatFacadeImpl(BotCacheService botCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:102` ChannelCacheService channelCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:104` ApiCacheService apiCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:105` SolrService solrService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:110` ChatSessionService chatSessionService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:111` XroshotMessageService xroshotMessageService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:112` LoggingService loggingService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:113` this.botCacheService = botCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:114` this.channelCacheService = channelCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:116` this.apiCacheService = apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:117` this.solrService = solrService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:125` this.chatSessionService = chatSessionService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:126` this.xroshotMessageService = xroshotMessageService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:127` this.loggingService = loggingService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineChatFacadeImpl.java:775` log.info("botCacheService BotName, botCacheService.get(session.getBotCode()).getName()={}", botCacheService.get(session.getBotCode()).getName());
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineLoggerImpl.java:49` private final AdapterApiService adapterApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineLoggerImpl.java:53` public EngineLoggerImpl(AdapterApiService adapterApiService, HostConfig hostConfig) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\EngineLoggerImpl.java:54` this.adapterApiService = adapterApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ScenarioHistoryLoggerImpl.java:31` private final EngineLampLoggingService lampLoggingService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ScenarioHistoryLoggerImpl.java:33` public ScenarioHistoryLoggerImpl(EngineLampLoggingService lampLoggingService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\services\ScenarioHistoryLoggerImpl.java:34` this.lampLoggingService = lampLoggingService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:68` private ApiCacheService apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:69` private AdapterApiService adapterApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:71` private VoiceBotService voiceBotService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:72` private ExternalApiService externalApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:76` private final EsbApiService esbApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:79` private final CmsApiService cmsApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:82` ApiCacheService apiCacheService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:83` AdapterApiService adapterApiService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:84` VoiceBotService voiceBotService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:86` ExternalApiService externalApiService,
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:87` EsbApiService esbApiService, CmsApiService cmsApiService) {
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:90` this.apiCacheService = apiCacheService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:91` this.adapterApiService = adapterApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:93` this.voiceBotService = voiceBotService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:94` this.externalApiService = externalApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:95` this.esbApiService = esbApiService;
+- `engine\src\main\java\com\kt\aicc\ktbot\engine\utils\ObjectMacroUtils.java:96` this.cmsApiService = cmsApiService;
+- `engine\src\main\resources\logging-dev-config.xml:5` <property name="LOG_DIR" value="/logs/engine/ecms_ap11"/>
+- `engine\src\main\resources\logging-local-config.xml:5` <property name="LOG_DIR" value="/logs/engine"/>
+- `engine\src\main\resources\logging-prod-config.xml:4` <property name="LOG_DIR" value="/logs/engine"/>
+- `engine\src\main\resources\logging-tb-config.xml:5` <property name="LOG_DIR" value="/data/logs/ecms_ap11/engine.log"/>
+- `engine\src\main\resources\logging-tc-config.xml:4` <property name="LOG_DIR" value="/logs/engine"/>
+- `engine\src\main\resources-dev\logging-config.xml:5` <property name="LOG_DIR" value="/logs/engine/ecms_ap11"/>
+- `engine\src\main\resources-prod\logging-config.xml:5` <property name="LOG_DIR" value="/data/logs/ecms_ap11/engine.log"/>
+- `engine\src\test\java\com\kt\aicc\ktbot\engine\chat\AdapterApiServiceTest.java:23` AdapterApiService adapterApiService;
+- `engine\src\test\java\com\kt\aicc\ktbot\engine\chat\ChatSessionTest.java:19` ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:36` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:37` private EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:38` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:39` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:41` public AppController(UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:42` EngineService engineService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:43` ChannelCacheService channelCacheService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:44` GatewayLoggingService gatewayLoggingService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:45` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:46` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:47` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\AppController.java:48` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\DiagnosisController.java:20` private DiagnosisService monitoringService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\DiagnosisController.java:22` public DiagnosisController(RestTemplate restTemplate, DiagnosisService monitoringService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\DiagnosisController.java:24` this.monitoringService = monitoringService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:68` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:69` private SpectraService spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:70` private RcsService rcsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:71` private FacebookService facebookService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:72` private ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:73` private EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:74` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:75` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:76` private FacebookAsyncService facebookAsyncService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:77` private GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:78` private ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:80` public ErmsController(UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:81` SpectraService spectraService, RcsService rcsService, FacebookService facebookService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:82` ErmsService ermsService, GatewayLoggingService gatewayLoggingService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:83` ChannelCacheService channelCacheService, FacebookAsyncService facebookAsyncService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:84` EngineService engineService, GatewayService gatewayService, ChannelService channelService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:85` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:86` this.spectraService = spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:87` this.rcsService = rcsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:88` this.facebookService = facebookService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:89` this.ermsService = ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:90` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:91` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:92` this.facebookAsyncService = facebookAsyncService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:93` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:94` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\ErmsController.java:95` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:45` private FacebookService facebookService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:46` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:47` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:48` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:50` public FacebookController(FacebookService facebookService, ChannelCacheService channelCacheService, GatewayLoggingService gatewayLoggingService, UserSessionService userSessionService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:51` this.facebookService = facebookService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:52` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:53` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\FacebookController.java:54` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:49` private EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:50` private SpectraService spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:51` private ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:52` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:53` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:54` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:55` private GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:56` private ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:71` public KakaoController(EngineService engineService, SpectraService spectraService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:72` UserSessionService userSessionService, ErmsService ermsService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:73` GatewayLoggingService gatewayLoggingService, ChannelCacheService channelCacheService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:74` GatewayService gatewayService, ChannelService channelService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:75` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:76` this.spectraService = spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:77` this.ermsService = ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:78` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:79` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:80` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:81` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\KakaoController.java:82` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:36` private EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:37` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:38` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:39` private FacebookService facebookService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:40` private RcsService rcsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:41` private ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:42` private SpectraService spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:43` private ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:45` public LoginController(EngineService engineService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:46` GatewayLoggingService gatewayLoggingService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:47` UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:48` FacebookService facebookService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:49` RcsService rcsService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:50` ErmsService ermsService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:51` SpectraService spectraService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:52` ChannelService channelService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:53` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:54` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:55` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:56` this.facebookService = facebookService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:57` this.rcsService = rcsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:58` this.ermsService = ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:59` this.spectraService = spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\LoginController.java:60` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\MessageArsController.java:25` private MessageArsService arsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\MessageArsController.java:28` public MessageArsController(MessageArsService arsService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\MessageArsController.java:29` this.arsService = arsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\RcsController.java:32` private RcsAccessService rcsAccessService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\RcsController.java:35` private RcsService rcsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\RcsController.java:37` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\RcsController.java:39` public RcsController(ChannelCacheService channelCacheService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\RcsController.java:40` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:40` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:41` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:42` private EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:43` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:45` public SessionController(UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:46` ChannelCacheService channelCacheService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:47` EngineService engineService, GatewayLoggingService gatewayLoggingService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:48` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:49` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:50` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SessionController.java:51` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SyncViewController.java:42` private SyncViewService syncViewService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SyncViewController.java:45` public SyncViewController(SyncViewService syncViewService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\SyncViewController.java:46` this.syncViewService = syncViewService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:60` private final RedisService redisService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:61` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:62` private final SpectraService spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:63` private final GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:64` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:69` public TestController(RedisService redisService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:70` ChannelCacheService channelCacheService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:71` SpectraService spectraService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:72` GatewayService gatewayService, UserSessionService userSessionService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:73` this.redisService = redisService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:74` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:75` this.spectraService = spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:76` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:77` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\TestController.java:652` public UserSessionService getUserSessionService() {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\VoiceController.java:24` private VoiceService voiceService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\VoiceController.java:27` public VoiceController(VoiceService voiceService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\VoiceController.java:28` this.voiceService = voiceService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:60` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:61` private EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:62` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:63` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:64` private ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:65` private BotCacheService botCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:66` private GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:68` public WebController(UserSessionService userSessionService, EngineService engineService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:69` ChannelCacheService channelCacheService, GatewayLoggingService gatewayLoggingService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:70` ErmsService ermsService, BotCacheService botCacheService, GatewayService gatewayService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:71` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:72` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:73` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:74` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:75` this.ermsService = ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:76` this.botCacheService = botCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\controller\WebController.java:77` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:47` private SpectraService spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:48` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:49` private ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:56` public SpectraMessageConverter(SpectraService spectraService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:57` UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:58` ChannelService channelService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:59` this.spectraService = spectraService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:60` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\kakao\SpectraMessageConverter.java:61` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\messageArs\MessageArsConverter.java:42` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\messageArs\MessageArsConverter.java:44` private ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\messageArs\MessageArsConverter.java:47` public MessageArsConverter(UserSessionService userSessionService, ChatSessionService chatSessionService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\messageArs\MessageArsConverter.java:48` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\messageArs\MessageArsConverter.java:49` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\syncview\SyncViewConverter.java:61` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\syncview\SyncViewConverter.java:63` private ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\syncview\SyncViewConverter.java:66` public SyncViewConverter(UserSessionService userSessionService, ChatSessionService chatSessionService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\syncview\SyncViewConverter.java:67` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\syncview\SyncViewConverter.java:68` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\voice\VoiceConverter.java:37` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\voice\VoiceConverter.java:39` private ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\voice\VoiceConverter.java:42` public VoiceConverter(UserSessionService userSessionService, ChatSessionService chatSessionService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\voice\VoiceConverter.java:43` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\converter\voice\VoiceConverter.java:44` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:45` private LoggingService loggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:46` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:47` private GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:52` public GatewayLoggingService(LoggingService loggingService, UserSessionService userSessionService, GatewayService gatewayService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:53` this.loggingService = loggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:54` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\GatewayLoggingService.java:55` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineService.java:9` public interface EngineService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:34` public class EngineServiceImpl implements EngineService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:36` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:37` private final GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:45` public EngineServiceImpl(UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:46` GatewayService gatewayService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:47` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\engine\EngineServiceImpl.java:48` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsService.java:6` public interface ErmsService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsServiceImpl.java:58` public class ErmsServiceImpl implements ErmsService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsServiceImpl.java:69` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsServiceImpl.java:70` private final GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsServiceImpl.java:73` public ErmsServiceImpl(UserSessionService userSessionService, GatewayService gatewayService, HostConfig hostConfig) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsServiceImpl.java:74` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\erms\ErmsServiceImpl.java:75` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncService.java:9` public interface FacebookAsyncService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:32` public class FacebookAsyncServiceImpl implements FacebookAsyncService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:47` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:48` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:49` private ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:51` public FacebookAsyncServiceImpl(GatewayLoggingService gatewayLoggingService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:52` UserSessionService userSessionService, ChannelService channelService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:53` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:54` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookAsyncServiceImpl.java:55` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookService.java:11` public interface FacebookService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:45` public class FacebookServiceImpl implements FacebookService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:48` private final EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:50` private final ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:52` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:54` private final FacebookAsyncService facebookAsyncService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:56` private final GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:58` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:60` private final ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:62` private final GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:79` public FacebookServiceImpl(UserSessionService userSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:80` EngineService engineService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:81` ErmsService ermsService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:82` FacebookAsyncService facebookAsyncService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:83` GatewayLoggingService gatewayLoggingService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:84` ChannelCacheService channelCacheService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:85` ChannelService channelService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:86` GatewayService gatewayService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:87` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:88` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:89` this.ermsService = ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:90` this.facebookAsyncService = facebookAsyncService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:91` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:92` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:93` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:94` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\facebook\FacebookServiceImpl.java:100` log.info("FacebookService receiveMessage(), sessionKey={}, transactionId={}, isStartKey={}", userSession.getId(), userSession.getTransactionId(), isStartKey);
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GatewayService.java:10` public interface GatewayService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:46` public class GetewayServiceImpl implements GatewayService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:58` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:59` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:64` public GetewayServiceImpl(ChannelCacheService channelCacheService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:65` UserSessionService userSessionService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:66` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\gateway\GetewayServiceImpl.java:67` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\kakao\SpectraService.java:12` public interface SpectraService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\kakao\SpectraServiceImpl.java:38` public class SpectraServiceImpl implements SpectraService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\kakao\SpectraServiceImpl.java:50` private GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsService.java:7` public interface MessageArsService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:43` public class MessageArsServiceImpl implements MessageArsService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:62` private final EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:64` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:66` private final ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:68` private final GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:70` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:77` public MessageArsServiceImpl(EngineService engineService, UserSessionService userSessionService, ChatSessionService chatSessionService, GatewayLoggingService gatewayLoggingService, ChannelCacheService channelCacheService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:78` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:79` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:80` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:81` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:82` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\messageArs\MessageArsServiceImpl.java:108` log.info("authService checkAndGetChannel succeed, channelCode: <REDACTED>
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsAccessService.java:11` public interface RcsAccessService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsAccessServiceImpl.java:70` private UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsAccessServiceImpl.java:71` private ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsAccessServiceImpl.java:73` public RcsAccessServiceImpl(UserSessionService userSessionService, ChannelService channelService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsAccessServiceImpl.java:74` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsAccessServiceImpl.java:75` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsService.java:12` public interface RcsService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:84` private final RcsAccessService rcsAccessService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:86` private final ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:88` private final EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:90` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:92` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:94` private final GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:96` private final ChannelService channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:98` private final GatewayService gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:100` public RcsServiceImpl(RcsAccessService rcsAccessService, ErmsService ermsService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:101` UserSessionService userSessionService, EngineService engineService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:102` ChannelCacheService channelCacheService, GatewayLoggingService gatewayLoggingService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:103` ChannelService channelService, GatewayService gatewayService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:104` this.rcsAccessService = rcsAccessService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:105` this.ermsService = ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:106` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:107` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:108` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:109` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:110` this.channelService = channelService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:111` this.gatewayService = gatewayService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:249` log.info("RccSendMessageServiceImpl.rcsCustomersTalkCallService call {} ", reqData);
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\rcs\RcsServiceImpl.java:452` //log.info("authService checkAndGetChannel succeed, channel: <REDACTED>
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelService.java:6` public interface ChannelService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelServiceImpl.java:17` public class ChannelServiceImpl implements ChannelService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelServiceImpl.java:21` private final RedisService redisService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelServiceImpl.java:22` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelServiceImpl.java:24` public ChannelServiceImpl(RedisService redisService, ChannelCacheService channelCacheService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelServiceImpl.java:25` this.redisService = redisService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\ChannelServiceImpl.java:26` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\SessionService.java:3` public interface SessionService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\SessionServiceImpl.java:12` public class SessionServiceImpl implements SessionService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionService.java:11` public interface UserSessionService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:26` public class UserSessionServiceImpl implements UserSessionService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:29` private RedisService redisService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:30` private SessionService sessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:31` private ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:32` private ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:33` private BotCacheService botCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:35` public UserSessionServiceImpl(RedisService redisService, SessionService sessionService, ChatSessionService chatSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:36` ChannelCacheService channelCacheService, BotCacheService botCacheService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:37` this.redisService = redisService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:38` this.sessionService = sessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:39` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:40` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\session\UserSessionServiceImpl.java:41` this.botCacheService = botCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewService.java:10` public interface SyncViewService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:64` public class SyncViewServiceImpl implements SyncViewService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:86` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:87` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:88` private final ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:89` private final GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:90` private final EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:93` public SyncViewServiceImpl(ChannelCacheService channelCacheService, UserSessionService userSessionService, ChatSessionService chatSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:94` GatewayLoggingService gatewayLoggingService, EngineService engineService) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:95` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:96` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:97` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:98` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\syncview\SyncViewServiceImpl.java:99` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceService.java:12` public interface VoiceService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:49` public class VoiceServiceImpl implements VoiceService {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:71` private final EngineService engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:73` private final UserSessionService userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:75` private final ChatSessionService chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:77` private final GatewayLoggingService gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:79` private final ChannelCacheService channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:84` public VoiceServiceImpl(EngineService engineService, UserSessionService userSessionService, ChatSessionService chatSessionService,
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:85` GatewayLoggingService gatewayLoggingService, ChannelCacheService channelCacheService, MessageSource messageSource) {
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:86` this.engineService = engineService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:87` this.userSessionService = userSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:88` this.chatSessionService = chatSessionService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:89` this.gatewayLoggingService = gatewayLoggingService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\services\voice\VoiceServiceImpl.java:90` this.channelCacheService = channelCacheService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\websocket\ChatWebSocketHandler.java:36` private ErmsService ermsService;
+- `gateway\src\main\java\com\kt\aicc\ktbot\gateway\websocket\ChatWebSocketHandler.java:38` private UserSessionService userSessionService;
+- `gateway\src\main\resources\logging-dev-config.xml:5` <property name="LOG_DIR" value="/logs/gateway/ecms_gw11"/>
+- `gateway\src\main\resources\logging-local-config.xml:5` <property name="LOG_DIR" value="/logs/gateway"/>
+- `gateway\src\main\resources\logging-prod-config.xml:5` <property name="LOG_DIR" value="/logs/gateway"/>
+- `gateway\src\main\resources\logging-tb-config.xml:5` <property name="LOG_DIR" value="/data/logs/ecms_gw11/gateway.log"/>
+- `gateway\src\main\resources\logging-tc-config.xml:5` <property name="LOG_DIR" value="/logs/gateway"/>
+- `gateway\src\main\resources-dev\logging-config.xml:5` <property name="LOG_DIR" value="/logs/gateway/ecms_gw11"/>
+- `gateway\src\main\resources-prod\logging-config.xml:5` <property name="LOG_DIR" value="/data/logs/ecms_gw11/gateway.log"/>
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:24` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:26` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:27` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:31` public BotCache(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:32` IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:33` ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:34` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:35` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\cache\BotCache.java:36` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\DiagnosisController.java:18` private DiagnosisService monitoringService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\DiagnosisController.java:20` public DiagnosisController(RestTemplate restTemplate, DiagnosisService monitoringService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\DiagnosisController.java:22` this.monitoringService = monitoringService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\TestVoiceSvcController.java:17` private VoiceBotService voiceBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\TestVoiceSvcController.java:20` public TestVoiceSvcController(VoiceBotService voiceBotService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\TestVoiceSvcController.java:21` this.voiceBotService = voiceBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:47` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:48` private BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:49` private CodeService codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:50` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:74` public B2bBotController(BotService botService, BotScheduleService botScheduleService, CodeService codeService, ChatCacheService chatCacheService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:75` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:76` this.botScheduleService = botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:77` this.codeService = codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:78` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:389` Boolean onService = (Boolean) param.get("onService");
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:390` if(onService == null) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:391` log.error("onService Info is not found");
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\B2bBotController.java:392` return new ResultEntity<>("1404", "onService Info is not found");
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:54` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:55` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:56` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:57` private IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:58` private ChannelPlatformService channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:59` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:62` public B2bChannelController(ChatChannelService chatChannelService, BotService botService, IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:63` IntroService introService, ChannelPlatformService channelPlatformService, ChatCacheService chatCacheService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:64` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:65` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:66` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:67` this.introService = introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:68` this.channelPlatformService = channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\bot\channel\B2bChannelController.java:69` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:32` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:33` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:34` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:37` public B2bChatNodeController(BotService botService, IntentService intentService, ChatNodeService chatNodeService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:38` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:39` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\chatnode\B2bChatNodeController.java:40` this.chatNodeService = chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:56` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:57` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:58` private IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:59` private SentenceService sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:60` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:63` public B2bIntentController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:64` IntentService intentsService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:65` IntentScheduleService intentScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:66` SentenceService sentenceService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:67` ChatCacheService chatCacheService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:68` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:69` this.intentService = intentsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:70` this.intentScheduleService = intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:71` this.sentenceService = sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:72` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\intent\B2bIntentController.java:219` this.onService = onService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:51` private ChatHistoryService chatHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:52` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:53` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:60` public B2bChatHistoryController(BotService botService, ChatHistoryService chatHistoryService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:61` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:62` this.chatHistoryService = chatHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bChatHistoryController.java:63` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bNoAnswerHistoryController.java:33` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bNoAnswerHistoryController.java:34` private NoAnswerHistoryService noAnswerHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bNoAnswerHistoryController.java:37` public B2bNoAnswerHistoryController(BotService botService, NoAnswerHistoryService noAnswerHistoryService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bNoAnswerHistoryController.java:38` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\logging\B2bNoAnswerHistoryController.java:39` this.noAnswerHistoryService = noAnswerHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:32` ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:33` BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:35` ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:37` public B2bParameterController(ParameterService parameterService, BotService botService, ChatCacheService chatCacheService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:38` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:39` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\parameter\B2bParameterController.java:41` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:42` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:43` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:44` private DialogStatisticsService dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:45` private UserStatisticsService userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:50` public B2bChannelStatisticsController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:51` ChatChannelService chatChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:52` DialogStatisticsService dialogStatisticsService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:53` UserStatisticsService userStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:54` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:55` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:56` this.dialogStatisticsService = dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\channel\B2bChannelStatisticsController.java:57` this.userStatisticsService = userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:39` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:40` private DialogStatisticsService dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:46` public B2bDialogStatisticsController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:47` DialogStatisticsService dialogStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:48` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\dialog\B2bDialogStatisticsController.java:49` this.dialogStatisticsService = dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:38` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:39` private Top10DialogStatisticsService top10DialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:45` public B2bTop10DialogStatisticsController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:46` Top10DialogStatisticsService top10DialogStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:47` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\top10\B2bTop10DialogStatisticsController.java:48` this.top10DialogStatisticsService = top10DialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:51` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:52` private UsageStatisticsService usageStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:55` public B2bUsageStatisticsController(UsageStatisticsService usageStatisticsService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:56` this.usageStatisticsService = usageStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\usage\B2bUsageStatisticsController.java:57` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\user\B2bUserStatisticsController.java:39` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\user\B2bUserStatisticsController.java:40` private UserStatisticsService userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\user\B2bUserStatisticsController.java:43` public B2bUserStatisticsController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\user\B2bUserStatisticsController.java:44` UserStatisticsService userStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\user\B2bUserStatisticsController.java:45` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\b2b\statistics\user\B2bUserStatisticsController.java:46` this.userStatisticsService = userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:51` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:52` private SatisfactionSurveyService satisfactionSurveyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:53` private UserStatisticsService userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:54` private DialogStatisticsService dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:55` private NoAnswerHistoryService noAnswerHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:58` public DashboardController(BotService botService, SatisfactionSurveyService satisfactionSurveyService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:59` UserStatisticsService userStatisticsService, DialogStatisticsService dialogStatisticsService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:60` NoAnswerHistoryService noAnswerHistoryService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:61` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:62` this.satisfactionSurveyService = satisfactionSurveyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:63` this.userStatisticsService = userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:64` this.dialogStatisticsService = dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\DashboardController.java:65` this.noAnswerHistoryService = noAnswerHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\additionalServiceCode\AdditionalServiceCodeController.java:30` private AdditionalProductService additionalProductService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\additionalServiceCode\AdditionalServiceCodeController.java:32` public AdditionalServiceCodeController(AdditionalProductService additionalProductService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\additionalServiceCode\AdditionalServiceCodeController.java:33` this.additionalProductService = additionalProductService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\categorybot\MasterCategoryBotController.java:37` private CategoryBotService categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\categorybot\MasterCategoryBotController.java:42` public MasterCategoryBotController(CategoryBotService categoryBotService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\categorybot\MasterCategoryBotController.java:43` this.categoryBotService = categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\customer\CustomerController.java:40` private CustomerService customerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\customer\CustomerController.java:41` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\customer\CustomerController.java:44` public CustomerController(CustomerService customerService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\customer\CustomerController.java:45` this.customerService = customerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\customer\CustomerController.java:46` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageAccessRightController.java:32` private ManageAccessRightService manageAccessRightService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageAccessRightController.java:36` public ManageAccessRightController(ManageAccessRightService manageAccessRightService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageAccessRightController.java:37` this.manageAccessRightService = manageAccessRightService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:36` private ManageBotService manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:37` private ManageAccessRightService manageAccessRightService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:39` private ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:40` private CategoryBotService categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:43` public ManageBotController(ManageBotService manageBotService, ManageAccessRightService manageAccessRightService, ManageTenantService manageTenantService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:44` CategoryBotService categoryBotService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:45` this.manageBotService = manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:46` this.manageAccessRightService = manageAccessRightService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:48` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageBotController.java:49` this.categoryBotService = categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelController.java:29` private ManageChannelService manageChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelController.java:30` private ManageVoiecBotService manageVoiecBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelController.java:33` public ManageChannelController(ManageChannelService manageChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelController.java:34` ManageVoiecBotService manageVoiecBotService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelController.java:35` this.manageChannelService = manageChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelController.java:36` this.manageVoiecBotService = manageVoiecBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelTemplateController.java:23` private final ManageChannelTemplateService manageChannelTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelTemplateController.java:26` public ManageChannelTemplateController(ManageChannelTemplateService manageChannelTemplateService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageChannelTemplateController.java:27` this.manageChannelTemplateService = manageChannelTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageMonitoringController.java:25` private MonitoringResponseService monitoringResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageMonitoringController.java:26` public ManageMonitoringController( MonitoringResponseService monitoringResponseService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageMonitoringController.java:28` this.monitoringResponseService = monitoringResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManagePremadeMappingController.java:31` private ManagePremadeMappingService managePremadeMappingService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManagePremadeMappingController.java:32` private ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManagePremadeMappingController.java:35` public ManagePremadeMappingController(ManagePremadeMappingService managePremadeMappingService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManagePremadeMappingController.java:36` ManageTenantService manageTenantService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManagePremadeMappingController.java:37` this.managePremadeMappingService = managePremadeMappingService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManagePremadeMappingController.java:38` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageSchemaController.java:39` private final ManageSchemaService manageSchemaService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageSchemaController.java:40` private final ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageSchemaController.java:44` public ManageSchemaController(ManageSchemaService manageSchemaService, ManageTenantService manageTenantService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageSchemaController.java:45` this.manageSchemaService = manageSchemaService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageSchemaController.java:46` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageTenantController.java:31` private final ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageTenantController.java:34` public ManageTenantController(ManageTenantService manageTenantService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageTenantController.java:35` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:35` private static ManageVoiecBotService manageVoiecBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:36` private static ManageChannelService manageChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:37` private static ManageBotService manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:38` private static ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:41` public ManageVoiceBotController(ManageVoiecBotService manageVoiecBotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:42` ManageChannelService manageChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:43` ManageBotService manageBotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:44` ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:45` this.manageVoiecBotService = manageVoiecBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:46` this.manageChannelService = manageChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:47` this.manageBotService = manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\manage\ManageVoiceBotController.java:48` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\permission\MenuPermissionController.java:32` private final MasterAuthMenuService masterAuthMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\permission\MenuPermissionController.java:34` private final MasterMenuService masterMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\permission\MenuPermissionController.java:37` public MenuPermissionController(MasterAuthMenuService masterAuthMenuService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\permission\MenuPermissionController.java:38` MasterMenuService masterMenuService
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\permission\MenuPermissionController.java:40` this.masterAuthMenuService = masterAuthMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\permission\MenuPermissionController.java:41` this.masterMenuService = masterMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:41` private MasterUserService masterUserService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:43` private MasterMenuService masterMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:45` private LdapService ldapService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:47` private XroshotMessageService xroshotMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:49` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:112` public UserController(MasterUserService masterUserService, MasterUserServiceTelOtp masterUserServiceTelOtp,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:113` MasterMenuService masterMenuService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:114` <REDACTED sensitive line>
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:116` XroshotMessageService xroshotMessageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:118` CmsMessageService cmsMessageService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:119` this.masterUserService = masterUserService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:121` this.masterMenuService = masterMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:123` this.ldapService = ldapService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:126` this.xroshotMessageService = xroshotMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\admin\user\UserController.java:128` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\batch\JobBatchLogController.java:49` private JobBatchLogService jobBatchLogService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\batch\JobBatchLogController.java:50` private CodeGroupService codeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\batch\JobBatchLogController.java:52` public JobBatchLogController(JobBatchLogService jobBatchLogService, CodeGroupService codeGroupService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\batch\JobBatchLogController.java:53` this.jobBatchLogService = jobBatchLogService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\batch\JobBatchLogController.java:54` this.codeGroupService = codeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:114` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:115` private SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:116` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:117` private LearningInfoService learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:118` private LearningService learningService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:120` private SolrLearnService solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:121` private BotCacheService botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:122` private RiveCacheService riveCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:124` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:125` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:126` private ChannelQuestionService channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:127` private ChannelPlatformService channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:128` private ChannelCacheService channelCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:129` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:130` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:131` private ApiCacheService apiCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:134` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:135` //    private PermissionService permissionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:136` private UserService userService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:137` //    private GroupService groupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:138` private NoticeService noticeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:139` private NoticeChannelService noticeChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:140` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:141` private IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:142` private DeployService deployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:143` private BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:144` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:145` private VoiceBotService voiceBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:146` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:147` private CustomerService customerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:163` BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:164` SolrService solrService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:165` CmsMessageService cmsMessageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:166` LearningInfoService learningInfoService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:167` LearningService learningService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:169` SolrLearnService solrLearnService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:170` BotCacheService botCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:171` RiveCacheService riveCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:173` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:174` ChatChannelService chatChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:175` ChannelQuestionService channelQuestionService, ChannelPlatformService channelPlatformService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:176` ChannelCacheService channelCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:177` BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:178` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:179` ApiCacheService apiCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:182` IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:183` //                         PermissionService permissionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:184` UserService userService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:185` //                         GroupService groupService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:186` NoticeService noticeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:187` NoticeChannelService noticeChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:188` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:189` IntroService introService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:190` DeployService deployService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:191` BotScheduleService botScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:192` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:193` VoiceBotService voiceBotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:194` ChatCacheService chatCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:195` CustomerService customerService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotController.java:197` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotExportImportController.java:25` private final BotExportService botExportService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotExportImportController.java:26` private final BotImportService botImportService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotExportImportController.java:28` public BotExportImportController(BotExportService botExportService, BotImportService botImportService, BotService service) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotExportImportController.java:29` this.botExportService = botExportService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotExportImportController.java:30` this.botImportService = botImportService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:28` private BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:29` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:30` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:34` BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:35` BotScheduleService botScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:36` ChatCacheService chatCacheService
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:38` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:39` this.botScheduleService = botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\BotScheduleController.java:40` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:75` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:76` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:77` private ChannelPlatformService channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:78` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:79` private IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:82` private ChannelQuestionService channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:85` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:86` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:90` public ChatChannelController(ChatChannelService chatChannelService, BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:91` ChannelPlatformService channelPlatformService, IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:92` IntroService introService, ChannelQuestionService channelQuestionService, ChatCacheService chatCacheService, CmsMessageService cmsMessageService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:93` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:94` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:95` this.channelPlatformService = channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:96` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:97` this.introService = introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:98` this.channelQuestionService = channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:103` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\channel\ChatChannelController.java:104` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\code\BotCodeController.java:38` private BotCodeGroupService botCodeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\code\BotCodeController.java:39` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\code\BotCodeController.java:42` public BotCodeController(BotCodeGroupService botCodeGroupService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\code\BotCodeController.java:43` this.botCodeGroupService = botCodeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\code\BotCodeController.java:44` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\dictionary\BotDictionaryController.java:51` private BotDictionaryService dictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\dictionary\BotDictionaryController.java:52` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\dictionary\BotDictionaryController.java:55` public BotDictionaryController(BotDictionaryService dictionaryService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\dictionary\BotDictionaryController.java:56` this.dictionaryService = dictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\dictionary\BotDictionaryController.java:57` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:57` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:58` private FormDynamicService formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:59` private FormDynamicValueService formDynamicValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:60` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:61` private DynamicFormService dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:62` private DynamicFormValueService dynamicFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:68` public FormDynamicController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:69` FormDynamicService formDynamicService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:70` FormDynamicValueService formDynamicValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:71` CmsMessageService cmsMessageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:72` DynamicFormService dynamicFormService, DynamicFormValueService dynamicFormValueService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:73` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:74` this.formDynamicService = formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:75` this.formDynamicValueService = formDynamicValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:76` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:77` this.dynamicFormService = dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\formdynamic\FormDynamicController.java:78` this.dynamicFormValueService = dynamicFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:68` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:69` private IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:70` private IntroRecommendService introRecommendService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:71` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:72` private IntroImageService introImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:79` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:82` public IntroController(BotService botService, IntroService introService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:83` IntroRecommendService introRecommendService, IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:84` IntroImageService introImageService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:85` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:86` this.introService = introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:87` this.introRecommendService = introRecommendService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:88` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:89` this.introImageService = introImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\intro\IntroController.java:95` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:59` private NoticeService noticeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:61` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:63` private NoticeChannelService noticeChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:65` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:69` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:72` public NoticeController(NoticeService noticeService, BotService botService, NoticeChannelService noticeChannelService, ChatChannelService chatChannelService, CmsMessageService cmsMessageService ) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:73` this.noticeService = noticeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:74` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:75` this.noticeChannelService = noticeChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:76` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\notice\NoticeController.java:78` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:60` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:61` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:62` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:64` private SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:65` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:69` public SmsTemplateController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:70` SmsTemplateService smsTemplateService, SmsTemplateValueService smsTemplateValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:71` SmsFormService smsFormService, SmsFormValueService smsFormValueService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:72` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:73` this.smsTemplateService = smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:74` this.smsTemplateValueService = smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:75` this.smsFormService = smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\smsform\SmsTemplateController.java:76` this.smsFormValueService = smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:57` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:58` private TemplateService templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:59` private TemplateValueService templateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:60` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:66` public TemplateController(BotService botService, TemplateService templateService, TemplateValueService templateValueService, CmsMessageService cmsMessageService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:67` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:68` this.templateService = templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:69` this.templateValueService = templateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\bot\template\TemplateController.java:70` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeController.java:26` private CodeService codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeController.java:29` public CodeController(CodeService codeService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeController.java:30` this.codeService = codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeGroupController.java:37` private CodeGroupService codeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeGroupController.java:38` private ManageBotService manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeGroupController.java:41` public CodeGroupController(CodeGroupService codeGroupService, ManageBotService manageBotService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeGroupController.java:42` this.codeGroupService = codeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\code\CodeGroupController.java:43` this.manageBotService = manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:152` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:153` private BotCacheService botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:154` private SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:157` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:158` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:159` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:160` private ChannelPlatformService channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:161` private ChannelQuestionService channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:162` private ChannelCacheService channelCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:163` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:164` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:165` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:166` //    private PermissionService permissionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:167` private UserService userService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:168` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:169` private IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:170` private IntroRecommendService introRecommendService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:172` private CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:173` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:174` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:175` private NamedEntityValueTagService namedEntityValueTagService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:176` private SentenceService sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:177` private SentenceNerService sentenceNerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:178` private IntentParameterService intentParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:179` private IntroImageService introImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:180` private BotDictionaryService botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:181` private FormDynamicService formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:182` private FormDynamicValueService formDynamicValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:183` private BotCodeGroupService botCodeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:184` private BotCopyHistoryService botCopyHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:185` private IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:187` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:188` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:189` private ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:190` private ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:191` private BubbleService bubbleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:192` private QuickReplyService quickReplyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:193` private ReturnNodeService returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:194` private ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:195` private ChatNodeSlideService chatNodeSlideService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:196` private SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:197` private SplitNodeService splitNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:198` private BubbleTextService bubbleTextService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:199` private BubbleTextParamService bubbleTextParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:200` private BubbleButtonService bubbleButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:201` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:202` private SlideButtonService slideButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:203` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:204` private SlotQuestionService slotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:205` private SlotOptionService slotOptionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:206` private SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:207` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:208` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:209` private BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:210` private SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:211` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:213` private MultiSlotQuestionService multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:214` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:215` private MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\BotCopyController.java:216` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:87` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:88` private SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:89` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:90` private SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:91` private BubbleTextParamService bubbleTextParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:92` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:93` private ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:94` private ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:95` private ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:96` private IntentParameterService intentParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:97` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:98` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:99` private NamedEntityValueTagService namedEntityValueTagService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:100` private SentenceNerService sentenceNerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:101` private SlotOptionService slotOptionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:102` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:103` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:104` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:105` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:106` private CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:107` private SentenceService sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:108` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:109` private IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:111` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:112` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:113` private BubbleService bubbleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:114` private QuickReplyService quickReplyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:115` private ReturnNodeService returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:116` private ChatNodeSlideService chatNodeSlideService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:117` private SplitNodeService splitNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:118` private BubbleTextService bubbleTextService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:119` private BubbleButtonService bubbleButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:120` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:121` private SlideButtonService slideButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:122` private SlotQuestionService slotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:124` private SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:125` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:127` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:128` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:130` private MultiSlotQuestionService multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:131` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:132` private MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:133` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:135` private ChatNodeParamService chatNodeParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:136` private DynamicViewService dynamicViewService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:137` private DynamicViewValueService dynamicViewValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:138` private TemplateService templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:139` private TemplateValueService templateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:141` private ConfirmEntityService confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:142` private ConfirmEntityValueService confirmEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:143` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:146` public DialogCopyController(IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:147` SplitNodeConditionService splitNodeConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:148` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:149` SlotNodeService slotNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:150` BubbleTextParamService bubbleTextParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:151` ChatNodeSlideParamService chatNodeSlideParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:152` ApiNodeRequestService apiNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:153` ApiNodeResponseService apiNodeResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\DialogCopyController.java:154` ReturnNodeRequestService returnNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:97` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:98` private SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:99` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:100` private SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:101` private ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:102` private BubbleTextParamService bubbleTextParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:103` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:104` private ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:105` private ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:106` private ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:107` private IntentParameterService intentParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:108` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:109` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:110` private SentenceNerService sentenceNerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:111` private SlotOptionService slotOptionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:112` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:113` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:114` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:115` private IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:116` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:117` private SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:118` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:119` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:120` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:121` private ChatNodeParamService chatNodeParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:122` private DynamicViewService dynamicViewService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:123` private DynamicViewValueService dynamicViewValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:124` private TemplateService templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:125` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:126` private final IntentClassificationEntityService intentClassificationEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:129` public PresetCopyController(IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:130` SplitNodeConditionService splitNodeConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:131` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:132` SlotNodeService slotNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:133` ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:134` BubbleTextParamService bubbleTextParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:135` ChatNodeSlideParamService chatNodeSlideParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:136` ApiNodeRequestService apiNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:137` ApiNodeResponseService apiNodeResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:138` ReturnNodeRequestService returnNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:139` IntentParameterService intentParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:140` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:141` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:142` SentenceNerService sentenceNerService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:143` SlotOptionService slotOptionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:144` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:145` BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:146` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:147` IntentScheduleService intentScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:148` ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:149` SmsFormService smsFormService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:150` SmsFormValueService smsFormValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:151` SmsTemplateService smsTemplateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:152` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:153` ChatNodeParamService chatNodeParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:154` DynamicViewService dynamicViewService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:155` DynamicViewValueService dynamicViewValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:156` TemplateService templateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:157` ConfirmSlotService confirmSlotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\copy\PresetCopyController.java:158` IntentClassificationEntityService intentClassificationEntityService
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\file\FileUploadRestController.java:44` private CodeService codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\file\FileUploadRestController.java:46` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\file\FileUploadRestController.java:48` public FileUploadRestController(CodeService codeService, ChatImageService chatImageService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\file\FileUploadRestController.java:49` this.codeService = codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\file\FileUploadRestController.java:50` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:70` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:72` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:74` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:75` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:78` public ApiController(BotService botService, BotApiService botApiService, ApiNodeService apiNodeService, EnumMapper enumMapper, CmsMessageService cmsMessageService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:79` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:80` this.botApiService = botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:81` this.apiNodeService = apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\api\ApiController.java:83` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:86` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:87` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:89` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:90` private BubbleService bubbleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:91` private BubbleTextService bubbleTextService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:92` private ChatNodeSlideService chatNodeSlideService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:93` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:94` private BubbleButtonService bubbleButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:95` private SlideButtonService slideButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:96` private ChipService chipService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:97` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:98` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:99` private ReturnNodeService returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:100` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:101` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:102` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:103` private ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:104` private ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:105` private ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:106` private IntentParameterService intentParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:107` private SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:108` private SlotQuestionService slotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:109` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:110` private SlotOptionService slotOptionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:111` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:112` private SplitNodeService splitNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:113` private SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:114` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:115` private BubbleTextParamService bubbleTextParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:116` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:117` private DynamicViewValueService dynamicViewValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:118` private DynamicViewService dynamicViewService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:119` private TemplateService templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:120` private TemplateValueService templateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:121` private ChatNodeHistoryService chatNodeHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:122` private QuickReplyService quickReplyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:124` private FormDynamicService formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:125` private FormDynamicValueService formDynamicValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:127` private DynamicFormService dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:128` private DynamicFormValueService dynamicFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:129` private SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:130` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:131` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:132` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:141` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:143` private MultiSlotQuestionService multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:144` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:145` private MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:146` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:147` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:148` private ConfirmEntityService confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:149` private ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:153` public ChatNodeController(BotService botService, IntentService intentService, ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:154` EnumMapper enumMapper, ChatChannelService chatChannelService, BubbleService bubbleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:155` BubbleTextService bubbleTextService, ChatNodeSlideService chatNodeSlideService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:156` ChatImageService chatImageService, BubbleButtonService bubbleButtonService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:157` SlideButtonService slideButtonService, ChipService chipService, ApiNodeService apiNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:158` ReturnNodeService returnNodeService, BotApiService botApiService, BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:159` ApiNodeRequestService apiNodeRequestService, BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ChatNodeController.java:160` ApiNodeResponseService apiNodeResponseService, ReturnNodeRequestService returnNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:48` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:49` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:51` private ReturnNodeService returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:52` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:53` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:54` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:55` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:56` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:58` public CheckStatusController(IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:59` ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:60` ReturnNodeService returnNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:61` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:62` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:63` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:64` ApiNodeService apiNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:65` BotApiService botApiService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:66` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:67` this.chatNodeService = chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:68` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:69` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:70` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:71` this.apiNodeService = apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:72` this.botApiService = botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\CheckStatusController.java:73` this.returnNodeService = returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:28` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:29` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:31` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:32` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:33` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:34` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:35` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:36` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:40` public ConnectionController(IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:41` ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:42` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:43` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:44` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:45` ApiNodeService apiNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:46` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:47` ReturnNodeService returnNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:48` ChatCacheService chatCacheService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:50` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:51` this.chatNodeService = chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:52` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:53` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:54` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:55` this.apiNodeService = apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:56` this.botApiService = botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\chatflow\ConnectionController.java:57` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:61` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:62` private ConfirmEntityService confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:63` private ConfirmEntityValueService confirmEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:64` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:65` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:66` private SolrLearnService solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:69` public ConfirmEntityController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:70` ConfirmEntityService confirmEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:71` ConfirmEntityValueService confirmEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:72` CmsMessageService cmsMessageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:73` SolrLearnService solrLearnService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:74` ConfirmSlotService confirmSlotService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:75` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:76` this.confirmEntityService = confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:77` this.confirmEntityValueService = confirmEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:78` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:79` this.solrLearnService = solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\confirmentity\ConfirmEntityController.java:80` this.confirmSlotService = confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:32` //    private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:33` //    private CmsCategoryBotService categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:34` //    private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:37` //    public DialogPresetController(IntentService intentService, CmsCategoryBotService categoryBotService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:38` //        this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:39` //        this.categoryBotService = categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:40` //        this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:168` //            log.error("Service Exception : {}", se.getMessage());
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\dialog\DialogPresetController.java:190` //            log.error("Service Exception : {}", se.getMessage());
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:74` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:75` private final NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:76` private final NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:77` private final NamedEntityValueTagService namedEntityValueTagService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:78` private final CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:79` private final SolrLearnService solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:81` public NamedEntityController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:82` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:83` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:84` NamedEntityValueTagService namedEntityValueTagService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:85` CmsMessageService cmsMessageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:86` SolrLearnService solrLearnService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:87` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:88` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:89` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:90` this.namedEntityValueTagService = namedEntityValueTagService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:91` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityController.java:92` this.solrLearnService = solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:31` //    private final NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:32` //    private final NamedEntityValueTagService namedEntityValueTagService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:33` //    private final CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:34` //    private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:36` //    public NamedEntityValueTagController(NamedEntityValueService namedEntityValueService, NamedEntityValueTagService namedEntityValueTagService, CmsMessageService cmsMessageService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:37` //        this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:38` //        this.namedEntityValueTagService = namedEntityValueTagService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:39` //        this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\namedentity\NamedEntityValueTagController.java:40` //        this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:41` ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:42` BubbleTextParamService bubbleTextParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:43` ChatNodeSlideParamService chatNodeSlideParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:44` IntentParameterService intentParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:45` ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:46` ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:47` ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:48` SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:49` BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:50` SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:51` CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:53` ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:54` ChatNodeParamService chatNodeParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:55` DynamicViewValueService dynamicViewValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:56` DynamicFormValueService dynamicFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:57` ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:59` public ParameterController(ParameterService parameterService, BotService botService, BubbleTextParamService bubbleTextParamService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:60` ChatNodeSlideParamService chatNodeSlideParamService, IntentParameterService intentParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:61` ReturnNodeRequestService returnNodeRequestService, ApiNodeRequestService apiNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:62` ApiNodeResponseService apiNodeResponseService, SplitNodeConditionService splitNodeConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:63` CmsMessageService cmsMessageService, SlotNodeService slotNodeService, ChatCacheService chatCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:64` ChatNodeParamService chatNodeParamService, DynamicViewValueService dynamicViewValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:65` DynamicFormValueService dynamicFormValueService, ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService ) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:66` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:67` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:68` this.bubbleTextParamService = bubbleTextParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:69` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:70` this.intentParameterService = intentParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:71` this.returnNodeRequestService = returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:72` this.apiNodeRequestService = apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:73` this.apiNodeResponseService = apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:74` this.splitNodeConditionService = splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:75` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:76` this.slotNodeService = slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:78` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:79` this.chatNodeParamService = chatNodeParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:80` this.dynamicViewValueService = dynamicViewValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:81` this.dynamicFormValueService = dynamicFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\parameter\ParameterController.java:82` this.chatNodeSlotQuestionParamService = chatNodeSlotQuestionParamService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:52` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:54` private SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:56` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:58` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:60` private VerificationService verificationService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:67` public VerificationController(BotService botService, SolrService solrService, IntentService intentService, NamedEntityService namedEntityService, VerificationService verificationService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:68` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:69` this.solrService = solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:70` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:71` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\knowledge\verification\VerificationController.java:72` this.verificationService = verificationService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatHistoryController.java:44` private ChatHistoryService chatHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatHistoryController.java:45` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatHistoryController.java:49` public ChatHistoryController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatHistoryController.java:50` ChatHistoryService chatHistoryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatHistoryController.java:52` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatHistoryController.java:53` this.chatHistoryService = chatHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatNodeHistoryController.java:31` private ChatNodeHistoryService chatNodeHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatNodeHistoryController.java:32` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatNodeHistoryController.java:35` public ChatNodeHistoryController(ChatNodeHistoryService chatNodeHistoryService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatNodeHistoryController.java:36` this.chatNodeHistoryService = chatNodeHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\ChatNodeHistoryController.java:37` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:49` private DeployService deployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:50` private LearningInfoService learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:51` private CodeService codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:52` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:53` private ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:54` private ManageDeployService manageDeployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:57` public DeployController(DeployService deployService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:58` BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:59` LearningInfoService learningInfoService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:60` CodeService codeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:61` ManageTenantService manageTenantService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:62` ManageDeployService manageDeployService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:63` this.deployService = deployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:64` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:65` this.codeService = codeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:66` this.learningInfoService = learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:67` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\DeployController.java:68` this.manageDeployService = manageDeployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\IntentHistoryController.java:30` private IntentHistoryService intentHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\IntentHistoryController.java:31` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\IntentHistoryController.java:34` public IntentHistoryController(IntentHistoryService intentHistoryService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\IntentHistoryController.java:35` this.intentHistoryService = intentHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\IntentHistoryController.java:36` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\LearningInfoController.java:31` private LearningInfoService learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\LearningInfoController.java:32` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\LearningInfoController.java:35` public LearningInfoController(LearningInfoService learningInfoService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\LearningInfoController.java:36` this.learningInfoService = learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\LearningInfoController.java:37` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\NoAnswerHistoryController.java:41` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\NoAnswerHistoryController.java:42` private NoAnswerHistoryService noAnswerHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\NoAnswerHistoryController.java:45` public NoAnswerHistoryController(BotService botService, NoAnswerHistoryService noAnswerHistoryService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\NoAnswerHistoryController.java:46` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\NoAnswerHistoryController.java:47` this.noAnswerHistoryService = noAnswerHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:49` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:50` private SatisfactionSurveyService satisfactionSurveyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:51` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:54` public SatisfactionHistoryController(BotService botService, SatisfactionSurveyService satisfactionSurveyService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:55` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:56` this.satisfactionSurveyService = satisfactionSurveyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\logging\SatisfactionHistoryController.java:57` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryBotController.java:49` //    private CategoryBotService categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryBotController.java:51` //    private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryBotController.java:54` //    public CategoryBotController(CategoryBotService categoryBotService, IntentService intentService ) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryBotController.java:55` //        this.categoryBotService = categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryBotController.java:56` //        this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:49` private CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:51` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:52` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:55` public CategoryController(CategoryService categoryService, BotService botService, IntentService intentService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:56` this.categoryService = categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:57` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\category\CategoryController.java:58` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:77` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:79` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:81` private SentenceService sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:83` private IntentHistoryService intentHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:85` private CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:87` private CategoryBotService categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:89` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:93` private CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:95` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:97` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:99` private SolrLearnService solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:101` private IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:103` private ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:105` private ChatCacheService chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:108` public IntentController(BotService botService, IntentService intentsService, SentenceService sentenceService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:109` IntentHistoryService intentHistoryService, CategoryService categoryService, NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:110` CategoryBotService categoryBotService, ReturnNodeServiceImpl returnNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:111` CmsMessageService cmsMessageService, ChatChannelService chatChannelService, ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:112` SolrLearnService solrLearnService, IntentScheduleService intentScheduleService, ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:113` ChatCacheService chatCacheService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:114` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:115` this.intentService = intentsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:116` this.sentenceService = sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:117` this.intentHistoryService = intentHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:118` this.categoryService = categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:119` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:120` this.categoryBotService = categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:121` this.returnNodeService = returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:122` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:123` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:124` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:125` this.solrLearnService = solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:126` this.intentScheduleService = intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:127` this.chatNodeService = chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\nlu\intent\IntentController.java:128` this.chatCacheService = chatCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:43` private LearnRecommendService learnRecommendService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:44` private CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:45` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:46` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:49` public RecommendController(LearnRecommendService learnRecommendService, BotService botService, IntentService intentService, CategoryService categoryService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:50` this.learnRecommendService = learnRecommendService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:51` this.categoryService = categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:52` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\recommend\RecommendController.java:53` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\satisfaction\SatisfactionSurveyController.java:40` private SatisfactionSurveyService satisfactionSurveyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\satisfaction\SatisfactionSurveyController.java:41` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\satisfaction\SatisfactionSurveyController.java:44` public SatisfactionSurveyController(SatisfactionSurveyService satisfactionSurveyService, IntentService intentService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\satisfaction\SatisfactionSurveyController.java:45` this.satisfactionSurveyService = satisfactionSurveyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\satisfaction\SatisfactionSurveyController.java:46` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:48` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:49` private AdditionalServiceJoinStatisticsService additionalServiceJoinStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:52` public AdditionalServiceJoinStatisticsController(BotService botService, AdditionalServiceJoinStatisticsService additionalServiceJoinStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:53` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\additaionalServiceJoin\AdditionalServiceJoinStatisticsController.java:54` this.additionalServiceJoinStatisticsService = additionalServiceJoinStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:46` private AnswerLinkStatisticsService answerLinkStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:47` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:48` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:51` public AnswerLinkStatisticsController(AnswerLinkStatisticsService answerLinkStatisticsService, BotService botService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:52` this.answerLinkStatisticsService = answerLinkStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:53` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\answerLink\AnswerLinkStatisticsController.java:54` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:52` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:53` private DialogStatisticsService dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:54` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:57` public DialogStatisticsController(BotService botService, DialogStatisticsService dialogStatisticsService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:58` ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:59` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:60` this.dialogStatisticsService = dialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\dialog\DialogStatisticsController.java:61` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:42` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:43` private KnowledgeStatisticsService knowledgeStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:46` public KnowledgeStatisticsController(BotService botService, KnowledgeStatisticsService knowledgeStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:47` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\knowledge\KnowledgeStatisticsController.java:48` this.knowledgeStatisticsService = knowledgeStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:46` private PaymentStatisticsService paymentStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:47` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:48` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:51` public PaymentStatisticsController(PaymentStatisticsService paymentStatisticsService, BotService botService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:52` this.paymentStatisticsService = paymentStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:53` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\payment\PaymentStatisticsController.java:54` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:46` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:47` private SimpleStatisticsService simpleStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:48` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:51` public SimpleStatisticsController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:52` SimpleStatisticsService simpleStatisticsService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:53` ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:54` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:55` this.simpleStatisticsService = simpleStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\simple\SimpleStatisticsController.java:56` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:45` private SatisfactionStatisticsService satisfactionStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:46` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:47` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:50` public SatisfactionStatisticsController(SatisfactionStatisticsService satisfactionStatisticsService, BotService botService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:51` this.satisfactionStatisticsService = satisfactionStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:52` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\statisfaction\SatisfactionStatisticsController.java:53` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:42` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:43` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:44` private Top10DialogStatisticsService top10DialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:48` public Top10DialogStatisticsController(BotService botService, Top10DialogStatisticsService top10DialogStatisticsService, ChatChannelService chatChannelService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:49` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:50` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\top10\Top10DialogStatisticsController.java:51` this.top10DialogStatisticsService = top10DialogStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\user\UserStatisticsController.java:42` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\user\UserStatisticsController.java:43` private UserStatisticsService userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\user\UserStatisticsController.java:46` public UserStatisticsController(BotService botService, UserStatisticsService userStatisticsService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\user\UserStatisticsController.java:47` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\statistics\user\UserStatisticsController.java:48` this.userStatisticsService = userStatisticsService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\tts\TtsVoiceController.java:39` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\tts\TtsVoiceController.java:40` private BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\tts\TtsVoiceController.java:43` public TtsVoiceController(ParameterService parameterService, BotService botService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\tts\TtsVoiceController.java:44` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\rest\tts\TtsVoiceController.java:45` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\web\HistoryController.java:28` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\web\HistoryController.java:32` public HistoryController(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\controller\web\HistoryController.java:34` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\channel\IntroRecommendToSlideConverter.java:19` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\channel\IntroRecommendToSlideConverter.java:21` public IntroRecommendToSlideConverter(String resourceLocation, IntentService intentService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\channel\IntroRecommendToSlideConverter.java:23` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\channel\StartRecommendConverter.java:19` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\channel\StartRecommendConverter.java:21` public StartRecommendConverter(String resourceLocation, IntentService intentService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\channel\StartRecommendConverter.java:23` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\knowledge\chatflow\ChatNodeConverter.java:154` ApiNodeService apiNodeService = BeanContext.get(ApiNodeService.class);
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\knowledge\chatflow\ChatNodeConverter.java:155` if (apiNodeService != null){
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\manage\ManageSchemaDtoConverter.java:15` ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\manage\ManageSchemaDtoConverter.java:17` public ManageSchemaDtoConverter (ManageTenantService manageTenantService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\manage\ManageSchemaDtoConverter.java:18` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:26` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:27` private ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:28` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:29` private ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:33` public EngineApiConverter(BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:34` ApiNodeRequestService apiNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:35` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:36` ApiNodeResponseService apiNodeResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:39` this.botApiParameterService = botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:40` this.apiNodeRequestService = apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:41` this.botApiResponseService = botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\EngineApiConverter.java:42` this.apiNodeResponseService = apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaConverter.java:20` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaConverter.java:21` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaConverter.java:25` public ApiMetaConverter(BotApiParameterService botApiParameterService, BotApiResponseService botApiResponseService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaConverter.java:26` this.botApiParameterService = botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaConverter.java:27` this.botApiResponseService = botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaRequestConverter.java:15` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaRequestConverter.java:18` public ApiMetaRequestConverter(BotApiParameterService botApiParameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaRequestConverter.java:19` this.botApiParameterService = botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaResponseConverter.java:14` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaResponseConverter.java:16` public ApiMetaResponseConverter(BotApiResponseService botApiResponseService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\api\meta\ApiMetaResponseConverter.java:17` this.botApiResponseService = botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\ChatDialogIntentConverter.java:13` private final IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\ChatDialogIntentConverter.java:15` public ChatDialogIntentConverter(IntentScheduleService intentScheduleService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\ChatDialogIntentConverter.java:16` this.intentScheduleService = intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:55` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:56` private BubbleService bubbleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:57` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:59` private ChatNodeSlideService chatNodeSlideService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:60` private QuickReplyService quickReplyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:61` private SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:62` private SplitNodeService splitNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:63` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:64` private SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:65` private ReturnNodeService returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:66` private ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:67` private ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:68` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:69` private ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:70` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:71` private ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:72` private DynamicViewService dynamicViewService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:73` private DynamicFormService dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:74` private SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:75` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:76` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:77` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:83` private MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:84` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:85` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:86` private MultiSlotQuestionService multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:87` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:88` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:90` public EngineReplyConverter(Bot bot, IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:91` BubbleService bubbleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:92` ChatImageService chatImageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:93` BubbleButtonService bubbleButtonService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:94` ChatNodeSlideService chatNodeSlideService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:95` QuickReplyService quickReplyService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:96` SlotNodeService slotNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:97` SplitNodeService splitNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:98` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:99` SplitNodeConditionService splitNodeConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:100` ReturnNodeService returnNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:101` ReturnNodeRequestService returnNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:102` ApiNodeService apiNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:103` BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:104` ApiNodeRequestService apiNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:105` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:106` ApiNodeResponseService apiNodeResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:107` DynamicViewService dynamicViewService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:108` DynamicFormService dynamicFormService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:109` SmsFormService smsFormService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:110` SmsFormValueService smsFormValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:111` SmsTemplateService smsTemplateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:112` SmsTemplateValueService smsTemplateValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:118` MultiSlotConditionService multiSlotConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:119` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:120` ConfirmSlotService confirmSlotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:121` MultiSlotQuestionService multiSlotQuestionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:122` MultiSlotQuestionContentService multiSlotQuestionContentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:123` ParameterService parameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:125` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:126` this.bubbleService = bubbleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyConverter.java:127` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyMessageConverter.java:29` private BubbleButtonService bubbleButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyMessageConverter.java:30` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyMessageConverter.java:35` public EngineReplyMessageConverter(BubbleButtonService bubbleButtonService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyMessageConverter.java:36` ChatImageService chatImageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyMessageConverter.java:39` this.bubbleButtonService = bubbleButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplyMessageConverter.java:40` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplySlideConverter.java:26` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplySlideConverter.java:31` public EngineReplySlideConverter(ChatImageService chatImageService, String resourceLocation, List<Parameter> parameters) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\EngineReplySlideConverter.java:32` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:21` private SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:22` private SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:23` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:26` SmsFormValueService smsFormValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:27` SmsTemplateService smsTemplateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:28` SmsTemplateValueService smsTemplateValueService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:30` this.smsFormValueService = smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:31` this.smsTemplateService = smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormConverter.java:32` this.smsTemplateValueService = smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormItemConverter.java:17` private SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormItemConverter.java:19` SmsTemplateValueService smsTemplateValueService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\basic\SMSFormItemConverter.java:21` this.smsTemplateValueService = smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:16` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:17` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:19` public MultiSlotConditionDetailEntityConverter(NamedEntityValueService namedEntityValueService, ParameterService parameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:20` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionDetailEntityConverter.java:21` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:17` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:18` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:19` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:21` public MultiSlotConditionEntityConverter(MultiSlotConditionDetailService multiSlotConditionDetailService, NamedEntityValueService namedEntityValueService, ParameterService parameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:22` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:23` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotConditionEntityConverter.java:24` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotQuestionContentEntityConverter.java:19` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotQuestionContentEntityConverter.java:21` public MultiSlotQuestionContentEntityConverter(List<SlotNode> slotNodes, ParameterService parameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\MultiSlotQuestionContentEntityConverter.java:23` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:37` private final NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:39` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:40` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:42` private MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:43` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:44` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:45` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:47` public SlotEntityConverter(Bot bot, NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:49` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:50` ChatImageService chatImageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:52` MultiSlotConditionService multiSlotConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:53` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:54` ConfirmSlotService confirmSlotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:55` ParameterService parameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:57` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:59` this.botApiResponseService = botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:60` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:62` this.multiSlotConditionService = multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:63` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:64` this.confirmSlotService = confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotEntityConverter.java:65` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:21` private SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:22` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:24` private DynamicFormService dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:25` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:26` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:28` private MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:29` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:30` private ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:31` private MultiSlotQuestionService multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:32` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:33` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:36` SlotNodeService slotNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:37` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:39` DynamicFormService dynamicFormService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:40` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:41` ChatImageService chatImageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:43` MultiSlotConditionService multiSlotConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:44` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:45` ConfirmSlotService confirmSlotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:46` MultiSlotQuestionService multiSlotQuestionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:47` MultiSlotQuestionContentService multiSlotQuestionContentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:48` ParameterService parameterService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:50` this.slotNodeService = slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:51` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:53` this.dynamicFormService = dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:54` this.botApiResponseService = botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:55` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:57` this.multiSlotConditionService = multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:58` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:59` this.confirmSlotService = confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:60` this.multiSlotQuestionService = multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:61` this.multiSlotQuestionContentService = multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotGroupConverter.java:62` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotItemConverter.java:18` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotItemConverter.java:19` private ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotItemConverter.java:23` public SlotItemConverter(NamedEntityValueService namedEntityValueService, ChatImageService chatImageService, String resourceLocation) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotItemConverter.java:24` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\slot\SlotItemConverter.java:25` this.chatImageService = chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitConditionConverter.java:23` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitConditionConverter.java:28` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitConditionConverter.java:32` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitEntityConverter.java:22` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitEntityConverter.java:23` private SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitEntityConverter.java:28` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitEntityConverter.java:29` SplitNodeConditionService splitNodeConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitEntityConverter.java:33` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\rive\split\SplitEntityConverter.java:34` this.splitNodeConditionService = splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\search\SearchRecommendConverter.java:11` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\search\SearchRecommendConverter.java:13` public SearchRecommendConverter(IntentService intentService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\converter\search\SearchRecommendConverter.java:14` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\entity\log\LampLogEntity.java:11` private String service = "PG084401";
+- `master\src\main\java\com\kt\aicc\ktbot\master\entity\log\LampLogEntity.java:36` this.service = service;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:50` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:51` private final SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:52` private final MenuService menuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:53` private final UserService userService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:54` private final AuthMenuService authMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:56` private final ManageSchemaService manageSchemaService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:57` private final ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:58` private final CodeGroupService codeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:59` private final ManageBotService manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:60` private final CategoryBotService categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:61` private final NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:77` public InitLoader(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:78` SolrService solrService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:79` MenuService menuService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:80` UserService userService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:82` AuthMenuService authMenuService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:83` ManageSchemaService manageSchemaService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:84` ManageTenantService manageTenantService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:85` CodeGroupService codeGroupService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:86` ManageBotService manageBotService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:87` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:88` CategoryBotService categoryBotService
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:90` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:91` this.solrService = solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:92` this.menuService = menuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:93` this.userService = userService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:94` this.authMenuService = authMenuService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:96` this.manageSchemaService = manageSchemaService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:97` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:98` this.codeGroupService = codeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:99` this.manageBotService = manageBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:100` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\init\data\InitLoader.java:101` this.categoryBotService = categoryBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\LdapService.java:7` public interface LdapService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\LdapServiceImpl.java:26` public class LdapServiceImpl implements LdapService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageAccessRightService.java:10` public interface ManageAccessRightService extends BaseService<ManageAccessRight> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageAccessRightServiceImpl.java:16` public class ManageAccessRightServiceImpl extends BaseServiceImpl<ManageAccessRight> implements ManageAccessRightService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageAccessRightServiceImpl.java:18` private final ManageTenantService manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageAccessRightServiceImpl.java:22` ManageTenantService manageTenantService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageAccessRightServiceImpl.java:25` this.manageTenantService = manageTenantService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageBotService.java:11` public interface ManageBotService extends BaseService<ManageBot> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageBotServiceImpl.java:19` public class ManageBotServiceImpl extends BaseServiceImpl<ManageBot> implements ManageBotService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageChannelService.java:9` public interface ManageChannelService extends BaseService<ManageChannel> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageChannelServiceImpl.java:16` public class ManageChannelServiceImpl extends BaseServiceImpl<ManageChannel> implements ManageChannelService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageChannelTemplateService.java:10` public interface ManageChannelTemplateService extends BaseService<ManageChannelTemplate> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageChannelTemplateServiceImpl.java:16` public class ManageChannelTemplateServiceImpl extends BaseServiceImpl<ManageChannelTemplate> implements ManageChannelTemplateService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageDeployService.java:8` public interface ManageDeployService extends BaseService<ManageDeploy> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageDeployServiceImpl.java:15` public class ManageDeployServiceImpl extends BaseServiceImpl<ManageDeploy> implements ManageDeployService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageMonitoringService.java:14` public interface ManageMonitoringService extends BaseService<ManageMonitoring> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageMonitoringServiceImpl.java:18` public class ManageMonitoringServiceImpl extends BaseServiceImpl<ManageMonitoring> implements ManageMonitoringService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManagePremadeMappingService.java:10` public interface ManagePremadeMappingService extends BaseService<ManagePremadeMapping> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageSchemaService.java:13` public interface ManageSchemaService extends BaseService<ManageSchema> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageSchemaServiceImpl.java:17` public class ManageSchemaServiceImpl extends BaseServiceImpl<ManageSchema> implements ManageSchemaService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageTenantService.java:11` public interface ManageTenantService extends BaseService<ManageTenant> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageTenantServiceImpl.java:15` public class ManageTenantServiceImpl extends BaseServiceImpl<ManageTenant> implements ManageTenantService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageVoiecBotService.java:10` public interface ManageVoiecBotService extends BaseService<ManageVoiceBotLine> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\admin\manage\ManageVoiecBotServiceImpl.java:14` public class ManageVoiecBotServiceImpl extends BaseServiceImpl<ManageVoiceBotLine> implements ManageVoiecBotService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportService.java:23` public interface BotExportService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:64` public class BotExportServiceImpl implements BotExportService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:68` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:69` private final BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:70` private final BotCodeGroupService botCodeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:71` private final CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:72` private final NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:74` private final ConfirmEntityService confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:75` private final ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:76` private final BotDictionaryService botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:77` private final SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:78` private final BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:80` private final TemplateService templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:81` private final IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:82` private final FormDynamicService formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:83` private final ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:84` private final IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:86` private final ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:88` public BotExportServiceImpl(BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:89` BotScheduleService botScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:90` BotCodeGroupService botCodeGroupService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:91` CategoryService categoryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:92` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:94` ConfirmEntityService confirmEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:95` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:96` BotDictionaryService botDictionaryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:97` SmsTemplateService smsTemplateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:98` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:100` TemplateService templateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:101` IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:102` FormDynamicService formDynamicService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:103` ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:104` IntroService introService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:106` ApiNodeService apiNodeService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:107` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:108` this.botScheduleService = botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:109` this.botCodeGroupService = botCodeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:110` this.categoryService = categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:111` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:113` this.confirmEntityService = confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:114` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:115` this.botDictionaryService = botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:116` this.smsTemplateService = smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:117` this.botApiService = botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:119` this.templateService = templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:120` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:121` this.formDynamicService = formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:122` this.chatNodeService = chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:123` this.introService = introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotExportServiceImpl.java:124` this.apiNodeService = apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportService.java:10` public interface BotImportService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:73` public class BotImportServiceImpl implements BotImportService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:78` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:79` private final BotCacheService botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:80` private final SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:84` private final CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:85` private final BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:86` private final IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:87` //    private final PermissionService permissionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:89` private final UserService userService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:90` private final ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:91` private final IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:92` private final CategoryService categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:93` private final NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:95` private final BotDictionaryService botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:96` private final BotCodeGroupService botCodeGroupService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:97` private final BotCopyHistoryService botCopyHistoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:98` private final ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:99` private final SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:101` private final BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:102` private final TemplateService templateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:103` private final ConfirmEntityService confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:104` private final ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:107` private final FormDynamicService formDynamicService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:108` private final ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:115` BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:116` SolrService solrService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:117` CmsMessageService cmsMessageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:118` BotCacheService botCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:120` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:123` IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:124` //                                PermissionService permissionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:126` UserService userService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:127` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:128` IntroService introService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:129` CategoryService categoryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:130` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:132` BotDictionaryService botDictionaryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:133` BotCodeGroupService botCodeGroupService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:134` BotCopyHistoryService botCopyHistoryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:135` ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:136` SmsTemplateService smsTemplateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:138` BotScheduleService botScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:139` TemplateService templateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:140` ConfirmEntityService confirmEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:141` ChatChannelService chatChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:144` FormDynamicService formDynamicService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:145` ApiNodeService apiNodeService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:147` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:148` this.solrService = solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:149` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:150` this.botCacheService = botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:152` this.botApiService = botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:155` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:156` //        this.permissionService = permissionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:158` this.userService = userService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:159` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:160` this.introService = introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:161` this.categoryService = categoryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:162` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\BotImportServiceImpl.java:164` this.botDictionaryService = botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningService.java:8` public interface LearningService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:44` public class LearningServiceImpl implements LearningService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:48` private final LearningInfoService learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:49` private final SolrLearnService solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:50` private final SolrDeployService solrDeployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:51` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:52` private final RiveCacheService riveCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:55` private final DeployService deployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:60` LearningInfoService learningInfoService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:61` SolrLearnService solrLearnService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:62` SolrDeployService solrDeployService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:63` BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:64` RiveCacheService riveCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:67` DeployService deployService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:68` this.learningInfoService = learningInfoService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:69` this.solrLearnService = solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:70` this.solrDeployService = solrDeployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:71` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:72` this.riveCacheService = riveCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\bot\LearningServiceImpl.java:75` this.deployService = deployService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheService.java:9` public interface ChatCacheService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:43` public class ChatCacheServiceImpl implements ChatCacheService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:46` private final BotCacheService botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:47` private final EngineApiService engineApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:48` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:50` private final BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:51` private final ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:52` private final ChannelCacheService channelCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:53` private final ChannelQuestionService channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:54` private final IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:58` BotCacheService botCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:59` EngineApiService engineApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:60` BotService botService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:62` BotScheduleService botScheduleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:63` ChatChannelService chatChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:64` ChannelCacheService channelCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:65` ChannelQuestionService channelQuestionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:66` IntentScheduleService intentScheduleService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:67` this.botCacheService = botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:68` this.engineApiService = engineApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:69` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:71` this.botScheduleService = botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:72` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:73` this.channelCacheService = channelCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:74` this.channelQuestionService = channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatCacheServiceImpl.java:75` this.intentScheduleService = intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:49` private final ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:50` private final IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:51` private final ChatNodeService chatNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:52` private final BubbleService bubbleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:53` private final QuickReplyService quickReplyService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:54` private final ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:55` private final NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:56` private final ChatNodeSlideService chatNodeSlideService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:57` private final SlotNodeService slotNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:58` private final SplitNodeConditionService splitNodeConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:59` private final BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:60` private final BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:61` private final BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:62` private final ApiNodeService apiNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:63` private final ApiNodeRequestService apiNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:64` private final ApiNodeResponseService apiNodeResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:65` private final BubbleButtonService bubbleButtonService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:66` private final SplitNodeService splitNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:67` private final ChatImageService chatImageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:68` private final ReturnNodeService returnNodeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:69` private final ReturnNodeRequestService returnNodeRequestService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:70` private final NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:71` private final SmsFormService smsFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:72` private final SmsFormValueService smsFormValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:73` private final SmsTemplateService smsTemplateService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:74` private final SmsTemplateValueService smsTemplateValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:75` private final DynamicViewService dynamicViewService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:76` private final DynamicFormService dynamicFormService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:77` private final IntentScheduleService intentScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:78` private final MultiSlotConditionService multiSlotConditionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:79` private final MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:80` private final ConfirmSlotService confirmSlotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:81` private final MultiSlotQuestionService multiSlotQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:82` private final MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:89` public ChatflowGeneratorImpl(ChatChannelService chatChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:90` IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:91` ChatNodeService chatNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:92` BubbleService bubbleService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:93` QuickReplyService quickReplyService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:94` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:95` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:96` ChatNodeSlideService chatNodeSlideService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:97` SlotNodeService slotNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:98` SplitNodeConditionService splitNodeConditionService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:99` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:100` BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:101` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:102` ApiNodeService apiNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:103` ApiNodeRequestService apiNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:104` ApiNodeResponseService apiNodeResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:105` BubbleButtonService bubbleButtonService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:106` SplitNodeService splitNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:107` ChatImageService chatImageService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:108` ReturnNodeService returnNodeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:109` ReturnNodeRequestService returnNodeRequestService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:110` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:111` SmsFormService smsFormService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:112` SmsFormValueService smsFormValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:113` SmsTemplateService smsTemplateService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\ChatflowGeneratorImpl.java:114` SmsTemplateValueService smsTemplateValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\EngineApiService.java:7` public interface EngineApiService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\chatflow\EngineApiServiceImpl.java:18` public class EngineApiServiceImpl implements EngineApiService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\common\CmsMessageService.java:3` public interface CmsMessageService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationService.java:14` public interface VerificationService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:44` public class VerificationServiceImpl implements VerificationService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:47` private final CmsMessageService cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:48` private final SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:49` private final BotService botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:50` private final NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:51` private final IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:57` public VerificationServiceImpl(CmsMessageService cmsMessageService, SolrService solrService, BotService botService, NamedEntityService namedEntityService, IntentService intentService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:58` this.cmsMessageService = cmsMessageService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:59` this.solrService = solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:60` this.botService = botService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:61` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\rest\knowledge\verification\VerificationServiceImpl.java:62` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployService.java:6` public interface SolrDeployService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployServiceImpl.java:14` public class SolrDeployServiceImpl implements SolrDeployService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployServiceImpl.java:18` private final SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployServiceImpl.java:21` public SolrDeployServiceImpl(SolrService solrService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrDeployServiceImpl.java:22` this.solrService = solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnService.java:15` public interface SolrLearnService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:41` public class SolrLearnServiceImpl implements SolrLearnService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:44` private SolrService solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:45` private SentenceService sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:46` private NamedEntityService namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:47` private NamedEntityValueService namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:48` private BotDictionaryService botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:49` private SentenceNerService sentenceNerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:50` private ConfirmEntityService confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:56` public SolrLearnServiceImpl(SolrService solrService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:57` SentenceService sentenceService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:58` NamedEntityService namedEntityService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:59` BotDictionaryService botDictionaryService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:60` NamedEntityValueService namedEntityValueService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:61` SentenceNerService sentenceNerService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:62` ConfirmEntityService confirmEntityService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:63` this.solrService = solrService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:64` this.sentenceService = sentenceService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:65` this.namedEntityService = namedEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:66` this.botDictionaryService = botDictionaryService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:67` this.namedEntityValueService = namedEntityValueService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:68` this.sentenceNerService = sentenceNerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:69` this.confirmEntityService = confirmEntityService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:274` log.info("Completed, Learning Department Data(from Service Server)");
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\solr\SolrLearnServiceImpl.java:508` // 학습 대상 인덱스 설정 - service collection 대상
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterAuthMenuService.java:10` public interface MasterAuthMenuService extends BaseService<AuthMenu> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterAuthMenuServiceImpl.java:15` public class MasterAuthMenuServiceImpl extends BaseServiceImpl<AuthMenu> implements MasterAuthMenuService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterMenuService.java:8` public interface MasterMenuService extends BaseService<Menu> {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterMenuServiceImpl.java:12` public class MasterMenuServiceImpl extends BaseServiceImpl<Menu> implements MasterMenuService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterUserService.java:16` public interface MasterUserService extends BaseService<User>{
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterUserServiceImpl.java:25` public class MasterUserServiceImpl extends BaseServiceImpl<User> implements MasterUserService {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterUserServiceImpl.java:28` private final ManageAccessRightService manageAccessRightService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterUserServiceImpl.java:32` ManageAccessRightService manageAccessRightService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\services\user\MasterUserServiceImpl.java:36` this.manageAccessRightService = manageAccessRightService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:93` private SolrLearnService solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:94` private BotCacheService botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:95` private RiveCacheService riveCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:96` private BotApiService botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:97` private ChatChannelService chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:98` private ChannelPlatformService channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:99` private ChannelCacheService channelCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:100` private BotApiParameterService botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:101` private BotApiResponseService botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:102` private ApiCacheService apiCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:104` private NoticeService noticeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:105` private NoticeChannelService noticeChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:106` private ParameterService parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:108` private IntroService introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:109` private IntentService intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:110` private ChannelQuestionService channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:111` private BotScheduleService botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:112` private VoiceBotService voiceBotService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:113` private CustomerService customerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:130` SolrLearnService solrLearnService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:131` BotCacheService botCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:132` RiveCacheService riveCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:133` BotApiService botApiService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:134` ChatChannelService chatChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:135` ChannelPlatformService channelPlatformService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:136` ChannelCacheService channelCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:137` BotApiParameterService botApiParameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:138` BotApiResponseService botApiResponseService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:139` ApiCacheService apiCacheService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:141` NoticeService noticeService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:142` NoticeChannelService noticeChannelService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:143` ParameterService parameterService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:145` IntroService introService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:146` IntentService intentService,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:147` ChannelQuestionService channelQuestionService, BotScheduleService botScheduleService, final String comment,
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:150` VoiceBotService voiceBotService, CustomerService customerService) {
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:151` this.solrLearnService = solrLearnService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:152` this.botCacheService = botCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:153` this.riveCacheService = riveCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:154` this.botApiService = botApiService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:155` this.chatChannelService = chatChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:156` this.channelPlatformService = channelPlatformService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:157` this.channelCacheService = channelCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:158` this.botApiParameterService = botApiParameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:159` this.botApiResponseService = botApiResponseService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:160` this.apiCacheService = apiCacheService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:162` this.noticeService = noticeService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:163` this.noticeChannelService = noticeChannelService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:164` this.parameterService = parameterService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:166` this.introService = introService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:167` this.intentService = intentService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:168` this.channelQuestionService = channelQuestionService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:169` this.botScheduleService = botScheduleService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:171` this.customerService = customerService;
+- `master\src\main\java\com\kt\aicc\ktbot\master\utils\LearningProgressJob.java:183` this.voiceBotService = voiceBotService;
+- `master\src\main\resources\application-dev-tb.yml:76` dir: /data/upload/rive
+- `master\src\main\resources\application-dev-tb.yml:103` base-path: /data/bot
+- `master\src\main\resources\application-dev-tb.yml:104` rive-path: /data/bot/rive
+- `master\src\main\resources\application-dev.yml:54` dir: /application/cms/data/upload/rive
+- `master\src\main\resources\application-dev.yml:56` dir: /application/cms/meritz_data/images
+- `master\src\main\resources\application-dev.yml:81` base-path: /application/cms/data/bot
+- `master\src\main\resources\application-dev.yml:82` rive-path: /application/cms/data/bot/rive
+- `master\src\main\resources\application-han.yml:79` dir: /data/upload/rive
+- `master\src\main\resources\application-han.yml:105` base-path: /data/bot
+- `master\src\main\resources\application-han.yml:106` rive-path: /data/bot/rive
+- `master\src\main\resources\application-prod.yml:54` dir: /application/cms/data/upload/rive
+- `master\src\main\resources\application-prod.yml:56` dir: /application/cms/meritz_data/images
+- `master\src\main\resources\application-prod.yml:81` base-path: /application/cms/data/bot
+- `master\src\main\resources\application-prod.yml:82` rive-path: /application/cms/data/bot/rive
+- `master\src\main\resources\application-tc.yml:54` dir: /application/cms/data/upload/rive
+- `master\src\main\resources\application-tc.yml:56` dir: /application/cms/meritz_data/images
+- `master\src\main\resources\application-tc.yml:81` base-path: /application/cms/data/bot
+- `master\src\main\resources\application-tc.yml:82` rive-path: /application/cms/data/bot/rive
+- `master\src\main\resources\application.yml:55` #    dir: /data/upload/rive
+- `master\src\main\resources\application.yml:81` #    base-path: /data/bot
+- `master\src\main\resources\application.yml:82` #    rive-path: /data/bot/rive
+- `master\src\main\resources\logging-config.xml:3` <property name="LOG_DIR" value="/data/logs/ecms_mst11/master.log"/>
+- `master\src\main\resources\logging-dev-config.xml:3` <property name="LOG_DIR" value="/logs/master/ecms_mst11"/>
+- `master\src\main\resources\logging-local-config.xml:3` <property name="LOG_DIR" value="/tmp/logs/master.log"/>
+- `master\src\main\resources\logging-prod-config.xml:3` <property name="LOG_DIR" value="/logs/master"/>
+- `master\src\main\resources\logging-tc-config.xml:3` <property name="LOG_DIR" value="/logs/master"/>
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\b2b\chatnode\B2BChatNodeConverter.java:19` private ChatNodeService chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\b2b\chatnode\B2BChatNodeConverter.java:26` public void setService(ChatNodeService chatNodeService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\b2b\chatnode\B2BChatNodeConverter.java:27` this.chatNodeService = chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\CategoryCopyConverter.java:18` private CategoryService categoryService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\CategoryCopyConverter.java:28` public void setCategoryService(CategoryService categoryService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\CategoryCopyConverter.java:29` this.categoryService = categoryService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:28` private ApiNodeService apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:29` private ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:30` private ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:42` ApiNodeService apiNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:43` ApiNodeRequestService apiNodeRequestService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:44` ApiNodeResponseService apiNodeResponseService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:54` this.apiNodeService = apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:55` this.apiNodeRequestService = apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyConverter.java:56` this.apiNodeResponseService = apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:35` private ApiNodeService apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:36` private ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:37` private ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:49` ApiNodeService apiNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:50` ApiNodeRequestService apiNodeRequestService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:51` ApiNodeResponseService apiNodeResponseService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:61` this.apiNodeService = apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:62` this.apiNodeRequestService = apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeCopyEntityConverter.java:63` this.apiNodeResponseService = apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeRequestCopyConverter.java:21` private ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeRequestCopyConverter.java:32` ApiNodeRequestService apiNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeRequestCopyConverter.java:37` this.apiNodeRequestService = apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeRequestCopyEntityConverter.java:21` private ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeRequestCopyEntityConverter.java:32` ApiNodeRequestService apiNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeRequestCopyEntityConverter.java:37` this.apiNodeRequestService = apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeResponseCopyConverter.java:19` private ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeResponseCopyConverter.java:29` ApiNodeResponseService apiNodeResponseService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeResponseCopyConverter.java:33` this.apiNodeResponseService = apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeResponseCopyEntityConverter.java:20` private ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeResponseCopyEntityConverter.java:30` ApiNodeResponseService apiNodeResponseService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ApiNodeResponseCopyEntityConverter.java:34` this.apiNodeResponseService = apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleButtonCopyConverter.java:18` private BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleButtonCopyConverter.java:28` BubbleButtonService bubbleButtonService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleButtonCopyConverter.java:31` this.bubbleButtonService = bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleButtonCopyEntityConverter.java:19` private BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleButtonCopyEntityConverter.java:29` BubbleButtonService bubbleButtonService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleButtonCopyEntityConverter.java:32` this.bubbleButtonService = bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:23` private BubbleService bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:24` private BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:25` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:26` private BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:27` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:39` BubbleService bubbleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:40` BubbleTextService bubbleTextService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:41` BubbleTextParamService bubbleTextParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:42` BubbleButtonService bubbleButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:43` ChatImageService chatImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:48` this.bubbleService = bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:49` this.bubbleTextService = bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:50` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:51` this.bubbleButtonService = bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyConverter.java:52` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:27` private BubbleService bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:28` private BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:29` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:30` private BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:31` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:43` BubbleService bubbleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:44` BubbleTextService bubbleTextService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:45` BubbleTextParamService bubbleTextParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:46` BubbleButtonService bubbleButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:47` ChatImageService chatImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:52` this.bubbleService = bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:53` this.bubbleTextService = bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:54` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:55` this.bubbleButtonService = bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleCopyEntityConverter.java:56` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyConverter.java:24` private BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyConverter.java:25` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyConverter.java:35` BubbleTextService bubbleTextService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyConverter.java:36` BubbleTextParamService bubbleTextParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyConverter.java:39` this.bubbleTextService = bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyConverter.java:40` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyEntityConverter.java:26` private BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyEntityConverter.java:27` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyEntityConverter.java:37` BubbleTextService bubbleTextService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyEntityConverter.java:38` BubbleTextParamService bubbleTextParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyEntityConverter.java:41` this.bubbleTextService = bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextCopyEntityConverter.java:42` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextParamCopyConverter.java:15` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextParamCopyConverter.java:27` BubbleTextParamService bubbleTextParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextParamCopyConverter.java:30` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextParamCopyEntityConverter.java:16` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextParamCopyEntityConverter.java:28` BubbleTextParamService bubbleTextParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\BubbleTextParamCopyEntityConverter.java:31` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatContentCopyConverter.java:11` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatContentCopyConverter.java:13` public void setInit(ChatImageService chatImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatContentCopyConverter.java:14` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatContentCopyEntityConverter.java:14` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatContentCopyEntityConverter.java:16` public void setInit(ChatImageService chatImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatContentCopyEntityConverter.java:17` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:58` private ChatNodeService chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:59` private ApiNodeService apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:60` private ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:61` private ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:62` private BubbleService bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:63` //    private DynamicFormService dynamicFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:64` private DynamicViewService dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:65` private DynamicViewValueService dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:66` private QuickReplyService quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:67` private ReturnNodeService returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:68` private ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:69` private ChatNodeSlideService chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:70` private SlotNodeService slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:71` private SplitNodeService splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:72` private BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:73` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:74` private BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:75` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:76` private SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:77` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:78` private SlotQuestionService slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:79` private SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:80` private SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:83` private SmsFormService smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:84` private SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:86` private MultiSlotQuestionService multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:87` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:88` private MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:89` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:91` private TemplateService templateService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:93` private ConfirmEntityService confirmEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:94` private ConfirmSlotService confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:101` public void setServices(ChatNodeService chatNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:102` ApiNodeService apiNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:103` ApiNodeRequestService apiNodeRequestService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:104` ApiNodeResponseService apiNodeResponseService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:105` BubbleService bubbleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:106` //                            DynamicFormService dynamicFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:107` DynamicViewService dynamicViewService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:108` DynamicViewValueService dynamicViewValueService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:109` QuickReplyService quickReplyService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:110` ReturnNodeService returnNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:111` ReturnNodeRequestService returnNodeRequestService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:112` ChatNodeSlideService chatNodeSlideService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:113` SlotNodeService slotNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:114` SplitNodeService splitNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:115` BubbleTextService bubbleTextService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:116` BubbleTextParamService bubbleTextParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:117` BubbleButtonService bubbleButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:118` ChatImageService chatImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:119` SlideButtonService slideButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:120` ChatNodeSlideParamService chatNodeSlideParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:121` SlotQuestionService slotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:122` SlotOptionService slotOptionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:123` SplitNodeConditionService splitNodeConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:124` SmsFormService smsFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:125` SmsFormValueService smsFormValueService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:126` MultiSlotQuestionService multiSlotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:127` MultiSlotQuestionContentService multiSlotQuestionContentService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodeCopyConverter.java:128` MultiSlotConditionService multiSlotConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:64` private ChatNodeService chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:65` private ApiNodeService apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:66` private ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:67` private ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:68` private BubbleService bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:69` //    private DynamicFormService dynamicFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:70` private DynamicViewService dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:71` private DynamicViewValueService dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:72` private QuickReplyService quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:73` private ReturnNodeService returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:74` private ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:75` private ChatNodeSlideService chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:76` private SlotNodeService slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:77` private SplitNodeService splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:78` private BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:79` private BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:80` private BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:81` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:82` private SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:83` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:84` private SlotQuestionService slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:85` private SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:86` private SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:89` private SmsFormService smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:90` private SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:92` private MultiSlotQuestionService multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:93` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:94` private MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:95` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:97` private TemplateService templateService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:99` private ConfirmEntityService confirmEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:100` private ConfirmSlotService confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:107` public void setServices(ChatNodeService chatNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:108` ApiNodeService apiNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:109` ApiNodeRequestService apiNodeRequestService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:110` ApiNodeResponseService apiNodeResponseService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:111` BubbleService bubbleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:112` //                            DynamicFormService dynamicFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:113` DynamicViewService dynamicViewService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:114` DynamicViewValueService dynamicViewValueService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:115` QuickReplyService quickReplyService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:116` ReturnNodeService returnNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:117` ReturnNodeRequestService returnNodeRequestService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:118` ChatNodeSlideService chatNodeSlideService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:119` SlotNodeService slotNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:120` SplitNodeService splitNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:121` BubbleTextService bubbleTextService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:122` BubbleTextParamService bubbleTextParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:123` BubbleButtonService bubbleButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:124` ChatImageService chatImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:125` SlideButtonService slideButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:126` ChatNodeSlideParamService chatNodeSlideParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:127` SlotQuestionService slotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:128` SlotOptionService slotOptionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:129` SplitNodeConditionService splitNodeConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:130` SmsFormService smsFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:131` SmsFormValueService smsFormValueService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:132` MultiSlotQuestionService multiSlotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:133` MultiSlotQuestionContentService multiSlotQuestionContentService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ChatNodePresetCopyConverter.java:134` MultiSlotConditionService multiSlotConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyConverter.java:27` private DynamicViewService dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyConverter.java:28` private DynamicViewValueService dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyConverter.java:34` DynamicViewService dynamicViewService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyConverter.java:35` DynamicViewValueService dynamicViewValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyConverter.java:40` this.dynamicViewService = dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyConverter.java:41` this.dynamicViewValueService = dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyEntityConverter.java:27` private DynamicViewService dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyEntityConverter.java:28` private DynamicViewValueService dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyEntityConverter.java:34` DynamicViewService dynamicViewService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyEntityConverter.java:35` DynamicViewValueService dynamicViewValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyEntityConverter.java:40` this.dynamicViewService = dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\DynamicViewCopyEntityConverter.java:41` this.dynamicViewValueService = dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyConverter.java:22` private MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyConverter.java:23` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyConverter.java:34` MultiSlotConditionService multiSlotConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyConverter.java:35` MultiSlotConditionDetailService multiSlotConditionDetailService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyConverter.java:40` this.multiSlotConditionService = multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyConverter.java:41` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyEntityConverter.java:26` private MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyEntityConverter.java:27` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyEntityConverter.java:38` MultiSlotConditionService multiSlotConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyEntityConverter.java:39` MultiSlotConditionDetailService multiSlotConditionDetailService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyEntityConverter.java:44` this.multiSlotConditionService = multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionCopyEntityConverter.java:45` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionDatailCopyConverter.java:28` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionDatailCopyConverter.java:39` MultiSlotConditionDetailService multiSlotConditionDetailService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionDatailCopyConverter.java:44` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionDetailCopyEntityConverter.java:29` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionDetailCopyEntityConverter.java:40` MultiSlotConditionDetailService multiSlotConditionDetailService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotConditionDetailCopyEntityConverter.java:45` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyConverter.java:18` private MultiSlotQuestionService multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyConverter.java:19` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyConverter.java:23` MultiSlotQuestionService multiSlotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyConverter.java:24` MultiSlotQuestionContentService multiSlotQuestionContentService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyConverter.java:27` this.multiSlotQuestionService = multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyConverter.java:28` this.multiSlotQuestionContentService = multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyEntityConverter.java:27` private MultiSlotQuestionService multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyEntityConverter.java:28` private MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyEntityConverter.java:32` MultiSlotQuestionService multiSlotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyEntityConverter.java:33` MultiSlotQuestionContentService multiSlotQuestionContentService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyEntityConverter.java:36` this.multiSlotQuestionService = multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\MultiSlotQuestionCopyEntityConverter.java:37` this.multiSlotQuestionContentService = multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\QuickReplyCopyConverter.java:17` private QuickReplyService quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\QuickReplyCopyConverter.java:24` QuickReplyService quickReplyService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\QuickReplyCopyConverter.java:28` this.quickReplyService = quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\QuickReplyCopyEntityConverter.java:23` private QuickReplyService quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\QuickReplyCopyEntityConverter.java:30` QuickReplyService quickReplyService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\QuickReplyCopyEntityConverter.java:34` this.quickReplyService = quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyConverter.java:27` private ReturnNodeService returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyConverter.java:28` private ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyConverter.java:40` ReturnNodeService returnNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyConverter.java:41` ReturnNodeRequestService returnNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyConverter.java:48` this.returnNodeService = returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyConverter.java:49` this.returnNodeRequestService = returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyEntityConverter.java:29` private ReturnNodeService returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyEntityConverter.java:30` private ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyEntityConverter.java:42` ReturnNodeService returnNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyEntityConverter.java:43` ReturnNodeRequestService returnNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyEntityConverter.java:50` this.returnNodeService = returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeCopyEntityConverter.java:51` this.returnNodeRequestService = returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeRequestCopyConverter.java:20` private ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeRequestCopyConverter.java:31` ReturnNodeRequestService returnNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeRequestCopyConverter.java:36` this.returnNodeRequestService = returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeRequestCopyEntityConverter.java:21` private ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeRequestCopyEntityConverter.java:32` ReturnNodeRequestService returnNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\ReturnNodeRequestCopyEntityConverter.java:37` this.returnNodeRequestService = returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideButtonCopyConverter.java:21` private SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideButtonCopyConverter.java:31` SlideButtonService slideButtonService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideButtonCopyConverter.java:34` this.slideButtonService = slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideButtonCopyEntityConverter.java:19` private SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideButtonCopyEntityConverter.java:29` SlideButtonService slideButtonService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideButtonCopyEntityConverter.java:32` this.slideButtonService = slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:25` private ChatNodeSlideService chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:26` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:27` private SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:28` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:42` ChatNodeSlideService chatNodeSlideService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:43` ChatImageService chatImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:44` SlideButtonService slideButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:45` ChatNodeSlideParamService chatNodeSlideParamService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:53` this.chatNodeSlideService = chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:54` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:55` this.slideButtonService = slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyConverter.java:56` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:35` private ChatNodeSlideService chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:36` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:37` private SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:38` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:52` ChatNodeSlideService chatNodeSlideService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:53` ChatImageService chatImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:54` SlideButtonService slideButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:55` ChatNodeSlideParamService chatNodeSlideParamService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:63` this.chatNodeSlideService = chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:64` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:65` this.slideButtonService = slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideCopyEntityConverter.java:66` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideParamCopyConverter.java:18` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideParamCopyConverter.java:30` ChatNodeSlideParamService chatNodeSlideParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideParamCopyConverter.java:33` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideParamCopyEntityConverter.java:17` private ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideParamCopyEntityConverter.java:29` ChatNodeSlideParamService chatNodeSlideParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlideParamCopyEntityConverter.java:32` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:32` private SlotNodeService slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:33` private SlotQuestionService slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:34` private SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:35` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:36` private MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:37` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:42` private ConfirmEntityService confirmEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:43` private ConfirmSlotService confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:52` SlotNodeService slotNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:53` SlotQuestionService slotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:54` SlotOptionService slotOptionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:55` ChatImageService chatImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:56` MultiSlotConditionService multiSlotConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:57` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:58` ConfirmEntityService confirmEntityService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:59` ConfirmSlotService confirmSlotService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:67` this.slotNodeService = slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:68` this.slotQuestionService = slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:69` this.slotOptionService = slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:70` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:71` this.multiSlotConditionService = multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:72` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:73` this.confirmEntityService = confirmEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyConverter.java:74` this.confirmSlotService = confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:41` private SlotNodeService slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:42` private SlotQuestionService slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:43` private SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:44` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:45` private MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:46` private MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:51` private ConfirmEntityService confirmEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:52` private ConfirmSlotService confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:62` SlotNodeService slotNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:63` SlotQuestionService slotQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:64` SlotOptionService slotOptionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:65` ChatImageService chatImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:66` MultiSlotConditionService multiSlotConditionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:67` MultiSlotConditionDetailService multiSlotConditionDetailService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:68` ConfirmEntityService confirmEntityService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:69` ConfirmSlotService confirmSlotService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:78` this.slotNodeService = slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:79` this.slotQuestionService = slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:80` this.slotOptionService = slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:81` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:82` this.multiSlotConditionService = multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:83` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:84` this.confirmEntityService = confirmEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotCopyEntityConverter.java:85` this.confirmSlotService = confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyConverter.java:23` private SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyConverter.java:24` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyConverter.java:37` SlotOptionService slotOptionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyConverter.java:38` ChatImageService chatImageService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyConverter.java:43` this.slotOptionService = slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyConverter.java:44` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyEntityConverter.java:24` private SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyEntityConverter.java:25` private ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyEntityConverter.java:38` SlotOptionService slotOptionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyEntityConverter.java:39` ChatImageService chatImageService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyEntityConverter.java:44` this.slotOptionService = slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SlotOptionCopyEntityConverter.java:45` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyConverter.java:30` private SmsFormService smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyConverter.java:31` private SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyConverter.java:39` SmsFormService smsFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyConverter.java:40` SmsFormValueService smsFormValueService ) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyConverter.java:47` this.smsFormService = smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyConverter.java:48` this.smsFormValueService = smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyEntityConverter.java:31` private SmsFormService smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyEntityConverter.java:32` private SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyEntityConverter.java:40` SmsFormService smsFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyEntityConverter.java:41` SmsFormValueService smsFormValueService ) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyEntityConverter.java:48` this.smsFormService = smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SMSViewCopyEntityConverter.java:49` this.smsFormValueService = smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyConverter.java:23` private SplitNodeService splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyConverter.java:24` private SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyConverter.java:32` SplitNodeService splitNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyConverter.java:33` SplitNodeConditionService splitNodeConditionService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyConverter.java:39` this.splitNodeService = splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyConverter.java:40` this.splitNodeConditionService = splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyEntityConverter.java:28` private SplitNodeService splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyEntityConverter.java:29` private SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyEntityConverter.java:37` SplitNodeService splitNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyEntityConverter.java:38` SplitNodeConditionService splitNodeConditionService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyEntityConverter.java:44` this.splitNodeService = splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitCopyEntityConverter.java:45` this.splitNodeConditionService = splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitNodeConditionCopyConverter.java:28` private SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitNodeConditionCopyConverter.java:39` SplitNodeConditionService splitNodeConditionService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitNodeConditionCopyConverter.java:44` this.splitNodeConditionService = splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitNodeConditionCopyEntityConverter.java:29` private SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitNodeConditionCopyEntityConverter.java:40` SplitNodeConditionService splitNodeConditionService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\copy\chatNode\SplitNodeConditionCopyEntityConverter.java:45` this.splitNodeConditionService = splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeImporter.java:20` private final ApiNodeService apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeImporter.java:24` public ApiNodeImporter(ApiNodeService apiNodeService, ApiNodeRequestImporter apiNodeRequestImporter, ApiNodeResponseImporter apiNodeResponseImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeImporter.java:25` this.apiNodeService = apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeRequestImporter.java:21` private final ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeRequestImporter.java:23` public ApiNodeRequestImporter(ApiNodeRequestService apiNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeRequestImporter.java:24` this.apiNodeRequestService = apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeResponseImporter.java:21` private final ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeResponseImporter.java:23` public ApiNodeResponseImporter(ApiNodeResponseService apiNodeResponseService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ApiNodeResponseImporter.java:24` this.apiNodeResponseService = apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleButtonImporter.java:18` private final BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleButtonImporter.java:26` public BubbleButtonImporter(BubbleButtonService bubbleButtonService, ChatButtonImporter chatButtonImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleButtonImporter.java:27` this.bubbleButtonService = bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleImporter.java:17` private final BubbleService bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleImporter.java:22` public BubbleImporter(BubbleService bubbleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleImporter.java:26` this.bubbleService = bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleTextImporter.java:20` private final BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleTextImporter.java:23` public BubbleTextImporter(BubbleTextService bubbleTextService, BubbleTextParamImporter bubbleTextParamImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleTextImporter.java:24` this.bubbleTextService = bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleTextParamImporter.java:19` private final BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleTextParamImporter.java:21` public BubbleTextParamImporter(BubbleTextParamService bubbleTextParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\BubbleTextParamImporter.java:22` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ChatContentImporter.java:15` private final ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ChatContentImporter.java:17` public ChatContentImporter(ChatImageService chatImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ChatContentImporter.java:18` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ChatNodeParamImporter.java:18` private final ChatNodeParamService chatNodeParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ChatNodeParamImporter.java:20` public ChatNodeParamImporter(ChatNodeParamService chatNodeParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ChatNodeParamImporter.java:21` this.chatNodeParamService = chatNodeParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:23` private final DynamicFormService dynamicFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:24` private final DynamicFormValueService dynamicFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:26` private final FormDynamicService formDynamicService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:28` public DynamicFormImporter(DynamicFormService dynamicFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:29` DynamicFormValueService dynamicFormValueService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:31` FormDynamicService formDynamicService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:32` this.dynamicFormService = dynamicFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:33` this.dynamicFormValueService = dynamicFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormImporter.java:35` this.formDynamicService = formDynamicService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormValueImporter.java:20` private final DynamicFormValueService dynamicFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormValueImporter.java:24` public DynamicFormValueImporter(DynamicFormValueService dynamicFormValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicFormValueImporter.java:25` this.dynamicFormValueService = dynamicFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicViewImporter.java:19` private final DynamicViewService dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicViewImporter.java:22` public DynamicViewImporter(DynamicViewService dynamicViewService, DynamicViewValueImporter dynamicViewValueImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicViewImporter.java:23` this.dynamicViewService = dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicViewValueImporter.java:21` private final DynamicViewValueService dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicViewValueImporter.java:23` public DynamicViewValueImporter(DynamicViewValueService dynamicViewValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\DynamicViewValueImporter.java:24` this.dynamicViewValueService = dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotConditionDetailImporter.java:32` private final MultiSlotConditionDetailService multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotConditionDetailImporter.java:34` public MultiSlotConditionDetailImporter(MultiSlotConditionDetailService multiSlotConditionDetailService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotConditionDetailImporter.java:35` this.multiSlotConditionDetailService = multiSlotConditionDetailService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotConditionImporter.java:22` private final MultiSlotConditionService multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotConditionImporter.java:25` public MultiSlotConditionImporter(MultiSlotConditionService multiSlotConditionService, MultiSlotConditionDetailImporter multiSlotConditionDetailImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotConditionImporter.java:26` this.multiSlotConditionService = multiSlotConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotQuestionContentImporter.java:16` private final MultiSlotQuestionContentService multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotQuestionContentImporter.java:18` public MultiSlotQuestionContentImporter(MultiSlotQuestionContentService multiSlotQuestionContentService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotQuestionContentImporter.java:19` this.multiSlotQuestionContentService = multiSlotQuestionContentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotQuestionImporter.java:20` private final MultiSlotQuestionService multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotQuestionImporter.java:23` public MultiSlotQuestionImporter(MultiSlotQuestionService multiSlotQuestionService, MultiSlotQuestionContentImporter contentConverter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\MultiSlotQuestionImporter.java:24` this.multiSlotQuestionService = multiSlotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\QuickReplyImporter.java:17` private final QuickReplyService quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\QuickReplyImporter.java:19` public QuickReplyImporter(QuickReplyButtonImporter buttonConverter, QuickReplyService quickReplyService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\QuickReplyImporter.java:21` this.quickReplyService = quickReplyService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ReturnNodeImporter.java:20` private final ReturnNodeService returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ReturnNodeImporter.java:23` public ReturnNodeImporter(ReturnNodeService returnNodeService, ReturnNodeRequestImporter returnNodeRequestImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ReturnNodeImporter.java:24` this.returnNodeService = returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ReturnNodeRequestImporter.java:18` private final ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ReturnNodeRequestImporter.java:20` public ReturnNodeRequestImporter(ReturnNodeRequestService returnNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\ReturnNodeRequestImporter.java:21` this.returnNodeRequestService = returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideButtonImporter.java:19` private final SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideButtonImporter.java:22` public SlideButtonImporter(SlideButtonService slideButtonService, ChatButtonImporter chatButtonImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideButtonImporter.java:23` this.slideButtonService = slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideImporter.java:23` private final ChatNodeSlideService chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideImporter.java:28` public SlideImporter(ChatNodeSlideService chatNodeSlideService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideImporter.java:32` this.chatNodeSlideService = chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideParamImporter.java:21` private final ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideParamImporter.java:23` public SlideParamImporter(ChatNodeSlideParamService chatNodeSlideParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlideParamImporter.java:24` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotImporter.java:30` private final SlotNodeService slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotImporter.java:33` private final ConfirmSlotService confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotImporter.java:36` public SlotImporter(SlotNodeService slotNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotImporter.java:39` ConfirmSlotService confirmSlotService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotImporter.java:41` this.slotNodeService = slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotImporter.java:44` this.confirmSlotService = confirmSlotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotOptionImporter.java:20` private final SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotOptionImporter.java:23` public SlotOptionImporter(SlotOptionService slotOptionService, ChatContentImporter chatContentImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotOptionImporter.java:24` this.slotOptionService = slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotQuestionImporter.java:24` private final SlotQuestionService slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotQuestionImporter.java:27` public SlotQuestionImporter(SlotQuestionService slotQuestionService, SlotQuestionParamImporter slotQuestionParamImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotQuestionImporter.java:28` this.slotQuestionService = slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotQuestionParamImporter.java:19` private final ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotQuestionParamImporter.java:21` public SlotQuestionParamImporter(ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SlotQuestionParamImporter.java:22` this.chatNodeSlotQuestionParamService = chatNodeSlotQuestionParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SmsFormImporter.java:22` private final SmsFormService smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SmsFormImporter.java:25` public SmsFormImporter(SmsFormService smsFormService, SmsFormValueImporter smsFormValueImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SmsFormImporter.java:26` this.smsFormService = smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SmsFormValueImporter.java:20` private final SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SmsFormValueImporter.java:22` public SmsFormValueImporter(SmsFormValueService smsFormValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SmsFormValueImporter.java:23` this.smsFormValueService = smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SplitImporter.java:19` private final SplitNodeService splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SplitImporter.java:22` public SplitImporter(SplitNodeService splitNodeService, SplitNodeConditionImporter splitNodeConditionImporter) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SplitImporter.java:23` this.splitNodeService = splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SplitNodeConditionImporter.java:29` private final SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SplitNodeConditionImporter.java:33` public SplitNodeConditionImporter(SplitNodeConditionService splitNodeConditionService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\converter\impo\SplitNodeConditionImporter.java:34` this.splitNodeConditionService = splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\copy\IntentCopyDto.java:63` private Boolean onService = false;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\copy\IntentCopyDto.java:133` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\copy\IntentCopyDto.java:165` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\export\IntentExportDto.java:40` private Boolean onService = false;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\export\IntentExportDto.java:325` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\manage\ManageVoiceBotLineDto.java:28` this.service = service;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\projection\intent\IntentDetailDto.java:264` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\projection\intent\IntentDto.java:82` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\projection\intent\IntentDto.java:305` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\projection\intent\SentenceLearn.java:33` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\dto\projection\intent\SentenceLearn.java:98` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\entity\bot\B2bBotEntity.java:46` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\manage\ManageVoiceBotLine.java:61` this.service = service;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\nlu\intent\Intent.java:161` private Boolean onService = false;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\nlu\intent\Intent.java:372` if(onService == null) return false;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\nlu\intent\Intent.java:433` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\nlu\intent\IntentForSolr.java:133` private Boolean onService = false;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\model\nlu\intent\IntentForSolr.java:335` this.onService = onService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\logging\ScenarioStatusHistoryRepositoryImpl.java:47` Query query = em.createNativeQuery(sql, "CampaignStatisticsDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\logging\ScenarioStatusHistoryRepositoryImpl.java:73` Query query = em.createNativeQuery(sql, "SearchLogNameDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\logging\ScenarioStatusHistoryRepositoryImpl.java:100` Query query = em.createNativeQuery(sql, "ByTaskDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\logging\ScenarioStatusHistoryRepositoryImpl.java:128` Query query = em.createNativeQuery(sql, "ByTaskDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\logging\ScenarioStatusHistoryRepositoryImpl.java:153` Query query = em.createNativeQuery(sql, "ByTaskDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\nlu\intent\IntentRepositoryImpl.java:223` nameQuery = " and i.onService = :onService";
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\nlu\intent\IntentRepositoryImpl.java:225` nameQuery = " and (i.onService = :onService or i.onService is null)";
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\nlu\intent\IntentRepositoryImpl.java:359` andQuery +=                "and i.onService=:onService ";
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\nlu\intent\IntentRepositoryImpl.java:835` where.append(" and i.onService = :onService ");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\nlu\intent\SentenceRepository.java:66` "and i.onService = true " +
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\satisfaction\BotSatisfactionSurveyRepositoryImpl.java:235` Query query = em.createNativeQuery(queryString, "BotSatisfactionPointProjectionDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\satisfaction\DialogSatisfactionSurveyRepositoryImpl.java:263` Query query = em.createNativeQuery(queryString, "DialogSatisfactionPointProjectionDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\ibsituation\IBScenarioSituationStatisticsRepositoryImpl.java:66` Query resultQuery = em.createNativeQuery(resultSql, "IBScenarioSituationDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\ibsituation\IBScenarioSituationStatisticsRepositoryImpl.java:67` Query countQuery = em.createNativeQuery(countSql);
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\scenarioPattern\ScenarioPatternStatisticsRepositoryImpl.java:71` Query totalCountQuery = em.createNativeQuery(
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\scenarioPattern\ScenarioPatternStatisticsRepositoryImpl.java:92` return  em.createNativeQuery(
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\scenarioPattern\ScenarioPatternStatisticsRepositoryImpl.java:109` Query totalCountQuery =   em.createNativeQuery(
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\situation\ScenarioSituationStatisticsRepositoryImpl.java:66` Query resultQuery = em.createNativeQuery(resultSql, "ScenarioSituationDto");
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\repositories\statistics\situation\ScenarioSituationStatisticsRepositoryImpl.java:67` Query countQuery = em.createNativeQuery(countSql);
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\batch\JobBatchLogService.java:13` public interface JobBatchLogService extends BaseService<JobBatchLog> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\batch\JobBatchLogServiceImpl.java:18` public class JobBatchLogServiceImpl extends BaseServiceImpl<JobBatchLog> implements JobBatchLogService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotScheduleService.java:12` public interface BotScheduleService extends BaseService<BotSchedule> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotScheduleServiceImpl.java:26` public class BotScheduleServiceImpl extends BaseServiceImpl<BotSchedule> implements BotScheduleService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotService.java:23` public interface BotService extends BaseService<Bot> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:61` public class BotServiceImpl extends BaseServiceImpl<Bot> implements BotService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:66` private final UserService userService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:68` private final SolrService solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:69` private final TenantAccessRightService tenantAccessRightService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:70` private final RiveCacheService riveCacheService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:72` public BotServiceImpl(JpaRepository<Bot, Long> repository, BotRepository repository1, UserService userService, MasterRestUtils masterRestUtils, SolrService solrService, TenantAccessRightService tenantAccessRightService, RiveCacheService riveCacheService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:75` this.userService = userService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:77` this.solrService = solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:78` this.tenantAccessRightService = tenantAccessRightService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:79` this.riveCacheService = riveCacheService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:353` log.error("riveCacheService get or remove ERROR: "+e.getMessage());
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\BotServiceImpl.java:357` log.error("riveCacheService get or remove ERROR: "+e.getMessage());
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotService.java:11` public interface ManageTenantBotService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:64` public class ManageTenantBotServiceImpl implements ManageTenantBotService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:69` private final TenantAccessRightService tenantAccessRightService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:70` private final TenantService tenantService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:75` , TenantAccessRightService tenantAccessRightService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:77` , TenantService tenantService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:79` this.tenantAccessRightService = tenantAccessRightService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\ManageTenantBotServiceImpl.java:81` this.tenantService = tenantService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChannelFallbackQuestionService.java:11` public interface ChannelFallbackQuestionService extends BaseService<ChannelFallbackQuestion> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChannelFallbackQuestionServiceImpl.java:21` public class ChannelFallbackQuestionServiceImpl extends BaseServiceImpl<ChannelFallbackQuestion>  implements ChannelFallbackQuestionService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChannelPlatformService.java:13` public interface ChannelPlatformService extends BaseService<ChannelPlatform> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChannelPlatformServiceImpl.java:25` public class ChannelPlatformServiceImpl extends BaseServiceImpl<ChannelPlatform>  implements ChannelPlatformService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChannelQuestionService.java:11` public interface ChannelQuestionService extends BaseService<ChannelQuestion> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChannelQuestionServiceImpl.java:21` public class ChannelQuestionServiceImpl extends BaseServiceImpl<ChannelQuestion>  implements ChannelQuestionService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelService.java:23` public interface ChatChannelService extends BaseService<ChatChannel> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:61` public class ChatChannelServiceImpl extends BaseServiceImpl<ChatChannel>  implements ChatChannelService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:65` private final ChannelPlatformService channelPlatformService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:66` private final ChannelQuestionService channelQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:67` private final ChannelFallbackQuestionService channelFallbackQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:71` private final IntentService intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:72` private final BotService botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:75` ChannelPlatformService channelPlatformService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:76` ChannelQuestionService channelQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:77` ChannelFallbackQuestionService channelFallbackQuestionService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:79` IntentService intentService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:80` BotService botService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:83` this.channelPlatformService = channelPlatformService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:84` this.channelQuestionService = channelQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:85` this.channelFallbackQuestionService = channelFallbackQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:89` this.intentService = intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\channel\ChatChannelServiceImpl.java:90` this.botService = botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupService.java:14` public interface BotCodeGroupService extends BaseService<BotCodeGroup> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupServiceImpl.java:28` public class BotCodeGroupServiceImpl extends BaseServiceImpl<BotCodeGroup> implements BotCodeGroupService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupServiceImpl.java:32` private final BotService botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupServiceImpl.java:33` private final BotCodeService botCodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupServiceImpl.java:39` public BotCodeGroupServiceImpl(BotService botService, BotCodeGroupRepository repository, BotCodeService botCodeService, BotCodeRepository botCodeRepository) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupServiceImpl.java:41` this.botService = botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeGroupServiceImpl.java:43` this.botCodeService = botCodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\code\BotCodeService.java:8` public interface BotCodeService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryService.java:15` public interface BotDictionaryService extends BaseService<BotDictionary> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:39` public class BotDictionaryServiceImpl extends BaseServiceImpl<BotDictionary> implements BotDictionaryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:43` private SolrService solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:44` private NamedEntityService namedEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:45` private NamedEntityValueService namedEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:46` private NamedEntityValueTagService namedEntityValueTagService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:52` SolrService solrService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:53` NamedEntityService namedEntityService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:54` NamedEntityValueTagService namedEntityValueTagService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:55` NamedEntityValueService namedEntityValueService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:59` this.solrService = solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:60` this.namedEntityService = namedEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:61` this.namedEntityValueService = namedEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\dictionary\BotDictionaryServiceImpl.java:62` this.namedEntityValueTagService = namedEntityValueTagService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicService.java:23` public interface FormDynamicService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicServiceImpl.java:31` public class FormDynamicServiceImpl extends BaseServiceImpl<FormDynamic> implements FormDynamicService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicServiceImpl.java:34` private final FormDynamicValueService formDynamicValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicServiceImpl.java:36` public FormDynamicServiceImpl(FormDynamicRepository repository, FormDynamicValueService formDynamicValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicServiceImpl.java:39` this.formDynamicValueService = formDynamicValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicValueService.java:19` public interface FormDynamicValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\formdynamic\FormDynamicValueServiceImpl.java:27` public class FormDynamicValueServiceImpl extends BaseServiceImpl<FormDynamicValue> implements FormDynamicValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroImageService.java:8` public interface IntroImageService extends BaseService<IntroImage> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroImageServiceImpl.java:10` public class IntroImageServiceImpl extends BaseServiceImpl<IntroImage>  implements IntroImageService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroRecommendService.java:11` public interface IntroRecommendService extends BaseService<IntroRecommend> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroRecommendServiceImpl.java:20` public class IntroRecommendServiceImpl extends BaseServiceImpl<IntroRecommend>  implements IntroRecommendService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroRecommendServiceImpl.java:23` private final IntroImageService introImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroRecommendServiceImpl.java:26` public IntroRecommendServiceImpl(IntroRecommendRepository repository, IntroImageService introImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroRecommendServiceImpl.java:29` this.introImageService = introImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroService.java:16` public interface IntroService extends BaseService<Intro> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:26` public class IntroServiceImpl extends BaseServiceImpl<Intro>  implements IntroService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:29` private final IntroImageService introImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:30` private final IntroRecommendService introRecommendService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:33` IntroImageService introImageService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:34` IntroRecommendService introRecommendService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:37` this.introImageService = introImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\intro\IntroServiceImpl.java:38` this.introRecommendService = introRecommendService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\learn\DeployService.java:19` public interface DeployService extends BaseService<Deploy> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\learn\DeployServiceImpl.java:31` public class DeployServiceImpl extends BaseServiceImpl<Deploy> implements DeployService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\learn\LearningInfoService.java:13` public interface LearningInfoService extends BaseService<LearningInfo> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\notice\NoticeChannelService.java:17` public interface NoticeChannelService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\notice\NoticeChannelServiceImpl.java:20` public class NoticeChannelServiceImpl extends BaseServiceImpl<NoticeChannelInfo> implements NoticeChannelService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\notice\NoticeService.java:19` public interface NoticeService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\notice\NoticeServiceImpl.java:22` public class NoticeServiceImpl extends BaseServiceImpl<Notice> implements NoticeService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateService.java:14` public interface SmsTemplateService extends BaseService<SmsTemplate> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateServiceImpl.java:27` public class SmsTemplateServiceImpl extends BaseServiceImpl<SmsTemplate> implements SmsTemplateService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateServiceImpl.java:30` private final SmsTemplateValueService smsTemplateValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateServiceImpl.java:33` public SmsTemplateServiceImpl(SmsTemplateRepository repository, SmsTemplateValueService smsTemplateValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateServiceImpl.java:36` this.smsTemplateValueService = smsTemplateValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateValueService.java:12` public interface SmsTemplateValueService extends BaseService<SmsTemplateValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateValueServiceImpl.java:24` public class SmsTemplateValueServiceImpl extends BaseServiceImpl<SmsTemplateValue> implements SmsTemplateValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateValueServiceImpl.java:27` private final SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateValueServiceImpl.java:30` public SmsTemplateValueServiceImpl(SmsTemplateValueRepository repository ,SmsFormValueService smsFormValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\sms\SmsTemplateValueServiceImpl.java:33` this.smsFormValueService = smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateService.java:24` public interface TemplateService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateServiceImpl.java:34` public class TemplateServiceImpl extends BaseServiceImpl<Template> implements TemplateService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateServiceImpl.java:37` private final TemplateValueService templateValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateServiceImpl.java:40` TemplateValueService templateValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateServiceImpl.java:43` this.templateValueService = templateValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateValueService.java:20` public interface TemplateValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\bot\template\TemplateValueServiceImpl.java:30` public class TemplateValueServiceImpl extends BaseServiceImpl<TemplateValue> implements TemplateValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\code\CodeGroupService.java:16` public interface CodeGroupService extends BaseService<CodeGroup> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\code\CodeGroupServiceImpl.java:30` public class CodeGroupServiceImpl extends BaseServiceImpl<CodeGroup> implements CodeGroupService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\code\CodeService.java:24` public class CodeService extends BaseServiceImpl<Code> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixInfoService.java:16` public interface ConfusionMatrixInfoService extends BaseService<ConfusionMatrixInfo> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixInfoServiceImpl.java:28` public class ConfusionMatrixInfoServiceImpl extends BaseServiceImpl<ConfusionMatrixInfo> implements ConfusionMatrixInfoService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixService.java:7` public interface ConfusionMatrixService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:55` public class ConfusionMatrixServiceImpl implements ConfusionMatrixService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:59` private final BotService botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:60` private final IntentService intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:61` private final SolrService solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:62` private final NamedEntityService namedEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:64` private final ConfusionMatrixInfoService confusionMatrixInfoService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:65` private final RedisService redisService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:66` private final LearningInfoService learningInfoService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:67` private final DeployService deployService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:68` private final SentenceService sentenceService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:69` private final IntentHistoryService intentHistoryService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:76` public ConfusionMatrixServiceImpl(BotService botService, IntentService intentService, SolrService solrService, NamedEntityService namedEntityService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:77` ConfusionMatrixInfoService confusionMatrixInfoService, RedisService redisService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:78` LearningInfoService learningInfoService, DeployService deployService, SentenceService sentenceService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:79` IntentHistoryService intentHistoryService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:80` this.botService = botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:81` this.intentService = intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:82` this.solrService = solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:83` this.namedEntityService = namedEntityService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:85` this.confusionMatrixInfoService = confusionMatrixInfoService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:86` this.redisService = redisService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:87` this.learningInfoService = learningInfoService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:88` this.deployService = deployService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:89` this.sentenceService = sentenceService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\confusion\ConfusionMatrixServiceImpl.java:90` this.intentHistoryService = intentHistoryService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\customer\CustomerService.java:9` public interface CustomerService extends BaseService<Customer> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\customer\CustomerServiceImpl.java:16` public class CustomerServiceImpl extends BaseServiceImpl<Customer> implements CustomerService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\etc\product\AdditionalProductService.java:10` public interface AdditionalProductService extends BaseService<AdditionalProduct> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\etc\product\AdditionalProductServiceImpl.java:13` public class AdditionalProductServiceImpl extends BaseServiceImpl<AdditionalProduct> implements AdditionalProductService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiService.java:25` public interface BotApiService extends BaseService<BotApi>{
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:36` public class BotApiServiceImpl extends BaseServiceImpl<BotApi> implements BotApiService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:39` private final BotApiParameterService botApiParameterService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:40` private final BotApiResponseService botApiResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:43` BotApiParameterService botApiParameterService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:44` BotApiResponseService botApiResponseService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:47` this.botApiParameterService = botApiParameterService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\api\BotApiServiceImpl.java:48` this.botApiResponseService = botApiResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeRequestService.java:11` public interface ApiNodeRequestService extends BaseService<ApiNodeRequest> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeResponseService.java:10` public interface ApiNodeResponseService extends BaseService<ApiNodeResponse> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeService.java:10` public interface ApiNodeService extends BaseService<ApiNode> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeServiceImpl.java:18` private final ApiNodeResponseService apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeServiceImpl.java:19` private final ApiNodeRequestService apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeServiceImpl.java:22` public ApiNodeServiceImpl(ApiNodeRepository repository, ApiNodeResponseService apiNodeResponseService, ApiNodeRequestService apiNodeRequestService ) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeServiceImpl.java:25` this.apiNodeResponseService = apiNodeResponseService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ApiNodeServiceImpl.java:26` this.apiNodeRequestService = apiNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BotApiParameterService.java:11` public interface BotApiParameterService extends BaseService<BotApiParameter> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BotApiResponseService.java:11` public interface BotApiResponseService extends BaseService<BotApiResponse> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleButtonService.java:8` public interface BubbleButtonService extends BaseService<BubbleButton> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleService.java:10` public interface BubbleService extends BaseService<Bubble> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:14` public class BubbleServiceImpl extends BaseServiceImpl<Bubble> implements BubbleService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:17` private final BubbleTextService bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:18` private final BubbleButtonService bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:19` private final ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:22` public BubbleServiceImpl(BubbleRepository repository, BubbleTextService bubbleTextService, BubbleButtonService bubbleButtonService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:23` ChatImageService chatImageService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:26` this.bubbleTextService = bubbleTextService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:27` this.bubbleButtonService = bubbleButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleServiceImpl.java:28` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleTextParamService.java:9` public interface BubbleTextParamService extends BaseService<BubbleTextParam> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleTextParamServiceImpl.java:14` public class BubbleTextParamServiceImpl extends BaseServiceImpl<BubbleTextParam> implements BubbleTextParamService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleTextService.java:8` public interface BubbleTextService extends BaseService<BubbleText> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleTextServiceImpl.java:16` private final BubbleTextParamService bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleTextServiceImpl.java:19` public BubbleTextServiceImpl(BubbleTextRepository repository, BubbleTextParamService bubbleTextParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\BubbleTextServiceImpl.java:22` this.bubbleTextParamService = bubbleTextParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatImageService.java:6` public interface ChatImageService extends BaseService<ChatContent> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeParamService.java:10` public interface ChatNodeParamService extends BaseService<ChatNodeParam>{
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeParamServiceImpl.java:16` public class ChatNodeParamServiceImpl extends BaseServiceImpl<ChatNodeParam> implements ChatNodeParamService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeService.java:13` public interface ChatNodeService extends BaseService<ChatNode> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:37` public class ChatNodeServiceImpl extends BaseServiceImpl<ChatNode> implements ChatNodeService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:41` private final IntentService intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:42` private final SlotNodeService slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:43` private final BubbleService bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:44` private final ChipService chipService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:45` private final ChatNodeSlideService chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:47` private final DynamicViewService dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:48` private final ApiNodeService apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:49` private final DynamicFormService dynamicFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:50` private final SplitNodeService splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:51` private final SmsFormService smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:53` private final ReturnNodeService returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:54` private final ParameterService parameterService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:55` private final ChatNodeParamService chatNodeParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:63` IntentService intentService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:64` SlotNodeService slotNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:65` BubbleService bubbleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:66` ChipService chipService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:67` ChatNodeSlideService chatNodeSlideService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:69` DynamicViewService dynamicViewService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:70` ApiNodeService apiNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:71` DynamicFormService dynamicFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:72` SplitNodeService splitNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:73` SmsFormService smsFormService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:75` ReturnNodeService returnNodeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:76` ParameterService parameterService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:77` ChatNodeParamService chatNodeParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:82` this.intentService = intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:83` this.slotNodeService = slotNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:84` this.bubbleService = bubbleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:85` this.chipService = chipService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:86` this.chatNodeSlideService = chatNodeSlideService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:88` this.dynamicViewService = dynamicViewService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:89` this.apiNodeService = apiNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:90` this.dynamicFormService = dynamicFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:91` this.splitNodeService = splitNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:92` this.smsFormService = smsFormService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:94` this.returnNodeService = returnNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:95` this.parameterService = parameterService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:96` this.chatNodeParamService = chatNodeParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeServiceImpl.java:233` ExecutorService executor = Executors.newFixedThreadPool(3);
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideParamService.java:9` public interface ChatNodeSlideParamService extends BaseService<ChatNodeSlideParam> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideParamServiceImpl.java:14` public class ChatNodeSlideParamServiceImpl extends BaseServiceImpl<ChatNodeSlideParam> implements ChatNodeSlideParamService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideService.java:9` public interface ChatNodeSlideService extends BaseService<ChatNodeSlide> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:13` public class ChatNodeSlideServiceImpl extends BaseServiceImpl<ChatNodeSlide> implements ChatNodeSlideService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:15` private final ChatImageService chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:16` private final ChatNodeSlideParamService chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:17` private final SlideButtonService slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:20` public ChatNodeSlideServiceImpl(ChatNodeSlideRepository repository, ChatImageService chatImageService, ChatNodeSlideParamService chatNodeSlideParamService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:21` SlideButtonService slideButtonService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:24` this.chatImageService = chatImageService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:25` this.chatNodeSlideParamService = chatNodeSlideParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlideServiceImpl.java:26` this.slideButtonService = slideButtonService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlotQuestionParamService.java:9` public interface ChatNodeSlotQuestionParamService extends BaseService<ChatNodeSlotQuestionParam> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChatNodeSlotQuestionParamServiceImpl.java:14` public class ChatNodeSlotQuestionParamServiceImpl extends BaseServiceImpl<ChatNodeSlotQuestionParam> implements ChatNodeSlotQuestionParamService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ChipService.java:8` public interface ChipService extends BaseService<QuickReply> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormService.java:10` public interface DynamicFormService extends BaseService<DynamicForm> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormServiceImpl.java:15` public class DynamicFormServiceImpl  extends BaseServiceImpl<DynamicForm> implements DynamicFormService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormServiceImpl.java:18` private final DynamicFormValueService dynamicFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormServiceImpl.java:22` public DynamicFormServiceImpl(DynamicFormRepository repository, DynamicFormValueService dynamicFormValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormServiceImpl.java:25` this.dynamicFormValueService = dynamicFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormValueService.java:7` public interface DynamicFormValueService extends BaseService<DynamicFormValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicFormValueServiceImpl.java:11` public class DynamicFormValueServiceImpl  extends BaseServiceImpl<DynamicFormValue> implements DynamicFormValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewService.java:19` public interface DynamicViewService extends BaseService<DynamicView> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewServiceImpl.java:14` public class DynamicViewServiceImpl extends BaseServiceImpl<DynamicView> implements DynamicViewService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewServiceImpl.java:17` private final DynamicViewValueService dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewServiceImpl.java:21` public DynamicViewServiceImpl(DynamicViewRepository repository, DynamicViewValueService dynamicViewValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewServiceImpl.java:24` this.dynamicViewValueService = dynamicViewValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewValueService.java:18` public interface DynamicViewValueService extends BaseService<DynamicViewValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\DynamicViewValueServiceImpl.java:14` public class DynamicViewValueServiceImpl extends BaseServiceImpl<DynamicViewValue> implements DynamicViewValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\MultiSlotConditionDetailService.java:9` public interface MultiSlotConditionDetailService extends BaseService<MultiSlotConditionDetail> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\MultiSlotConditionService.java:8` public interface MultiSlotConditionService extends BaseService<MultiSlotCondition> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\MultiSlotQuestionContentService.java:9` public interface MultiSlotQuestionContentService extends BaseService<MultiSlotQuestionContent> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\MultiSlotQuestionService.java:8` public interface MultiSlotQuestionService extends BaseService<MultiSlotQuestion> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\QuickReplyService.java:9` public interface QuickReplyService extends BaseService<QuickReply> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\QuickReplyServiceImpl.java:12` public class QuickReplyServiceImpl extends BaseServiceImpl<QuickReply> implements QuickReplyService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ReturnNodeRequestService.java:10` public interface ReturnNodeRequestService extends BaseService<ReturnNodeRequest> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ReturnNodeService.java:10` public interface ReturnNodeService extends BaseService<ReturnNode> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ReturnNodeServiceImpl.java:17` private final ReturnNodeRequestService returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ReturnNodeServiceImpl.java:20` public ReturnNodeServiceImpl(ReturnNodeRepository repository, ReturnNodeRequestService returnNodeRequestService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\ReturnNodeServiceImpl.java:23` this.returnNodeRequestService = returnNodeRequestService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlideButtonService.java:8` public interface SlideButtonService extends BaseService<ChatNodeSlideButton> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotNodeService.java:9` public interface SlotNodeService extends BaseService<SlotNode> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotNodeServiceImpl.java:17` private final SlotOptionService slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotNodeServiceImpl.java:18` private final SlotQuestionService slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotNodeServiceImpl.java:21` SlotOptionService slotOptionService, SlotQuestionService slotQuestionService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotNodeServiceImpl.java:24` this.slotOptionService = slotOptionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotNodeServiceImpl.java:25` this.slotQuestionService = slotQuestionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotOptionService.java:8` public interface SlotOptionService extends BaseService<SlotOption> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotOptionServiceImpl.java:12` public class SlotOptionServiceImpl extends BaseServiceImpl<SlotOption> implements SlotOptionService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotQuestionService.java:8` public interface SlotQuestionService extends BaseService<SlotQuestion> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotQuestionServiceImpl.java:16` private final ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotQuestionServiceImpl.java:18` public SlotQuestionServiceImpl(SlotQuestionRepository repository, ChatNodeSlotQuestionParamService chatNodeSlotQuestionParamService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SlotQuestionServiceImpl.java:21` this.chatNodeSlotQuestionParamService = chatNodeSlotQuestionParamService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormService.java:19` public interface SmsFormService extends BaseService<SmsForm> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormServiceImpl.java:13` public class SmsFormServiceImpl extends BaseServiceImpl<SmsForm> implements SmsFormService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormServiceImpl.java:16` private final SmsFormValueService smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormServiceImpl.java:20` public SmsFormServiceImpl(SmsFormRepository repository, SmsFormValueService smsFormValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormServiceImpl.java:23` this.smsFormValueService = smsFormValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormValueService.java:21` public interface SmsFormValueService extends BaseService<SmsFormValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SmsFormValueServiceImpl.java:14` public class SmsFormValueServiceImpl extends BaseServiceImpl<SmsFormValue> implements SmsFormValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SplitNodeConditionService.java:11` public interface SplitNodeConditionService extends BaseService<SplitNodeCondition> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SplitNodeService.java:8` public interface SplitNodeService extends BaseService<SplitNode> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SplitNodeServiceImpl.java:13` public class SplitNodeServiceImpl extends BaseServiceImpl<SplitNode> implements SplitNodeService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SplitNodeServiceImpl.java:16` private final SplitNodeConditionService splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SplitNodeServiceImpl.java:19` public SplitNodeServiceImpl(SplitNodeRepository repository, SplitNodeConditionService splitNodeConditionService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\chatflow\SplitNodeServiceImpl.java:22` this.splitNodeConditionService = splitNodeConditionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityService.java:16` public interface ConfirmEntityService extends BaseService<ConfirmEntity> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityServiceImpl.java:34` public class ConfirmEntityServiceImpl extends BaseServiceImpl<ConfirmEntity> implements ConfirmEntityService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityServiceImpl.java:37` private final CodeService codeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityServiceImpl.java:38` private final ConfirmEntityValueService confirmEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityServiceImpl.java:41` public ConfirmEntityServiceImpl(ConfirmEntityRepository repository, CodeService codeService, ConfirmEntityValueService confirmEntityValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityServiceImpl.java:44` this.codeService = codeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityServiceImpl.java:45` this.confirmEntityValueService = confirmEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityValueService.java:13` public interface ConfirmEntityValueService extends BaseService<ConfirmEntityValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmEntityValueServiceImpl.java:23` public class ConfirmEntityValueServiceImpl extends BaseServiceImpl<ConfirmEntityValue> implements ConfirmEntityValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmSlotService.java:8` public interface ConfirmSlotService extends BaseService<ConfirmSlot> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\confirmentity\ConfirmSlotServiceImpl.java:12` public class ConfirmSlotServiceImpl extends BaseServiceImpl<ConfirmSlot> implements ConfirmSlotService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityService.java:17` public interface IntentClassificationEntityService extends BaseService<IntentClassificationEntity> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:39` public class IntentClassificationEntityServiceImpl extends BaseServiceImpl<IntentClassificationEntity> implements IntentClassificationEntityService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:41` private final CodeService codeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:43` private final IntentClassificationEntityValueService intentClassificationEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:44` //private SolrService solrService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:48` CodeService codeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:49` IntentClassificationEntityValueService intentClassificationEntityValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:52` this.codeService = codeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityServiceImpl.java:53` this.intentClassificationEntityValueService = intentClassificationEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueService.java:17` public interface IntentClassificationEntityValueService extends BaseService<IntentClassificationEntityValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueServiceImpl.java:29` public class IntentClassificationEntityValueServiceImpl extends BaseServiceImpl<IntentClassificationEntityValue> implements IntentClassificationEntityValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueServiceImpl.java:32` private final IntentClassificationEntityValueTagService intentClassificationEntityValueTagService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueServiceImpl.java:34` public IntentClassificationEntityValueServiceImpl(IntentClassificationEntityValueRepository repository, IntentClassificationEntityValueTagService intentClassificationEntityValueTagService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueServiceImpl.java:37` this.intentClassificationEntityValueTagService = intentClassificationEntityValueTagService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueTagService.java:11` public interface IntentClassificationEntityValueTagService extends BaseService<IntentClassificationEntityValueTag> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\intentclassification\IntentClassificationEntityValueTagServiceImpl.java:22` public class IntentClassificationEntityValueTagServiceImpl extends BaseServiceImpl<IntentClassificationEntityValueTag> implements IntentClassificationEntityValueTagService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityService.java:14` public interface NamedEntityService extends BaseService<NamedEntity> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:33` public class NamedEntityServiceImpl extends BaseServiceImpl<NamedEntity> implements NamedEntityService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:35` private final CodeService codeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:37` private final NamedEntityValueService namedEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:38` private final NamedEntityValueFunctionService namedEntityValueFunctionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:42` CodeService codeService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:43` NamedEntityValueService namedEntityValueService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:44` NamedEntityValueFunctionService namedEntityValueFunctionService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:47` this.codeService = codeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:48` this.namedEntityValueService = namedEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityServiceImpl.java:49` this.namedEntityValueFunctionService = namedEntityValueFunctionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueFunctionService.java:13` public interface NamedEntityValueFunctionService extends BaseService<NamedEntityValueFunction> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueFunctionServiceImpl.java:21` public class NamedEntityValueFunctionServiceImpl extends BaseServiceImpl<NamedEntityValueFunction> implements NamedEntityValueFunctionService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueFunctionServiceImpl.java:24` private final NamedEntityValueService namedEntityValueService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueFunctionServiceImpl.java:25` public NamedEntityValueFunctionServiceImpl(NamedEntityValueFunctionRepository repository,NamedEntityValueService namedEntityValueService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueService.java:14` public interface NamedEntityValueService extends BaseService<NamedEntityValue> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueServiceImpl.java:22` public class NamedEntityValueServiceImpl extends BaseServiceImpl<NamedEntityValue> implements NamedEntityValueService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueServiceImpl.java:25` private final NamedEntityValueTagService namedEntityValueTagService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueServiceImpl.java:27` public NamedEntityValueServiceImpl(NamedEntityValueRepository repository, NamedEntityValueTagService namedEntityValueTagService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueServiceImpl.java:30` this.namedEntityValueTagService = namedEntityValueTagService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueTagService.java:11` public interface NamedEntityValueTagService extends BaseService<NamedEntityValueTag> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\namedentity\NamedEntityValueTagServiceImpl.java:22` public class NamedEntityValueTagServiceImpl extends BaseServiceImpl<NamedEntityValueTag> implements NamedEntityValueTagService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\parameter\ParameterService.java:14` public interface ParameterService extends BaseService<Parameter> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\knowledge\parameter\ParameterServiceImpl.java:27` public class ParameterServiceImpl extends BaseServiceImpl<Parameter> implements ParameterService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryService.java:9` public interface ApiHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryServiceImpl.java:55` public class ApiHistoryServiceImpl implements ApiHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryServiceImpl.java:59` private final ChatChannelService chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryServiceImpl.java:60` private final CustomerService customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryServiceImpl.java:63` public ApiHistoryServiceImpl( ChatChannelService chatChannelService, CustomerService customerService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryServiceImpl.java:65` this.chatChannelService = chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ApiHistoryServiceImpl.java:66` this.customerService = customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\BotCopyHistoryService.java:7` public interface BotCopyHistoryService extends BaseService<BotCopyHistory>{
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\BotCopyHistoryServiceImpl.java:11` public class BotCopyHistoryServiceImpl extends BaseServiceImpl<BotCopyHistory> implements BotCopyHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryService.java:7` public interface ChatHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryServiceImpl.java:62` public class ChatHistoryServiceImpl implements ChatHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryServiceImpl.java:66` private final ChatChannelService chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryServiceImpl.java:67` private final CustomerService customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryServiceImpl.java:70` public ChatHistoryServiceImpl(ChatChannelService chatChannelService, CustomerService customerService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryServiceImpl.java:72` this.chatChannelService = chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatHistoryServiceImpl.java:73` this.customerService = customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatNodeHistoryService.java:18` public interface ChatNodeHistoryService extends BaseService<ChatNodeHistory> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ChatNodeHistoryServiceImpl.java:23` public class ChatNodeHistoryServiceImpl extends BaseServiceImpl<ChatNodeHistory> implements ChatNodeHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\IntentHistoryService.java:21` public interface IntentHistoryService extends BaseService<IntentHistory> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\IntentHistoryServiceImpl.java:37` public class IntentHistoryServiceImpl extends BaseServiceImpl<IntentHistory> implements IntentHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NluHistoryService.java:6` public interface NluHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NluHistoryServiceImpl.java:49` private final ChatChannelService chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NluHistoryServiceImpl.java:50` private final CustomerService customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NluHistoryServiceImpl.java:53` public NluHistoryServiceImpl( ChatChannelService chatChannelService, CustomerService customerService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NluHistoryServiceImpl.java:55` this.chatChannelService = chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NluHistoryServiceImpl.java:56` this.customerService = customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NoAnswerHistoryService.java:14` public interface NoAnswerHistoryService extends BaseService<NoAnswerHistory> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NoAnswerHistoryServiceImpl.java:62` public class NoAnswerHistoryServiceImpl extends BaseServiceImpl<NoAnswerHistory> implements NoAnswerHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NoAnswerHistoryServiceImpl.java:66` private final CustomerService customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NoAnswerHistoryServiceImpl.java:70` public NoAnswerHistoryServiceImpl( CustomerService customerService, NoAnswerRepository noAnswerRepository) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\NoAnswerHistoryServiceImpl.java:73` this.customerService = customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryService.java:6` public interface ScenarioHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:46` public class ScenarioHistoryServiceImpl implements ScenarioHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:50` private final ChatChannelService chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:51` private final ChatNodeService chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:52` private final IntentService intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:53` private final CustomerService customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:56` public ScenarioHistoryServiceImpl( ChatChannelService chatChannelService, ChatNodeService chatNodeService, IntentService intentService, CustomerService customerService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:58` this.chatChannelService = chatChannelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:59` this.chatNodeService = chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:60` this.intentService = intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioHistoryServiceImpl.java:61` this.customerService = customerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioStatusHistoryService.java:15` public interface ScenarioStatusHistoryService extends BaseService<ScenarioStatusHistory> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\ScenarioStatusHistoryServiceImpl.java:20` public class ScenarioStatusHistoryServiceImpl extends BaseServiceImpl<ScenarioStatusHistory> implements ScenarioStatusHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\XroShotHistoryService.java:8` public interface XroShotHistoryService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\logging\XroShotHistoryServiceImpl.java:134` log.info("XroShotHistoryService Fail >>> sendReqStartTime : {}, sendReqEndTime : {}, cause : {}",
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\monitoring\MonitoringResponseService.java:12` public interface MonitoringResponseService extends BaseService<ManageMonitoringResponse> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\monitoring\MonitoringResponseServiceImpl.java:19` public class MonitoringResponseServiceImpl extends BaseServiceImpl<ManageMonitoringResponse> implements MonitoringResponseService  {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\monitoring\MonitoringService.java:20` public interface MonitoringService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\monitoring\MonitoringServiceImpl.java:32` public class MonitoringServiceImpl implements MonitoringService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\category\CategoryBotService.java:29` public class CategoryBotService extends BaseServiceImpl<CategoryBot> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\category\CategoryService.java:27` public class CategoryService extends BaseServiceImpl<Category> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\category\CmsCategoryBotService.java:26` public class CmsCategoryBotService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentParameterService.java:10` public interface IntentParameterService extends BaseService<IntentParameter> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentSatisfactionService.java:12` public interface IntentSatisfactionService extends BaseService<IntentSatisfaction> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentScheduleService.java:11` public interface IntentScheduleService extends BaseService<IntentSchedule> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentScheduleServiceImpl.java:18` public class IntentScheduleServiceImpl extends BaseServiceImpl<IntentSchedule> implements IntentScheduleService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentService.java:37` public interface IntentService extends BaseService<Intent> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:41` public class IntentServiceImpl extends BaseServiceImpl<Intent> implements IntentService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:44` private final IntentScheduleService intentScheduleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:45` private final SentenceService sentenceService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:46` private final IntentParameterService intentParameterService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:47` private final IntentSatisfactionService intentSatisfactionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:50` IntentScheduleService intentScheduleService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:51` SentenceService sentenceService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:52` IntentParameterService intentParameterService, IntentSatisfactionService intentSatisfactionService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:55` this.intentScheduleService = intentScheduleService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:56` this.sentenceService = sentenceService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:57` this.intentParameterService = intentParameterService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:58` this.intentSatisfactionService = intentSatisfactionService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\IntentServiceImpl.java:128` //TODO learnRecommendService 생성시 작업 진행
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceNerService.java:10` public interface SentenceNerService extends BaseService<SentenceNer> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceNerServiceImpl.java:19` public class SentenceNerServiceImpl extends BaseServiceImpl<SentenceNer> implements SentenceNerService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceService.java:24` public interface SentenceService extends BaseService<Sentence> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceServiceImpl.java:33` public class SentenceServiceImpl extends BaseServiceImpl<Sentence> implements SentenceService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceServiceImpl.java:36` private final SentenceNerService sentenceNerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceServiceImpl.java:38` public SentenceServiceImpl(SentenceRepository repository, SentenceNerService sentenceNerService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\nlu\intent\SentenceServiceImpl.java:41` this.sentenceNerService = sentenceNerService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\recommend\LearnRecommendService.java:17` public class LearnRecommendService extends BaseServiceImpl<LearnRecommend> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\satisfaction\SatisfactionSurveyService.java:20` public interface SatisfactionSurveyService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\satisfaction\SatisfactionSurveyServiceImpl.java:26` public class SatisfactionSurveyServiceImpl implements SatisfactionSurveyService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\schema\SchemaService.java:15` public interface SchemaService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\schema\SchemaServiceImpl.java:28` public class SchemaServiceImpl implements SchemaService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsService.java:10` public interface AdditionalServiceJoinStatisticsService extends BaseService<AdditionalServiceJoinStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\additionalServiceJoin\AdditionalServiceJoinStatisticsServiceImpl.java:16` public class AdditionalServiceJoinStatisticsServiceImpl extends BaseServiceImpl<AdditionalServiceJoinStatistics> implements AdditionalServiceJoinStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\answerLink\AnswerLinkStatisticsService.java:11` public interface AnswerLinkStatisticsService extends BaseService<AnswerLinkStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\answerLink\AnswerLinkStatisticsServiceImpl.java:15` public class AnswerLinkStatisticsServiceImpl extends BaseServiceImpl<AnswerLinkStatistics> implements AnswerLinkStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\answerLinkDetail\AnswerLinkDetailStatisticsService.java:6` public interface AnswerLinkDetailStatisticsService extends BaseService<AnswerLinkDetailStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\answerLinkDetail\AnswerLinkDetailStatisticsServiceImpl.java:17` public class AnswerLinkDetailStatisticsServiceImpl extends BaseServiceImpl<AnswerLinkDetailStatistics> implements AnswerLinkDetailStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\api\ApiStatisticsService.java:13` public interface ApiStatisticsService extends BaseService<ApiStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\api\ApiStatisticsServiceImpl.java:49` public class ApiStatisticsServiceImpl extends BaseServiceImpl<ApiStatistics> implements ApiStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\api\ApiStatisticsServiceImpl.java:53` private final BotApiService botApiService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\api\ApiStatisticsServiceImpl.java:56` public ApiStatisticsServiceImpl(ApiStatisticsRepository repository, BotApiService botApiService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\api\ApiStatisticsServiceImpl.java:59` this.botApiService = botApiService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\campaign\CampaignPlanService.java:10` public interface CampaignPlanService extends BaseService<CampaignPlan> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\campaign\CampaignPlanServiceImpl.java:18` public class CampaignPlanServiceImpl extends BaseServiceImpl<CampaignPlan> implements CampaignPlanService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\dialog\DialogStatisticsService.java:15` public interface DialogStatisticsService extends BaseService<DialogStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\dialog\DialogStatisticsServiceImpl.java:60` public class DialogStatisticsServiceImpl extends BaseServiceImpl<DialogStatistics> implements DialogStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\ibsituation\IBScenarioSituationService.java:14` public interface IBScenarioSituationService extends BaseService<ScenarioStatusHistory> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\ibsituation\IBScenarioSituationServiceImpl.java:23` public class IBScenarioSituationServiceImpl extends BaseServiceImpl<ScenarioStatusHistory> implements IBScenarioSituationService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\knowledge\KnowledgeStatisticsService.java:11` public interface KnowledgeStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\knowledge\KnowledgeStatisticsServiceImpl.java:17` public class KnowledgeStatisticsServiceImpl implements KnowledgeStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsService.java:13` public interface SlotStatisticsService extends BaseService<SlotStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsServiceImpl.java:52` public class SlotStatisticsServiceImpl extends BaseServiceImpl<SlotStatistics> implements SlotStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsServiceImpl.java:56` private final BotService botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsServiceImpl.java:57` private final ChatChannelService channelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsServiceImpl.java:60` public SlotStatisticsServiceImpl(SlotStatisticsRepository repository, BotService botService, ChatChannelService channelService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsServiceImpl.java:63` this.botService = botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\nlu\SlotStatisticsServiceImpl.java:64` this.channelService = channelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\payment\PaymentStatisticsService.java:10` public interface PaymentStatisticsService extends BaseService<PaymentStatistics>{
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\payment\PaymentStatisticsServiceImpl.java:16` public class PaymentStatisticsServiceImpl extends BaseServiceImpl<PaymentStatistics> implements PaymentStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\satisfaction\SatisfactionStatisticsService.java:11` public interface SatisfactionStatisticsService extends BaseService<SatisfactionStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\satisfaction\SatisfactionStatisticsServiceImpl.java:17` public class SatisfactionStatisticsServiceImpl extends BaseServiceImpl<SatisfactionStatistics> implements SatisfactionStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioNodeStatisticsService.java:11` public interface ScenarioNodeStatisticsService extends BaseService<ScenarioNodeStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioNodeStatisticsServiceImpl.java:15` public class ScenarioNodeStatisticsServiceImpl extends BaseServiceImpl<ScenarioNodeStatistics> implements ScenarioNodeStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsService.java:21` public interface ScenarioStatisticsService extends BaseService<ScenarioStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:59` public class ScenarioStatisticsServiceImpl extends BaseServiceImpl<ScenarioStatistics> implements ScenarioStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:63` private final BotService botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:64` private final ChatChannelService channelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:65` private final IntentService intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:66` private final ChatNodeService chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:71` public ScenarioStatisticsServiceImpl(ScenarioStatisticsRepository repository, BotService botService, ChatChannelService channelService
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:72` , IntentService intentService, ChatNodeService chatNodeService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:75` this.botService = botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:76` this.channelService = channelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:77` this.intentService = intentService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenario\ScenarioStatisticsServiceImpl.java:78` this.chatNodeService = chatNodeService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenarioPattern\ScenarioPatternStatisticsService.java:9` public interface ScenarioPatternStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\scenarioPattern\ScenarioPatternStatisticsServiceImpl.java:15` public class ScenarioPatternStatisticsServiceImpl implements ScenarioPatternStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\simple\SimpleStatisticsService.java:8` public interface SimpleStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\simple\SimpleStatisticsServiceImpl.java:12` public class SimpleStatisticsServiceImpl implements SimpleStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\situation\ScenarioSituationService.java:13` public interface ScenarioSituationService extends BaseService<ScenarioStatusHistory> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\situation\ScenarioSituationServiceImpl.java:20` public class ScenarioSituationServiceImpl extends BaseServiceImpl<ScenarioStatusHistory> implements ScenarioSituationService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\top10\Top10DialogStatisticsService.java:11` public interface Top10DialogStatisticsService extends BaseService<Top10DialogStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\top10\Top10DialogStatisticsServiceImpl.java:15` public class Top10DialogStatisticsServiceImpl extends BaseServiceImpl<Top10DialogStatistics> implements Top10DialogStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\usage\UsageStatisticsService.java:10` public interface UsageStatisticsService extends BaseService<UserStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\usage\UsageStatisticsServiceImpl.java:16` public class UsageStatisticsServiceImpl  extends BaseServiceImpl<UserStatistics> implements UsageStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsService.java:14` public interface UserStatisticsService extends BaseService<UserStatistics> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsServiceImpl.java:53` public class UserStatisticsServiceImpl extends BaseServiceImpl<UserStatistics> implements UserStatisticsService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsServiceImpl.java:58` private ChatChannelService channelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsServiceImpl.java:59` private BotService botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsServiceImpl.java:62` public UserStatisticsServiceImpl(UserStatisticsRepository repository, ChatChannelService channelService, BotService botService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsServiceImpl.java:65` this.channelService = channelService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\statistics\user\UserStatisticsServiceImpl.java:66` this.botService = botService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\template\ChannelTemplateService.java:11` public interface ChannelTemplateService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\template\ChannelTemplateServiceImpl.java:23` public class ChannelTemplateServiceImpl implements ChannelTemplateService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\tenant\PremadeMappingService.java:16` public interface PremadeMappingService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\tenant\PremadeMappingServiceImpl.java:19` public class PremadeMappingServiceImpl implements PremadeMappingService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\tenant\TenantService.java:15` public interface TenantService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\tenant\TenantServiceImpl.java:27` public class TenantServiceImpl implements TenantService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\AuthMenuService.java:13` public interface AuthMenuService extends BaseService<AuthMenu> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\AuthMenuServiceImpl.java:35` public class AuthMenuServiceImpl extends BaseServiceImpl<AuthMenu> implements AuthMenuService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\AuthMenuServiceImpl.java:41` private final MenuService menuService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\AuthMenuServiceImpl.java:49` MenuService menuService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\AuthMenuServiceImpl.java:55` this.menuService = menuService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\MenuService.java:8` public interface MenuService extends BaseService<Menu> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\MenuServiceImpl.java:26` public class MenuServiceImpl extends BaseServiceImpl<Menu> implements MenuService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\TenantAccessRightService.java:10` public interface TenantAccessRightService extends BaseService<TenantAccessRight> {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\TenantAccessRightServiceImpl.java:15` public class TenantAccessRightServiceImpl extends BaseServiceImpl<TenantAccessRight> implements TenantAccessRightService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserService.java:15` public interface UserService extends BaseService<User>{
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:37` public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:46` private final ManageTenantBotService manageTenantBotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:48` private TenantAccessRightService tenantAccessRightService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:53` ManageTenantBotService manageTenantBotService,
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:54` TenantAccessRightService tenantAccessRightService) {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:61` this.manageTenantBotService = manageTenantBotService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\user\UserServiceImpl.java:62` this.tenantAccessRightService = tenantAccessRightService;
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\voiceBotLine\VoiceBotLineService.java:13` public interface VoiceBotLineService {
+- `persistence\src\main\java\com\kt\aicc\ktbot\persistence\services\voiceBotLine\VoiceBotLineServiceImpl.java:31` public class VoiceBotLineServiceImpl implements VoiceBotLineService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\controller\DiagnosisController.java:18` private DiagnosisService monitoringService;
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\controller\DiagnosisController.java:22` public DiagnosisController(DiagnosisService monitoringService, RestTemplate restTemplate) {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\controller\DiagnosisController.java:23` this.monitoringService = monitoringService;
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\controller\ManualCallController.java:27` private CodeService codeService;
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\controller\ManualCallController.java:31` public ManualCallController(CodeService codeService, @Qualifier("defaultSchedulerFactory") SchedulerFactoryBean schedulerFactoryBean, @Qualifier("defaultJobDetail") JobDetail jobDetail) {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\controller\ManualCallController.java:32` this.codeService = codeService;
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\elasticsearch\ClientApiService.java:18` public class ClientApiService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ApiStatisticJob.java:97` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ApiStatisticJob.java:98` ApiStatisticsService apiStatisticsService = applicationContext.getBean(ApiStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ApiStatisticJob.java:100` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticByCallJob.java:107` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticByCallJob.java:116` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticByCallJob.java:118` ChatChannelService chatChannelService = applicationContext.getBean(ChatChannelService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticJob.java:107` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticJob.java:108` DialogStatisticsService dialogStatisticsService = applicationContext.getBean(DialogStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticJob.java:110` UserStatisticsService userService = applicationContext.getBean(UserStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\DialogStatisticJob.java:111` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\EsLogBackupJob.java:92` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\KnowledgeStatisticJob.java:82` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\KnowledgeStatisticJob.java:83` IntentService intentService = applicationContext.getBean(IntentService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\KnowledgeStatisticJob.java:84` BotService botService = applicationContext.getBean(BotService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\KnowledgeStatisticJob.java:85` SentenceService sentenceService = applicationContext.getBean(SentenceService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\KnowledgeStatisticJob.java:86` KnowledgeStatisticsService knowledgeService = applicationContext.getBean(KnowledgeStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\KnowledgeStatisticJob.java:87` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:123` MonitoringResponseService monitoringResponseService = applicationContext.getBean(MonitoringResponseService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:124` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:125` ManageMonitoringService monitoringService = applicationContext.getBean(ManageMonitoringService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:126` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:127` CodeService codeService = applicationContext.getBean(CodeService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:128` //        BotService botService = applicationContext.getBean(BotService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\MonitoringJob.java:137` ManageBotService botService = applicationContext.getBean(ManageBotService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\RcsJob.java:73` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\RcsJob.java:82` ChannelPlatformService channelPlatformService = applicationContext.getBean(ChannelPlatformService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\RecommendJob.java:107` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\RecommendJob.java:109` LearnRecommendService learnRecommendService = applicationContext.getBean(LearnRecommendService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\RecommendJob.java:110` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\RecommendJob.java:112` BotService botService = applicationContext.getBean(BotService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ReservationDeployJob.java:97` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ReservationDeployJob.java:99` DeployService deployService = applicationContext.getBean(DeployService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ReservationDeployJob.java:101` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:105` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:106` SatisfactionSurveyService satisfactionSurveyService = applicationContext.getBean(SatisfactionSurveyService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:107` SatisfactionStatisticsService satisfactionStatisticsService = applicationContext.getBean(SatisfactionStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:108` UserStatisticsService userStatisticsService = applicationContext.getBean(UserStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:109` DialogStatisticsService dialogStatisticsService = applicationContext.getBean(DialogStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:110` IntentService intentService = applicationContext.getBean(IntentService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SatisfactionStatisticJob.java:112` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:104` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:105` ScenarioStatisticsService scenarioStatisticsService = applicationContext.getBean(ScenarioStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:107` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:109` ChatNodeService chatNodeService = applicationContext.getBean(ChatNodeService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:110` IntentService intentService = applicationContext.getBean(IntentService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:111` ScenarioNodeStatisticsService scenarioNodeStatisticsService = applicationContext.getBean(ScenarioNodeStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\ScenarioStatisticJob.java:112` RedisService redisService = applicationContext.getBean(RedisService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SlotStatisticJob.java:97` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SlotStatisticJob.java:98` SlotStatisticsService slotStatisticsService = applicationContext.getBean(SlotStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SlotStatisticJob.java:100` UserStatisticsService userService = applicationContext.getBean(UserStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\SlotStatisticJob.java:101` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\Top10DialogStatisticJob.java:113` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\Top10DialogStatisticJob.java:114` IntentService intentService = applicationContext.getBean(IntentService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\Top10DialogStatisticJob.java:115` Top10DialogStatisticsService service = applicationContext.getBean(Top10DialogStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\Top10DialogStatisticJob.java:117` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:113` ManageTenantService manageTenantService = applicationContext.getBean(ManageTenantService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:114` ManageBotService manageBotService = applicationContext.getBean(ManageBotService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:115` UserStatisticsService userStatisticsService = applicationContext.getBean(UserStatisticsService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:116` BotService botService = applicationContext.getBean(BotService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:117` ChatChannelService channelService = applicationContext.getBean(ChatChannelService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:119` JobBatchLogService jobBatchLogService = applicationContext.getBean(JobBatchLogService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\job\common\UserStatisticJob.java:121` RedisService redisService = applicationContext.getBean(RedisService.class);
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageBotService.java:10` public interface ManageBotService extends BaseService<ManageBot> {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageBotServiceImpl.java:19` public class ManageBotServiceImpl extends BaseServiceImpl<ManageBot> implements ManageBotService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageDeployService.java:6` public interface ManageDeployService extends BaseService<ManageDeploy> {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageDeployServiceImpl.java:14` public class ManageDeployServiceImpl extends BaseServiceImpl<ManageDeploy> implements ManageDeployService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageMonitoringService.java:9` public interface ManageMonitoringService extends BaseService<ManageMonitoring> {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageMonitoringServiceImpl.java:14` public class ManageMonitoringServiceImpl extends BaseServiceImpl<ManageMonitoring> implements ManageMonitoringService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageTenantService.java:19` public interface ManageTenantService extends BaseService<ManageTenant> {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\services\manage\ManageTenantServiceImpl.java:25` public class ManageTenantServiceImpl extends BaseServiceImpl<ManageTenant>  implements ManageTenantService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\tenancy\config\tenant\hibernate\DynamicDataSourceBasedMultiTenantConnectionProvider.java:44` private EncryptionService encryptionService;
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\tenancy\config\tenant\hibernate\DynamicDataSourceBasedMultiTenantConnectionProvider.java:107` log.info("encryptionService encrypt: <REDACTED>
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\tenancy\config\tenant\hibernate\DynamicDataSourceBasedMultiTenantConnectionProvider.java:108` log.info("encryptionService decrypt: <REDACTED>
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\tenancy\utils\EncryptionService.java:3` public interface EncryptionService {
+- `scheduler\src\main\java\com\kt\aicc\ktbot\scheduler\tenancy\utils\EncryptionServiceImpl.java:11` public class EncryptionServiceImpl implements EncryptionService {
+- `scheduler\src\main\resources\logging-dev-config.xml:5` <property name="LOG_DIR" value="/logs/scheduler/ecms_batch11"/>
+- `scheduler\src\main\resources\logging-prod-config.xml:3` <property name="LOG_DIR" value="/logs/scheduler"/>
+- `scheduler\src\main\resources\logging-tc-config.xml:3` <property name="LOG_DIR" value="/logs/scheduler"/>
+- `scheduler\src\main\resources-dev\logging-config.xml:5` <property name="LOG_DIR" value="/logs/scheduler/ecms_batch11"/>
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\DialogStatisticsTest.java:30` ClientApiService clientApiService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\DialogStatisticsTest.java:38` DialogStatisticsService dialogStatisticsService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\DialogStatisticsTest2.java:38` ClientApiService clientApiService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\DialogStatisticsTest2.java:42` private DialogStatisticsService dialogStatisticsService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\KnowledgeStatisticsTest.java:30` ClientApiService clientApiService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\KnowledgeStatisticsTest.java:36` KnowledgeStatisticsService knowledgeService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\KnowledgeStatisticsTest.java:39` IntentService intentService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\KnowledgeStatisticsTest.java:42` SentenceService sentenceService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\KnowledgeStatisticsTest.java:45` BotService botService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\Top10DialogStatisticsTest.java:34` ClientApiService clientApiService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\Top10DialogStatisticsTest.java:40` Top10DialogStatisticsService service;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\Top10DialogStatisticsTest.java:43` IntentService intentService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\UserStatisticsTest.java:33` ClientApiService clientApiService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\UserStatisticsTest.java:41` UserStatisticsService userStatisticsService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\UserStatisticsTest2.java:38` ClientApiService clientApiService;
+- `scheduler\src\test\java\com\kt\aicc\ktbot\scheduler\UserStatisticsTest2.java:45` private UserStatisticsService userStatisticsService;
+
+## Deployment manuals
+- `docs\01.API\readme.log` (8153 bytes)
+- `docs\99.ETC\aicc_chatbot_deploy_manual.md` (14091 bytes)
+- `docs\99.ETC\aicc_chatbot_deploy_manual_20210520.html` (51686 bytes)
+- `docs\99.ETC\b2b_aicc_easycms_deploy_manual.md` (12589 bytes)
+- `docs\99.ETC\EasyCMS_deploy_manual.md` (16569 bytes)
+- `docs\99.ETC\EasyCMS_deploy_manual_20210527.html` (34640 bytes)
+- `docs\99.ETC\EasyCMS_deploy_manual_20210531.html` (34640 bytes)
+- `docs\99.ETC\local-setting.log` (356 bytes)
+
+## Large and packaged files
+- `cms\src\main\app.chatflow\npm_packages\prettier-1.19.1.tgz` (2,174,463 bytes)
+- `libs\simplecaptcha-1.2.1.jar` (2,007,760 bytes)
+- `cms\src\main\app.chatflow\npm_packages\brace-0.11.1.tgz` (1,776,977 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caniuse-db-1.0.30001109.tgz` (1,465,112 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rxjs-6.3.3.tgz` (969,854 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-2.6.11.tgz` (845,023 bytes)
+- `cms\src\main\app.chatflow\npm_packages\node-notifier-5.4.3.tgz` (771,524 bytes)
+- `cms\src\main\app.chatflow\npm_packages\handlebars-4.7.6.tgz` (631,926 bytes)
+- `cms\src\main\app.chatflow\npm_packages\core-js-2.6.11.tgz` (561,957 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html2canvas-1.0.0-rc.7.tgz` (544,385 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-resize-0.4.5.tgz` (540,471 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ajv-5.5.2.tgz` (505,800 bytes)
+- `cms\src\main\app.chatflow\npm_packages\popper.js-1.16.1.tgz` (481,042 bytes)
+- `cms\src\main\app.chatflow\npm_packages\node-forge-0.9.0.tgz` (448,891 bytes)
+- `cms\src\main\app.chatflow\npm_packages\acorn-5.7.4.tgz` (430,244 bytes)
+- `cms\src\main\app.chatflow\npm_packages\canvg-3.0.6.tgz` (353,242 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webpack-bundle-analyzer-2.13.1.tgz` (321,892 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lodash-4.17.19.tgz` (315,311 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsdom-11.12.0.tgz` (283,720 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caniuse-lite-1.0.30001109.tgz` (251,701 bytes)
+- `cms\src\main\app.chatflow\npm_packages\acorn-6.4.1.tgz` (247,945 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-tree-1.0.0-alpha.39.tgz` (224,138 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-7.0.32.tgz` (223,585 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-tree-1.0.0-alpha.37.tgz` (221,896 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sockjs-client-1.1.5.tgz` (210,417 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pako-1.0.11.tgz` (204,482 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-includes-3.1.1.tgz` (203,815 bytes)
+- `cms\src\main\app.chatflow\npm_packages\js-beautify-1.11.0.tgz` (203,540 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ajv-6.12.3.tgz` (201,000 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-map-0.6.1.tgz` (199,644 bytes)
+- `cms\src\main\app.chatflow\npm_packages\csso-4.0.3.tgz` (191,219 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-map-0.5.7.tgz` (189,755 bytes)
+- `cms\src\main\app.chatflow\npm_packages\diff-3.5.0.tgz` (189,607 bytes)
+- `cms\src\main\app.chatflow\npm_packages\iconv-lite-0.4.24.tgz` (185,241 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-6.0.23.tgz` (183,627 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webpack-3.12.0.tgz` (183,559 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sass-1.7.2.tgz` (176,312 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-5.2.18.tgz` (174,784 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rsvp-3.6.2.tgz` (170,543 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglify-js-3.10.1.tgz` (169,697 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglify-es-3.3.9.tgz` (156,788 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-line-break-1.1.1.tgz` (156,035 bytes)
+- `cms\src\main\app.chatflow\npm_packages\core-js-3.6.5.tgz` (154,959 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pretty-format-22.4.3.tgz` (145,565 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vuedraggable-2.24.0.tgz` (144,974 bytes)
+- `cms\src\main\app.chatflow\npm_packages\acorn-4.0.13.tgz` (144,876 bytes)
+- `cms\src\main\app.chatflow\npm_packages\escope-3.6.0.tgz` (144,016 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webpack-dev-server-2.11.5.tgz` (142,381 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglify-js-3.4.10.tgz` (141,647 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bluebird-3.7.2.tgz` (139,293 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es5-ext-0.10.53.tgz` (138,231 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uri-js-4.2.2.tgz` (137,707 bytes)
+- `cms\src\main\app.chatflow\npm_packages\psl-1.8.0.tgz` (133,491 bytes)
+- `cms\src\main\app.chatflow\npm_packages\v-tooltip-2.0.0-rc.33.tgz` (132,688 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-polyfill-6.26.0.tgz` (132,336 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sortablejs-1.10.2.tgz` (130,544 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglify-js-2.8.29.tgz` (130,303 bytes)
+- `cms\src\main\app.chatflow\npm_packages\async-2.6.3.tgz` (124,143 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-1.4.4.tgz` (124,106 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-template-compiler-2.6.11.tgz` (120,578 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-template-es2015-compiler-1.9.1.tgz` (119,441 bytes)
+- `cms\src\main\app.chatflow\npm_packages\expect-22.4.3.tgz` (118,047 bytes)
+- `cms\src\main\app.chatflow\npm_packages\alight-0.14.1.tgz` (111,273 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es-abstract-1.17.6.tgz` (106,984 bytes)
+- `cms\src\main\app.chatflow\npm_packages\svgo-1.3.2.tgz` (93,986 bytes)
+- `cms\src\main\app.chatflow\npm_packages\clean-css-4.2.3.tgz` (90,258 bytes)
+- `cms\src\main\app.chatflow\npm_packages\axios-0.19.2.tgz` (87,938 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mdn-data-2.0.6.tgz` (78,619 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mdn-data-2.0.4.tgz` (77,878 bytes)
+- `cms\src\main\app.chatflow\npm_packages\js-yaml-3.14.0.tgz` (76,946 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tr46-1.0.1.tgz` (76,774 bytes)
+- `cms\src\main\app.chatflow\npm_packages\csso-2.3.2.tgz` (75,817 bytes)
+- `cms\src\main\app.chatflow\npm_packages\nan-2.14.1.tgz` (75,816 bytes)
+- `cms\src\main\app.chatflow\npm_packages\svgo-0.7.2.tgz` (75,494 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parse5-4.0.0.tgz` (72,266 bytes)
+- `cms\src\main\app.chatflow\npm_packages\coa-1.0.4.tgz` (71,418 bytes)
+- `cms\src\main\app.chatflow\npm_packages\js-yaml-3.7.0.tgz` (70,884 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babylon-6.18.0.tgz` (69,241 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-proxy-1.18.1.tgz` (68,346 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-6.6.0.tgz` (65,305 bytes)
+- `cms\src\main\app.chatflow\npm_packages\serve-index-1.9.1.tgz` (63,771 bytes)
+- `cms\src\main\app.chatflow\npm_packages\request-2.88.2.tgz` (59,214 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-10.1.2.tgz` (59,063 bytes)
+- `cms\src\main\app.chatflow\npm_packages\buffer-4.9.2.tgz` (58,766 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-selector-parser-6.0.2.tgz` (57,011 bytes)
+- `cms\src\main\app.chatflow\npm_packages\autoprefixer-7.2.6.tgz` (56,381 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-8.0.2.tgz` (55,633 bytes)
+- `cms\src\main\app.chatflow\npm_packages\express-4.17.1.tgz` (54,717 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rollup-pluginutils-2.8.2.tgz` (53,756 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sshpk-1.16.1.tgz` (53,630 bytes)
+- `cms\src\main\app.chatflow\npm_packages\shelljs-0.7.8.tgz` (52,574 bytes)
+- `cms\src\main\app.chatflow\npm_packages\esprima-4.0.1.tgz` (52,078 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stream-http-2.8.3.tgz` (50,404 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tweetnacl-0.14.5.tgz` (49,663 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-cli-22.4.4.tgz` (48,994 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserify-zlib-0.2.0.tgz` (48,061 bytes)
+- `cms\src\main\app.chatflow\npm_packages\d3-shape-1.3.7.tgz` (48,026 bytes)
+- `cms\src\main\app.chatflow\npm_packages\autoprefixer-6.7.7.tgz` (44,706 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-serializer-vue-0.3.0.tgz` (42,512 bytes)
+- `cms\src\main\app.chatflow\npm_packages\elliptic-6.5.3.tgz` (41,449 bytes)
+- `cms\src\main\app.chatflow\npm_packages\esprima-2.7.3.tgz` (41,051 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-style-loader-4.1.2.tgz` (40,741 bytes)
+- `cms\src\main\app.chatflow\npm_packages\he-1.2.0.tgz` (40,278 bytes)
+- `cms\src\main\app.chatflow\npm_packages\js-base64-2.6.3.tgz` (40,105 bytes)
+- `cms\src\main\app.chatflow\npm_packages\xxhashjs-0.2.2.tgz` (39,926 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-calc-7.0.2.tgz` (38,890 bytes)
+- `cms\src\main\app.chatflow\npm_packages\neo-async-2.6.2.tgz` (38,647 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ejs-2.7.4.tgz` (37,914 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bfj-node4-5.3.1.tgz` (36,811 bytes)
+- `cms\src\main\app.chatflow\npm_packages\q-1.5.1.tgz` (36,808 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fileset-2.0.3.tgz` (36,526 bytes)
+- `cms\src\main\app.chatflow\npm_packages\renderkid-2.0.3.tgz` (35,712 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssstyle-1.4.0.tgz` (34,330 bytes)
+- `cms\src\main\app.chatflow\npm_packages\form-data-2.3.3.tgz` (34,269 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-schema-0.2.3.tgz` (33,667 bytes)
+- `cms\src\main\app.chatflow\npm_packages\growly-1.3.0.tgz` (33,600 bytes)
+- `cms\src\main\app.chatflow\npm_packages\spdy-transport-3.0.0.tgz` (33,546 bytes)
+- `cms\src\main\app.chatflow\npm_packages\readable-stream-3.6.0.tgz` (33,259 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-3.10.0.tgz` (33,186 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-jsx-vue-functional-2.1.0.tgz` (33,122 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-transform-0.10.1.tgz` (32,034 bytes)
+- `cms\src\main\app.chatflow\npm_packages\loglevel-1.6.8.tgz` (31,706 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-vue-render-plugin-0.4.0.tgz` (30,498 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-traverse-6.26.0.tgz` (30,249 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cacache-10.0.4.tgz` (29,791 bytes)
+- `cms\src\main\app.chatflow\npm_packages\argparse-1.0.10.tgz` (29,761 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-vue-1.2.1.tgz` (28,781 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-mock-22.4.3.tgz` (27,956 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-selector-parser-3.1.2.tgz` (27,854 bytes)
+- `cms\src\main\app.chatflow\npm_packages\qs-6.7.0.tgz` (27,605 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mime-db-1.44.0.tgz` (27,036 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html-minifier-3.5.21.tgz` (26,531 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-map-support-0.5.19.tgz` (26,373 bytes)
+- `cms\src\main\app.chatflow\npm_packages\chokidar-3.4.1.tgz` (26,089 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-connection-plugin-0.9.0.tgz` (26,084 bytes)
+- `cms\src\main\app.chatflow\npm_packages\readable-stream-2.3.7.tgz` (25,689 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json5-1.0.1.tgz` (25,561 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sockjs-0.3.19.tgz` (25,532 bytes)
+- `cms\src\main\app.chatflow\npm_packages\chokidar-2.1.8.tgz` (25,329 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fs-extra-0.30.0.tgz` (24,806 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stackblur-canvas-2.4.0.tgz` (24,522 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-map-support-0.4.18.tgz` (24,475 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tough-cookie-2.5.0.tgz` (24,439 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-reports-1.5.1.tgz` (24,235 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserslist-4.13.0.tgz` (24,169 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ws-4.1.0.tgz` (24,025 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ws-5.2.2.tgz` (23,881 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-core-6.26.3.tgz` (23,767 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dashdash-1.14.1.tgz` (23,544 bytes)
+- `cms\src\main\app.chatflow\npm_packages\picomatch-2.2.2.tgz` (23,357 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-env-1.7.0.tgz` (23,130 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bn.js-5.1.2.tgz` (22,420 bytes)
+- `cms\src\main\app.chatflow\npm_packages\qs-6.5.2.tgz` (22,345 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json3-3.3.3.tgz` (22,137 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bn.js-4.11.9.tgz` (21,826 bytes)
+- `cms\src\main\app.chatflow\npm_packages\resolve-1.17.0.tgz` (21,813 bytes)
+- `cms\src\main\app.chatflow\npm_packages\debug-4.1.1.tgz` (21,773 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-types-6.26.0.tgz` (21,326 bytes)
+- `cms\src\main\app.chatflow\npm_packages\debug-3.2.6.tgz` (20,436 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@vue-component-compiler-utils-3.2.0.tgz` (20,126 bytes)
+- `cms\src\main\app.chatflow\npm_packages\escodegen-1.14.3.tgz` (20,106 bytes)
+- `cms\src\main\app.chatflow\npm_packages\nanomatch-1.2.13.tgz` (20,057 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hpack.js-2.1.6.tgz` (19,737 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html-webpack-plugin-2.30.1.tgz` (19,575 bytes)
+- `cms\src\main\app.chatflow\npm_packages\nwsapi-2.2.0.tgz` (19,559 bytes)
+- `cms\src\main\app.chatflow\npm_packages\type-2.0.0.tgz` (19,359 bytes)
+- `cms\src\main\app.chatflow\npm_packages\micromatch-3.1.10.tgz` (19,260 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-loader-15.9.3.tgz` (19,214 bytes)
+- `cms\src\main\app.chatflow\npm_packages\websocket-driver-0.7.4.tgz` (19,196 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cuint-0.2.2.tgz` (19,140 bytes)
+- `cms\src\main\app.chatflow\npm_packages\semver-6.3.0.tgz` (18,921 bytes)
+- `cms\src\main\app.chatflow\npm_packages\editorconfig-0.15.3.tgz` (18,719 bytes)
+- `cms\src\main\app.chatflow\npm_packages\commander-2.20.3.tgz` (18,702 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-generator-6.26.1.tgz` (18,651 bytes)
+- `cms\src\main\app.chatflow\npm_packages\entities-2.0.3.tgz` (18,394 bytes)
+- `cms\src\main\app.chatflow\npm_packages\commander-2.19.0.tgz` (18,368 bytes)
+- `cms\src\main\app.chatflow\npm_packages\commander-2.17.1.tgz` (18,267 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ajv-keywords-3.5.2.tgz` (18,254 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html-entities-1.3.1.tgz` (18,113 bytes)
+- `cms\src\main\app.chatflow\npm_packages\type-1.2.0.tgz` (18,107 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@babel-runtime-7.11.2.tgz` (18,064 bytes)
+- `cms\src\main\app.chatflow\npm_packages\enhanced-resolve-3.4.1.tgz` (17,730 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-jasmine2-22.4.4.tgz` (17,730 bytes)
+- `cms\src\main\app.chatflow\npm_packages\url-0.11.0.tgz` (17,614 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lodash.sortby-4.7.0.tgz` (17,607 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-config-22.4.4.tgz` (17,569 bytes)
+- `cms\src\main\app.chatflow\npm_packages\semver-5.7.1.tgz` (17,541 bytes)
+- `cms\src\main\app.chatflow\npm_packages\braces-2.3.2.tgz` (17,531 bytes)
+- `cms\src\main\app.chatflow\npm_packages\entities-1.1.2.tgz` (17,348 bytes)
+- `cms\src\main\app.chatflow\npm_packages\debug-3.1.0.tgz` (17,183 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-selector-parser-2.2.3.tgz` (17,068 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-haste-map-22.4.3.tgz` (17,047 bytes)
+- `cms\src\main\app.chatflow\npm_packages\coa-2.0.2.tgz` (17,036 bytes)
+- `cms\src\main\app.chatflow\npm_packages\commander-2.13.0.tgz` (16,966 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-arrayish-0.3.2.tgz` (16,639 bytes)
+- `cms\src\main\app.chatflow\npm_packages\whatwg-url-7.1.0.tgz` (16,584 bytes)
+- `cms\src\main\app.chatflow\npm_packages\spdy-4.0.2.tgz` (16,563 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserslist-3.2.8.tgz` (16,559 bytes)
+- `cms\src\main\app.chatflow\npm_packages\debug-2.6.9.tgz` (16,514 bytes)
+- `cms\src\main\app.chatflow\npm_packages\big.js-5.2.2.tgz` (16,308 bytes)
+- `cms\src\main\app.chatflow\npm_packages\acorn-walk-6.2.0.tgz` (16,087 bytes)
+- `cms\src\main\app.chatflow\npm_packages\glob-7.1.6.tgz` (15,878 bytes)
+- `cms\src\main\app.chatflow\npm_packages\whatwg-url-6.5.0.tgz` (15,749 bytes)
+- `cms\src\main\app.chatflow\npm_packages\websocket-extensions-0.1.4.tgz` (15,696 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mime-1.6.0.tgz` (15,686 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sass-loader-7.3.1.tgz` (15,646 bytes)
+- `cms\src\main\app.chatflow\npm_packages\braces-3.0.2.tgz` (15,637 bytes)
+- `cms\src\main\app.chatflow\npm_packages\events-3.2.0.tgz` (15,470 bytes)
+- `cms\src\main\app.chatflow\npm_packages\crypto-browserify-3.12.0.tgz` (15,434 bytes)
+- `cms\src\main\app.chatflow\npm_packages\exit-0.1.2.tgz` (15,295 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-signature-1.2.0.tgz` (15,208 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sax-1.2.4.tgz` (15,162 bytes)
+- `cms\src\main\app.chatflow\npm_packages\node-cache-4.2.1.tgz` (15,109 bytes)
+- `cms\src\main\app.chatflow\npm_packages\send-0.17.1.tgz` (15,022 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserslist-2.11.3.tgz` (14,917 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-overridden-4.0.1.tgz` (14,907 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webpack-merge-4.2.2.tgz` (14,875 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-3.10.0.tgz` (14,816 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pretty-error-2.1.1.tgz` (14,757 bytes)
+- `cms\src\main\app.chatflow\npm_packages\micromatch-2.3.11.tgz` (14,623 bytes)
+- `cms\src\main\app.chatflow\npm_packages\wordwrap-1.0.0.tgz` (14,509 bytes)
+- `cms\src\main\app.chatflow\npm_packages\check-types-7.4.0.tgz` (14,412 bytes)
+- `cms\src\main\app.chatflow\npm_packages\big.js-3.2.0.tgz` (14,401 bytes)
+- `cms\src\main\app.chatflow\npm_packages\url-parse-1.4.7.tgz` (14,333 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglifyjs-webpack-plugin-1.3.0.tgz` (14,228 bytes)
+- `cms\src\main\app.chatflow\npm_packages\worker-farm-1.7.0.tgz` (14,216 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-proxy-middleware-0.19.2.tgz` (14,060 bytes)
+- `cms\src\main\app.chatflow\npm_packages\optionator-0.8.3.tgz` (14,045 bytes)
+- `cms\src\main\app.chatflow\npm_packages\body-parser-1.19.0.tgz` (13,964 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-api-1.3.7.tgz` (13,956 bytes)
+- `cms\src\main\app.chatflow\npm_packages\math-expression-evaluator-1.2.22.tgz` (13,917 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pn-1.1.0.tgz` (13,907 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-url-7.3.2.tgz` (13,886 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-loader-0.28.11.tgz` (13,840 bytes)
+- `cms\src\main\app.chatflow\npm_packages\wordwrap-0.0.2.tgz` (13,772 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsbn-0.1.1.tgz` (13,715 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-vue-jsx-3.7.0.tgz` (13,689 bytes)
+- `cms\src\main\app.chatflow\npm_packages\public-encrypt-4.0.3.tgz` (13,647 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-lib-instrument-1.10.2.tgz` (13,627 bytes)
+- `cms\src\main\app.chatflow\npm_packages\unique-filename-1.1.1.tgz` (13,580 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cosmiconfig-5.2.1.tgz` (13,568 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json5-0.5.1.tgz` (13,523 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sane-2.5.2.tgz` (13,410 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-runtime-6.26.0.tgz` (13,371 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-jest-1.4.0.tgz` (13,328 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-select-2.1.0.tgz` (13,327 bytes)
+- `cms\src\main\app.chatflow\npm_packages\timsort-0.3.0.tgz` (13,271 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lodash.merge-4.6.2.tgz` (13,081 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fsevents-2.1.3.tgz` (12,808 bytes)
+- `cms\src\main\app.chatflow\npm_packages\atob-2.1.2.tgz` (12,721 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-parser-8.1.0.tgz` (12,717 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mime-1.3.6.tgz` (12,646 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerate-1.4.1.tgz` (12,622 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hash.js-1.1.7.tgz` (12,589 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hmac-drbg-1.0.1.tgz` (12,509 bytes)
+- `cms\src\main\app.chatflow\npm_packages\asn1.js-4.10.1.tgz` (12,480 bytes)
+- `cms\src\main\app.chatflow\npm_packages\consolidate-0.15.1.tgz` (12,414 bytes)
+- `cms\src\main\app.chatflow\npm_packages\emojis-list-3.0.0.tgz` (12,343 bytes)
+- `cms\src\main\app.chatflow\npm_packages\node-releases-1.1.60.tgz` (12,304 bytes)
+- `cms\src\main\app.chatflow\npm_packages\verror-1.10.0.tgz` (12,279 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object.assign-4.1.0.tgz` (12,213 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uuid-3.4.0.tgz` (12,156 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-runtime-22.4.4.tgz` (12,071 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ssri-5.3.0.tgz` (12,041 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extract-text-webpack-plugin-3.0.2.tgz` (12,036 bytes)
+- `cms\src\main\app.chatflow\npm_packages\safer-buffer-2.1.2.tgz` (12,035 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssom-0.3.8.tgz` (11,940 bytes)
+- `cms\src\main\app.chatflow\npm_packages\copy-webpack-plugin-4.6.0.tgz` (11,721 bytes)
+- `cms\src\main\app.chatflow\npm_packages\htmlparser2-3.10.1.tgz` (11,640 bytes)
+- `cms\src\main\app.chatflow\npm_packages\faye-websocket-0.10.0.tgz` (11,601 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-parser-7.0.0.tgz` (11,590 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ipaddr.js-1.9.1.tgz` (11,501 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-history-plugin-0.2.1.tgz` (11,424 bytes)
+- `cms\src\main\app.chatflow\npm_packages\minimatch-3.0.4.tgz` (11,423 bytes)
+- `cms\src\main\app.chatflow\npm_packages\eventsource-0.1.6.tgz` (11,320 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserslist-1.7.7.tgz` (11,156 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extsprintf-1.4.0.tgz` (11,121 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bcrypt-pbkdf-1.0.2.tgz` (11,109 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-import-11.1.0.tgz` (11,075 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object-inspect-1.8.0.tgz` (11,052 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-connection-path-plugin-0.3.1.tgz` (11,046 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsprim-1.4.1.tgz` (10,886 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yargs-parser-4.2.1.tgz` (10,830 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regjsparser-0.1.5.tgz` (10,690 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-4.1.10.tgz` (10,508 bytes)
+- `cms\src\main\app.chatflow\npm_packages\emojis-list-2.1.0.tgz` (10,493 bytes)
+- `cms\src\main\app.chatflow\npm_packages\util-0.10.3.tgz` (10,449 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sprintf-js-1.0.3.tgz` (10,330 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extglob-2.0.4.tgz` (10,322 bytes)
+- `cms\src\main\app.chatflow\npm_packages\assert-1.5.0.tgz` (10,135 bytes)
+- `cms\src\main\app.chatflow\npm_packages\snapdragon-0.8.2.tgz` (10,096 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-merge-longhand-4.0.11.tgz` (10,035 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ip-1.1.5.tgz` (10,014 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sha.js-2.4.11.tgz` (9,975 bytes)
+- `cms\src\main\app.chatflow\npm_packages\safe-buffer-5.2.1.tgz` (9,972 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-select-1.2.0.tgz` (9,943 bytes)
+- `cms\src\main\app.chatflow\npm_packages\des.js-1.0.1.tgz` (9,929 bytes)
+- `cms\src\main\app.chatflow\npm_packages\error-stack-parser-2.0.6.tgz` (9,912 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parse-json-2.2.0.tgz` (9,910 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-lib-report-1.1.5.tgz` (9,885 bytes)
+- `cms\src\main\app.chatflow\npm_packages\chalk-2.4.2.tgz` (9,865 bytes)
+- `cms\src\main\app.chatflow\npm_packages\safe-buffer-5.1.2.tgz` (9,822 bytes)
+- `cms\src\main\app.chatflow\npm_packages\faye-websocket-0.11.3.tgz` (9,767 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-loader-7.1.5.tgz` (9,765 bytes)
+- `cms\src\main\app.chatflow\npm_packages\relateurl-0.2.7.tgz` (9,716 bytes)
+- `cms\src\main\app.chatflow\npm_packages\resolve-1.1.7.tgz` (9,640 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webpack-sources-1.4.3.tgz` (9,612 bytes)
+- `cms\src\main\app.chatflow\npm_packages\eventemitter3-4.0.4.tgz` (9,587 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-jsx-v-model-2.0.3.tgz` (9,572 bytes)
+- `cms\src\main\app.chatflow\npm_packages\esutils-2.0.3.tgz` (9,542 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglifyjs-webpack-plugin-0.4.6.tgz` (9,512 bytes)
+- `cms\src\main\app.chatflow\npm_packages\opn-5.5.0.tgz` (9,489 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-regex-1.1.0.tgz` (9,454 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bonjour-3.5.0.tgz` (9,424 bytes)
+- `cms\src\main\app.chatflow\npm_packages\nopt-4.0.3.tgz` (9,327 bytes)
+- `cms\src\main\app.chatflow\npm_packages\prelude-ls-1.1.2.tgz` (9,303 bytes)
+- `cms\src\main\app.chatflow\npm_packages\loader-utils-1.4.0.tgz` (9,279 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsesc-0.5.0.tgz` (9,165 bytes)
+- `cms\src\main\app.chatflow\npm_packages\electron-to-chromium-1.3.516.tgz` (9,121 bytes)
+- `cms\src\main\app.chatflow\npm_packages\snapdragon-util-3.0.1.tgz` (9,108 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-util-22.4.3.tgz` (9,078 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-loader-2.1.6.tgz` (9,034 bytes)
+- `cms\src\main\app.chatflow\npm_packages\depd-1.1.2.tgz` (9,026 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extsprintf-1.3.0.tgz` (9,009 bytes)
+- `cms\src\main\app.chatflow\npm_packages\base-0.11.2.tgz` (8,927 bytes)
+- `cms\src\main\app.chatflow\npm_packages\deep-equal-1.1.1.tgz` (8,924 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-map-resolve-0.5.3.tgz` (8,905 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-convert-1.9.3.tgz` (8,882 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-jsx-event-modifiers-2.0.5.tgz` (8,839 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-symbol-1.0.3.tgz` (8,828 bytes)
+- `cms\src\main\app.chatflow\npm_packages\symbol-tree-3.2.4.tgz` (8,805 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stackframe-1.2.0.tgz` (8,804 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tryer-1.0.1.tgz` (8,793 bytes)
+- `cms\src\main\app.chatflow\npm_packages\friendly-errors-webpack-plugin-1.7.0.tgz` (8,750 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es-to-primitive-1.2.1.tgz` (8,725 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-rx-6.0.1.tgz` (8,699 bytes)
+- `cms\src\main\app.chatflow\npm_packages\selfsigned-1.10.7.tgz` (8,695 bytes)
+- `cms\src\main\app.chatflow\npm_packages\normalize-package-data-2.5.0.tgz` (8,662 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ext-1.4.0.tgz` (8,642 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-merge-longhand-2.0.2.tgz` (8,526 bytes)
+- `cms\src\main\app.chatflow\npm_packages\serve-static-1.14.1.tgz` (8,519 bytes)
+- `cms\src\main\app.chatflow\npm_packages\graceful-fs-4.2.4.tgz` (8,484 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-area-plugin-0.1.6.tgz` (8,443 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-runtime-0.13.7.tgz` (8,378 bytes)
+- `cms\src\main\app.chatflow\npm_packages\watch-0.18.0.tgz` (8,268 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es6-iterator-2.0.3.tgz` (8,266 bytes)
+- `cms\src\main\app.chatflow\npm_packages\minimist-1.2.5.tgz` (8,251 bytes)
+- `cms\src\main\app.chatflow\npm_packages\colors-1.1.2.tgz` (8,212 bytes)
+- `cms\src\main\app.chatflow\npm_packages\util-0.11.1.tgz` (8,192 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es6-set-0.1.5.tgz` (8,190 bytes)
+- `cms\src\main\app.chatflow\npm_packages\asynckit-0.4.0.tgz` (8,111 bytes)
+- `cms\src\main\app.chatflow\npm_packages\follow-redirects-1.12.1.tgz` (8,103 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ecc-jsbn-0.1.2.tgz` (8,102 bytes)
+- `cms\src\main\app.chatflow\npm_packages\punycode-1.4.1.tgz` (8,058 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hosted-git-info-2.8.8.tgz` (8,033 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-runtime-0.10.5.tgz` (7,986 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rete-context-menu-plugin-0.1.4.tgz` (7,985 bytes)
+- `cms\src\main\app.chatflow\npm_packages\upath-1.2.0.tgz` (7,985 bytes)
+- `cms\src\main\app.chatflow\npm_packages\punycode-1.3.2.tgz` (7,980 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webpack-dev-middleware-1.12.2.tgz` (7,980 bytes)
+- `cms\src\main\app.chatflow\npm_packages\levn-0.3.0.tgz` (7,967 bytes)
+- `cms\src\main\app.chatflow\npm_packages\no-case-2.3.2.tgz` (7,966 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es6-map-0.1.5.tgz` (7,961 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ignore-3.3.10.tgz` (7,922 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-value-parser-4.1.0.tgz` (7,902 bytes)
+- `cms\src\main\app.chatflow\npm_packages\globals-9.18.0.tgz` (7,889 bytes)
+- `cms\src\main\app.chatflow\npm_packages\estraverse-4.3.0.tgz` (7,883 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fsevents-1.2.13.tgz` (7,859 bytes)
+- `cms\src\main\app.chatflow\npm_packages\compression-1.7.4.tgz` (7,824 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regenerator-runtime-0.11.1.tgz` (7,823 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserify-aes-1.2.0.tgz` (7,794 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@types-q-1.5.4.tgz` (7,750 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domhandler-2.4.2.tgz` (7,724 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object-keys-1.1.1.tgz` (7,677 bytes)
+- `cms\src\main\app.chatflow\npm_packages\clap-1.2.3.tgz` (7,665 bytes)
+- `cms\src\main\app.chatflow\npm_packages\kind-of-6.0.3.tgz` (7,647 bytes)
+- `cms\src\main\app.chatflow\npm_packages\raw-body-2.4.0.tgz` (7,641 bytes)
+- `cms\src\main\app.chatflow\npm_packages\exec-sh-0.2.2.tgz` (7,623 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object.getownpropertydescriptors-2.1.0.tgz` (7,596 bytes)
+- `cms\src\main\app.chatflow\npm_packages\event-emitter-0.3.5.tgz` (7,592 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ansi-html-0.0.7.tgz` (7,586 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object-is-1.1.2.tgz` (7,557 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-worker-22.4.3.tgz` (7,506 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-date-object-1.0.2.tgz` (7,501 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-style-loader-3.1.2.tgz` (7,494 bytes)
+- `cms\src\main\app.chatflow\npm_packages\typedarray-0.0.6.tgz` (7,481 bytes)
+- `cms\src\main\app.chatflow\npm_packages\to-regex-range-5.0.1.tgz` (7,479 bytes)
+- `cms\src\main\app.chatflow\npm_packages\aws4-1.10.0.tgz` (7,393 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es6-symbol-3.1.3.tgz` (7,385 bytes)
+- `cms\src\main\app.chatflow\npm_packages\to-regex-range-2.1.1.tgz` (7,306 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-merge-rules-2.1.2.tgz` (7,286 bytes)
+- `cms\src\main\app.chatflow\npm_packages\punycode-2.1.1.tgz` (7,270 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extend-3.0.2.tgz` (7,258 bytes)
+- `cms\src\main\app.chatflow\npm_packages\readdirp-3.4.0.tgz` (7,240 bytes)
+- `cms\src\main\app.chatflow\npm_packages\loader-utils-0.2.17.tgz` (7,206 bytes)
+- `cms\src\main\app.chatflow\npm_packages\expand-brackets-2.1.4.tgz` (7,174 bytes)
+- `cms\src\main\app.chatflow\npm_packages\readdirp-2.2.1.tgz` (7,161 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-list-map-2.0.1.tgz` (7,148 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@babel-helper-validator-identifier-7.10.4.tgz` (7,071 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fill-range-2.2.4.tgz` (7,057 bytes)
+- `cms\src\main\app.chatflow\npm_packages\core-util-is-1.0.2.tgz` (7,016 bytes)
+- `cms\src\main\app.chatflow\npm_packages\spdx-correct-3.1.1.tgz` (7,011 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-callable-1.2.0.tgz` (6,997 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lodash.camelcase-4.3.0.tgz` (6,993 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lodash.uniq-4.5.0.tgz` (6,944 bytes)
+- `cms\src\main\app.chatflow\npm_packages\follow-redirects-1.5.10.tgz` (6,942 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dns-packet-1.3.1.tgz` (6,902 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tslib-1.13.0.tgz` (6,869 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-declaration-sorter-4.0.1.tgz` (6,831 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-lib-source-maps-1.2.6.tgz` (6,819 bytes)
+- `cms\src\main\app.chatflow\npm_packages\webidl-conversions-4.0.2.tgz` (6,759 bytes)
+- `cms\src\main\app.chatflow\npm_packages\content-disposition-0.5.3.tgz` (6,755 bytes)
+- `cms\src\main\app.chatflow\npm_packages\type-check-0.3.2.tgz` (6,730 bytes)
+- `cms\src\main\app.chatflow\npm_packages\xml-name-validator-3.0.0.tgz` (6,691 bytes)
+- `cms\src\main\app.chatflow\npm_packages\querystring-0.2.0.tgz` (6,669 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mkdirp-1.0.4.tgz` (6,665 bytes)
+- `cms\src\main\app.chatflow\npm_packages\negotiator-0.6.2.tgz` (6,650 bytes)
+- `cms\src\main\app.chatflow\npm_packages\file-loader-1.1.11.tgz` (6,643 bytes)
+- `cms\src\main\app.chatflow\npm_packages\execa-0.7.0.tgz` (6,593 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-classes-6.24.1.tgz` (6,590 bytes)
+- `cms\src\main\app.chatflow\npm_packages\utila-0.4.0.tgz` (6,584 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-errors-1.6.3.tgz` (6,572 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-what-3.3.0.tgz` (6,543 bytes)
+- `cms\src\main\app.chatflow\npm_packages\js-tokens-4.0.0.tgz` (6,542 bytes)
+- `cms\src\main\app.chatflow\npm_packages\portfinder-1.0.28.tgz` (6,523 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-lib-coverage-1.2.1.tgz` (6,518 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domutils-1.7.0.tgz` (6,513 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-load-config-2.1.0.tgz` (6,502 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssesc-3.0.0.tgz` (6,495 bytes)
+- `cms\src\main\app.chatflow\npm_packages\w3c-hr-time-1.0.2.tgz` (6,444 bytes)
+- `cms\src\main\app.chatflow\npm_packages\d-1.0.1.tgz` (6,429 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-modules-commonjs-6.26.2.tgz` (6,424 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cookie-0.4.0.tgz` (6,407 bytes)
+- `cms\src\main\app.chatflow\npm_packages\errno-0.1.7.tgz` (6,350 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domutils-1.5.1.tgz` (6,347 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fast-json-stable-stringify-2.1.0.tgz` (6,318 bytes)
+- `cms\src\main\app.chatflow\npm_packages\function-bind-1.1.1.tgz` (6,301 bytes)
+- `cms\src\main\app.chatflow\npm_packages\define-properties-1.1.3.tgz` (6,295 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hex-color-regex-1.1.0.tgz` (6,281 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsesc-1.3.0.tgz` (6,255 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lru-cache-4.1.5.tgz` (6,249 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-value-parser-3.3.1.tgz` (6,247 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-block-scoping-6.26.0.tgz` (6,204 bytes)
+- `cms\src\main\app.chatflow\npm_packages\snapdragon-node-2.1.1.tgz` (6,204 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-reduce-idents-2.4.0.tgz` (6,203 bytes)
+- `cms\src\main\app.chatflow\npm_packages\querystring-es3-0.2.1.tgz` (6,202 bytes)
+- `cms\src\main\app.chatflow\npm_packages\watchpack-1.7.4.tgz` (6,199 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-parser-js-0.5.2.tgz` (6,187 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-istanbul-4.1.6.tgz` (6,157 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-string-1.0.5.tgz` (6,154 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lodash.memoize-4.1.2.tgz` (6,117 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-browserify-0.0.1.tgz` (6,093 bytes)
+- `cms\src\main\app.chatflow\npm_packages\util.promisify-1.0.1.tgz` (6,081 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cliui-2.1.0.tgz` (6,070 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es6-symbol-3.1.1.tgz` (6,062 bytes)
+- `cms\src\main\app.chatflow\npm_packages\node-int64-0.4.0.tgz` (6,059 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cross-spawn-5.1.0.tgz` (6,053 bytes)
+- `cms\src\main\app.chatflow\npm_packages\finalhandler-1.1.2.tgz` (6,029 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ret-0.1.15.tgz` (6,025 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserify-rsa-4.0.1.tgz` (5,999 bytes)
+- `cms\src\main\app.chatflow\npm_packages\config-chain-1.1.12.tgz` (5,996 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mississippi-2.0.0.tgz` (5,993 bytes)
+- `cms\src\main\app.chatflow\npm_packages\js-tokens-3.0.2.tgz` (5,991 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regexpu-core-2.0.0.tgz` (5,986 bytes)
+- `cms\src\main\app.chatflow\npm_packages\braces-1.8.5.tgz` (5,981 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue2-ace-editor-0.0.15.tgz` (5,977 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tsconfig-7.0.0.tgz` (5,975 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-errors-1.7.3.tgz` (5,908 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-errors-1.7.2.tgz` (5,895 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-convert-values-2.6.1.tgz` (5,881 bytes)
+- `cms\src\main\app.chatflow\npm_packages\co-4.6.0.tgz` (5,880 bytes)
+- `cms\src\main\app.chatflow\npm_packages\type-is-1.6.18.tgz` (5,872 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tunnel-agent-0.6.0.tgz` (5,828 bytes)
+- `cms\src\main\app.chatflow\npm_packages\clone-2.1.2.tgz` (5,814 bytes)
+- `cms\src\main\app.chatflow\npm_packages\request-promise-core-1.1.4.tgz` (5,784 bytes)
+- `cms\src\main\app.chatflow\npm_packages\kind-of-5.1.0.tgz` (5,747 bytes)
+- `cms\src\main\app.chatflow\npm_packages\multicast-dns-6.2.3.tgz` (5,707 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fill-range-4.0.0.tgz` (5,702 bytes)
+- `cms\src\main\app.chatflow\npm_packages\d3-path-1.0.9.tgz` (5,697 bytes)
+- `cms\src\main\app.chatflow\npm_packages\whet.extend-0.9.9.tgz` (5,692 bytes)
+- `cms\src\main\app.chatflow\npm_packages\validate-npm-package-license-3.0.4.tgz` (5,675 bytes)
+- `cms\src\main\app.chatflow\npm_packages\asn1-0.2.4.tgz` (5,666 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-symbols-1.0.1.tgz` (5,663 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rimraf-2.7.1.tgz` (5,662 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-3.1.2.tgz` (5,662 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fs-write-stream-atomic-1.0.10.tgz` (5,622 bytes)
+- `cms\src\main\app.chatflow\npm_packages\toposort-1.0.7.tgz` (5,575 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bser-2.1.1.tgz` (5,571 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fill-range-7.0.1.tgz` (5,567 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stylehacks-4.0.3.tgz` (5,557 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regexp.prototype.flags-1.3.0.tgz` (5,532 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-snapshot-22.4.3.tgz` (5,527 bytes)
+- `cms\src\main\app.chatflow\npm_packages\classlist-polyfill-1.2.0.tgz` (5,507 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-modules-local-by-default-1.2.0.tgz` (5,493 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-arguments-1.0.4.tgz` (5,490 bytes)
+- `cms\src\main\app.chatflow\npm_packages\statuses-1.5.0.tgz` (5,482 bytes)
+- `cms\src\main\app.chatflow\npm_packages\serialize-javascript-1.9.1.tgz` (5,481 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-ordered-values-2.2.3.tgz` (5,476 bytes)
+- `cms\src\main\app.chatflow\npm_packages\proxy-addr-2.0.6.tgz` (5,461 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string.prototype.trimstart-1.0.1.tgz` (5,457 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-font-values-4.0.2.tgz` (5,444 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string.prototype.trimend-1.0.1.tgz` (5,444 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cliui-4.1.0.tgz` (5,438 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsonfile-2.4.0.tgz` (5,427 bytes)
+- `cms\src\main\app.chatflow\npm_packages\source-map-url-0.4.0.tgz` (5,406 bytes)
+- `cms\src\main\app.chatflow\npm_packages\accepts-1.3.7.tgz` (5,400 bytes)
+- `cms\src\main\app.chatflow\npm_packages\class-utils-0.3.6.tgz` (5,374 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mime-types-2.1.27.tgz` (5,367 bytes)
+- `cms\src\main\app.chatflow\npm_packages\select-hose-2.0.0.tgz` (5,359 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-runtime-6.23.0.tgz` (5,353 bytes)
+- `cms\src\main\app.chatflow\npm_packages\diffie-hellman-5.0.3.tgz` (5,334 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caseless-0.12.0.tgz` (5,323 bytes)
+- `cms\src\main\app.chatflow\npm_packages\buffer-indexof-1.1.1.tgz` (5,315 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-selector-tokenizer-0.7.3.tgz` (5,266 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-merge-rules-4.0.3.tgz` (5,244 bytes)
+- `cms\src\main\app.chatflow\npm_packages\private-0.1.8.tgz` (5,240 bytes)
+- `cms\src\main\app.chatflow\npm_packages\chalk-1.1.3.tgz` (5,236 bytes)
+- `cms\src\main\app.chatflow\npm_packages\es6-weak-map-2.0.3.tgz` (5,216 bytes)
+- `cms\src\main\app.chatflow\npm_packages\oauth-sign-0.9.0.tgz` (5,195 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stack-utils-1.0.2.tgz` (5,178 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-svgo-2.1.6.tgz` (5,176 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-schema-traverse-0.3.1.tgz` (5,165 bytes)
+- `cms\src\main\app.chatflow\npm_packages\aws-sign2-0.7.0.tgz` (5,160 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object.values-1.1.1.tgz` (5,147 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rollup-plugin-sass-0.9.3.tgz` (5,146 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-schema-traverse-0.4.1.tgz` (5,141 bytes)
+- `cms\src\main\app.chatflow\npm_packages\whatwg-mimetype-2.3.0.tgz` (5,135 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-0.11.4.tgz` (5,101 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-modules-values-1.3.0.tgz` (5,100 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-resolve-22.4.3.tgz` (5,077 bytes)
+- `cms\src\main\app.chatflow\npm_packages\duplexify-3.7.1.tgz` (5,038 bytes)
+- `cms\src\main\app.chatflow\npm_packages\forever-agent-0.6.1.tgz` (5,035 bytes)
+- `cms\src\main\app.chatflow\npm_packages\loader-runner-2.4.0.tgz` (4,959 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cliui-3.2.0.tgz` (4,953 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vm-browserify-1.1.2.tgz` (4,931 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helpers-6.24.1.tgz` (4,913 bytes)
+- `cms\src\main\app.chatflow\npm_packages\filesize-3.6.1.tgz` (4,905 bytes)
+- `cms\src\main\app.chatflow\npm_packages\kind-of-4.0.0.tgz` (4,901 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-convert-values-4.0.1.tgz` (4,887 bytes)
+- `cms\src\main\app.chatflow\npm_packages\abab-2.0.4.tgz` (4,875 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-ordered-values-4.1.2.tgz` (4,863 bytes)
+- `cms\src\main\app.chatflow\npm_packages\kind-of-3.2.2.tgz` (4,861 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cache-base-1.0.1.tgz` (4,847 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domain-browser-1.2.0.tgz` (4,845 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-validate-22.4.4.tgz` (4,843 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browser-resolve-1.11.3.tgz` (4,839 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string_decoder-1.1.1.tgz` (4,831 bytes)
+- `cms\src\main\app.chatflow\npm_packages\klaw-1.3.1.tgz` (4,822 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-preset-default-4.0.7.tgz` (4,803 bytes)
+- `cms\src\main\app.chatflow\npm_packages\wbuf-1.7.3.tgz` (4,784 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-selectors-2.1.1.tgz` (4,764 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stealthy-require-1.1.1.tgz` (4,760 bytes)
+- `cms\src\main\app.chatflow\npm_packages\copy-concurrently-1.0.5.tgz` (4,742 bytes)
+- `cms\src\main\app.chatflow\npm_packages\globby-7.1.1.tgz` (4,741 bytes)
+- `cms\src\main\app.chatflow\npm_packages\randomatic-3.1.1.tgz` (4,740 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-runner-22.4.4.tgz` (4,733 bytes)
+- `cms\src\main\app.chatflow\npm_packages\split-string-3.1.0.tgz` (4,720 bytes)
+- `cms\src\main\app.chatflow\npm_packages\test-exclude-4.2.3.tgz` (4,715 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-reduce-initial-1.0.1.tgz` (4,692 bytes)
+- `cms\src\main\app.chatflow\npm_packages\connect-history-api-fallback-1.6.0.tgz` (4,680 bytes)
+- `cms\src\main\app.chatflow\npm_packages\process-0.11.10.tgz` (4,669 bytes)
+- `cms\src\main\app.chatflow\npm_packages\content-type-1.0.4.tgz` (4,655 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-reduce-initial-4.0.3.tgz` (4,628 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string_decoder-1.3.0.tgz` (4,622 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-unused-2.2.3.tgz` (4,609 bytes)
+- `cms\src\main\app.chatflow\npm_packages\to-regex-3.0.2.tgz` (4,600 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ci-info-1.6.0.tgz` (4,573 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caniuse-api-3.0.0.tgz` (4,572 bytes)
+- `cms\src\main\app.chatflow\npm_packages\performance-now-2.1.0.tgz` (4,564 bytes)
+- `cms\src\main\app.chatflow\npm_packages\http-deceiver-1.2.7.tgz` (4,562 bytes)
+- `cms\src\main\app.chatflow\npm_packages\on-finished-2.3.0.tgz` (4,552 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-stable-stringify-1.0.1.tgz` (4,527 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pbkdf2-3.1.1.tgz` (4,524 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-parameters-6.24.1.tgz` (4,498 bytes)
+- `cms\src\main\app.chatflow\npm_packages\write-file-atomic-2.4.3.tgz` (4,495 bytes)
+- `cms\src\main\app.chatflow\npm_packages\clone-1.0.4.tgz` (4,457 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fs.realpath-1.0.0.tgz` (4,434 bytes)
+- `cms\src\main\app.chatflow\npm_packages\spdx-expression-parse-3.0.1.tgz` (4,427 bytes)
+- `cms\src\main\app.chatflow\npm_packages\istanbul-lib-hook-1.2.2.tgz` (4,405 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-comments-2.0.4.tgz` (4,403 bytes)
+- `cms\src\main\app.chatflow\npm_packages\etag-1.8.1.tgz` (4,386 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserify-sign-4.2.0.tgz` (4,382 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jsonify-0.0.0.tgz` (4,376 bytes)
+- `cms\src\main\app.chatflow\npm_packages\require-directory-2.1.1.tgz` (4,372 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-register-6.26.0.tgz` (4,342 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caniuse-api-1.6.1.tgz` (4,341 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regjsgen-0.2.0.tgz` (4,329 bytes)
+- `cms\src\main\app.chatflow\npm_packages\imurmurhash-0.1.4.tgz` (4,312 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rgbcolor-1.0.1.tgz` (4,307 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-destructuring-6.23.0.tgz` (4,271 bytes)
+- `cms\src\main\app.chatflow\npm_packages\timers-browserify-2.0.11.tgz` (4,249 bytes)
+- `cms\src\main\app.chatflow\npm_packages\brace-expansion-1.1.11.tgz` (4,239 bytes)
+- `cms\src\main\app.chatflow\npm_packages\yallist-2.1.2.tgz` (4,239 bytes)
+- `cms\src\main\app.chatflow\npm_packages\find-babel-config-1.2.0.tgz` (4,232 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fresh-0.5.2.tgz` (4,229 bytes)
+- `cms\src\main\app.chatflow\npm_packages\console-browserify-1.2.0.tgz` (4,227 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bytes-3.1.0.tgz` (4,215 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-svgo-4.0.2.tgz` (4,214 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-diff-22.4.3.tgz` (4,209 bytes)
+- `cms\src\main\app.chatflow\npm_packages\media-typer-0.3.0.tgz` (4,189 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-modules-systemjs-6.24.1.tgz` (4,189 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vue-hot-reload-api-2.3.4.tgz` (4,184 bytes)
+- `cms\src\main\app.chatflow\npm_packages\which-1.3.1.tgz` (4,174 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bindings-1.5.0.tgz` (4,174 bytes)
+- `cms\src\main\app.chatflow\npm_packages\query-string-4.3.4.tgz` (4,170 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dns-txt-2.0.2.tgz` (4,161 bytes)
+- `cms\src\main\app.chatflow\npm_packages\signal-exit-3.0.3.tgz` (4,158 bytes)
+- `cms\src\main\app.chatflow\npm_packages\miller-rabin-4.0.1.tgz` (4,146 bytes)
+- `cms\src\main\app.chatflow\npm_packages\bytes-3.0.0.tgz` (4,145 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domexception-1.0.1.tgz` (4,124 bytes)
+- `cms\src\main\app.chatflow\npm_packages\reduce-css-calc-1.3.0.tgz` (4,122 bytes)
+- `cms\src\main\app.chatflow\npm_packages\y18n-4.0.0.tgz` (4,116 bytes)
+- `cms\src\main\app.chatflow\npm_packages\last-call-webpack-plugin-2.1.2.tgz` (4,111 bytes)
+- `cms\src\main\app.chatflow\npm_packages\obuf-1.1.2.tgz` (4,111 bytes)
+- `cms\src\main\app.chatflow\npm_packages\handle-thing-2.0.1.tgz` (4,106 bytes)
+- `cms\src\main\app.chatflow\npm_packages\word-wrap-1.2.3.tgz` (4,094 bytes)
+- `cms\src\main\app.chatflow\npm_packages\escalade-3.0.2.tgz` (4,093 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-glob-4.0.1.tgz` (4,092 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cli-spinners-1.3.1.tgz` (4,078 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fb-watchman-2.0.1.tgz` (4,074 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-name-1.1.3.tgz` (4,071 bytes)
+- `cms\src\main\app.chatflow\npm_packages\combined-stream-1.0.8.tgz` (4,068 bytes)
+- `cms\src\main\app.chatflow\npm_packages\schema-utils-0.3.0.tgz` (4,065 bytes)
+- `cms\src\main\app.chatflow\npm_packages\through2-2.0.5.tgz` (4,060 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-modules-extract-imports-1.2.1.tgz` (4,057 bytes)
+- `cms\src\main\app.chatflow\npm_packages\esrecurse-4.2.1.tgz` (4,049 bytes)
+- `cms\src\main\app.chatflow\npm_packages\define-property-2.0.2.tgz` (4,047 bytes)
+- `cms\src\main\app.chatflow\npm_packages\interpret-1.4.0.tgz` (4,046 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-stringify-safe-5.0.1.tgz` (4,014 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-string-0.3.0.tgz` (3,994 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parse-glob-3.0.4.tgz` (3,991 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tapable-0.2.9.tgz` (3,982 bytes)
+- `cms\src\main\app.chatflow\npm_packages\node-libs-browser-2.2.1.tgz` (3,976 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regex-cache-0.4.4.tgz` (3,975 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-duplicates-2.1.0.tgz` (3,970 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-url-3.0.8.tgz` (3,968 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-what-2.1.3.tgz` (3,955 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parseurl-1.3.3.tgz` (3,952 bytes)
+- `cms\src\main\app.chatflow\npm_packages\whatwg-encoding-1.0.5.tgz` (3,947 bytes)
+- `cms\src\main\app.chatflow\npm_packages\assert-plus-1.0.0.tgz` (3,943 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dom-serializer-0.2.2.tgz` (3,936 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pinkie-2.0.4.tgz` (3,935 bytes)
+- `cms\src\main\app.chatflow\npm_packages\convert-source-map-1.7.0.tgz` (3,931 bytes)
+- `cms\src\main\app.chatflow\npm_packages\url-loader-0.5.9.tgz` (3,914 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extglob-0.3.2.tgz` (3,902 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ini-1.3.5.tgz` (3,890 bytes)
+- `cms\src\main\app.chatflow\npm_packages\base64-js-1.3.1.tgz` (3,882 bytes)
+- `cms\src\main\app.chatflow\npm_packages\time-stamp-2.2.0.tgz` (3,880 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parse-asn1-5.1.5.tgz` (3,865 bytes)
+- `cms\src\main\app.chatflow\npm_packages\colormin-1.1.2.tgz` (3,853 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-colormin-2.2.2.tgz` (3,824 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-font-values-1.0.5.tgz` (3,820 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sigmund-1.0.1.tgz` (3,814 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-filter-plugins-2.0.3.tgz` (3,814 bytes)
+- `cms\src\main\app.chatflow\npm_packages\use-3.1.1.tgz` (3,813 bytes)
+- `cms\src\main\app.chatflow\npm_packages\concat-stream-1.6.2.tgz` (3,808 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-color-stop-1.1.0.tgz` (3,808 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ansi-styles-3.2.1.tgz` (3,808 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-select-base-adapter-0.1.1.tgz` (3,784 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ripemd160-2.0.2.tgz` (3,780 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rechoir-0.6.2.tgz` (3,776 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-url-4.0.1.tgz` (3,775 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vary-1.1.2.tgz` (3,772 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ora-1.4.0.tgz` (3,757 bytes)
+- `cms\src\main\app.chatflow\npm_packages\isexe-2.0.0.tgz` (3,756 bytes)
+- `cms\src\main\app.chatflow\npm_packages\isstream-0.1.2.tgz` (3,755 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-gradients-1.0.5.tgz` (3,748 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-dynamic-import-node-1.2.0.tgz` (3,744 bytes)
+- `cms\src\main\app.chatflow\npm_packages\from2-2.3.0.tgz` (3,738 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-number-7.0.0.tgz` (3,730 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-zindex-2.2.0.tgz` (3,725 bytes)
+- `cms\src\main\app.chatflow\npm_packages\preserve-0.2.0.tgz` (3,719 bytes)
+- `cms\src\main\app.chatflow\npm_packages\raf-3.4.1.tgz` (3,716 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html-encoding-sniffer-1.0.2.tgz` (3,713 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fast-levenshtein-2.0.6.tgz` (3,699 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-message-util-22.4.3.tgz` (3,681 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stable-0.1.8.tgz` (3,680 bytes)
+- `cms\src\main\app.chatflow\npm_packages\shallow-clone-3.0.1.tgz` (3,669 bytes)
+- `cms\src\main\app.chatflow\npm_packages\schema-utils-0.4.7.tgz` (3,661 bytes)
+- `cms\src\main\app.chatflow\npm_packages\expand-brackets-0.1.5.tgz` (3,659 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fast-deep-equal-3.1.3.tgz` (3,656 bytes)
+- `cms\src\main\app.chatflow\npm_packages\set-value-2.0.1.tgz` (3,649 bytes)
+- `cms\src\main\app.chatflow\npm_packages\request-promise-native-1.0.9.tgz` (3,644 bytes)
+- `cms\src\main\app.chatflow\npm_packages\anymatch-3.1.1.tgz` (3,639 bytes)
+- `cms\src\main\app.chatflow\npm_packages\normalize-url-3.3.0.tgz` (3,628 bytes)
+- `cms\src\main\app.chatflow\npm_packages\har-schema-2.0.0.tgz` (3,628 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-string-1.5.3.tgz` (3,627 bytes)
+- `cms\src\main\app.chatflow\npm_packages\left-pad-1.3.0.tgz` (3,619 bytes)
+- `cms\src\main\app.chatflow\npm_packages\meow-3.7.0.tgz` (3,611 bytes)
+- `cms\src\main\app.chatflow\npm_packages\range-parser-1.2.1.tgz` (3,603 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-merge-idents-2.1.7.tgz` (3,594 bytes)
+- `cms\src\main\app.chatflow\npm_packages\resolve-url-0.2.1.tgz` (3,592 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-colormin-4.0.3.tgz` (3,573 bytes)
+- `cms\src\main\app.chatflow\npm_packages\normalize-path-3.0.0.tgz` (3,566 bytes)
+- `cms\src\main\app.chatflow\npm_packages\error-ex-1.3.2.tgz` (3,555 bytes)
+- `cms\src\main\app.chatflow\npm_packages\data-urls-1.1.0.tgz` (3,550 bytes)
+- `cms\src\main\app.chatflow\npm_packages\file-uri-to-path-1.0.0.tgz` (3,549 bytes)
+- `cms\src\main\app.chatflow\npm_packages\align-text-0.1.4.tgz` (3,547 bytes)
+- `cms\src\main\app.chatflow\npm_packages\wrap-ansi-2.1.0.tgz` (3,546 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-calc-5.3.1.tgz` (3,540 bytes)
+- `cms\src\main\app.chatflow\npm_packages\aproba-1.2.0.tgz` (3,526 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ansi-escapes-3.2.0.tgz` (3,518 bytes)
+- `cms\src\main\app.chatflow\npm_packages\map-visit-1.0.0.tgz` (3,508 bytes)
+- `cms\src\main\app.chatflow\npm_packages\get-stream-3.0.0.tgz` (3,497 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-selectors-4.0.2.tgz` (3,491 bytes)
+- `cms\src\main\app.chatflow\npm_packages\deep-is-0.1.3.tgz` (3,487 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pumpify-1.5.1.tgz` (3,478 bytes)
+- `cms\src\main\app.chatflow\npm_packages\normalize-url-1.9.1.tgz` (3,468 bytes)
+- `cms\src\main\app.chatflow\npm_packages\delayed-stream-1.0.0.tgz` (3,464 bytes)
+- `cms\src\main\app.chatflow\npm_packages\prr-1.0.1.tgz` (3,458 bytes)
+- `cms\src\main\app.chatflow\npm_packages\append-transform-0.4.0.tgz` (3,456 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-string-4.0.2.tgz` (3,446 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pseudomap-1.0.2.tgz` (3,443 bytes)
+- `cms\src\main\app.chatflow\npm_packages\anymatch-2.0.0.tgz` (3,437 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-object-rest-spread-6.26.0.tgz` (3,436 bytes)
+- `cms\src\main\app.chatflow\npm_packages\y18n-3.2.1.tgz` (3,424 bytes)
+- `cms\src\main\app.chatflow\npm_packages\memory-fs-0.4.1.tgz` (3,423 bytes)
+- `cms\src\main\app.chatflow\npm_packages\glob-parent-5.1.1.tgz` (3,418 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fastparse-1.1.2.tgz` (3,392 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-modules-umd-6.24.1.tgz` (3,390 bytes)
+- `cms\src\main\app.chatflow\npm_packages\supports-color-6.1.0.tgz` (3,389 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-glob-3.1.0.tgz` (3,388 bytes)
+- `cms\src\main\app.chatflow\npm_packages\batch-0.6.1.tgz` (3,384 bytes)
+- `cms\src\main\app.chatflow\npm_packages\constants-browserify-1.0.0.tgz` (3,383 bytes)
+- `cms\src\main\app.chatflow\npm_packages\async-limiter-1.0.1.tgz` (3,380 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-modules-scope-1.1.0.tgz` (3,368 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-changed-files-22.4.3.tgz` (3,365 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-comments-4.0.2.tgz` (3,364 bytes)
+- `cms\src\main\app.chatflow\npm_packages\regex-not-1.0.2.tgz` (3,357 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fragment-cache-0.2.1.tgz` (3,345 bytes)
+- `cms\src\main\app.chatflow\npm_packages\repeat-string-1.6.1.tgz` (3,339 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pify-4.0.1.tgz` (3,318 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hash-sum-1.0.2.tgz` (3,310 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-duplicates-4.0.2.tgz` (3,310 bytes)
+- `cms\src\main\app.chatflow\npm_packages\next-tick-1.0.0.tgz` (3,302 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lazy-cache-1.0.4.tgz` (3,295 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-class-properties-6.24.1.tgz` (3,278 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-to-regexp-0.1.7.tgz` (3,269 bytes)
+- `cms\src\main\app.chatflow\npm_packages\estree-walker-0.6.1.tgz` (3,261 bytes)
+- `cms\src\main\app.chatflow\npm_packages\encodeurl-1.0.2.tgz` (3,260 bytes)
+- `cms\src\main\app.chatflow\npm_packages\setimmediate-1.0.5.tgz` (3,255 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-accessor-descriptor-1.0.0.tgz` (3,250 bytes)
+- `cms\src\main\app.chatflow\npm_packages\expand-range-1.8.2.tgz` (3,248 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-reduce-transforms-1.0.4.tgz` (3,244 bytes)
+- `cms\src\main\app.chatflow\npm_packages\normalize-range-0.1.2.tgz` (3,234 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dot-prop-5.2.0.tgz` (3,232 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-parse-1.0.6.tgz` (3,231 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-data-descriptor-1.0.0.tgz` (3,230 bytes)
+- `cms\src\main\app.chatflow\npm_packages\acorn-dynamic-import-2.0.2.tgz` (3,229 bytes)
+- `cms\src\main\app.chatflow\npm_packages\on-headers-1.0.2.tgz` (3,225 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lcid-1.0.0.tgz` (3,211 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extend-shallow-3.0.2.tgz` (3,210 bytes)
+- `cms\src\main\app.chatflow\npm_packages\arr-diff-4.0.0.tgz` (3,205 bytes)
+- `cms\src\main\app.chatflow\npm_packages\clone-deep-4.0.1.tgz` (3,195 bytes)
+- `cms\src\main\app.chatflow\npm_packages\querystringify-2.1.1.tgz` (3,187 bytes)
+- `cms\src\main\app.chatflow\npm_packages\unset-value-1.0.0.tgz` (3,169 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-windows-1.0.2.tgz` (3,162 bytes)
+- `cms\src\main\app.chatflow\npm_packages\normalize-path-2.1.1.tgz` (3,159 bytes)
+- `cms\src\main\app.chatflow\npm_packages\posix-character-classes-0.1.1.tgz` (3,156 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@babel-code-frame-7.10.4.tgz` (3,147 bytes)
+- `cms\src\main\app.chatflow\npm_packages\md5.js-1.3.5.tgz` (3,147 bytes)
+- `cms\src\main\app.chatflow\npm_packages\acorn-globals-4.3.4.tgz` (3,145 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pump-2.0.1.tgz` (3,136 bytes)
+- `cms\src\main\app.chatflow\npm_packages\thunky-1.1.0.tgz` (3,117 bytes)
+- `cms\src\main\app.chatflow\npm_packages\throat-4.1.0.tgz` (3,115 bytes)
+- `cms\src\main\app.chatflow\npm_packages\component-emitter-1.3.0.tgz` (3,102 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-number-4.0.0.tgz` (3,100 bytes)
+- `cms\src\main\app.chatflow\npm_packages\detect-indent-4.0.0.tgz` (3,096 bytes)
+- `cms\src\main\app.chatflow\npm_packages\globby-6.1.0.tgz` (3,095 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pify-3.0.0.tgz` (3,092 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dom-converter-0.2.0.tgz` (3,087 bytes)
+- `cms\src\main\app.chatflow\npm_packages\invariant-2.2.4.tgz` (3,079 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stream-browserify-2.0.2.tgz` (3,073 bytes)
+- `cms\src\main\app.chatflow\npm_packages\compressible-2.0.18.tgz` (3,067 bytes)
+- `cms\src\main\app.chatflow\npm_packages\supports-color-5.5.0.tgz` (3,067 bytes)
+- `cms\src\main\app.chatflow\npm_packages\requires-port-1.0.0.tgz` (3,057 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-parse-better-errors-1.0.2.tgz` (3,051 bytes)
+- `cms\src\main\app.chatflow\npm_packages\opener-1.5.1.tgz` (3,046 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cipher-base-1.0.4.tgz` (3,041 bytes)
+- `cms\src\main\app.chatflow\npm_packages\minimalistic-crypto-utils-1.0.1.tgz` (3,039 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object.omit-2.0.1.tgz` (3,032 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-plain-object-2.0.4.tgz` (3,029 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ms-2.1.1.tgz` (3,028 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mkdirp-0.5.5.tgz` (3,018 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ms-2.1.2.tgz` (3,017 bytes)
+- `cms\src\main\app.chatflow\npm_packages\spdx-license-ids-3.0.5.tgz` (3,009 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-values-1.0.0.tgz` (3,009 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-descriptor-0.1.6.tgz` (3,000 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-descriptor-1.0.2.tgz` (2,995 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-overridden-0.1.1.tgz` (2,989 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-value-1.0.0.tgz` (2,973 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-for-of-6.23.0.tgz` (2,970 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mixin-deep-1.3.2.tgz` (2,962 bytes)
+- `cms\src\main\app.chatflow\npm_packages\icss-utils-2.1.0.tgz` (2,947 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-code-frame-6.26.0.tgz` (2,928 bytes)
+- `cms\src\main\app.chatflow\npm_packages\move-concurrently-1.0.1.tgz` (2,927 bytes)
+- `cms\src\main\app.chatflow\npm_packages\condense-newlines-0.2.1.tgz` (2,926 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-extendable-1.0.1.tgz` (2,921 bytes)
+- `cms\src\main\app.chatflow\npm_packages\del-3.0.0.tgz` (2,914 bytes)
+- `cms\src\main\app.chatflow\npm_packages\make-dir-1.3.0.tgz` (2,901 bytes)
+- `cms\src\main\app.chatflow\npm_packages\collection-visit-1.0.0.tgz` (2,892 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-message-helpers-2.0.0.tgz` (2,891 bytes)
+- `cms\src\main\app.chatflow\npm_packages\map-cache-0.2.2.tgz` (2,885 bytes)
+- `cms\src\main\app.chatflow\npm_packages\supports-color-4.5.0.tgz` (2,882 bytes)
+- `cms\src\main\app.chatflow\npm_packages\safe-regex-1.1.0.tgz` (2,878 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-vue-app-1.3.2.tgz` (2,875 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ms-2.0.0.tgz` (2,874 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-gradients-4.0.2.tgz` (2,872 bytes)
+- `cms\src\main\app.chatflow\npm_packages\arr-flatten-1.1.0.tgz` (2,872 bytes)
+- `cms\src\main\app.chatflow\npm_packages\color-name-1.1.4.tgz` (2,868 bytes)
+- `cms\src\main\app.chatflow\npm_packages\json-loader-0.5.7.tgz` (2,866 bytes)
+- `cms\src\main\app.chatflow\npm_packages\reduce-function-call-1.0.3.tgz` (2,859 bytes)
+- `cms\src\main\app.chatflow\npm_packages\arr-union-3.1.0.tgz` (2,857 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-number-3.0.0.tgz` (2,851 bytes)
+- `cms\src\main\app.chatflow\npm_packages\glob-parent-3.1.0.tgz` (2,850 bytes)
+- `cms\src\main\app.chatflow\npm_packages\glob-base-0.3.0.tgz` (2,844 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-computed-properties-6.24.1.tgz` (2,843 bytes)
+- `cms\src\main\app.chatflow\npm_packages\loose-envify-1.4.0.tgz` (2,842 bytes)
+- `cms\src\main\app.chatflow\npm_packages\isobject-3.0.1.tgz` (2,839 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-remap-async-to-generator-6.24.1.tgz` (2,836 bytes)
+- `cms\src\main\app.chatflow\npm_packages\merge-1.2.1.tgz` (2,829 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object-visit-1.0.1.tgz` (2,829 bytes)
+- `cms\src\main\app.chatflow\npm_packages\randomfill-1.0.4.tgz` (2,814 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-params-1.2.2.tgz` (2,810 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pify-2.3.0.tgz` (2,793 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-reduce-transforms-4.0.2.tgz` (2,789 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-unique-0.3.2.tgz` (2,787 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-dotfile-1.0.3.tgz` (2,776 bytes)
+- `cms\src\main\app.chatflow\npm_packages\define-property-1.0.0.tgz` (2,772 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mem-1.1.0.tgz` (2,765 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stream-each-1.2.3.tgz` (2,765 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pretty-2.0.0.tgz` (2,764 bytes)
+- `cms\src\main\app.chatflow\npm_packages\nth-check-1.0.2.tgz` (2,752 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-accessor-descriptor-0.1.6.tgz` (2,745 bytes)
+- `cms\src\main\app.chatflow\npm_packages\union-value-1.0.1.tgz` (2,739 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-minify-params-4.0.2.tgz` (2,737 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ee-first-1.1.1.tgz` (2,733 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ieee754-1.1.13.tgz` (2,723 bytes)
+- `cms\src\main\app.chatflow\npm_packages\svg-tags-1.0.0.tgz` (2,718 bytes)
+- `cms\src\main\app.chatflow\npm_packages\num2fraction-1.2.2.tgz` (2,694 bytes)
+- `cms\src\main\app.chatflow\npm_packages\decode-uri-component-0.2.0.tgz` (2,691 bytes)
+- `cms\src\main\app.chatflow\npm_packages\for-own-0.1.5.tgz` (2,689 bytes)
+- `cms\src\main\app.chatflow\npm_packages\merge-source-map-1.1.0.tgz` (2,679 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object-assign-4.1.1.tgz` (2,675 bytes)
+- `cms\src\main\app.chatflow\npm_packages\randombytes-2.1.0.tgz` (2,667 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-extglob-2.1.1.tgz` (2,663 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-docblock-22.4.3.tgz` (2,658 bytes)
+- `cms\src\main\app.chatflow\npm_packages\alphanum-sort-1.0.2.tgz` (2,655 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object.pick-1.3.0.tgz` (2,648 bytes)
+- `cms\src\main\app.chatflow\npm_packages\find-cache-dir-1.0.0.tgz` (2,648 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-arrayish-0.2.1.tgz` (2,646 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hash-base-3.1.0.tgz` (2,645 bytes)
+- `cms\src\main\app.chatflow\npm_packages\for-in-1.0.2.tgz` (2,637 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-data-descriptor-0.1.4.tgz` (2,632 bytes)
+- `cms\src\main\app.chatflow\npm_packages\to-arraybuffer-1.0.1.tgz` (2,617 bytes)
+- `cms\src\main\app.chatflow\npm_packages\evp_bytestokey-1.0.3.tgz` (2,610 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-positions-4.0.2.tgz` (2,604 bytes)
+- `cms\src\main\app.chatflow\npm_packages\getpass-0.1.7.tgz` (2,601 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-value-0.3.1.tgz` (2,601 bytes)
+- `cms\src\main\app.chatflow\npm_packages\optimize-css-assets-webpack-plugin-3.2.1.tgz` (2,601 bytes)
+- `cms\src\main\app.chatflow\npm_packages\har-validator-5.1.5.tgz` (2,599 bytes)
+- `cms\src\main\app.chatflow\npm_packages\makeerror-1.0.11.tgz` (2,599 bytes)
+- `cms\src\main\app.chatflow\npm_packages\binary-extensions-2.1.0.tgz` (2,597 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-unicode-4.0.1.tgz` (2,596 bytes)
+- `cms\src\main\app.chatflow\npm_packages\forwarded-0.1.2.tgz` (2,588 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@babel-highlight-7.10.4.tgz` (2,585 bytes)
+- `cms\src\main\app.chatflow\npm_packages\p-locate-2.0.0.tgz` (2,580 bytes)
+- `cms\src\main\app.chatflow\npm_packages\assign-symbols-1.0.0.tgz` (2,576 bytes)
+- `cms\src\main\app.chatflow\npm_packages\duplexer-0.1.1.tgz` (2,570 bytes)
+- `cms\src\main\app.chatflow\npm_packages\balanced-match-1.0.0.tgz` (2,566 bytes)
+- `cms\src\main\app.chatflow\npm_packages\balanced-match-0.4.2.tgz` (2,550 bytes)
+- `cms\src\main\app.chatflow\npm_packages\p-map-1.2.0.tgz` (2,545 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-repeat-style-4.0.2.tgz` (2,541 bytes)
+- `cms\src\main\app.chatflow\npm_packages\flush-write-stream-1.1.1.tgz` (2,534 bytes)
+- `cms\src\main\app.chatflow\npm_packages\loud-rejection-1.6.0.tgz` (2,532 bytes)
+- `cms\src\main\app.chatflow\npm_packages\iferr-0.1.5.tgz` (2,529 bytes)
+- `cms\src\main\app.chatflow\npm_packages\xtend-4.0.2.tgz` (2,529 bytes)
+- `cms\src\main\app.chatflow\npm_packages\currently-unhandled-0.4.1.tgz` (2,513 bytes)
+- `cms\src\main\app.chatflow\npm_packages\natural-compare-1.4.0.tgz` (2,510 bytes)
+- `cms\src\main\app.chatflow\npm_packages\brorand-1.1.0.tgz` (2,509 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-replace-supers-6.24.1.tgz` (2,508 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-template-6.26.0.tgz` (2,496 bytes)
+- `cms\src\main\app.chatflow\npm_packages\create-ecdh-4.0.3.tgz` (2,488 bytes)
+- `cms\src\main\app.chatflow\npm_packages\supports-color-3.2.3.tgz` (2,487 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-decorators-6.24.1.tgz` (2,485 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-glob-2.0.1.tgz` (2,485 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-values-0.1.4.tgz` (2,483 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-directory-0.3.1.tgz` (2,480 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parallel-transform-1.2.0.tgz` (2,478 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-dirname-1.0.2.tgz` (2,476 bytes)
+- `cms\src\main\app.chatflow\npm_packages\methods-1.1.2.tgz` (2,475 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-equal-shallow-0.1.3.tgz` (2,471 bytes)
+- `cms\src\main\app.chatflow\npm_packages\os-locale-1.4.0.tgz` (2,463 bytes)
+- `cms\src\main\app.chatflow\npm_packages\run-queue-1.0.3.tgz` (2,458 bytes)
+- `cms\src\main\app.chatflow\npm_packages\fast-deep-equal-1.1.0.tgz` (2,451 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-number-2.1.0.tgz` (2,450 bytes)
+- `cms\src\main\app.chatflow\npm_packages\create-hash-1.2.0.tgz` (2,444 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ansi-styles-2.2.1.tgz` (2,443 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-display-values-4.0.2.tgz` (2,438 bytes)
+- `cms\src\main\app.chatflow\npm_packages\arr-diff-2.0.0.tgz` (2,431 bytes)
+- `cms\src\main\app.chatflow\npm_packages\os-locale-2.1.0.tgz` (2,431 bytes)
+- `cms\src\main\app.chatflow\npm_packages\create-hmac-1.1.7.tgz` (2,429 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-posix-bracket-0.1.1.tgz` (2,418 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uglify-to-browserify-1.0.2.tgz` (2,417 bytes)
+- `cms\src\main\app.chatflow\npm_packages\original-1.0.2.tgz` (2,413 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-timing-functions-4.0.2.tgz` (2,404 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-empty-2.1.0.tgz` (2,404 bytes)
+- `cms\src\main\app.chatflow\npm_packages\center-align-0.1.3.tgz` (2,402 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-buffer-1.1.6.tgz` (2,394 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-flatten-2.1.2.tgz` (2,394 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rgba-regex-1.0.0.tgz` (2,393 bytes)
+- `cms\src\main\app.chatflow\npm_packages\repeat-element-1.1.3.tgz` (2,390 bytes)
+- `cms\src\main\app.chatflow\npm_packages\isobject-2.1.0.tgz` (2,387 bytes)
+- `cms\src\main\app.chatflow\npm_packages\end-of-stream-1.4.4.tgz` (2,387 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-whitespace-4.0.2.tgz` (2,382 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-extendable-0.1.1.tgz` (2,381 bytes)
+- `cms\src\main\app.chatflow\npm_packages\builtin-status-codes-3.0.0.tgz` (2,374 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hsla-regex-1.0.0.tgz` (2,370 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserify-cipher-1.0.1.tgz` (2,363 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-jest-22.4.4.tgz` (2,359 bytes)
+- `cms\src\main\app.chatflow\npm_packages\rgb-regex-1.0.1.tgz` (2,356 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-jest-21.2.0.tgz` (2,350 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ansi-regex-2.1.1.tgz` (2,340 bytes)
+- `cms\src\main\app.chatflow\npm_packages\leven-2.1.0.tgz` (2,338 bytes)
+- `cms\src\main\app.chatflow\npm_packages\hsl-regex-1.0.0.tgz` (2,336 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-messages-6.23.0.tgz` (2,336 bytes)
+- `cms\src\main\app.chatflow\npm_packages\to-object-path-0.3.0.tgz` (2,332 bytes)
+- `cms\src\main\app.chatflow\npm_packages\destroy-1.0.4.tgz` (2,331 bytes)
+- `cms\src\main\app.chatflow\npm_packages\object-copy-0.1.0.tgz` (2,317 bytes)
+- `cms\src\main\app.chatflow\npm_packages\merge-descriptors-1.0.1.tgz` (2,312 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cyclist-1.0.1.tgz` (2,312 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browserify-des-1.0.2.tgz` (2,310 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uniq-1.0.1.tgz` (2,302 bytes)
+- `cms\src\main\app.chatflow\npm_packages\lower-case-1.1.4.tgz` (2,301 bytes)
+- `cms\src\main\app.chatflow\npm_packages\abbrev-1.1.1.tgz` (2,301 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-serializer-22.4.3.tgz` (2,300 bytes)
+- `cms\src\main\app.chatflow\npm_packages\osenv-0.1.5.tgz` (2,299 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-charset-4.0.1.tgz` (2,299 bytes)
+- `cms\src\main\app.chatflow\npm_packages\define-property-0.2.5.tgz` (2,299 bytes)
+- `cms\src\main\app.chatflow\npm_packages\buffer-xor-1.0.3.tgz` (2,294 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-jest-hoist-21.2.0.tgz` (2,292 bytes)
+- `cms\src\main\app.chatflow\npm_packages\buffer-from-1.1.1.tgz` (2,292 bytes)
+- `cms\src\main\app.chatflow\npm_packages\gzip-size-4.1.0.tgz` (2,291 bytes)
+- `cms\src\main\app.chatflow\npm_packages\upper-case-1.1.3.tgz` (2,284 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-discard-empty-4.0.1.tgz` (2,273 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-json-comments-2.0.1.tgz` (2,270 bytes)
+- `cms\src\main\app.chatflow\npm_packages\walker-1.0.7.tgz` (2,269 bytes)
+- `cms\src\main\app.chatflow\npm_packages\commondir-1.0.1.tgz` (2,267 bytes)
+- `cms\src\main\app.chatflow\npm_packages\ansi-regex-3.0.0.tgz` (2,264 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dir-glob-2.2.2.tgz` (2,263 bytes)
+- `cms\src\main\app.chatflow\npm_packages\concat-map-0.0.1.tgz` (2,263 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-unique-selectors-2.0.2.tgz` (2,254 bytes)
+- `cms\src\main\app.chatflow\npm_packages\util-deprecate-1.0.2.tgz` (2,246 bytes)
+- `cms\src\main\app.chatflow\npm_packages\realpath-native-1.1.0.tgz` (2,238 bytes)
+- `cms\src\main\app.chatflow\npm_packages\find-up-2.1.0.tgz` (2,234 bytes)
+- `cms\src\main\app.chatflow\npm_packages\which-module-2.0.0.tgz` (2,232 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-jest-hoist-22.4.4.tgz` (2,228 bytes)
+- `cms\src\main\app.chatflow\npm_packages\chownr-1.1.4.tgz` (2,226 bytes)
+- `cms\src\main\app.chatflow\npm_packages\extend-shallow-2.0.1.tgz` (2,221 bytes)
+- `cms\src\main\app.chatflow\npm_packages\npm-run-path-2.0.2.tgz` (2,221 bytes)
+- `cms\src\main\app.chatflow\npm_packages\set-blocking-2.0.0.tgz` (2,212 bytes)
+- `cms\src\main\app.chatflow\npm_packages\urix-0.1.0.tgz` (2,211 bytes)
+- `cms\src\main\app.chatflow\npm_packages\toidentifier-1.0.0.tgz` (2,210 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domelementtype-2.0.1.tgz` (2,199 bytes)
+- `cms\src\main\app.chatflow\npm_packages\css-color-names-0.0.4.tgz` (2,199 bytes)
+- `cms\src\main\app.chatflow\npm_packages\defined-1.0.0.tgz` (2,162 bytes)
+- `cms\src\main\app.chatflow\npm_packages\binary-extensions-1.13.1.tgz` (2,149 bytes)
+- `cms\src\main\app.chatflow\npm_packages\static-extend-0.1.2.tgz` (2,141 bytes)
+- `cms\src\main\app.chatflow\npm_packages\capture-exit-1.2.0.tgz` (2,136 bytes)
+- `cms\src\main\app.chatflow\npm_packages\require-main-filename-1.0.1.tgz` (2,133 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-unique-0.2.1.tgz` (2,131 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-fullwidth-code-point-1.0.0.tgz` (2,124 bytes)
+- `cms\src\main\app.chatflow\npm_packages\inherits-2.0.1.tgz` (2,122 bytes)
+- `cms\src\main\app.chatflow\npm_packages\vendors-1.0.4.tgz` (2,122 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-indent-1.0.1.tgz` (2,117 bytes)
+- `cms\src\main\app.chatflow\npm_packages\base64-arraybuffer-0.2.0.tgz` (2,114 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cookie-signature-1.0.6.tgz` (2,111 bytes)
+- `cms\src\main\app.chatflow\npm_packages\filename-regex-2.0.1.tgz` (2,111 bytes)
+- `cms\src\main\app.chatflow\npm_packages\remove-trailing-separator-1.1.0.tgz` (2,104 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-normalize-charset-1.1.1.tgz` (2,098 bytes)
+- `cms\src\main\app.chatflow\npm_packages\unpipe-1.0.0.tgz` (2,096 bytes)
+- `cms\src\main\app.chatflow\npm_packages\proto-list-1.2.4.tgz` (2,094 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pascalcase-0.1.1.tgz` (2,089 bytes)
+- `cms\src\main\app.chatflow\npm_packages\which-module-1.0.0.tgz` (2,088 bytes)
+- `cms\src\main\app.chatflow\npm_packages\resolve-from-3.0.0.tgz` (2,088 bytes)
+- `cms\src\main\app.chatflow\npm_packages\right-align-0.1.3.tgz` (2,086 bytes)
+- `cms\src\main\app.chatflow\npm_packages\read-pkg-up-2.0.0.tgz` (2,085 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string-width-1.0.2.tgz` (2,083 bytes)
+- `cms\src\main\app.chatflow\npm_packages\multicast-dns-service-types-1.1.0.tgz` (2,081 bytes)
+- `cms\src\main\app.chatflow\npm_packages\read-pkg-1.1.0.tgz` (2,074 bytes)
+- `cms\src\main\app.chatflow\npm_packages\read-pkg-up-1.0.1.tgz` (2,072 bytes)
+- `cms\src\main\app.chatflow\npm_packages\longest-1.0.1.tgz` (2,068 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-extglob-1.0.0.tgz` (2,063 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-fullwidth-code-point-2.0.0.tgz` (2,063 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html-tags-2.0.0.tgz` (2,062 bytes)
+- `cms\src\main\app.chatflow\npm_packages\read-pkg-2.0.0.tgz` (2,062 bytes)
+- `cms\src\main\app.chatflow\npm_packages\find-up-1.1.2.tgz` (2,060 bytes)
+- `cms\src\main\app.chatflow\npm_packages\postcss-unique-selectors-4.0.1.tgz` (2,055 bytes)
+- `cms\src\main\app.chatflow\npm_packages\internal-ip-1.2.0.tgz` (2,053 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-resolvable-1.1.0.tgz` (2,051 bytes)
+- `cms\src\main\app.chatflow\npm_packages\merge-stream-1.0.1.tgz` (2,050 bytes)
+- `cms\src\main\app.chatflow\npm_packages\inflight-1.0.6.tgz` (2,041 bytes)
+- `cms\src\main\app.chatflow\npm_packages\flatten-1.0.3.tgz` (2,037 bytes)
+- `cms\src\main\app.chatflow\npm_packages\camelcase-4.1.0.tgz` (2,035 bytes)
+- `cms\src\main\app.chatflow\npm_packages\inherits-2.0.4.tgz` (2,030 bytes)
+- `cms\src\main\app.chatflow\npm_packages\parse-json-4.0.0.tgz` (2,029 bytes)
+- `cms\src\main\app.chatflow\npm_packages\inherits-2.0.3.tgz` (2,028 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-whitespace-0.3.0.tgz` (2,023 bytes)
+- `cms\src\main\app.chatflow\npm_packages\isarray-1.0.0.tgz` (2,021 bytes)
+- `cms\src\main\app.chatflow\npm_packages\async-each-1.0.3.tgz` (2,021 bytes)
+- `cms\src\main\app.chatflow\npm_packages\locate-path-2.0.0.tgz` (2,019 bytes)
+- `cms\src\main\app.chatflow\npm_packages\glob-parent-2.0.0.tgz` (2,017 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-matcher-utils-22.4.3.tgz` (2,015 bytes)
+- `cms\src\main\app.chatflow\npm_packages\callsites-2.0.0.tgz` (2,004 bytes)
+- `cms\src\main\app.chatflow\npm_packages\p-limit-1.3.0.tgz` (2,000 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-define-map-6.26.0.tgz` (2,000 bytes)
+- `cms\src\main\app.chatflow\npm_packages\sort-keys-1.1.2.tgz` (1,993 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-flatten-1.1.1.tgz` (1,992 bytes)
+- `cms\src\main\app.chatflow\npm_packages\shellwords-0.1.1.tgz` (1,991 bytes)
+- `cms\src\main\app.chatflow\npm_packages\once-1.4.0.tgz` (1,979 bytes)
+- `cms\src\main\app.chatflow\npm_packages\param-case-2.1.1.tgz` (1,974 bytes)
+- `cms\src\main\app.chatflow\npm_packages\copy-descriptor-0.1.1.tgz` (1,974 bytes)
+- `cms\src\main\app.chatflow\npm_packages\camelcase-3.0.0.tgz` (1,972 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string-width-2.1.1.tgz` (1,972 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-uniq-1.0.3.tgz` (1,970 bytes)
+- `cms\src\main\app.chatflow\npm_packages\camelcase-2.1.1.tgz` (1,967 bytes)
+- `cms\src\main\app.chatflow\npm_packages\log-symbols-2.2.0.tgz` (1,961 bytes)
+- `cms\src\main\app.chatflow\npm_packages\utils-merge-1.0.1.tgz` (1,953 bytes)
+- `cms\src\main\app.chatflow\npm_packages\supports-color-2.0.0.tgz` (1,951 bytes)
+- `cms\src\main\app.chatflow\npm_packages\import-fresh-2.0.0.tgz` (1,948 bytes)
+- `cms\src\main\app.chatflow\npm_packages\onetime-2.0.1.tgz` (1,943 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-template-literals-6.22.0.tgz` (1,941 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-modules-amd-6.24.1.tgz` (1,941 bytes)
+- `cms\src\main\app.chatflow\npm_packages\import-local-1.0.0.tgz` (1,937 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-ci-1.2.1.tgz` (1,932 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-async-generator-functions-6.24.1.tgz` (1,931 bytes)
+- `cms\src\main\app.chatflow\npm_packages\dns-equal-1.0.0.tgz` (1,928 bytes)
+- `cms\src\main\app.chatflow\npm_packages\read-cache-1.0.0.tgz` (1,925 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-svg-2.1.0.tgz` (1,923 bytes)
+- `cms\src\main\app.chatflow\npm_packages\setprototypeof-1.1.1.tgz` (1,922 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-exists-2.1.0.tgz` (1,922 bytes)
+- `cms\src\main\app.chatflow\npm_packages\simple-swizzle-0.2.2.tgz` (1,920 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-svg-3.0.0.tgz` (1,920 bytes)
+- `cms\src\main\app.chatflow\npm_packages\escape-html-1.0.3.tgz` (1,917 bytes)
+- `cms\src\main\app.chatflow\npm_packages\get-value-2.0.6.tgz` (1,911 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-spread-6.22.0.tgz` (1,900 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-exists-3.0.0.tgz` (1,891 bytes)
+- `cms\src\main\app.chatflow\npm_packages\browser-process-hrtime-1.0.0.tgz` (1,887 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-is-absolute-1.0.1.tgz` (1,882 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-typedarray-1.0.0.tgz` (1,881 bytes)
+- `cms\src\main\app.chatflow\npm_packages\default-require-extensions-1.0.0.tgz` (1,877 bytes)
+- `cms\src\main\app.chatflow\npm_packages\import-from-2.1.0.tgz` (1,863 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-function-name-6.24.1.tgz` (1,853 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-flag-2.0.0.tgz` (1,850 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pkg-dir-2.0.0.tgz` (1,848 bytes)
+- `cms\src\main\app.chatflow\npm_packages\stream-shift-1.0.1.tgz` (1,844 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-flag-1.0.0.tgz` (1,831 bytes)
+- `cms\src\main\app.chatflow\npm_packages\load-json-file-1.1.0.tgz` (1,825 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-is-inside-1.0.2.tgz` (1,821 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-type-1.1.0.tgz` (1,798 bytes)
+- `cms\src\main\app.chatflow\npm_packages\os-tmpdir-1.0.2.tgz` (1,796 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-bom-2.0.0.tgz` (1,789 bytes)
+- `cms\src\main\app.chatflow\npm_packages\import-cwd-2.1.0.tgz` (1,787 bytes)
+- `cms\src\main\app.chatflow\npm_packages\code-point-at-1.1.0.tgz` (1,776 bytes)
+- `cms\src\main\app.chatflow\npm_packages\resolve-cwd-2.0.0.tgz` (1,772 bytes)
+- `cms\src\main\app.chatflow\npm_packages\mimic-fn-1.2.0.tgz` (1,765 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-type-3.0.0.tgz` (1,762 bytes)
+- `cms\src\main\app.chatflow\npm_packages\indent-string-2.1.0.tgz` (1,759 bytes)
+- `cms\src\main\app.chatflow\npm_packages\os-homedir-1.0.2.tgz` (1,758 bytes)
+- `cms\src\main\app.chatflow\npm_packages\camelcase-1.2.1.tgz` (1,756 bytes)
+- `cms\src\main\app.chatflow\npm_packages\p-finally-1.0.0.tgz` (1,754 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-arrow-functions-6.22.0.tgz` (1,752 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-flag-3.0.0.tgz` (1,751 bytes)
+- `cms\src\main\app.chatflow\npm_packages\load-json-file-2.0.0.tgz` (1,750 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-key-2.0.1.tgz` (1,746 bytes)
+- `cms\src\main\app.chatflow\npm_packages\path-type-2.0.0.tgz` (1,742 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-primitive-2.0.0.tgz` (1,738 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-bom-3.0.0.tgz` (1,736 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-ansi-3.0.1.tgz` (1,734 bytes)
+- `cms\src\main\app.chatflow\npm_packages\camelcase-keys-2.1.0.tgz` (1,730 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-regenerator-6.26.0.tgz` (1,730 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cli-cursor-2.1.0.tgz` (1,729 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tmpl-1.0.4.tgz` (1,726 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-util-get-match-4.0.0.tgz` (1,708 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-util-get-arguments-4.0.0.tgz` (1,708 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-ansi-2.0.0.tgz` (1,702 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-duplicate-keys-6.24.1.tgz` (1,693 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-wsl-1.1.0.tgz` (1,691 bytes)
+- `cms\src\main\app.chatflow\npm_packages\decamelize-1.2.0.tgz` (1,691 bytes)
+- `cms\src\main\app.chatflow\npm_packages\detect-newline-2.1.0.tgz` (1,691 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-find-index-1.0.2.tgz` (1,685 bytes)
+- `cms\src\main\app.chatflow\npm_packages\p-try-1.0.0.tgz` (1,684 bytes)
+- `cms\src\main\app.chatflow\npm_packages\wrappy-1.0.2.tgz` (1,676 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-util-same-parent-4.0.1.tgz` (1,670 bytes)
+- `cms\src\main\app.chatflow\npm_packages\cssnano-util-raw-cache-4.0.1.tgz` (1,669 bytes)
+- `cms\src\main\app.chatflow\npm_packages\promise-inflight-1.0.1.tgz` (1,668 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-finite-1.1.0.tgz` (1,664 bytes)
+- `cms\src\main\app.chatflow\npm_packages\window-size-0.1.0.tgz` (1,658 bytes)
+- `cms\src\main\app.chatflow\npm_packages\killable-1.0.1.tgz` (1,656 bytes)
+- `cms\src\main\app.chatflow\npm_packages\process-nextick-args-2.0.1.tgz` (1,654 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-leak-detector-22.4.3.tgz` (1,652 bytes)
+- `cms\src\main\app.chatflow\npm_packages\string-length-2.0.0.tgz` (1,651 bytes)
+- `cms\src\main\app.chatflow\npm_packages\to-fast-properties-1.0.3.tgz` (1,647 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-ansi-4.0.0.tgz` (1,644 bytes)
+- `cms\src\main\app.chatflow\npm_packages\camel-case-3.0.0.tgz` (1,635 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-utf8-0.2.1.tgz` (1,628 bytes)
+- `cms\src\main\app.chatflow\npm_packages\html-comment-regex-1.1.2.tgz` (1,623 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caller-callsite-2.0.0.tgz` (1,620 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-binary-path-2.1.0.tgz` (1,619 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-stream-1.1.0.tgz` (1,616 bytes)
+- `cms\src\main\app.chatflow\npm_packages\unique-slug-2.0.2.tgz` (1,612 bytes)
+- `cms\src\main\app.chatflow\npm_packages\redent-1.0.0.tgz` (1,611 bytes)
+- `cms\src\main\app.chatflow\npm_packages\trim-newlines-1.0.0.tgz` (1,610 bytes)
+- `cms\src\main\app.chatflow\npm_packages\icss-replace-symbols-1.1.0.tgz` (1,605 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-obj-2.0.0.tgz` (1,597 bytes)
+- `cms\src\main\app.chatflow\npm_packages\os-browserify-0.3.0.tgz` (1,594 bytes)
+- `cms\src\main\app.chatflow\npm_packages\https-browserify-1.0.0.tgz` (1,586 bytes)
+- `cms\src\main\app.chatflow\npm_packages\shebang-command-1.2.0.tgz` (1,585 bytes)
+- `cms\src\main\app.chatflow\npm_packages\repeating-2.0.1.tgz` (1,584 bytes)
+- `cms\src\main\app.chatflow\npm_packages\detect-node-2.0.4.tgz` (1,580 bytes)
+- `cms\src\main\app.chatflow\npm_packages\indexes-of-1.0.1.tgz` (1,579 bytes)
+- `cms\src\main\app.chatflow\npm_packages\escape-string-regexp-1.0.5.tgz` (1,578 bytes)
+- `cms\src\main\app.chatflow\npm_packages\trim-right-1.0.1.tgz` (1,575 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-plain-obj-1.1.0.tgz` (1,561 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-binary-path-1.0.1.tgz` (1,557 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strip-eof-1.0.0.tgz` (1,556 bytes)
+- `cms\src\main\app.chatflow\npm_packages\has-1.0.3.tgz` (1,553 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@types-strip-json-comments-0.0.30.tgz` (1,551 bytes)
+- `cms\src\main\app.chatflow\npm_packages\astral-regex-1.0.0.tgz` (1,551 bytes)
+- `cms\src\main\app.chatflow\npm_packages\prepend-http-1.0.4.tgz` (1,551 bytes)
+- `cms\src\main\app.chatflow\npm_packages\map-obj-1.0.1.tgz` (1,549 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-generator-fn-1.0.0.tgz` (1,546 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-environment-jsdom-22.4.3.tgz` (1,545 bytes)
+- `cms\src\main\app.chatflow\npm_packages\home-or-tmp-2.0.0.tgz` (1,545 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-typeof-symbol-6.23.0.tgz` (1,541 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@types-raf-3.4.0.tgz` (1,537 bytes)
+- `cms\src\main\app.chatflow\npm_packages\pinkie-promise-2.0.1.tgz` (1,532 bytes)
+- `cms\src\main\app.chatflow\npm_packages\strict-uri-encode-1.1.0.tgz` (1,526 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-strict-mode-6.24.1.tgz` (1,499 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-trailing-function-commas-6.22.0.tgz` (1,497 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-absolute-url-2.1.0.tgz` (1,493 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-object-super-6.24.1.tgz` (1,485 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-union-1.0.2.tgz` (1,479 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-path-inside-1.0.1.tgz` (1,479 bytes)
+- `cms\src\main\app.chatflow\npm_packages\restore-cursor-2.0.0.tgz` (1,475 bytes)
+- `cms\src\main\app.chatflow\npm_packages\caller-path-2.0.0.tgz` (1,474 bytes)
+- `cms\src\main\app.chatflow\npm_packages\unquote-1.1.1.tgz` (1,473 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-stage-3-6.24.1.tgz` (1,471 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-path-in-cwd-1.0.1.tgz` (1,468 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-check-es2015-constants-6.22.0.tgz` (1,465 bytes)
+- `cms\src\main\app.chatflow\npm_packages\number-is-nan-1.0.1.tgz` (1,464 bytes)
+- `cms\src\main\app.chatflow\npm_packages\arrify-1.0.1.tgz` (1,452 bytes)
+- `cms\src\main\app.chatflow\npm_packages\setprototypeof-1.1.0.tgz` (1,428 bytes)
+- `cms\src\main\app.chatflow\npm_packages\shebang-regex-1.0.0.tgz` (1,425 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-stage-2-6.24.1.tgz` (1,413 bytes)
+- `cms\src\main\app.chatflow\npm_packages\get-caller-file-1.0.3.tgz` (1,400 bytes)
+- `cms\src\main\app.chatflow\npm_packages\spdx-exceptions-2.3.0.tgz` (1,376 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-explode-class-6.24.1.tgz` (1,370 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-resolve-dependencies-22.4.3.tgz` (1,345 bytes)
+- `cms\src\main\app.chatflow\npm_packages\uniqs-2.0.0.tgz` (1,343 bytes)
+- `cms\src\main\app.chatflow\npm_packages\array-equal-1.0.0.tgz` (1,336 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-block-scoped-functions-6.22.0.tgz` (1,294 bytes)
+- `cms\src\main\app.chatflow\npm_packages\domelementtype-1.3.1.tgz` (1,287 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-hoist-variables-6.24.1.tgz` (1,279 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-22.4.4.tgz` (1,273 bytes)
+- `cms\src\main\app.chatflow\npm_packages\math-random-1.0.4.tgz` (1,269 bytes)
+- `cms\src\main\app.chatflow\npm_packages\tty-browserify-0.0.0.tgz` (1,255 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-unicode-regex-6.24.1.tgz` (1,242 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-call-delegate-6.24.1.tgz` (1,206 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-shorthand-properties-6.24.1.tgz` (1,199 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-exponentiation-operator-6.24.1.tgz` (1,170 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-explode-assignable-expression-6.24.1.tgz` (1,157 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-environment-node-22.4.3.tgz` (1,150 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-bindify-decorators-6.24.1.tgz` (1,147 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-builder-binary-assignment-operator-visitor-6.24.1.tgz` (1,135 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-async-to-generator-6.24.1.tgz` (1,107 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-sticky-regex-6.24.1.tgz` (1,092 bytes)
+- `cms\src\main\app.chatflow\npm_packages\de-indent-1.0.2.tgz` (1,065 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-function-name-6.24.1.tgz` (1,044 bytes)
+- `cms\src\main\app.chatflow\npm_packages\minimalistic-assert-1.0.1.tgz` (1,020 bytes)
+- `cms\src\main\app.chatflow\npm_packages\slash-1.0.0.tgz` (1,020 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-regex-6.26.0.tgz` (1,007 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-transform-es2015-literals-6.22.0.tgz` (985 bytes)
+- `cms\src\main\app.chatflow\npm_packages\get-stdin-4.0.1.tgz` (978 bytes)
+- `cms\src\main\app.chatflow\npm_packages\@types-strip-bom-3.0.0.tgz` (962 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-jest-21.2.0.tgz` (876 bytes)
+- `cms\src\main\app.chatflow\npm_packages\boolbase-1.0.0.tgz` (851 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-optimise-call-expression-6.24.1.tgz` (845 bytes)
+- `cms\src\main\app.chatflow\npm_packages\invert-kv-1.0.0.tgz` (833 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-preset-jest-22.4.4.tgz` (815 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-vue-jsx-merge-props-2.0.3.tgz` (814 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-regex-util-22.4.3.tgz` (797 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-helper-get-function-arity-6.24.1.tgz` (790 bytes)
+- `cms\src\main\app.chatflow\npm_packages\jest-get-type-22.4.3.tgz` (774 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-exponentiation-operator-6.13.0.tgz` (752 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-object-rest-spread-6.13.0.tgz` (746 bytes)
+- `cms\src\main\app.chatflow\npm_packages\is-path-cwd-1.0.0.tgz` (745 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-class-properties-6.13.0.tgz` (744 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-dynamic-import-6.18.0.tgz` (743 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-async-generators-6.13.0.tgz` (743 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-async-functions-6.13.0.tgz` (737 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-decorators-6.13.0.tgz` (731 bytes)
+- `cms\src\main\app.chatflow\npm_packages\babel-plugin-syntax-jsx-6.18.0.tgz` (720 bytes)
+- `cms\src\main\app.chatflow\npm_packages\watchpack-chokidar2-2.0.0.tgz` (373 bytes)

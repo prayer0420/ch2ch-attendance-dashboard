@@ -19,7 +19,19 @@
     "verify:web-clear-targets": "node scripts/verify-web-clear-targets.js",
     "verify:save-verification": "node scripts/verify-save-verification.js",
     "verify:run-date-default": "node scripts/verify-run-date-default.js",
+    "verify:attendance-sheet-preference": "node scripts/verify-attendance-sheet-preference.js",
+    "verify:attendance-sheet-pages": "node scripts/verify-attendance-sheet-pages.js",
     "verify:accounting": "node scripts/accounting/verify-accounting-parser.js",
+    "verify:worship-journal-sheet": "node scripts/worship-journal/verify-google-sheet-output.js",
+    "verify:worship-journal-publish": "node scripts/worship-journal/verify-google-sheet-publish.js",
+    "verify:worship-bulletin": "node scripts/worship-journal/verify-bulletin-parser.js",
+    "verify:worship-journal-review": "node scripts/worship-journal/verify-review-digest.js",
+    "verify:worship-journal-validation": "node scripts/worship-journal/verify-final-validation.js",
+    "verify:worship-journal-attendance": "node scripts/worship-journal/verify-attendance-parser.js",
+    "verify:worship-accounting-google": "node scripts/worship-journal/verify-accounting-google-drive.js",
+    "verify:band": "node scripts/verify-band-integration.js",
+    "configure:worship-journal-google": "node scripts/worship-journal/configure-google-service-account.js",
+    "check:worship-journal-google": "node scripts/worship-journal/check-google-connection.js",
     "verify:run-persistence": "node scripts/verify-run-persistence.js",
     "verify:affiliation-correction": "node scripts/verify-affiliation-correction.js",
     "verify:qr-job-queue": "node scripts/verify-qr-job-queue.js",
@@ -34,6 +46,9 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
     "dotenv": "^16.4.7",
+    "google-auth-library": "^11.0.2",
+    "html-to-image": "^1.11.13",
+    "jspdf": "^4.2.1",
     "lucide-react": "^0.468.0",
     "next": "^15.0.3",
     "pdf-parse": "^1.1.1",
@@ -58,8 +73,13 @@
   "build": {
     "appId": "kr.ch2ch.attendance",
     "productName": "CH2CH 출석체크",
-    "directories": { "output": "dist" },
-    "files": ["desktop/**/*", "package.json"],
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**/*",
+      "package.json"
+    ],
     "extraResources": [
       {
         "from": ".",
@@ -72,13 +92,17 @@
           "!.git/**",
           "!.local-runtime/**",
           "!.next/**",
+          "!extras/**",
           "!dist*/**"
         ]
       },
       {
         "from": "node_modules",
         "to": "project/node_modules",
-        "filter": ["**/*", "!.cache/**"]
+        "filter": [
+          "**/*",
+          "!.cache/**"
+        ]
       }
     ],
     "nsis": {

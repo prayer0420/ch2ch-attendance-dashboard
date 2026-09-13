@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { fetchJson } from "@/lib/utils";
 import { applyAttendanceMode, buildAttendanceRunRows } from "@/lib/attendance-run-selection";
+import { DEFAULT_ATTENDANCE_SHEET_URL, readAttendanceSheetUrl, saveAttendanceSheetUrl } from "@/lib/attendance-sheet-preference";
 
 type RunResponse = {
   runId: string;
@@ -121,7 +122,7 @@ export function RunCreateForm() {
   const [form, setForm] = useState({
     operation: "attendance_sync" as RunOperation,
     dataSource: "google_sheet" as DataSource,
-    googleSheetUrl: "",
+    googleSheetUrl: DEFAULT_ATTENDANCE_SHEET_URL,
     googleSheetTab: "가장체크",
     targetDate: mostRecentSunday(),
     targetDept: "2청년회",
@@ -143,6 +144,7 @@ export function RunCreateForm() {
 
   useEffect(() => {
     const currentSunday = mostRecentSunday();
+    const preferredSheetUrl = readAttendanceSheetUrl();
     try {
       const saved = localStorage.getItem(SETTINGS_KEY);
       if (saved) {
@@ -151,16 +153,19 @@ export function RunCreateForm() {
         const restoredTargetDate = typeof savedTargetDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(savedTargetDate)
           ? savedTargetDate
           : currentSunday;
-        setForm((current) => ({ ...current, ...savedSettings, targetDate: restoredTargetDate }));
+        setForm((current) => ({ ...current, ...savedSettings, googleSheetUrl: preferredSheetUrl, targetDate: restoredTargetDate }));
       } else {
-        setForm((current) => ({ ...current, targetDate: currentSunday }));
+        setForm((current) => ({ ...current, googleSheetUrl: preferredSheetUrl, targetDate: currentSunday }));
       }
     } catch {}
     setReady(true);
   }, []);
 
   useEffect(() => {
-    if (ready) localStorage.setItem(SETTINGS_KEY, JSON.stringify(form));
+    if (ready) {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(form));
+      saveAttendanceSheetUrl(form.googleSheetUrl);
+    }
   }, [form, ready]);
 
   const calculatedWeek = useMemo(() => weekOfSunday(form.targetDate), [form.targetDate]);

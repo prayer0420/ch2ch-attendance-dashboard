@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
-import { resolveTargetBand, TARGET_NAME } from "@/lib/band-api";
+import { checkTargetBandPosting, TARGET_NAME } from "@/lib/band-api";
 
 export const dynamic = "force-dynamic";
 
 async function status(accessToken?: string) {
   try {
-    const band = await resolveTargetBand({ accessToken });
+    const { band, canPost } = await checkTargetBandPosting({ accessToken });
     return NextResponse.json({
-      ready: true,
+      ready: canPost,
       targetName: band.name,
       memberCount: band.member_count,
-      message: `대상 확인 완료 · 멤버 ${band.member_count}명`,
+      bandKey: band.band_key,
+      bandUrl: `https://band.us/band/${encodeURIComponent(band.band_key)}`,
+      message: canPost
+        ? `대상과 글쓰기 권한 확인 완료 · 멤버 ${band.member_count}명`
+        : `"${band.name}"에는 연결됐지만 이 계정에 글쓰기 권한이 없습니다.`,
     });
   } catch (error) {
     return NextResponse.json({

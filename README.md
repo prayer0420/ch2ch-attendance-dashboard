@@ -108,8 +108,11 @@ npm run desktop:dist
 │   └── supabase/            # 서버·브라우저 Supabase 클라이언트
 ├── runner/                  # 로컬 CH2CH 실행기
 ├── supabase/                # 스키마와 마이그레이션
-└── public/screenshots/      # README 화면 캡처
+├── public/screenshots/      # README 화면 캡처
+└── extras/                  # 본체와 별개인 보조 작업 묶음
 ```
+
+`extras/`에는 서버 이관 자료, 녹음 전사 도구, QEMU 실습 문서를 각각 분리해 보관합니다. CH2CH 앱 실행·빌드에는 포함하지 않으며 자세한 위치는 [`extras/README.md`](./extras/README.md)에서 확인할 수 있습니다.
 
 ## 로컬 실행
 

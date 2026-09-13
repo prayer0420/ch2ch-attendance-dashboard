@@ -6,7 +6,7 @@ import path from "node:path";
 import { chromium, type BrowserContext, type Page } from "playwright";
 import * as XLSX from "xlsx";
 
-const DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/1DXEeV2h5lk3c8clfNBZPDw3biuqkIP1-5ENvapcVvk8/edit?usp=sharing";
+import { DEFAULT_ATTENDANCE_SHEET_URL } from "./attendance-sheet-preference";
 const DEFAULT_SHEET_TAB = "가장체크";
 const SOURCE_COLUMN_LIMIT = 120; // A through DP
 const PREVIEW_TTL_MS = 15 * 60 * 1000;
@@ -336,7 +336,7 @@ export async function createQrAttendancePreview(input: {
 }) {
   return runQueued(async () => {
     prunePreviewCache();
-    const sheetUrl = input.sheetUrl || DEFAULT_SHEET_URL;
+    const sheetUrl = input.sheetUrl || DEFAULT_ATTENDANCE_SHEET_URL;
     const sheetTab = input.sheetTab || DEFAULT_SHEET_TAB;
     const department = input.department || "2청년회";
     spreadsheetIdFromUrl(sheetUrl);
@@ -816,7 +816,7 @@ export async function applyQrAttendancePreview(previewId: string): Promise<QrAtt
 }
 
 export const qrAttendanceDefaults = {
-  sheetUrl: DEFAULT_SHEET_URL,
+  sheetUrl: DEFAULT_ATTENDANCE_SHEET_URL,
   sheetTab: DEFAULT_SHEET_TAB,
   department: "2청년회"
 };

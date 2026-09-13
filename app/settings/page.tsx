@@ -9,7 +9,7 @@ export default function SettingsPage() {
       <SectionTitle eyebrow="기본값" title="설정" />
       <Panel className="max-w-2xl">
         <div className="grid gap-3">
-          <label className="grid gap-2 text-sm font-bold">구글시트 URL<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="https://docs.google.com/spreadsheets/d/1DXEeV2h5lk3c8clfNBZPDw3biuqkIP1-5ENvapcVvk8/edit?usp=drivesdk" /></label>
+          <label className="grid gap-2 text-sm font-bold">구글시트 URL<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="https://docs.google.com/spreadsheets/d/11TQJbhev8m0MfPqW70b2HPbuXleOOfMSL2MXpr3Ab2o/edit?pli=1&gid=437108819#gid=437108819" /></label>
           <label className="grid gap-2 text-sm font-bold">탭 이름<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="가장체크" /></label>
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="grid gap-2 text-sm font-bold">부서<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="2청년회" /></label>

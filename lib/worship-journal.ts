@@ -1,6 +1,7 @@
 import { inflateRawSync } from "node:zlib";
-import { isChecked, normalizeName, parseCsv } from "@/lib/attendance-input-parser";
+import { isChecked, parseCsv } from "@/lib/attendance-input-parser";
 import type { JournalAccounting } from "@/lib/worship-journal-accounting";
+import type { WorshipJournalSheetOutput } from "@/lib/worship-journal-google-api";
 
 export type FamilyAttendance = {
   family: string;
@@ -42,23 +43,46 @@ export type WorshipService = {
   prayerMeeting: string;
 };
 
+export type AttendanceSourceAudit = Omit<AttendanceSummary, "families"> & {
+  excludedVisitorRows: number;
+  excludedVisitorService4: number;
+};
+
+export type WorshipExtraction = {
+  format: "hwp" | "pdf";
+  requiresReview: true;
+  evidenceLines: string[];
+};
+
 export type WorshipJournal = {
   id: string;
   date: string;
   author: string;
   createdAt: string;
-  source: { attendanceSheetUrl: string; attendanceSheetTab: string; hwpFileName: string };
+  source: {
+    attendanceSheetUrl: string;
+    attendanceSheetTab: string;
+    hwpFileName?: string;
+    bulletinFileName?: string;
+    bulletinFormat?: "hwp" | "pdf";
+  };
   attendance: AttendanceSummary;
   newFamilies: NewFamilyEntry[];
   graduates: GraduateEntry[];
   sermon: { title: string; passage: string; preacher: string };
   service: WorshipService;
   announcements: string[];
+  extraction?: WorshipExtraction;
   accounting?: JournalAccounting;
+  outputSheet?: WorshipJournalSheetOutput;
 };
 
 const FAMILY_COLUMN_LIMIT = 120;
 const FAMILY_BLOCK_WIDTH = 8;
+
+export function isWorshipBulletinFileName(fileName: string) {
+  return /\.(hwp|pdf)$/i.test(fileName.trim());
+}
 
 function isFamilyLabel(value: unknown) {
   const text = String(value ?? "").replace(/\s+/g, "").trim();
@@ -71,6 +95,11 @@ function cleanFamilyLabel(value: unknown) {
   if (text === "새가족반결석중") return "새가족반 결석중";
   if (text === "새가족반방문자") return "새가족 방문자";
   return text;
+}
+
+export function isExcludedAttendanceFamily(value: unknown) {
+  const text = String(value ?? "").replace(/\s+/g, "").trim();
+  return text.includes("새가족") && text.includes("방문자");
 }
 
 function isName(value: unknown) {
@@ -97,7 +126,7 @@ export function parseJournalAttendanceCsv(csv: string): AttendanceSummary {
     headerFamilyCounts.set(family, (headerFamilyCounts.get(family) ?? 0) + 1);
   });
   const activeFamilies = starts.map((column) => cleanFamilyLabel(header[column]));
-  const people = new Map<string, {
+  const people: Array<{
     family: string;
     name: string;
     service13: boolean;
@@ -105,7 +134,7 @@ export function parseJournalAttendanceCsv(csv: string): AttendanceSummary {
     service4: boolean;
     service4Online: boolean;
     familyMeeting: boolean;
-  }>();
+  }> = [];
 
   for (const row of rows.slice(1)) {
     const familyLabels = starts.filter((column) => isFamilyLabel(row[column]));
@@ -125,7 +154,7 @@ export function parseJournalAttendanceCsv(csv: string): AttendanceSummary {
       const name = String(row[column] ?? "").trim();
       if (!isName(name)) return;
       const family = activeFamilies[index];
-      if (!family) return;
+      if (!family || isExcludedAttendanceFamily(family)) return;
 
       const item = {
         family,
@@ -136,22 +165,13 @@ export function parseJournalAttendanceCsv(csv: string): AttendanceSummary {
         service4Online: isChecked(row[column + 6]),
         familyMeeting: isChecked(row[column + 7])
       };
-      const key = `${normalizeName(family)}::${normalizeName(name)}`;
-      const previous = people.get(key);
-      people.set(key, previous ? {
-        ...item,
-        service13: previous.service13 || item.service13,
-        service13Online: previous.service13Online || item.service13Online,
-        service4: previous.service4 || item.service4,
-        service4Online: previous.service4Online || item.service4Online,
-        familyMeeting: previous.familyMeeting || item.familyMeeting
-      } : item);
+      people.push(item);
     });
   }
 
   const familyOrder: string[] = [];
   const familyMap = new Map<string, FamilyAttendance>();
-  for (const person of people.values()) {
+  for (const person of people) {
     if (!familyMap.has(person.family)) {
       familyOrder.push(person.family);
       familyMap.set(person.family, { family: person.family, service13: 0, service4: 0, familyMeeting: 0 });
@@ -162,7 +182,7 @@ export function parseJournalAttendanceCsv(csv: string): AttendanceSummary {
     if (person.familyMeeting) family.familyMeeting += 1;
   }
 
-  const all = Array.from(people.values());
+  const all = people;
   const orderedFamilies = familyOrder.filter((family) => (headerFamilyCounts.get(family) ?? 0) <= 1);
   orderedFamilies.push(...familyOrder.filter((family) => (headerFamilyCounts.get(family) ?? 0) > 1));
 
@@ -174,6 +194,60 @@ export function parseJournalAttendanceCsv(csv: string): AttendanceSummary {
     familyMeeting: all.filter((person) => person.familyMeeting).length,
     families: orderedFamilies.map((family) => familyMap.get(family)!)
   };
+}
+
+export function auditJournalAttendanceCsv(csv: string): AttendanceSourceAudit {
+  const rows = parseCsv(csv);
+  const header = rows[0] ?? [];
+  const starts: number[] = [];
+  for (let column = 0; column < Math.min(header.length, FAMILY_COLUMN_LIMIT); column += FAMILY_BLOCK_WIDTH) {
+    if (isFamilyLabel(header[column])) starts.push(column);
+  }
+  if (!starts.length) throw new Error("출석 시트 검증용 가족 블록을 찾지 못했습니다.");
+
+  const activeFamilies = starts.map((column) => cleanFamilyLabel(header[column]));
+  const result: AttendanceSourceAudit = {
+    service13: 0,
+    service13Online: 0,
+    service4: 0,
+    service4Online: 0,
+    familyMeeting: 0,
+    excludedVisitorRows: 0,
+    excludedVisitorService4: 0
+  };
+
+  for (const row of rows.slice(1)) {
+    const familyLabels = starts.filter((column) => isFamilyLabel(row[column]));
+    if (familyLabels.length >= 2) {
+      starts.forEach((column, index) => {
+        if (isFamilyLabel(row[column])) activeFamilies[index] = cleanFamilyLabel(row[column]);
+      });
+      continue;
+    }
+    starts.forEach((column, index) => {
+      if (isFamilyLabel(row[column]) && !row.slice(column + 1, column + FAMILY_BLOCK_WIDTH).some(isChecked)) {
+        activeFamilies[index] = cleanFamilyLabel(row[column]);
+        return;
+      }
+      const attendance = {
+        service13: isChecked(row[column + 1]) || isChecked(row[column + 2]),
+        service13Online: isChecked(row[column + 3]),
+        service4: isChecked(row[column + 4]) || isChecked(row[column + 5]),
+        service4Online: isChecked(row[column + 6]),
+        familyMeeting: isChecked(row[column + 7])
+      };
+      if (!Object.values(attendance).some(Boolean)) return;
+      if (isExcludedAttendanceFamily(activeFamilies[index])) {
+        result.excludedVisitorRows += 1;
+        if (attendance.service4) result.excludedVisitorService4 += 1;
+        return;
+      }
+      (Object.keys(attendance) as Array<keyof typeof attendance>).forEach((key) => {
+        if (attendance[key]) result[key] += 1;
+      });
+    });
+  }
+  return result;
 }
 
 function cleanParagraph(value: string) {
@@ -225,15 +299,32 @@ function findTargetDateLabel(date: string) {
 }
 
 function extractSermon(paragraphs: string[]) {
-  const marker = paragraphs.findIndex((line) => line.includes("4부 청년예배 말씀"));
-  const nearby = marker >= 0 ? paragraphs.slice(marker + 1, marker + 8) : paragraphs;
+  const marker = paragraphs.findIndex((line) => line.includes("청년예배 말씀"));
+  const nearby = marker >= 0 ? paragraphs.slice(marker + 1, marker + 16) : paragraphs;
   const passageIndex = nearby.findIndex((line) => /\([^)]*(?:전서|후서|복음|기|편|장)\s*\d+[:：]/.test(line));
-  const passageLine = passageIndex >= 0 ? nearby[passageIndex] : paragraphs.find((line) => /\([^)]*\d+[:：][^)]*\)/.test(line)) ?? "";
-  const title = passageIndex > 0 ? nearby[passageIndex - 1] : "";
-  const preacher = passageIndex >= 0
-    ? nearby.slice(passageIndex + 1).find((line) => /(목사|전도사|장로)/.test(line)) ?? ""
-    : paragraphs.find((line) => /(목사|전도사)\s*$/.test(line)) ?? "";
-  return { title, passage: passageLine.replace(/^\(|\)$/g, "").replace(/,\s*(구약|신약).*$/, ""), preacher };
+  if (passageIndex >= 0) {
+    const passageLine = nearby[passageIndex];
+    return {
+      title: passageIndex > 0 ? nearby[passageIndex - 1] : "",
+      passage: passageLine.replace(/^\(|\)$/g, "").replace(/,\s*(구약|신약).*$/, ""),
+      preacher: nearby.slice(passageIndex + 1).find((line) => /(목사|전도사|장로)/.test(line)) ?? ""
+    };
+  }
+
+  const bookIndex = nearby.findIndex((line) => /(?:전서|후서|복음|기|편|장)$/.test(line));
+  if (bookIndex >= 0) {
+    const title = nearby.slice(0, bookIndex).find((line) => !/^\d+$/.test(line)) ?? "";
+    const preacherIndex = nearby.findIndex((line, index) => index > bookIndex && /(목사|전도사|장로)/.test(line));
+    const passageSource = nearby.slice(bookIndex, preacherIndex >= 0 ? preacherIndex : bookIndex + 7).join(" ");
+    const verse = passageSource.match(/\d+[:：]\d+(?:\s*[~～-]\s*\d+)?/)?.[0]?.replace("：", ":") ?? "";
+    return {
+      title,
+      passage: verse ? `${nearby[bookIndex]} ${verse}` : nearby[bookIndex],
+      preacher: preacherIndex >= 0 ? nearby[preacherIndex] : ""
+    };
+  }
+
+  return { title: "", passage: "", preacher: paragraphs.find((line) => /(목사|전도사)\s*$/.test(line)) ?? "" };
 }
 
 function extractService(paragraphs: string[], date: string): WorshipService {
@@ -257,6 +348,25 @@ function extractService(paragraphs: string[], date: string): WorshipService {
     if (/^\d{1,2}\/\d{1,2}/.test(line)) break;
     cells.push(line);
   }
+  const firstFamily = cells.findIndex((cell) => cell.replace(/\s+/g, "").endsWith("네"));
+  if (firstFamily >= 0 && cells.length - firstFamily >= 3) {
+    const dutyPeople = cells.slice(0, firstFamily);
+    const families = cells.slice(firstFamily);
+    const hasPrayerGroup = dutyPeople[1] && /청/.test(dutyPeople[1]);
+    const representativePrayer = hasPrayerGroup
+      ? `${dutyPeople[0]} (${dutyPeople[1].match(/\d+/)?.[0] ?? ""}청)`.replace("()", "").trim()
+      : (dutyPeople[0] ?? "");
+    const offeringStart = hasPrayerGroup ? 2 : 1;
+    return {
+      representativePrayer,
+      offeringMembers: dutyPeople.slice(offeringStart, -1).join(" ").replace(/,\s*/g, ", ").trim(),
+      offeringPrayer: dutyPeople.at(-1) ?? "",
+      guide: families[0] ?? "",
+      cleanup: families[0] ?? "",
+      mealService: families[1] ?? "",
+      prayerMeeting: families.slice(2).join(", ")
+    };
+  }
   const prayer = cells[1]?.startsWith("(") ? `${cells[0]} ${cells[1]}` : (cells[0] ?? "");
   const shift = cells[1]?.startsWith("(") ? 2 : 1;
   return {
@@ -264,7 +374,7 @@ function extractService(paragraphs: string[], date: string): WorshipService {
     offeringMembers: cells[shift] ?? "",
     offeringPrayer: cells[shift + 1] ?? "",
     guide: cells[shift + 2] ?? "",
-    cleanup: "",
+    cleanup: cells[shift + 2] ?? "",
     mealService: cells[shift + 3] ?? "",
     prayerMeeting: cells[shift + 4] ?? ""
   };
@@ -278,23 +388,40 @@ function compactTiming(lines: string[]) {
 }
 
 function extractAnnouncements(paragraphs: string[]) {
-  const start = paragraphs.findIndex((line) => line === "광고");
+  const compact = (value: string) => value.replace(/\s+/g, "").trim();
+  const start = paragraphs.findIndex((line) => /^(?:주보)?광고(?:사항)?$/.test(compact(line)) && !compact(line).includes("미리미리"));
   if (start < 0) return [];
-  const endOffset = paragraphs.slice(start + 1).findIndex((line) => line.includes("미리미리광고"));
-  const section = paragraphs.slice(start + 1, endOffset >= 0 ? start + 1 + endOffset : start + 80);
+  const endOffset = paragraphs.slice(start + 1).findIndex((line) => compact(line).includes("미리미리광고") || /(?:20\d{2}\s*년?\s*)?\d{1,2}\s*[~-]\s*\d{1,2}\s*월?\s*일정/.test(line) || /^20\d{2}\s+\d{1,2}\s*[~-]\s*\d{1,2}$/.test(line));
+  const section = paragraphs.slice(start + 1, endOffset >= 0 ? start + 1 + endOffset : start + 200);
   const groups: Array<{ title: string; lines: string[] }> = [];
+  const pending: string[] = [];
   for (const line of section) {
-    const match = line.match(/^\s*(\d+)\.\s*(?:\d+\.\s*)?(.+)/);
+    const cleanLine = line.trim();
+    if (!cleanLine || /^[-:,!·•]+$/.test(cleanLine) || /^\d+\s*$/.test(cleanLine)) continue;
+    const match = cleanLine.match(/^\s*(\d{1,2})\s*[.)]\s*(?:\d+\.\s*)?(.*)/);
     if (match) {
-      groups.push({ title: match[2].trim(), lines: [] });
+      let prefix = pending.splice(0).join(" ").trim();
+      const previous = groups.at(-1);
+      if (previous?.lines.length) {
+        const candidate = previous.lines.at(-1) ?? "";
+        if (/(?:월.*(?:시상|축하)|학교|모집|구합니다|기도회)$/.test(candidate)) {
+          previous.lines.pop();
+          prefix = candidate;
+        }
+      }
+      const suffix = match[2].trim();
+      const title = /^\d{1,2}$/.test(suffix) && prefix ? `${suffix}${prefix}` : [suffix, prefix].filter(Boolean).join(" ");
+      groups.push({ title, lines: [] });
     } else if (groups.length) {
-      groups[groups.length - 1].lines.push(line);
+      groups[groups.length - 1].lines.push(cleanLine);
+    } else {
+      pending.push(cleanLine);
     }
   }
   return groups.map((group) => {
-    const timing = compactTiming(group.lines);
-    return timing ? `${group.title} (${timing})` : group.title;
-  });
+    const parts = [group.title, ...group.lines].map((part) => part.replace(/[ \t]+/g, " ").trim()).filter(Boolean);
+    return parts.join("\n").trim();
+  }).filter(Boolean);
 }
 
 export function parseHwpWorshipInfo(buffer: Buffer, date: string) {
@@ -302,6 +429,29 @@ export function parseHwpWorshipInfo(buffer: Buffer, date: string) {
   return {
     sermon: extractSermon(paragraphs),
     service: extractService(paragraphs, date),
-    announcements: extractAnnouncements(paragraphs)
+    announcements: extractAnnouncements(paragraphs),
+    extraction: { format: "hwp", requiresReview: true, evidenceLines: paragraphs } satisfies WorshipExtraction
   };
+}
+
+export function parsePdfWorshipText(text: string, date: string) {
+  const paragraphs = text
+    .split(/\r?\n/)
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+  if (paragraphs.join("").replace(/\s/g, "").length < 10) {
+    throw new Error("PDF에서 읽을 수 있는 텍스트를 찾지 못했습니다. 스캔 PDF는 이름을 추정하지 않으므로 한컴에서 텍스트형 PDF로 다시 저장해 주세요.");
+  }
+  return {
+    sermon: extractSermon(paragraphs),
+    service: extractService(paragraphs, date),
+    announcements: extractAnnouncements(paragraphs),
+    extraction: { format: "pdf", requiresReview: true, evidenceLines: paragraphs } satisfies WorshipExtraction
+  };
+}
+
+export async function parsePdfWorshipInfo(buffer: Buffer, date: string) {
+  const pdfParse = eval("require")("pdf-parse") as (input: Buffer) => Promise<{ text?: string }>;
+  const parsed = await pdfParse(buffer);
+  return parsePdfWorshipText(parsed.text ?? "", date);
 }
