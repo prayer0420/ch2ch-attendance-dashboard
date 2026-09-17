@@ -209,11 +209,16 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
         <div className="grid content-start gap-4">
           <Panel>
             <div className="mb-3 flex items-center justify-between gap-2">
-              <h2 className="text-lg font-black">최종 실패자</h2>
+              <h2 className="text-lg font-black">직접 확인이 필요한 사람</h2>
               <Badge tone={failures.length ? "bad" : "good"}>{failures.length}명</Badge>
             </div>
             {failures.length ? (
               <div className="overflow-x-auto">
+                <p className="mb-3 rounded border border-line bg-paper p-3 text-sm leading-6">
+                  찾지 못한 사람은 1회 확인 후 건너뛰며 자동으로 재검색하지 않습니다.
+                  아래 가족·이름을 시트와 웹교적에서 확인하고, 필요한 출석을 직접 반영해 주세요.
+                  1–3부 참석은 웹교적 ‘주일’, 4부 참석은 ‘부서’에 해당합니다.
+                </p>
                 <table className="w-full min-w-[420px] text-sm">
                   <thead className="border-b border-line text-left text-xs font-black text-ink/55">
                     <tr><th className="py-2">이름</th><th>가족</th><th>체크</th><th>원인</th></tr>
@@ -222,7 +227,7 @@ export default async function RunDetailPage({ params }: { params: Promise<{ id: 
                     {failures.map((failure) => (
                       <tr key={failure.id} className="border-b border-line/70 align-top">
                         <td className="py-3 font-black">{failure.name}</td>
-                        <td>{failure.found_location || failure.original_family || "-"}</td>
+                        <td>{failure.original_family || "-"}{failure.found_location && failure.found_location !== failure.original_family ? <span className="block text-xs text-ink/60">웹 확인: {failure.found_location}</span> : null}</td>
                         <td>{targetText(failure)}</td>
                         <td className="max-w-[180px] break-words text-brick">{failure.failure_reason ?? "사유 없음"}</td>
                       </tr>

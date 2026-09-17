@@ -258,6 +258,23 @@ function cleanParagraph(value: string) {
     .trim();
 }
 
+// HWP extended/inline controls occupy eight UTF-16 units. Their payload is
+// binary metadata, not text (decoding it as text introduces spurious names).
+export function decodeHwpParagraph(payload: Buffer) {
+  const characters: string[] = [];
+  for (let offset = 0; offset + 1 < payload.length;) {
+    const code = payload.readUInt16LE(offset);
+    if ((code >= 1 && code <= 9) || code === 11 || code === 12 || (code >= 14 && code <= 23)) {
+      if (code === 9) characters.push(" ");
+      offset += 16;
+    } else {
+      characters.push(code < 32 ? " " : String.fromCharCode(code));
+      offset += 2;
+    }
+  }
+  return cleanParagraph(characters.join(""));
+}
+
 export function extractHwpParagraphs(buffer: Buffer) {
   const CFB = eval("require")("cfb") as {
     read: (input: Buffer, options: { type: string }) => unknown;
@@ -285,7 +302,7 @@ export function extractHwpParagraphs(buffer: Buffer) {
     }
     if (offset + size > body.length) break;
     if (tag === 67) {
-      const text = cleanParagraph(body.subarray(offset, offset + size).toString("utf16le"));
+      const text = decodeHwpParagraph(body.subarray(offset, offset + size));
       if (text && !/^[汤氠漠杳捤獥汤捯瑢\s]+$/.test(text)) paragraphs.push(text);
     }
     offset += size;
@@ -301,7 +318,7 @@ function findTargetDateLabel(date: string) {
 function extractSermon(paragraphs: string[]) {
   const marker = paragraphs.findIndex((line) => line.includes("청년예배 말씀"));
   const nearby = marker >= 0 ? paragraphs.slice(marker + 1, marker + 16) : paragraphs;
-  const passageIndex = nearby.findIndex((line) => /\([^)]*(?:전서|후서|복음|기|편|장)\s*\d+[:：]/.test(line));
+  const passageIndex = nearby.findIndex((line) => /^\(?\s*[가-힣]+\s*\d+[:：]\d+/.test(line));
   if (passageIndex >= 0) {
     const passageLine = nearby[passageIndex];
     return {
@@ -311,7 +328,7 @@ function extractSermon(paragraphs: string[]) {
     };
   }
 
-  const bookIndex = nearby.findIndex((line) => /(?:전서|후서|복음|기|편|장)$/.test(line));
+  const bookIndex = nearby.findIndex((line) => /(?:전서|후서|복음|기|편|장|서)$/.test(line));
   if (bookIndex >= 0) {
     const title = nearby.slice(0, bookIndex).find((line) => !/^\d+$/.test(line)) ?? "";
     const preacherIndex = nearby.findIndex((line, index) => index > bookIndex && /(목사|전도사|장로)/.test(line));
@@ -340,7 +357,7 @@ function extractService(paragraphs: string[], date: string): WorshipService {
   const marker = paragraphs.findIndex((line) => line === "예배 섬김" || line.includes("예배 섬김"));
   if (marker < 0) return empty;
   const label = findTargetDateLabel(date);
-  const dateIndex = paragraphs.findIndex((line, index) => index > marker && index < marker + 30 && line.startsWith(label));
+  const dateIndex = paragraphs.findIndex((line, index) => index > marker && index < marker + 60 && new RegExp(`^${label}(?:$|\\s|\\()`).test(line));
   if (dateIndex < 0) return empty;
 
   const cells: string[] = [];
@@ -352,7 +369,7 @@ function extractService(paragraphs: string[], date: string): WorshipService {
   if (firstFamily >= 0 && cells.length - firstFamily >= 3) {
     const dutyPeople = cells.slice(0, firstFamily);
     const families = cells.slice(firstFamily);
-    const hasPrayerGroup = dutyPeople[1] && /청/.test(dutyPeople[1]);
+    const hasPrayerGroup = dutyPeople[1] && /^(?:\(\s*\d+\s*청\s*\)|청\(\s*\d+\s*\))$/.test(dutyPeople[1]);
     const representativePrayer = hasPrayerGroup
       ? `${dutyPeople[0]} (${dutyPeople[1].match(/\d+/)?.[0] ?? ""}청)`.replace("()", "").trim()
       : (dutyPeople[0] ?? "");

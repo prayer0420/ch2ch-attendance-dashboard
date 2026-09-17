@@ -25,7 +25,7 @@ Module._resolveFilename = function resolveAlias(request, parent, isMain, options
   return originalResolve.call(this, request, parent, isMain, options);
 };
 
-const { isWorshipBulletinFileName, parsePdfWorshipText } = require(path.join(projectRoot, "lib", "worship-journal.ts"));
+const { isWorshipBulletinFileName, parsePdfWorshipText, parseHwpWorshipInfo, decodeHwpParagraph } = require(path.join(projectRoot, "lib", "worship-journal.ts"));
 assert.equal(typeof isWorshipBulletinFileName, "function", "bulletin file validation helper must be exported");
 assert.equal(isWorshipBulletinFileName("주보.hwp"), true);
 assert.equal(isWorshipBulletinFileName("주보.PDF"), true);
@@ -109,4 +109,54 @@ const spacedHeading = parsePdfWorshipText([
 ].join("\n"), "2026-09-13");
 assert.deepEqual(spacedHeading.announcements, ["긴 광고 제목\n일시: 9/13 오후 5시\n장소: 비전홀\n대상자 이름은 원문 그대로 유지합니다."]);
 
-console.log("worship bulletin parser: exact PDF text preservation and scanned-PDF rejection passed");
+const september13Lines = [
+  "4부 청년예배 말씀", "하나님의 인도를 받는 법", "(야고보서 1:5~8, 신약 370쪽)",
+  "정재용 목사", "(마태복음 7:21)", "예배 순서",
+  "예배 섬김", "대표", "기도", "헌금 위원", "헌금", "기도", "안내", "뒷정리", "식당", "봉사", "예배를", "위한", "기도회",
+  "9/13", "박기도", "1청년회", "1청년회", "윤영이네", "1청년회", "성혜네",
+  "9/20", "박광우A 안수집사", "김종인, 이필홍", "백동현", "애선이네", "희원이네", "윤영이네"
+];
+const expectedSermon = { title: "하나님의 인도를 받는 법", passage: "야고보서 1:5~8", preacher: "정재용 목사" };
+const expectedService = {
+  representativePrayer: "박기도", offeringMembers: "1청년회", offeringPrayer: "1청년회",
+  guide: "윤영이네", cleanup: "윤영이네", mealService: "1청년회", prayerMeeting: "성혜네"
+};
+const september13 = parsePdfWorshipText(september13Lines.join("\n"), "2026-09-13");
+assert.deepEqual(september13.sermon, expectedSermon);
+assert.deepEqual(september13.service, expectedService);
+assert.equal(parsePdfWorshipText(september13Lines.join("\n"), "2026-09-01").service.guide, "", "9/1 must not match 9/13");
+assert.equal(parsePdfWorshipText(september13Lines.join("\n"), "2026-09-20").service.offeringMembers, "김종인, 이필홍");
+
+// Synthetic HWP control payload: these bytes must never become visible text.
+const control = Buffer.alloc(16);
+control.writeUInt16LE(2, 0);
+Buffer.from("dces", "ascii").copy(control, 2);
+control.writeUInt16LE(2, 14);
+assert.equal(decodeHwpParagraph(Buffer.concat([control, Buffer.from("하나님의 인도를 받는 법\r", "utf16le")])), expectedSermon.title);
+assert.equal(decodeHwpParagraph(Buffer.from("양건우 박건우 방건우\r", "utf16le")), "양건우 박건우 방건우");
+
+// Exercise the binary HWP path without committing the private bulletin.
+const CFB = require("cfb");
+const header = Buffer.alloc(40);
+const section = Buffer.concat(september13Lines.map((line) => {
+  const content = Buffer.concat([control, Buffer.from(`${line}\r`, "utf16le")]);
+  const record = Buffer.alloc(4);
+  record.writeUInt32LE((content.length << 20) | 67);
+  return Buffer.concat([record, content]);
+}));
+for (const compressed of [false, true]) {
+  header.writeUInt32LE(compressed ? 1 : 0, 36);
+  const file = CFB.utils.cfb_new();
+  CFB.utils.cfb_add(file, "FileHeader", header);
+  CFB.utils.cfb_add(file, "BodyText/Section0", compressed ? require("node:zlib").deflateRawSync(section) : section);
+  const result = parseHwpWorshipInfo(CFB.write(file, { type: "buffer" }), "2026-09-13");
+  assert.deepEqual(result.sermon, expectedSermon);
+  assert.deepEqual(result.service, expectedService);
+}
+if (process.argv[2]) {
+  const actual = parseHwpWorshipInfo(fs.readFileSync(process.argv[2]), "2026-09-13");
+  assert.deepEqual(actual.sermon, expectedSermon);
+  assert.deepEqual(actual.service, expectedService);
+  console.log("Attached 2026-09-13 HWP: all sermon and service fields match", JSON.stringify({ sermon: actual.sermon, service: actual.service }));
+}
+console.log("worship bulletin parser: PDF, HWP controls, date boundaries and September 13 regression passed");

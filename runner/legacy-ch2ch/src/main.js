@@ -17,6 +17,7 @@ import {
 } from './web-clear-targets.js';
 import { attendanceTargetSatisfied, buildAttendanceActions } from './attendance-actions.js';
 import { verifyPreparedRowsWithFreshRows } from './attendance-verification.js';
+import { locateMemberRow, readMemberAffiliation } from './member-row.js';
 
 const CONFIG = {
   url: process.env.CH2CH_URL || 'https://ch2ch.or.kr/login.asp',
@@ -270,7 +271,7 @@ function readFamilyOrder() {
 }
 
 function allContexts(page) {
-  return [page, ...page.frames()];
+  return [page, ...page.frames().filter(frame => frame !== page.mainFrame())];
 }
 
 async function shortDelay(ms = CONFIG.actionDelayMs) {
@@ -285,7 +286,7 @@ async function scrollAllContainers(page, position = 'start') {
         const nodes = [document.scrollingElement, document.documentElement, document.body, ...document.querySelectorAll('*')].filter(Boolean);
         for (const node of nodes) {
           if (node.scrollWidth > node.clientWidth) node.scrollLeft = Math.round((node.scrollWidth - node.clientWidth) * ratio);
-          if (node.scrollHeight > node.clientHeight && ratio === 0) node.scrollTop = 0;
+          if (node.scrollHeight > node.clientHeight) node.scrollTop = Math.round((node.scrollHeight - node.clientHeight) * ratio);
         }
       }, ratio);
     } catch (_) {}
@@ -724,39 +725,12 @@ function escapeRegExp(text) {
   return String(text).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-async function findMemberRow(page, name) {
-  const variants = memberNameVariants(name);
+async function findMemberRow(page, name, family = '') {
 
   // 셀에서 추출한 이름 텍스트를 정확히 비교합니다. 접두어 유사 매칭은 사용하지 않습니다.
   for (const ctx of allContexts(page)) {
     try {
-      const handle = await ctx.evaluateHandle((variants) => {
-        const normalize = (v) => String(v || '').replace(/\s+/g, '').trim().toLowerCase();
-        const base = (v) => normalize(v).replace(/[a-z]$/, '');
-        const tokens = (v) => String(v || '').match(/[가-힣]{2,5}[A-Za-z]?/g)?.map(normalize) || [];
-        const isVisible = (el) => {
-          if (!el || !el.getClientRects || el.getClientRects().length === 0) return false;
-          const style = window.getComputedStyle(el);
-          return style.visibility !== 'hidden' && style.display !== 'none' && Number(style.opacity || 1) !== 0;
-        };
-        const rows = Array.from(document.querySelectorAll('tr')).filter((tr) =>
-          isVisible(tr) && Array.from(tr.querySelectorAll('input[type="checkbox"]')).some(isVisible)
-        );
-        const candidates = rows.map((tr) => ({
-          tr,
-          cellTokens: Array.from(tr.querySelectorAll('td,th')).flatMap((cell) => tokens(cell.innerText || cell.textContent))
-        })).filter((item) => item.cellTokens.length > 0);
-
-        const exact = candidates.filter((item) => item.cellTokens.some((token) => variants.includes(token)));
-        if (exact.length === 1) return { row: exact[0].tr, mode: 'exact', text: exact[0].cellTokens.join('/') };
-
-        const targetBases = new Set(variants.map(base).filter(Boolean));
-        const baseMatches = candidates.filter((item) => item.cellTokens.some((token) => targetBases.has(base(token))));
-        if (baseMatches.length === 1) {
-          return { row: baseMatches[0].tr, mode: 'unique-base', text: baseMatches[0].cellTokens.join('/') };
-        }
-        return { row: null, mode: baseMatches.length > 1 ? 'ambiguous' : 'not-found', text: '' };
-      }, variants);
+      const handle = await ctx.evaluateHandle(locateMemberRow, { name, family });
       const properties = await handle.getProperties();
       const rowHandle = properties.get('row')?.asElement() || null;
       const mode = await properties.get('mode')?.jsonValue().catch(() => 'unknown');
@@ -770,22 +744,9 @@ async function findMemberRow(page, name) {
   return null;
 }
 
-async function findMemberRowWithRetry(page, name, attempts = 2) {
-  const totalAttempts = Math.max(1, Number(attempts) || 1);
-  for (let attempt = 1; attempt <= totalAttempts; attempt += 1) {
-    const found = await findMemberRow(page, name);
-    if (found) return found;
-    if (attempt === totalAttempts) break;
-
-    // CH2CH renders long tables lazily.  Re-scan both ends so a row outside
-    // the current viewport is not reported as missing just because the first
-    // DOM snapshot was taken too early.
-    await scrollAllContainers(page, 'start');
-    await shortDelay(250);
-    await scrollAllContainers(page, 'end');
-    await shortDelay(250);
-  }
-  return null;
+async function findMemberRowWithRetry(page, name, attempts = 2, family = '') {
+  // Keep the legacy call signature; missing rows are inspected only once.
+  return findMemberRow(page, name, family);
 }
 
 async function readVisibleMemberTexts(page, expected = []) {
@@ -824,17 +785,8 @@ async function readVisibleMemberTexts(page, expected = []) {
 
 async function waitForFamilyMemberText(page, familyName, rows) {
   const expected = Array.from(new Set(rows.flatMap((row) => memberNameVariants(row.name))));
-  const deadline = Date.now() + CONFIG.familyTextWaitMs;
-  let lastVisible = [];
-  while (Date.now() < deadline) {
-    const current = await readVisibleMemberTexts(page, expected);
-    lastVisible = current.names;
-    if (current.matched > 0) {
-      return true;
-    }
-    await shortDelay(250);
-  }
-  return false;
+  const current = await readVisibleMemberTexts(page, expected);
+  return current.matched > 0;
 }
 
 async function accessCheckboxInRow(found, fieldName, desired = null, checkboxIndex = 0, shouldSet = false) {
@@ -849,10 +801,10 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
         const style = window.getComputedStyle(el);
         return style.visibility !== 'hidden' && style.display !== 'none' && Number(style.opacity || 1) !== 0;
       };
-      const boxes = Array.from(tr.querySelectorAll('input[type="checkbox"]')).filter(isVisible);
+      const boxes = Array.from(tr.querySelectorAll('input[type="checkbox"]')).filter(box => box.closest('tr') === tr && isVisible(box));
       const table = tr.closest('table');
       const rowCells = Array.from(tr.cells || []);
-      const headerRows = table ? Array.from(table.querySelectorAll('tr')).filter((row) => row !== tr) : [];
+      const headerRows = table ? Array.from(table.querySelectorAll('tr')).filter((row) => row !== tr && row.closest('table') === table && !row.querySelector('input[type="checkbox"]')) : [];
       const candidates = boxes.map((box, index) => {
         const cell = box.closest('td,th');
         const cellIndex = rowCells.indexOf(cell);
@@ -928,7 +880,7 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
         chosenIndex: chosen.index,
         cellIndex: chosen.cellIndex
       };
-    }, { fieldName, desired, shouldSet });
+    }, { fieldName, desired, shouldSet, checkboxIndex });
     if (!result.ok) {
       const reason = `${fieldName} 체크박스 처리 실패`;
       return { ...result, ok: false, reason };
@@ -1009,14 +961,9 @@ function attendanceStateMatches(rowInfo, state) {
 }
 
 async function extractFamilyFromFoundRow(found, fallback = '') {
-  const familyPattern = /[가-힣]{2,8}(?:이네|네|반|팀)/g;
   try {
-    const text = found.rowHandle
-      ? await found.rowHandle.evaluate((tr) => tr.innerText || tr.textContent || '')
-      : await found.row.innerText({ timeout: 700 });
-    const matches = String(text || '').match(familyPattern) || [];
-    const familyLike = matches.find((value) => /이네|네$/.test(value)) || matches[0];
-    return familyLike || fallback || '';
+    const row = found.rowHandle || found.row;
+    return await row.evaluate(readMemberAffiliation) || fallback || '';
   } catch (_) {
     return fallback || '';
   }
@@ -1083,11 +1030,11 @@ async function searchMemberRowGlobally(page, rowInfo, originalFamily) {
   await clickTextInAnyFrame(page, '간편검색', false, 1200).catch(() => false);
   await shortDelay(1200);
 
-  let found = await findMemberRowWithRetry(page, rowInfo.name, 2);
+  let found = await findMemberRowWithRetry(page, rowInfo.name, 2, originalFamily);
   if (!found) {
     await clickTextInAnyFrame(page, '검색', false, 1200).catch(() => false);
     await shortDelay(1200);
-    found = await findMemberRowWithRetry(page, rowInfo.name, 2);
+    found = await findMemberRowWithRetry(page, rowInfo.name, 2, originalFamily);
   }
 
   if (!found) {
@@ -1501,24 +1448,22 @@ async function processFamily(page, familyName, rows, options = {}) {
   let failed = 0;
   const people = [];
   const preparedRows = [];
-  const searchRetryRows = [];
   let finalMismatchCount = 0;
 
   for (const rowInfo of rows) {
     try {
-      const found = await findMemberRowWithRetry(page, rowInfo.name, 2);
+      const found = await findMemberRowWithRetry(page, rowInfo.name, 2, familyName);
       if (!found) {
-        searchRetryRows.push(rowInfo);
         failed += 1;
-        const reason = `시트/CH2CH 미일치 보류: '${familyName}' 화면에서 '${rowInfo.name}'을 찾지 못함. 검색 보정은 임시 중지`;
-        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason, deferredSearch: true });
+        const reason = `1회 확인 후 건너뜀: '${familyName}'에서 '${rowInfo.name}'의 출석 행을 하나로 확인하지 못했습니다. 웹교적의 이름·소속과 시트 값을 직접 확인해 주세요.`;
+        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
         log('시트 불일치 발견', `${familyName} / ${rowInfo.name} / 다음 가족 처리 계속`);
         continue;
       }
       const currentState = await readWebAttendanceState(found);
       if (!currentState.ok) {
         failed += 1;
-        const reason = `실행 전 대조 실패: ${currentState.reason}. ${targetActionText(rowInfo)}`;
+        const reason = `1회 확인 후 건너뜀: ${currentState.reason}. ${targetActionText(rowInfo)}. 웹교적에서 직접 확인해 주세요.`;
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
         continue;
       }
@@ -1531,8 +1476,11 @@ async function processFamily(page, familyName, rows, options = {}) {
   }
 
   for (const item of preparedRows) {
-    const { rowInfo, found } = item;
+    const { rowInfo } = item;
     try {
+      const found = await findMemberRowWithRetry(page, rowInfo.name, 2, familyName);
+      if (!found) throw new Error(`처리 직전 이름 재확인 실패: ${rowInfo.name}`);
+      item.found = found;
       if (CONFIG.dryRun) {
         success += 1;
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: true, reason: null });
@@ -1596,11 +1544,6 @@ async function processFamily(page, familyName, rows, options = {}) {
     }
   } else if (CONFIG.savePerFamily) {
     saved = { attempted: true, verified: CONFIG.dryRun };
-  }
-
-  // 임시 비활성화: 미일치 인원 전역 검색은 현재 가족 화면을 이탈시켜 다음 처리를 멈추게 할 수 있다.
-  if (searchRetryRows.length) {
-    log('검색 보정 보류', `${familyName}: ${searchRetryRows.length}명 / ${searchRetryRows.map(row => row.name).join(', ')}`);
   }
 
   return {
@@ -2038,94 +1981,21 @@ async function main() {
     results.push(result);
   }
 
-  const correctionTargets = collectDeferredCorrectionTargets(results, grouped);
+  // A missing person is a user-review result, never a global-search job.
   const affiliationCorrections = [];
-  for (const target of correctionTargets) {
-    const outcome = await processSearchCorrectionWithRetry(page, target);
-    const report = buildCorrectionReport(target, outcome);
-    affiliationCorrections.push(report);
-
-    const familyResult = results.find(result => normalizeText(result.familyName) === normalizeText(target.originalFamily));
-    const personResult = familyResult?.people?.find(person => normalizeMemberName(person.name) === normalizeMemberName(target.rowInfo.name));
-    if (personResult) {
-      personResult.deferredSearch = false;
-      personResult.fallbackSearch = true;
-      personResult.ok = Boolean(outcome.ok);
-      personResult.reason = outcome.reason || null;
-      personResult.foundFamily = outcome.foundFamily || null;
-      personResult.foundLocation = outcome.foundLocation || null;
-      personResult.saveAttempted = Boolean(outcome.saveAttempted);
-      personResult.saveVerified = Boolean(outcome.saveVerified);
-    }
-    if (familyResult && isCorrectionSuccessful(outcome)) {
-      familyResult.success += 1;
-      familyResult.failed = Math.max(familyResult.failed - 1, 0);
-    }
-  }
-
-  const corrected = affiliationCorrections.filter(item => item.status === 'corrected');
-  const correctionFailures = affiliationCorrections.filter(item => item.status === 'failed');
-  if (affiliationCorrections.length) {
-    log('소속 보정 결과', `성공 ${corrected.length}명 / 실패 ${correctionFailures.length}명${correctionFailures.length ? ` / 실패자 ${correctionFailures.map(item => item.name).join(', ')}` : ''}`);
-  }
-  const deferredSearch = correctionFailures;
+  const affiliationMismatches = [];
+  const deferredSearch = [];
+  const reviewPeople = results.flatMap(result =>
+    result.people.filter(person => !person.ok).map(person => ({ family: result.familyName, name: person.name }))
+  );
+  log('사용자 확인 대상', reviewPeople.length
+    ? `${reviewPeople.length}명: ${reviewPeople.map(person => `${person.family} / ${person.name}`).join(', ')}. 자동 재검색 없이 결과에서 확인해 주세요.`
+    : '추가 확인 대상 없음');
+  log('전체 소속 재검색 생략', '처리한 가족의 저장 검증만 수행하고 실행을 마칩니다.');
 
   let finalSave = { attempted: true, verified: CONFIG.dryRun };
   if (!CONFIG.savePerFamily) {
     finalSave = await saveCurrentPage(page, '최종 저장');
-  }
-
-  const affiliationAudit = await runAffiliationAuditParallel(context, grouped);
-  const affiliationMismatches = affiliationAudit.mismatches;
-  if (false) {
-  const affiliationMismatches = [];
-  const affiliationMissingRows = [];
-  const normalAffiliationGroups = grouped.filter((item) => !isSpecialNewcomerGroup(item.family));
-  const newcomerAffiliationGroups = grouped
-    .filter((item) => isSpecialNewcomerGroup(item.family))
-    .sort((a, b) => specialOrder.indexOf(a.family) - specialOrder.indexOf(b.family));
-
-  for (const item of normalAffiliationGroups) {
-    const comparison = await compareFamilyAffiliations(page, item.family, item.rows, { searchMissing: false });
-    affiliationMismatches.push(...comparison.mismatches);
-    affiliationMissingRows.push(...comparison.missingRows.map((rowInfo) => ({ rowInfo, familyName: item.family })));
-  }
-  for (const item of newcomerAffiliationGroups) {
-    const navigated = await navigateToNewcomerAttendance(page, item.family);
-    if (!navigated) {
-      affiliationMismatches.push(...item.rows.map((rowInfo) => buildAffiliationMismatch(
-        rowInfo,
-        item.family,
-        '',
-        `새가족 > ${item.family} 화면으로 이동하지 못했습니다.`,
-        'not_found'
-      )));
-      continue;
-    }
-    const comparison = await compareFamilyAffiliations(page, item.family, item.rows, {
-      clickFamilyTab: false,
-      searchMissing: false
-    });
-    affiliationMismatches.push(...comparison.mismatches);
-    affiliationMissingRows.push(...comparison.missingRows.map((rowInfo) => ({ rowInfo, familyName: item.family })));
-  }
-
-  const missingByFamily = new Map();
-  for (const item of affiliationMissingRows) {
-    if (!missingByFamily.has(item.familyName)) missingByFamily.set(item.familyName, []);
-    missingByFamily.get(item.familyName).push(item.rowInfo);
-  }
-  const missingAffiliationRows = [];
-  for (const [familyName, missingRows] of missingByFamily) {
-    missingAffiliationRows.push(...await resolveMissingAffiliations(page, missingRows, familyName));
-  }
-  affiliationMismatches.push(...missingAffiliationRows);
-
-  }
-  if (affiliationMismatches.length) {
-    log('전체 소속 대조 불일치', `${affiliationMismatches.length}명: ${affiliationMismatches.map((item) => `${item.name}(시트 ${item.expectedFamily} / 웹 ${item.foundFamily || '확인 불가'})`).join(', ')}`);
-  } else {
-    log('전체 소속 대조 완료', `전체 ${rows.length}명 중 시트와 웹교적 소속 불일치 0명`);
   }
 
   const summary = results.map(r => `${r.familyName}: 주일 ${r.expectedSunday ?? 0}명, 부서 ${r.expectedDepartment ?? 0}명, 실패 ${r.failed}명`).join(' / ');
