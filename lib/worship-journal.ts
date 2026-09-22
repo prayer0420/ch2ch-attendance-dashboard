@@ -286,7 +286,8 @@ export function extractHwpParagraphs(buffer: Buffer) {
   if (!header || !section) throw new Error("HWP 본문을 찾지 못했습니다. HWP 5.x 형식인지 확인해 주세요.");
 
   let body = section;
-  if ((header.readUInt32LE(36) & 1) === 1) body = inflateRawSync(section);
+  if (header.length < 40) throw new Error("올바르지 않은 HWP 헤더입니다.");
+  if ((header.readUInt32LE(36) & 1) === 1) body = inflateRawSync(section, { maxOutputLength: 64 * 1024 * 1024 });
 
   const paragraphs: string[] = [];
   let offset = 0;

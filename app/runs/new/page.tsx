@@ -1,3 +1,4 @@
+import { requirePageSession } from "@/lib/page-auth";
 import Link from "next/link";
 import { History } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
@@ -5,7 +6,8 @@ import { PageActions } from "@/components/page-actions";
 import { RunCreateForm } from "@/components/run-create-form";
 import { SectionTitle } from "@/components/ui";
 
-export default function NewRunPage() {
+export default async function NewRunPage() {
+  await requirePageSession();
   return (
     <AppShell>
       <PageActions />

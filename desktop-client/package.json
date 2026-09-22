@@ -1,0 +1,9 @@
+{
+  "name": "ch2ch-management-client",
+  "version": "0.1.0",
+  "private": true,
+  "description": "기존 CH2CH 웹 서비스에 연결하는 Windows 관리앱",
+  "author": "CH2CH",
+  "main": "main.js",
+  "dependencies": {}
+}

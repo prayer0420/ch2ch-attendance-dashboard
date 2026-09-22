@@ -1,3 +1,4 @@
+import { requirePageSession } from "@/lib/page-auth";
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { AutoRefresh } from "@/components/auto-refresh";
@@ -34,6 +35,7 @@ function compactLogMessage(message: string) {
 }
 
 export default async function RunDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  await requirePageSession();
   const { id } = await params;
   const { run, results, events, demo } = await getRunDetail(id);
 

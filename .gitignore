@@ -19,3 +19,13 @@ runner/legacy-ch2ch/logs/
 __pycache__/
 *.py[cod]
 extras/server-migration/qa/
+.codex-doc-review/
+.codex-remote-attachments/
+output/
+outputs/
+tmp/
+산출물/
+*.pem
+*.key
+*service-account*.json
+test-*-*.json

@@ -1,9 +1,11 @@
+import { requirePageSession } from "@/lib/page-auth";
 import { AppShell } from "@/components/app-shell";
 import { PageActions } from "@/components/page-actions";
 import { EmptyState, Panel, SectionTitle, StatCard } from "@/components/ui";
 import { getAttendanceRecords } from "@/lib/data";
 
 export default async function MemberPage({ params }: { params: Promise<{ memberId: string }> }) {
+  await requirePageSession();
   const { memberId } = await params;
   const { records } = await getAttendanceRecords();
   const record = records.find((item) => item.id === memberId);

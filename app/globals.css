@@ -25,7 +25,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -35,7 +36,7 @@ select {
 
 @layer components {
   .journal-input-card {
-    @apply relative flex gap-4 overflow-hidden rounded border border-line bg-white/75 p-4 shadow-sm sm:p-5;
+    @apply relative flex min-w-0 gap-4 overflow-hidden rounded border border-line bg-white/75 p-4 shadow-sm sm:p-5;
   }
 
   .journal-step {

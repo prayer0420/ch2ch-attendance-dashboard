@@ -1,8 +1,11 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextRequest, NextResponse } from "next/server";
 import { mockResults } from "@/lib/mock-data";
 import { getServiceSupabase, hasSupabaseEnv } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   const { id } = await params;
   const status = request.nextUrl.searchParams.get("status");
 

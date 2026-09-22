@@ -1,3 +1,4 @@
+import { checkRequestSecurity } from "@/lib/security";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import * as XLSX from "xlsx";
@@ -100,6 +101,8 @@ async function csvFromFile(file: File, tabName: string) {
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     const form = await request.formData();
     const file = form.get("file");

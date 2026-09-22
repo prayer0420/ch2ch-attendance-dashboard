@@ -1,107 +1,71 @@
-
-param(
-  [switch]$NoPause
-)
-
-$ErrorActionPreference = "Stop"
-
-$root = Split-Path -Parent $PSScriptRoot
-$node = "C:\Program Files\nodejs\node.exe"
-$runtimeDir = Join-Path $root ".local-runtime"
-$stateFile = Join-Path $runtimeDir "processes.json"
-$dashboardLog = Join-Path $runtimeDir "dashboard.out.log"
-$dashboardErrorLog = Join-Path $runtimeDir "dashboard.err.log"
-$runnerLog = Join-Path $runtimeDir "runner.out.log"
-$runnerErrorLog = Join-Path $runtimeDir "runner.err.log"
-$url = "http://localhost:3000/runs/new"
-
-if (-not (Test-Path -LiteralPath $node)) {
-  throw "Node.js was not found: $node"
-}
-
-New-Item -ItemType Directory -Force -Path $runtimeDir | Out-Null
-
-if (Test-Path -LiteralPath $stateFile) {
-  Write-Host "[CH2CH] Previous local run info found. Stopping it first..."
-  & (Join-Path $PSScriptRoot "stop-local.ps1") -NoPause
-  if ($LASTEXITCODE -ne 0) {
-    throw "The previous CH2CH process could not be stopped. Close its command window once, then retry."
-  }
-}
-
-# A launcher version from before PID tracking may have left a server on port 3000.
-$orphanedListeners = Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue
-foreach ($listener in $orphanedListeners) {
-  Write-Host "[CH2CH] Stopping the previous dashboard on port 3000. PID=$($listener.OwningProcess)"
-  & taskkill.exe /PID $listener.OwningProcess /T /F | Out-Null
-  if ($LASTEXITCODE -ne 0) {
-    throw "The previous dashboard on port 3000 could not be stopped. Close its command window once, then retry."
-  }
-}
-
-foreach ($logFile in @($dashboardLog, $dashboardErrorLog, $runnerLog, $runnerErrorLog)) {
-  if (Test-Path -LiteralPath $logFile) {
-    Clear-Content -LiteralPath $logFile -ErrorAction SilentlyContinue
-  }
-}
-
-$dashboard = Start-Process -FilePath $node `
-  -ArgumentList @("node_modules\next\dist\bin\next", "dev", "-p", "3000") `
-  -WorkingDirectory $root `
-  -WindowStyle Minimized `
-  -RedirectStandardOutput $dashboardLog `
-  -RedirectStandardError $dashboardErrorLog `
-  -PassThru
-
-$runner = Start-Process -FilePath $node `
-  -ArgumentList @("runner\src\runner.js") `
-  -WorkingDirectory $root `
-  -WindowStyle Minimized `
-  -RedirectStandardOutput $runnerLog `
-  -RedirectStandardError $runnerErrorLog `
-  -PassThru
-
-$state = @{
-  dashboard = @{ pid = $dashboard.Id; startedAt = $dashboard.StartTime.ToUniversalTime().ToString("O") }
-  runner = @{ pid = $runner.Id; startedAt = $runner.StartTime.ToUniversalTime().ToString("O") }
-}
-$state | ConvertTo-Json -Depth 3 | Set-Content -Encoding UTF8 -LiteralPath $stateFile
-
-Write-Host "[CH2CH] Dashboard PID: $($dashboard.Id)"
-Write-Host "[CH2CH] Runner PID: $($runner.Id)"
-Write-Host "[CH2CH] Waiting for $url ..."
-Write-Host "[CH2CH] Dashboard log: $dashboardLog"
-Write-Host "[CH2CH] Dashboard error log: $dashboardErrorLog"
-Write-Host "[CH2CH] Runner log: $runnerLog"
-Write-Host "[CH2CH] Runner error log: $runnerErrorLog"
-
-$ready = $false
-for ($attempt = 0; $attempt -lt 45; $attempt += 1) {
-  Start-Sleep -Seconds 1
-  try {
-    $statusCode = & curl.exe --silent --output NUL --write-out "%{http_code}" --max-time 2 $url
-    if ($statusCode -eq "200") {
-      $ready = $true
-      break
+param([switch]$NoPause, [switch]$Production, [switch]$WebOnly, [switch]$SetupOnly)
+. (Join-Path $PSScriptRoot 'server\common.ps1')
+if ($SetupOnly -and -not $WebOnly) { throw 'SetupOnly requires WebOnly; no Runner may run before authentication setup.' }
+Import-ServerAuthentication
+$serverStartMutex = New-Object Threading.Mutex($false, ('Local\CH2CH-Start-' + $serverProjectHash))
+$serverHaveLock = $false
+try {
+  try { $serverHaveLock = $serverStartMutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $serverHaveLock = $true }
+  if (-not $serverHaveLock) { throw 'Another start/stop operation is already in progress.' }
+  $state = Get-ServerState
+  $listeners = @(Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue)
+  if ($listeners.Count) {
+    if ((Test-ServerProcessOwned $state.dashboard) -and @($listeners | Where-Object OwningProcess -ne $state.dashboard.pid).Count -eq 0) {
+      Write-Host '[CH2CH] This server is already running at http://localhost:3000. No restart or duplicate Runner.'
+      Write-Host '[CH2CH] To change mode/configuration, stop-local.cmd first, then start-server.cmd.'
+      return
     }
-  } catch {}
+    throw 'Port 3000 belongs to another or unverified process. It was NOT stopped. Check the existing program first.'
+  }
+  foreach ($name in @('dashboard', 'runner')) {
+    if ($state[$name] -and (Get-Process -Id $state[$name].pid -ErrorAction SilentlyContinue)) { throw "Recorded $name process still exists. Review/stop it explicitly before starting. No process was killed." }
+  }
+  $checkArgs = @((Join-Path $PSScriptRoot 'server\preflight.js'))
+  if ($Production) { $checkArgs += '--production' }
+  if ($WebOnly) { $checkArgs += '--web-only' }
+  if ($SetupOnly) { $checkArgs += '--setup-only' }
+  & $serverNode @checkArgs
+  if ($LASTEXITCODE -ne 0) { throw 'Preflight failed. No services started.' }
+  New-Item -ItemType Directory -Path $serverRuntime -Force | Out-Null
+  $stamp = Get-Date -Format 'yyyyMMdd-HHmmss-fff'
+  $env:NEXT_BUILD_DIR = if ($Production) { '.local-runtime/server-build' } else { '.next' }
+  $env:NODE_ENV = if ($Production) { 'production' } else { 'development' }
+  $env:CH2CH_STANDALONE = '0'
+  $env:RUNNER_DASHBOARD_URL = 'http://localhost:3000'
+  $webScript = Join-Path $serverProject 'node_modules\next\dist\bin\next'
+  $mode = if ($Production) { 'start' } else { 'dev' }
+  $web = Start-Process -FilePath $serverNode -ArgumentList @(('"' + $webScript + '"'), $mode, '--hostname', '127.0.0.1', '--port', '3000') -WorkingDirectory $serverProject -WindowStyle Hidden -RedirectStandardOutput (Join-Path $serverRuntime "dashboard-$stamp.out.log") -RedirectStandardError (Join-Path $serverRuntime "dashboard-$stamp.err.log") -PassThru
+  $state = @{ dashboard = @{ pid = $web.Id; startedAt = $web.StartTime.ToUniversalTime().ToString('O'); nodePath = $serverNode; scriptPath = $webScript; mode = $mode; setupOnly = [bool]$SetupOnly } }
+  Save-ServerState $state
+  $ready = $false
+  for ($attempt = 0; $attempt -lt 45; $attempt++) {
+    if ($web.HasExited) { break }
+    try {
+      $request = [Net.HttpWebRequest]::Create('http://127.0.0.1:3000/login')
+      $request.Timeout = 1500; $request.AllowAutoRedirect = $false
+      $response = $request.GetResponse()
+      $ready = ([int]$response.StatusCode -eq 200); $response.Close()
+    } catch {}
+    if ($ready) { break }
+    Start-Sleep -Milliseconds 500
+  }
+  if (-not $ready) {
+    if (Test-ServerProcessOwned $state.dashboard) { Stop-Process -Id $web.Id }
+    throw 'The login page did not become ready. Check the new timestamped dashboard log. No unrelated program was stopped.'
+  }
+  if (-not $WebOnly) {
+    $runnerScript = Join-Path $serverProject 'runner\src\runner.js'
+    $runner = Start-Process -FilePath $serverNode -ArgumentList @(('"' + $runnerScript + '"')) -WorkingDirectory $serverProject -WindowStyle Hidden -RedirectStandardOutput (Join-Path $serverRuntime "runner-$stamp.out.log") -RedirectStandardError (Join-Path $serverRuntime "runner-$stamp.err.log") -PassThru
+    $state.runner = @{ pid = $runner.Id; startedAt = $runner.StartTime.ToUniversalTime().ToString('O'); nodePath = $serverNode; scriptPath = $runnerScript }
+    Save-ServerState $state
+    Start-Sleep -Seconds 1
+    if ($runner.HasExited) { throw 'Web server is running, but Runner exited. Check the timestamped Runner log.' }
+  }
+  Write-Host '[CH2CH] Web ready: http://localhost:3000 (this PC only).'
+  Write-Host "[CH2CH] Mode: $mode. Runner started: $(-not $WebOnly). Setup only: $([bool]$SetupOnly)."
+  Write-Host '[CH2CH] No firewall, power, startup registration or network settings were changed.'
+  if (-not $NoPause) { Read-Host 'Press Enter to close this helper (server stays running)' }
+} finally {
+  if ($serverHaveLock) { $serverStartMutex.ReleaseMutex() }
+  $serverStartMutex.Dispose()
 }
-
-if ($ready) {
-  Start-Process $url
-  Write-Host "[CH2CH] READY - Dashboard and Runner are running."
-  Write-Host "[CH2CH] Browser opened: $url"
-  Write-Host "[CH2CH] To stop, double-click stop-local.cmd"
-} else {
-  & (Join-Path $PSScriptRoot "stop-local.ps1") -NoPause
-  Write-Warning "Dashboard did not respond within 45 seconds."
-  Write-Warning "Open $dashboardErrorLog and check the error message."
-  Write-Warning "You can still try this URL manually: $url"
-  exit 1
-}
-
-if (-not $NoPause) {
-  Read-Host "Press Enter to close this helper window"
-}
-
-exit 0

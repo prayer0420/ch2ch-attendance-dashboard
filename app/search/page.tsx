@@ -1,8 +1,10 @@
+import { requirePageSession } from "@/lib/page-auth";
 import { AppShell } from "@/components/app-shell";
 import { MemberSearch } from "@/components/member-search";
 import { SectionTitle } from "@/components/ui";
 
-export default function SearchPage() {
+export default async function SearchPage() {
+  await requirePageSession();
   return (
     <AppShell>
       <SectionTitle eyebrow="교인관리" title="이름 검색" />

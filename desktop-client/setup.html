@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CH2CH 관리앱 · 연결</title><link rel="stylesheet" href="setup.css"></head>
+<body><main>
+  <div class="brand">CH2CH <span>WINDOWS APP</span></div>
+  <p class="eyebrow">기존 서비스는 그대로</p>
+  <h1>하나의 서비스,<br>웹에서도 앱에서도.</h1>
+  <p class="intro">사용 중인 CH2CH 웹 주소로 연결하세요.<br>이 앱은 출석 실행기를 새로 켜거나 기존 서비스를 종료하지 않습니다.</p>
+  <section class="card">
+    <form id="connect-form">
+      <label for="server-url">웹 서비스 주소</label>
+      <input id="server-url" type="url" required autocomplete="url" placeholder="https://서비스주소 또는 http://localhost:3000" aria-describedby="url-help">
+      <p id="url-help" class="hint">외부 서버는 HTTPS, 이 PC의 서비스는 localhost 주소를 사용합니다. 비밀번호나 API 키는 여기에 입력하지 마세요.</p>
+      <button id="connect-button" type="submit">웹 서비스에 연결</button>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+  <div class="notes"><p><strong>이 PC에서 기존 서비스를 쓰고 있다면</strong><br>기존 start-local.cmd로 웹 서비스를 켠 후 해당 주소에 연결하세요.</p><p><strong>서버에 배포한 서비스를 쓰고 있다면</strong><br>운영 HTTPS 주소를 입력하세요. 모바일도 같은 주소에서 홈 화면에 추가할 수 있습니다.</p></div>
+  <p class="footer">출석·예배일지 자료는 기존 서비스에서 관리합니다. 서버 주소 변경: 앱 메뉴 또는 Ctrl+,</p>
+</main><script src="setup.js"></script></body></html>

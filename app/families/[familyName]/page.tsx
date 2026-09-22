@@ -1,9 +1,11 @@
+import { requirePageSession } from "@/lib/page-auth";
 import { AppShell } from "@/components/app-shell";
 import { PageActions } from "@/components/page-actions";
 import { EmptyState, Panel, SectionTitle, StatCard } from "@/components/ui";
 import { getAttendanceRecords } from "@/lib/data";
 
 export default async function FamilyPage({ params }: { params: Promise<{ familyName: string }> }) {
+  await requirePageSession();
   const { familyName } = await params;
   const decoded = decodeURIComponent(familyName);
   const { records } = await getAttendanceRecords();

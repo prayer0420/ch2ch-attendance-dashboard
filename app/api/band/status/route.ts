@@ -1,3 +1,4 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextResponse } from "next/server";
 import { checkTargetBandPosting, TARGET_NAME } from "@/lib/band-api";
 
@@ -25,11 +26,15 @@ async function status(accessToken?: string) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   return status();
 }
 
 export async function POST(request: Request) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   const body = await request.json().catch(() => ({}));
   return status(typeof body?.accessToken === "string" ? body.accessToken : undefined);
 }

@@ -1,3 +1,4 @@
+import { requirePageSession } from "@/lib/page-auth";
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { PageActions } from "@/components/page-actions";
@@ -6,6 +7,7 @@ import { getAttendanceRecords } from "@/lib/data";
 import { resultStatusLabel, statusTone } from "@/lib/status";
 
 export default async function AttendancePage() {
+  await requirePageSession();
   const { records, demo } = await getAttendanceRecords();
   const service13 = records.filter((record) => record.service_1_3_present).length;
   const service4 = records.filter((record) => record.service_4_present).length;

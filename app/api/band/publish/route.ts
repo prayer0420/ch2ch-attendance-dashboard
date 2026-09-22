@@ -1,7 +1,10 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextResponse } from "next/server";
 import { publishToTargetBand, TARGET_NAME } from "@/lib/band-api";
 
 export async function POST(request: Request) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     const body = await request.json();
 

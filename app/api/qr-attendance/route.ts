@@ -1,3 +1,4 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextRequest, NextResponse } from "next/server";
 import {
   applyQrAttendancePreview,
@@ -59,6 +60,8 @@ async function readQrJob(jobId: string) {
 }
 
 export async function GET(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   const jobId = request.nextUrl.searchParams.get("jobId");
   if (!isLocalRequest(request) && jobId) {
     try { return json({ data: await readQrJob(jobId) }); }
@@ -69,6 +72,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     const body = await request.json().catch(() => ({}));
     const action = String(body?.action || "preview");

@@ -1,8 +1,11 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextResponse } from "next/server";
 import { mockRun } from "@/lib/mock-data";
 import { getServiceSupabase, hasSupabaseEnv } from "@/lib/supabase/server";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await checkRequestSecurity(_);
+  if (denied) return denied;
   const { id } = await params;
 
   if (!hasSupabaseEnv()) {
@@ -24,6 +27,8 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
 }
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   const { id } = await params;
   if (!hasSupabaseEnv()) return NextResponse.json({ error: "데모 실행은 중지할 수 없습니다." }, { status: 400 });
 

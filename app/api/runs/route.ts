@@ -1,3 +1,6 @@
+import { googleCsvExportUrl } from "@/lib/google-sheet-url";
+import { checkRequestSecurity } from "@/lib/security";
+import { readPagination } from "@/lib/api-pagination";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
@@ -61,32 +64,7 @@ function extractSpreadsheetId(url: string) {
 }
 
 function buildGoogleCsvUrl(url: string, tabName: string) {
-  let parsed: URL;
-  try {
-    parsed = new URL(url);
-  } catch {
-    return null;
-  }
-
-  if ((parsed.searchParams.get("output") === "csv" || parsed.searchParams.get("format") === "csv") && parsed.hostname.includes("docs.google.com")) {
-    return url;
-  }
-
-  const spreadsheetId = extractSpreadsheetId(url);
-  if (spreadsheetId) {
-    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
-  }
-
-  const publishedId = url.match(/\/spreadsheets\/d\/e\/([^/]+)/)?.[1] ?? null;
-  if (publishedId) {
-    const exportUrl = new URL(`https://docs.google.com/spreadsheets/d/e/${publishedId}/pub`);
-    exportUrl.searchParams.set("output", "csv");
-    const gid = parsed.searchParams.get("gid");
-    if (gid) exportUrl.searchParams.set("gid", gid);
-    return exportUrl.toString();
-  }
-
-  return null;
+  return googleCsvExportUrl(url, tabName);
 }
 
 async function downloadGoogleSheetSnapshot(url: string, tabName: string) {
@@ -117,14 +95,14 @@ async function ensureInputBucket(supabase: ReturnType<typeof getServiceSupabase>
 }
 
 export async function GET(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
+  const pagination = readPagination(request.nextUrl.searchParams);
+  if (!pagination) return NextResponse.json({ error: "page는 1~100000, pageSize는 1~100 사이의 정수여야 합니다." }, { status: 400 });
+  const { page, pageSize, from, to } = pagination;
   if (!hasSupabaseEnv()) {
-    return NextResponse.json({ data: mockRuns, demo: true });
+    return NextResponse.json({ data: mockRuns.slice(from, to + 1), demo: true, page, pageSize });
   }
-
-  const page = Number(request.nextUrl.searchParams.get("page") ?? "1");
-  const pageSize = Number(request.nextUrl.searchParams.get("pageSize") ?? "20");
-  const from = Math.max(page - 1, 0) * pageSize;
-  const to = from + pageSize - 1;
 
   const supabase = getServiceSupabase();
   const { data, error } = await supabase
@@ -134,10 +112,12 @@ export async function GET(request: NextRequest) {
     .range(from, to);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ data });
+  return NextResponse.json({ data, demo: false, page, pageSize });
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   const contentType = request.headers.get("content-type") ?? "";
   const isMultipart = contentType.includes("multipart/form-data");
   const input = isMultipart ? await request.formData() : await request.json();

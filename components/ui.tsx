@@ -13,7 +13,7 @@ export function SectionTitle({ eyebrow, title, children }: { eyebrow?: string; t
 }
 
 export function Panel({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <section className={clsx("rounded border border-line bg-white/72 p-4 shadow-sm", className)}>{children}</section>;
+  return <section className={clsx("min-w-0 rounded border border-line bg-white/90 p-4 shadow-sm", className)}>{children}</section>;
 }
 
 export function StatCard({ label, value, tone }: { label: string; value: string | number; tone?: "moss" | "brick" | "brass" | "sea" }) {

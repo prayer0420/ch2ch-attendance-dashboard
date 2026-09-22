@@ -1,8 +1,10 @@
+import { requirePageSession } from "@/lib/page-auth";
 import { AppShell } from "@/components/app-shell";
 import { PageActions } from "@/components/page-actions";
 import { WorshipJournalBuilder } from "@/components/worship-journal-builder";
 
-export default function WorshipJournalPage() {
+export default async function WorshipJournalPage() {
+  await requirePageSession();
   return (
     <AppShell>
       <PageActions />

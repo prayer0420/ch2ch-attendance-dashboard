@@ -32,12 +32,10 @@ function buildGoogleCsvUrl(url, tabName) {
     return null;
   }
 
-  if ((parsed.searchParams.get("output") === "csv" || parsed.searchParams.get("format") === "csv") && parsed.hostname.includes("docs.google.com")) {
-    return String(url);
-  }
-
-  const { spreadsheetId, publishedId } = extractSheetInfo(url);
-  if (spreadsheetId) {
+  if (parsed.protocol !== "https:" || parsed.hostname !== "docs.google.com" || parsed.port || parsed.username || parsed.password) return null;
+  const publishedId = parsed.pathname.match(/^\/spreadsheets\/d\/e\/([\w-]+)(?:\/|$)/)?.[1];
+  const spreadsheetId = parsed.pathname.match(/^\/spreadsheets\/d\/([\w-]+)(?:\/|$)/)?.[1];
+  if (spreadsheetId && spreadsheetId !== 'e' && !publishedId) {
     return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName || "가장체크")}`;
   }
 

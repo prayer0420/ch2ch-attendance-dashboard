@@ -1,49 +1,30 @@
-
-param(
-  [switch]$NoPause
-)
-
-$root = Split-Path -Parent $PSScriptRoot
-$stateFile = Join-Path $root ".local-runtime\processes.json"
-
-if (-not (Test-Path -LiteralPath $stateFile)) {
-  Write-Host "[CH2CH] No recorded local processes for this project."
-  if (-not $NoPause) { Read-Host "Press Enter to close" }
-  exit 0
-}
-
-$state = Get-Content -Raw -Encoding UTF8 -LiteralPath $stateFile | ConvertFrom-Json
-$stopFailed = $false
-
-foreach ($entryName in @("dashboard", "runner")) {
-  $entry = $state.$entryName
-  if (-not $entry) { continue }
-
-  $process = Get-Process -Id $entry.pid -ErrorAction SilentlyContinue
-  if (-not $process) {
-    Write-Host "[CH2CH] $entryName is already stopped."
-    continue
+param([switch]$NoPause)
+. (Join-Path $PSScriptRoot 'server\common.ps1')
+$serverStopMutex = New-Object Threading.Mutex($false, ('Local\CH2CH-Start-' + $serverProjectHash))
+$serverHaveLock = $false
+try {
+  try { $serverHaveLock = $serverStopMutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $serverHaveLock = $true }
+  if (-not $serverHaveLock) { throw 'Another start/stop operation is already in progress.' }
+  $state = Get-ServerState
+  $remaining = @{}
+  foreach ($name in @('runner', 'dashboard')) {
+    $entry = $state[$name]
+    if (-not $entry) { continue }
+    if (-not (Get-Process -Id $entry.pid -ErrorAction SilentlyContinue)) { continue }
+    if (-not (Test-ServerProcessOwned $entry)) {
+      $remaining[$name] = $entry
+      Write-Warning "Unverified/reused $name PID: $($entry.pid). NOT stopped."
+      continue
+    }
+    & taskkill.exe /PID $entry.pid /T /F | Out-Null
+    if ($LASTEXITCODE -ne 0) { $remaining[$name] = $entry; Write-Warning "Could not stop $name." }
+    else { Write-Host "[CH2CH] Stopped own $name process." }
   }
-
-  $recordedStart = [DateTime]::Parse($entry.startedAt).ToUniversalTime()
-  $actualStart = $process.StartTime.ToUniversalTime()
-  if ([Math]::Abs(($actualStart - $recordedStart).TotalSeconds) -gt 2) {
-    Write-Warning "$entryName PID seems reused by another process. Not stopping PID=$($entry.pid)"
-    continue
-  }
-
-  & taskkill.exe /PID $entry.pid /T /F | Out-Null
-  if ($LASTEXITCODE -eq 0) {
-    Write-Host "[CH2CH] Stopped $entryName. PID=$($entry.pid)"
-  } else {
-    Write-Warning "Could not stop $entryName. PID=$($entry.pid)"
-    $stopFailed = $true
-  }
+  Save-ServerState $remaining
+  if ($remaining.Count) { throw 'Some recorded processes were left intact. Review them before restarting.' }
+  Write-Host '[CH2CH] Recorded services stopped. Files, logs and business data were kept.'
+  if (-not $NoPause) { Read-Host 'Press Enter to close' }
+} finally {
+  if ($serverHaveLock) { $serverStopMutex.ReleaseMutex() }
+  $serverStopMutex.Dispose()
 }
-
-if (-not $stopFailed) {
-  Remove-Item -LiteralPath $stateFile -Force
-}
-if (-not $NoPause) { Read-Host "Press Enter to close" }
-if ($stopFailed) { exit 1 }
-exit 0

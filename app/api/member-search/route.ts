@@ -1,3 +1,4 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextRequest, NextResponse } from "next/server";
 import { getCh2chConnectionStatus, searchCh2chMembers } from "@/lib/ch2ch-member-search";
 
@@ -20,6 +21,8 @@ function validateName(value: string) {
 }
 
 export async function GET(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   if (!isLocalRequest(request)) {
     return json({ error: "교인 검색은 이 컴퓨터의 로컬 홈페이지에서만 사용할 수 있습니다." }, 403);
   }
@@ -27,6 +30,8 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     if (!isLocalRequest(request)) {
       return json({ error: "교인 검색은 이 컴퓨터의 로컬 홈페이지에서만 사용할 수 있습니다." }, 403);

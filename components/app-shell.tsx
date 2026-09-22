@@ -1,30 +1,34 @@
 import Link from "next/link";
-import { Activity, BookOpenCheck, Home, Play, QrCode, Settings, UserRoundSearch } from "lucide-react";
+import { Activity, LogOut } from "lucide-react";
+import { AppNavigation } from "@/components/app-navigation";
 
-const navItems = [
-  { href: "/", label: "대시보드", icon: Home },
-  { href: "/search", label: "교인 검색", icon: UserRoundSearch },
-  { href: "/qr-attendance", label: "QR 출석체크", icon: QrCode },
-  { href: "/runs/new", label: "출석 실행", icon: Play },
-  { href: "/worship-journal", label: "예배일지", icon: BookOpenCheck },
-  { href: "/settings", label: "설정", icon: Settings }
-];
+function LogoutButton() {
+  return <form action="/api/auth/logout" method="post">
+    <button className="focus-ring flex min-h-11 items-center gap-2 rounded px-3 text-sm font-bold text-ink/65 hover:bg-white" type="submit"><LogOut size={16} aria-hidden="true" />로그아웃</button>
+  </form>;
+}
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen">
-      <aside className="fixed inset-y-0 left-0 z-10 hidden w-64 border-r border-line/80 bg-paper/92 px-4 py-5 backdrop-blur lg:block">
-        <Link href="/" className="flex items-center gap-3 border-b border-line pb-5">
-          <span className="grid size-10 place-items-center rounded bg-ink text-paper"><Activity size={20} /></span>
+      <a href="#main-content" className="focus-ring sr-only z-50 bg-white p-3 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">본문으로 이동</a>
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col overflow-y-auto border-r border-line/80 bg-paper/95 px-4 py-5 backdrop-blur lg:flex">
+        <Link href="/" className="focus-ring flex items-center gap-3 border-b border-line pb-5">
+          <span className="grid size-10 place-items-center rounded bg-ink text-paper"><Activity size={20} aria-hidden="true" /></span>
           <span><span className="block font-display text-xl font-bold">CH2CH</span><span className="text-xs text-ink/60">출석체크 관리</span></span>
         </Link>
-        <nav className="mt-6 grid gap-1">
-          {navItems.map((item) => <Link key={item.href} href={item.href} className="focus-ring flex items-center gap-3 rounded px-3 py-2.5 text-sm font-semibold text-ink/72 transition hover:bg-white/70 hover:text-ink"><item.icon size={17} />{item.label}</Link>)}
-        </nav>
-        <div className="mt-8 rounded border border-line bg-white/65 p-3 text-xs leading-5 text-ink/60">데이터는 브라우저와 서버의 임시 실행 환경에서만 처리됩니다.</div>
+        <AppNavigation />
+        <div className="mt-auto space-y-3 pt-8">
+          <p className="rounded border border-line bg-white/65 p-3 text-xs leading-5 text-ink/60">출석과 예배일지에는 개인정보가 포함됩니다. 공용 기기에서는 사용 후 로그아웃해 주세요.</p>
+          <LogoutButton />
+        </div>
       </aside>
-      <main className="min-h-screen lg:pl-64"><div className="mx-auto max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8">{children}</div></main>
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-paper/95 px-3 py-2 backdrop-blur lg:hidden"><nav className="grid grid-cols-5 gap-1">{navItems.slice(0, 5).map((item) => <Link key={item.href} href={item.href} className="flex flex-col items-center gap-1 rounded px-1 py-1 text-[10px] font-bold text-ink/65"><item.icon size={17} />{item.label}</Link>)}</nav></div>
+      <header className="flex min-h-16 items-center justify-between gap-2 border-b border-line bg-paper/95 px-4 pt-[env(safe-area-inset-top)] lg:hidden">
+        <Link href="/" aria-label="CH2CH 대시보드" className="focus-ring inline-flex min-h-11 items-center gap-2 font-display text-xl font-bold"><Activity size={20} aria-hidden="true" />CH2CH</Link>
+        <LogoutButton />
+      </header>
+      <main id="main-content" tabIndex={-1} className="min-h-screen min-w-0 pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-0 lg:pl-64"><div className="mx-auto min-w-0 max-w-[1440px] px-4 py-5 sm:px-6 lg:px-8">{children}</div></main>
+      <AppNavigation mobile />
     </div>
   );
 }

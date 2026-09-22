@@ -131,7 +131,7 @@ class Runner {
       await update({ status: "running" });
       const response = await fetch(`${this.config.dashboardUrl}/api/qr-attendance/worker`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json", "x-qr-worker-token": process.env.QR_WORKER_TOKEN || "" },
         body: JSON.stringify(buildQrWorkerPayload(job))
       });
       const payload = await response.json().catch(() => ({}));

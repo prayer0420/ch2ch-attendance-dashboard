@@ -1,5 +1,6 @@
 import { LockKeyhole } from "lucide-react";
 import { Panel } from "@/components/ui";
+import { securityConfigured, safeNextPath } from "@/lib/security";
 
 type LoginPageProps = {
   searchParams: Promise<{
@@ -12,7 +13,7 @@ type LoginPageProps = {
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
-  const nextPath = params.next && params.next.startsWith("/") && !params.next.startsWith("//") ? params.next : "/";
+  const nextPath = safeNextPath(params.next);
 
   return (
     <main className="grid min-h-screen place-items-center px-4 py-10">
@@ -27,9 +28,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           </div>
         </div>
 
-        {params.setup ? (
+        {params.setup || !securityConfigured() ? (
           <div className="mb-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
-            배포 환경변수에 APP_ACCESS_PASSWORD와 APP_SESSION_TOKEN을 먼저 설정해야 합니다.
+            서버 환경변수에 APP_ACCESS_PASSWORD(12자 이상)와 APP_SESSION_TOKEN(32자 이상)을 먼저 설정해야 합니다. 인증 설정 전에는 관리 데이터에 접근할 수 없습니다.
           </div>
         ) : null}
         {params.error ? (

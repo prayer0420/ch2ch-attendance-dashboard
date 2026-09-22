@@ -1,3 +1,5 @@
+import { googleCsvExportUrl } from "@/lib/google-sheet-url";
+import { checkRequestSecurity } from "@/lib/security";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 import * as XLSX from "xlsx";
@@ -25,28 +27,7 @@ function extractSheetInfo(url: string) {
 }
 
 function buildExportUrl(url: string, tabName: string) {
-  let parsed: URL;
-  try {
-    parsed = new URL(url);
-  } catch {
-    return null;
-  }
-
-  if ((parsed.searchParams.get("output") === "csv" || parsed.searchParams.get("format") === "csv") && parsed.hostname.includes("docs.google.com")) {
-    return url;
-  }
-
-  const { spreadsheetId, publishedId, gid } = extractSheetInfo(url);
-  if (spreadsheetId) {
-    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName || "가장체크")}`;
-  }
-  if (publishedId) {
-    const exportUrl = new URL(`https://docs.google.com/spreadsheets/d/e/${publishedId}/pub`);
-    exportUrl.searchParams.set("output", "csv");
-    if (gid) exportUrl.searchParams.set("gid", gid);
-    return exportUrl.toString();
-  }
-  return null;
+  return googleCsvExportUrl(url, tabName);
 }
 
 function rowsFromPdfText(text: string) {
@@ -144,6 +125,8 @@ function summarizeFamilies(people: Array<{ family: string; service13: boolean; s
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     const contentType = request.headers.get("content-type") ?? "";
     const isMultipart = contentType.includes("multipart/form-data");

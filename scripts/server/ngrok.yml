@@ -1,0 +1,7 @@
+version: "3"
+agent:
+  console_ui: false
+  log: false
+  inspect_db_size: -1
+  web_addr: false
+  remote_management: false

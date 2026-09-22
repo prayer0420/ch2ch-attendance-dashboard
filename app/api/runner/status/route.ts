@@ -1,8 +1,11 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextResponse } from "next/server";
 import { mockHeartbeat } from "@/lib/mock-data";
 import { getServiceSupabase, hasSupabaseEnv } from "@/lib/supabase/server";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   if (!hasSupabaseEnv()) {
     return NextResponse.json({ data: mockHeartbeat, demo: true });
   }

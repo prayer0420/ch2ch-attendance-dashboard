@@ -1,3 +1,4 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextRequest, NextResponse } from "next/server";
 import { accountingGoogleFileId, downloadGoogleAccountingWorkbook } from "@/lib/worship-journal-accounting-google";
 import { MAX_ACCOUNTING_SIZE } from "@/lib/worship-journal-accounting";
@@ -5,6 +6,8 @@ import { MAX_ACCOUNTING_SIZE } from "@/lib/worship-journal-accounting";
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     const source = request.nextUrl.searchParams.get("url") || "";
     const id = accountingGoogleFileId(source);

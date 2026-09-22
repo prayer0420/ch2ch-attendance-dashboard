@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const http = require("node:http");
+const net = require("node:net");
 const { spawn } = require("node:child_process");
 
 function canStopProcess(record, expected) {
@@ -50,7 +51,7 @@ function startServices({ rootDir, nodePath, port = 3000, logDir }) {
   fs.mkdirSync(logDir, { recursive: true });
   const dashboard = spawnService({
     nodePath,
-    args: [path.join(rootDir, "node_modules", "next", "dist", "bin", "next"), "dev", "-p", String(port)],
+    args: [path.join(rootDir, "node_modules", "next", "dist", "bin", "next"), "dev", "--hostname", "127.0.0.1", "-p", String(port)],
     rootDir,
     stdoutPath: path.join(logDir, "dashboard.out.log"),
     stderrPath: path.join(logDir, "dashboard.err.log")
@@ -92,9 +93,18 @@ function stopPid(pid) {
 function stopServices(state) {
   for (const name of ["dashboard", "runner"]) {
     const record = state?.[name];
-    if (!canStopProcess(record, state?.[name])) continue;
+    const child = state?.children?.[name];
+    if (!child || child.exitCode !== null || child.signalCode !== null || !canStopProcess(record, { pid: child.pid, startedAt: record?.startedAt })) continue;
     stopPid(record.pid);
   }
+}
+
+function assertPortAvailable(port) {
+  return new Promise((resolve, reject) => {
+    const probe = net.createServer();
+    probe.once("error", () => reject(new Error(`${port} 포트를 다른 프로그램이 사용 중입니다. 기존 프로그램은 종료하지 않았습니다. 해당 프로그램을 확인한 뒤 다시 실행해 주세요.`)));
+    probe.listen(port, "127.0.0.1", () => probe.close(resolve));
+  });
 }
 
 function waitForHttp(url, timeoutMs = 45000) {
@@ -129,5 +139,6 @@ module.exports = {
   startServices,
   readServiceStatus,
   stopServices,
+  assertPortAvailable,
   waitForHttp
 };

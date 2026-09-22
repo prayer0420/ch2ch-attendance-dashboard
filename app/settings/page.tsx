@@ -1,23 +1,16 @@
+import { requirePageSession } from "@/lib/page-auth";
 import { AppShell } from "@/components/app-shell";
 import { PageActions } from "@/components/page-actions";
-import { Panel, SectionTitle } from "@/components/ui";
+import { SectionTitle } from "@/components/ui";
+import { AppSettings } from "@/components/app-settings";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  await requirePageSession();
   return (
     <AppShell>
       <PageActions />
-      <SectionTitle eyebrow="기본값" title="설정" />
-      <Panel className="max-w-2xl">
-        <div className="grid gap-3">
-          <label className="grid gap-2 text-sm font-bold">구글시트 URL<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="https://docs.google.com/spreadsheets/d/11TQJbhev8m0MfPqW70b2HPbuXleOOfMSL2MXpr3Ab2o/edit?pli=1&gid=437108819#gid=437108819" /></label>
-          <label className="grid gap-2 text-sm font-bold">탭 이름<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="가장체크" /></label>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <label className="grid gap-2 text-sm font-bold">부서<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="2청년회" /></label>
-            <label className="grid gap-2 text-sm font-bold">기본 주차<input className="focus-ring rounded border border-line px-3 py-2" defaultValue="24" type="number" /></label>
-          </div>
-          <button className="focus-ring rounded bg-ink px-4 py-2 font-bold text-paper">설정 저장</button>
-        </div>
-      </Panel>
+      <SectionTitle eyebrow="기본값 · 앱 연결" title="설정" />
+      <AppSettings />
     </AppShell>
   );
 }

@@ -1,3 +1,4 @@
+import { requirePageSession } from "@/lib/page-auth";
 import Link from "next/link";
 import { AppShell } from "@/components/app-shell";
 import { PageActions } from "@/components/page-actions";
@@ -16,6 +17,7 @@ const filters = [
 ];
 
 export default async function RunResultsPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ status?: string }> }) {
+  await requirePageSession();
   const { id } = await params;
   const { status } = await searchParams;
   const { results } = await getRunResults(id, status);

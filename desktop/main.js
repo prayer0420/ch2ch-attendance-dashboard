@@ -1,15 +1,17 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { execFileSync } = require("node:child_process");
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, shell } = require("electron");
+const { dashboardOrigin, isLauncherUrl, isAppUrl, isAllowedExternalUrl, isTrustedIpc } = require("./navigation-policy");
 const {
   startServices,
   readServiceStatus,
   stopServices,
+  assertPortAvailable,
   waitForHttp
 } = require("./process-manager");
 
-const DASHBOARD_URL = "http://localhost:3000/runs/new";
+const DASHBOARD_URL = `${dashboardOrigin}/runs/new`;
 let windowRef = null;
 let serviceState = null;
 let stopping = false;
@@ -50,7 +52,7 @@ function statusPayload(error = null) {
 }
 
 function sendStatus(error = null) {
-  if (windowRef && !windowRef.isDestroyed()) windowRef.webContents.send("service-status", statusPayload(error));
+  if (windowRef && !windowRef.isDestroyed() && isLauncherUrl(windowRef.webContents.getURL())) windowRef.webContents.send("service-status", statusPayload(error));
 }
 
 async function startLocalServices() {
@@ -61,6 +63,7 @@ async function startLocalServices() {
   if (!fs.existsSync(path.join(root, "node_modules"))) {
     throw new Error("node_modules가 없습니다. 프로젝트 폴더에서 npm install을 한 번 실행해 주세요.");
   }
+  await assertPortAvailable(3000);
   serviceState = startServices({
     rootDir: root,
     nodePath: resolveNodePath(),
@@ -77,26 +80,49 @@ function createWindow() {
   windowRef = new BrowserWindow({
     width: 1280,
     height: 860,
-    minWidth: 960,
+    minWidth: 400,
     minHeight: 640,
     title: "CH2CH 출석체크",
     backgroundColor: "#f5f1e8",
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
+      sandbox: true,
       preload: path.join(__dirname, "preload.js")
     }
+  });
+  const contents = windowRef.webContents;
+  contents.session.setPermissionRequestHandler((_contents, _permission, callback) => callback(false));
+  contents.session.setPermissionCheckHandler(() => false);
+  const guardNavigation = (event, url) => {
+    if (isAppUrl(url) || isLauncherUrl(url)) return;
+    event.preventDefault();
+    if (isAllowedExternalUrl(url)) void shell.openExternal(url).catch(() => {});
+  };
+  contents.on("will-navigate", guardNavigation);
+  contents.on("will-redirect", guardNavigation);
+  contents.on("will-attach-webview", event => event.preventDefault());
+  contents.setWindowOpenHandler(({ url }) => {
+    if (isAppUrl(url)) void contents.loadURL(url);
+    else if (isAllowedExternalUrl(url)) void shell.openExternal(url).catch(() => {});
+    return { action: "deny" };
   });
   windowRef.loadFile(path.join(__dirname, "renderer", "index.html"));
   windowRef.on("closed", () => { windowRef = null; });
 }
 
-ipcMain.handle("get-status", () => statusPayload());
-ipcMain.handle("open-dashboard", async () => {
+function requireLauncher(event) {
+  if (!isTrustedIpc(event, windowRef?.webContents)) throw new Error("허용되지 않은 앱 요청입니다.");
+}
+
+ipcMain.handle("get-status", event => { requireLauncher(event); return statusPayload(); });
+ipcMain.handle("open-dashboard", async event => {
+  requireLauncher(event);
   if (windowRef && !windowRef.isDestroyed()) await windowRef.loadURL(DASHBOARD_URL);
   return true;
 });
-ipcMain.handle("stop-services", () => {
+ipcMain.handle("stop-services", event => {
+  requireLauncher(event);
   if (serviceState) stopServices(serviceState);
   serviceState = null;
   sendStatus();

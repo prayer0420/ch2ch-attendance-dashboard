@@ -1,3 +1,4 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextRequest, NextResponse } from "next/server";
 import {
   applyQrAttendancePreview,
@@ -12,11 +13,12 @@ export const maxDuration = 300;
 
 function authorized(request: NextRequest) {
   const expected = process.env.QR_WORKER_TOKEN || "";
-  const localHost = ["localhost", "127.0.0.1", "::1"].includes(request.nextUrl.hostname);
-  return localHost || (Boolean(expected) && request.headers.get("x-qr-worker-token") === expected);
+  return expected.length >= 32 && request.headers.get("x-qr-worker-token") === expected;
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request, true);
+  if (denied) return denied;
   if (!authorized(request)) return NextResponse.json({ error: "QR Worker 인증 실패" }, { status: 401 });
   try {
     const body = await request.json();

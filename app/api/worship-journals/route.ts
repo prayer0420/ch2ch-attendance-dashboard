@@ -1,3 +1,5 @@
+import { checkRequestSecurity } from "@/lib/security";
+import { googleCsvExportUrl } from "@/lib/google-sheet-url";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { createHash } from "node:crypto";
@@ -29,9 +31,9 @@ const processState = globalThis as typeof globalThis & { __worshipJournalPublish
 const publishLocks = processState.__worshipJournalPublishLocks ??= new Set<string>();
 
 function sheetExportUrl(source: string, tab: string) {
-  const match = source.match(/\/spreadsheets\/d\/([^/]+)/);
-  if (!match) throw new Error("올바른 구글 시트 링크를 입력해 주세요.");
-  return `https://docs.google.com/spreadsheets/d/${match[1]}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tab)}`;
+  const url = googleCsvExportUrl(source, tab);
+  if (!url) throw new Error("올바른 구글 시트 링크를 입력해 주세요.");
+  return url;
 }
 
 async function fetchAttendanceCsv(source: string, tab: string) {
@@ -84,7 +86,9 @@ function parseEntries<T>(value: FormDataEntryValue | null): T[] {
   return Array.isArray(parsed) ? parsed : [];
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     return NextResponse.json({ journals: await readStore() });
   } catch (error) {
@@ -93,6 +97,8 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const denied = await checkRequestSecurity(request);
+  if (denied) return denied;
   try {
     const form = await request.formData();
     const date = String(form.get("date") ?? "").trim();

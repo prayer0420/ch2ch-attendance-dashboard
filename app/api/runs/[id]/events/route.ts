@@ -1,8 +1,11 @@
+import { checkRequestSecurity } from "@/lib/security";
 import { NextResponse } from "next/server";
 import { mockEvents } from "@/lib/mock-data";
 import { getServiceSupabase, hasSupabaseEnv } from "@/lib/supabase/server";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  const denied = await checkRequestSecurity(_);
+  if (denied) return denied;
   const { id } = await params;
 
   if (!hasSupabaseEnv()) {
