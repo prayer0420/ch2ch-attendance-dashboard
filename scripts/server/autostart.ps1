@@ -61,7 +61,9 @@ try {
       # Shell shortcuts can inherit a PowerShell 7 module search path. Load the
       # Windows PowerShell signing cmdlet from this runtime, not that search path.
       Import-Module (Join-Path $PSHOME 'Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1') -ErrorAction Stop
-      $executable = (Resolve-Path -LiteralPath $ExecutablePath).Path
+      # Windows PowerShell -File can preserve shortcut argument quotes in a
+      # string parameter. Normalize those wrapper quotes before path lookup.
+      $executable = (Resolve-Path -LiteralPath $ExecutablePath.Trim().Trim('"')).Path
       $origin = [string](Get-Content -LiteralPath (Join-Path $serverRuntime 'public-origin.json') -Raw -Encoding UTF8 | ConvertFrom-Json).origin
       if ($origin -notmatch '^https://[a-z0-9-]+\.ngrok-free\.(app|dev)$') { throw 'Public origin is not configured.' }
       $bootTime = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
