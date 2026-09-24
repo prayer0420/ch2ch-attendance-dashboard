@@ -52,6 +52,23 @@ const { chromium } = require('playwright');
     assert.equal(sunday.chosenIndex, 1);
     assert.equal(department.chosenIndex, 2);
     assert.deepEqual(await page.locator('input').evaluateAll(boxes => boxes.map(box => box.checked)), [false, true, false]);
-    console.log('Member DOM regression passed: exact names, suffixes, nested rows, affiliations and real checkbox access');
+    const readiness = vm.createContext({
+      CONFIG: { familyTextWaitMs: 1500 },
+      allContexts: () => [page],
+      shortDelay: ms => new Promise(resolve => setTimeout(resolve, ms)),
+      memberNameVariants: name => [name]
+    });
+    const readinessStart = source.indexOf('async function readVisibleMemberTexts(');
+    const readinessEnd = source.indexOf('\nasync function accessCheckboxInRow(', readinessStart);
+    vm.runInContext(source.slice(readinessStart, readinessEnd), readiness);
+    await page.setContent(`<table>${row('previous-family', '다른사람', '다른가족')}</table>`);
+    const pendingTable = setTimeout(() => {
+      page.setContent(`<table>${row('new-family', '이새별', '재용이네')}</table>`).catch(() => {});
+    }, 250);
+    try {
+      assert.equal(await readiness.waitForFamilyMemberText(page, '재용이네', [{ name: '이새별' }]), true);
+      assert.equal((await find('이새별', '재용이네')).mode, 'exact');
+    } finally { clearTimeout(pendingTable); }
+    console.log('Member DOM regression passed: exact names, suffixes, delayed family rendering, affiliations and checkbox access');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

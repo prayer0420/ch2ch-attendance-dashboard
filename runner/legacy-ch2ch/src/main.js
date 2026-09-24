@@ -785,8 +785,15 @@ async function readVisibleMemberTexts(page, expected = []) {
 
 async function waitForFamilyMemberText(page, familyName, rows) {
   const expected = Array.from(new Set(rows.flatMap((row) => memberNameVariants(row.name))));
-  const current = await readVisibleMemberTexts(page, expected);
-  return current.matched > 0;
+  const deadline = Date.now() + CONFIG.familyTextWaitMs;
+  while (true) {
+    const current = await readVisibleMemberTexts(page, expected);
+    if (current.matched > 0) return true;
+    const remaining = deadline - Date.now();
+    if (remaining <= 0) return false;
+    // Wait for the new family's table to render, not for each missing person.
+    await shortDelay(Math.min(200, remaining));
+  }
 }
 
 async function accessCheckboxInRow(found, fieldName, desired = null, checkboxIndex = 0, shouldSet = false) {
@@ -1441,7 +1448,18 @@ async function processFamily(page, familyName, rows, options = {}) {
   await shortDelay(CONFIG.familyLoadWaitMs);
   const familyReady = await waitForFamilyMemberText(page, familyName, rows);
   if (!familyReady) {
-    log('가족 화면 대조 경고', `'${familyName}'에서 시트 대상 이름이 바로 보이지 않습니다. 미일치는 기록만 남기고 다른 대상을 계속 처리합니다.`);
+    const reason = `가족 화면 준비 실패: '${familyName}'에서 시트 대상 이름이 보이지 않아 출석을 변경하지 않았습니다. 웹교적 주차와 가족 화면을 확인해 주세요.`;
+    log('가족 화면 대조 실패', reason);
+    return {
+      familyName,
+      expectedSunday,
+      expectedDepartment,
+      success: 0,
+      failed: rows.length,
+      saved: false,
+      saveVerified: false,
+      people: rows.map(row => ({ family: row.family, name: row.name, ok: false, reason }))
+    };
   }
 
   let success = 0;
