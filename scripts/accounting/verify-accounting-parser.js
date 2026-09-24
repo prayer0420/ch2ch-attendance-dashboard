@@ -99,6 +99,18 @@ const rightmost = parseAccountingWorkbook(
 );
 assert.equal(rightmost.sheetTab, "6월 28일 최종");
 assert.equal(rightmost.thanksgiving.find(({ name }) => name === "구자연").amount, 2000);
+const chosenOlder = parseAccountingWorkbook(
+  workbookBuffer([["6월 28일 입력", olderRows], ["6월 28일 최종", latestRows]]),
+  "2026-06-28",
+  { sourceType: "google-sheet", sourceName: "회계 링크" },
+  "6월 28일 입력"
+);
+assert.equal(chosenOlder.sheetTab, "6월 28일 입력");
+assert.equal(chosenOlder.thanksgiving.find(({ name }) => name === "구자연").amount, 1000);
+assert.throws(() => parseAccountingWorkbook(
+  workbookBuffer([["6월 28일 입력", olderRows], ["6월 28일 최종", latestRows]]),
+  "2026-06-28", { sourceType: "google-sheet", sourceName: "회계 링크" }, "없는 탭"
+), /'없는 탭' 탭이 없습니다/);
 
 const formattedRows = accountingRows("2026년 6월 28일 헌금");
 formattedRows[3][6] = "₩12,000원";

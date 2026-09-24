@@ -68,10 +68,10 @@ export async function downloadGoogleAccountingWorkbook(
   return { buffer, name: metadata.name?.trim() || url };
 }
 
-export async function loadAccountingFromGoogleDrive(url: string, date: string, dependencies: GoogleDriveAccountingDependencies = {}) {
+export async function loadAccountingFromGoogleDrive(url: string, date: string, sheetTab = "", dependencies: GoogleDriveAccountingDependencies = {}) {
   const {buffer, name} = await downloadGoogleAccountingWorkbook(url, dependencies);
   return parseAccountingWorkbook(buffer, date, {
     sourceType: "google-sheet",
     sourceName: name
-  });
+  }, sheetTab);
 }

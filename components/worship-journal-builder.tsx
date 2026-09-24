@@ -40,19 +40,25 @@ function journalFileStem(journal: WorshipJournal) {
 }
 
 function worshipJournalBandText(journal: WorshipJournal) {
-  const accounting = journal.accounting;
+  const tabName = journal.outputSheet?.sheetTitle || journal.date.slice(5).replace("-", "");
   return [
-    `[제2청년회 예배일지] ${displayDate(journal.date)}`,
+    `#예배일지 #${tabName}`,
     "",
-    `출석: 1~3부 ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명 / 4부 ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명 / 가족모임 ${journal.attendance.familyMeeting}명`,
-    `말씀: ${journal.sermon.title} (${journal.sermon.passage}) / ${journal.sermon.preacher}`,
-    accounting ? `헌금: 주일 ${accounting.sundayTotal.toLocaleString("ko-KR")}원 / 감사 ${accounting.thanksgivingTotal.toLocaleString("ko-KR")}원 / 총액 ${accounting.total.toLocaleString("ko-KR")}원` : "",
+    "출석",
+    `1~3부 ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명`,
+    `4부 ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명`,
+    `가족모임 ${journal.attendance.familyMeeting}명`,
     "",
-    "[광고사항]",
-    ...journal.announcements.map((item, index) => `${index + 1}. ${item}`),
-    "",
-    `작성자: ${journal.author}`
-  ].filter((line, index, lines) => line !== "" || lines[index - 1] !== "").join("\n").trim();
+    `새가족 (${journal.newFamilies.length}명)`,
+    ...journal.newFamilies.map((person) => [
+      `- ${person.name}`,
+      person.generation,
+      person.inviter ? `인도자 ${person.inviter}` : "",
+      person.relationship ? `관계 ${person.relationship}` : "",
+      person.note
+    ].filter(Boolean).join(" · ")),
+    ...(journal.newFamilies.length ? [] : ["없음"])
+  ].join("\n").trim();
 }
 
 function downloadBlob(blob: Blob, fileName: string) {
@@ -320,6 +326,7 @@ export function WorshipJournalBuilder() {
   const [accountingSourceType, setAccountingSourceType] = useState<"excel" | "google-sheet">("excel");
   const [accountingFile, setAccountingFile] = useState<File | null>(null);
   const [accountingSheetUrl, setAccountingSheetUrl] = useState(ACCOUNTING_SHEET);
+  const [accountingSheetTab, setAccountingSheetTab] = useState("");
   const [newFamilies, setNewFamilies] = useState<NewFamilyEntry[]>([blankNewFamily()]);
   const [graduates, setGraduates] = useState<GraduateEntry[]>([blankGraduate()]);
   const [journals, setJournals] = useState<WorshipJournal[]>([]);
@@ -377,9 +384,10 @@ export function WorshipJournalBuilder() {
     accountingSourceType,
     accountingFile: accountingFile ? [accountingFile.name, accountingFile.size, accountingFile.lastModified] : null,
     accountingSheetUrl,
+    accountingSheetTab,
     newFamilies,
     graduates
-  }), [accountingFile, accountingSheetUrl, accountingSourceType, attendanceSheetTab, attendanceSheetUrl, author, bulletin, date, graduates, newFamilies]);
+  }), [accountingFile, accountingSheetTab, accountingSheetUrl, accountingSourceType, attendanceSheetTab, attendanceSheetUrl, author, bulletin, date, graduates, newFamilies]);
   const validation = useMemo(() => preview ? validateWorshipJournalForPublish(preview, date) : null, [date, preview]);
 
   function updateNewFamily(index: number, key: keyof NewFamilyEntry, value: string) {
@@ -403,7 +411,10 @@ export function WorshipJournalBuilder() {
       }
       body.set("accountingSourceType", accountingSourceType);
       if (accountingSourceType === "excel" && accountingFile) body.set("accountingFile", accountingFile);
-      if (accountingSourceType === "google-sheet") body.set("accountingSheetUrl", accountingSheetUrl);
+      if (accountingSourceType === "google-sheet") {
+        body.set("accountingSheetUrl", accountingSheetUrl);
+        body.set("accountingSheetTab", accountingSheetTab.trim());
+      }
       body.set("newFamilies", JSON.stringify(newFamilies)); body.set("graduates", JSON.stringify(graduates));
       const response = await fetchJson<{ journal: WorshipJournal; reviewDigest?: string; validation?: WorshipJournalValidationReport; saved: boolean; published?: boolean }>("/api/worship-journals", { method: "POST", body });
       if (action === "preview") {
@@ -516,8 +527,8 @@ export function WorshipJournalBuilder() {
               <button type="button" role="tab" aria-selected={accountingSourceType === "excel"} className={`rounded px-4 py-2 text-sm font-black transition ${accountingSourceType === "excel" ? "bg-ink text-paper shadow" : "text-ink/55 hover:text-ink"}`} onClick={() => setAccountingSourceType("excel")}>엑셀 파일</button>
               <button type="button" role="tab" aria-selected={accountingSourceType === "google-sheet"} className={`rounded px-4 py-2 text-sm font-black transition ${accountingSourceType === "google-sheet" ? "bg-ink text-paper shadow" : "text-ink/55 hover:text-ink"}`} onClick={() => setAccountingSourceType("google-sheet")}>Google Sheet</button>
             </div>
-            {accountingSourceType === "excel" ? <label className="group flex cursor-pointer items-center justify-between gap-3 rounded border border-dashed border-brass/50 bg-brass/5 px-4 py-4 transition hover:bg-brass/10"><span className="min-w-0"><span className="block text-sm font-black">회계 엑셀 선택</span><span className="block truncate text-xs text-ink/50">{accountingFile?.name ?? "XLSX 또는 XLS 파일을 올려주세요."}</span></span><span className="rounded bg-brass px-3 py-2 text-xs font-black text-ink">파일 찾기</span><input className="sr-only" type="file" accept=".xlsx,.xls" onChange={(event: ChangeEvent<HTMLInputElement>) => setAccountingFile(event.target.files?.[0] ?? null)} /></label> : <label className="journal-label">회계 Google Sheet 링크<input className="journal-input" type="url" value={accountingSheetUrl} onChange={(event) => setAccountingSheetUrl(event.target.value)} placeholder="https://docs.google.com/spreadsheets/d/..." /></label>}
-            <p className="mt-2 text-xs leading-5 text-ink/50">날짜와 관계없이 파일의 가장 오른쪽 탭을 최신 회계 자료로 읽습니다. 분석 후 선택된 탭 이름을 확인할 수 있습니다.</p>
+            {accountingSourceType === "excel" ? <label className="group flex cursor-pointer items-center justify-between gap-3 rounded border border-dashed border-brass/50 bg-brass/5 px-4 py-4 transition hover:bg-brass/10"><span className="min-w-0"><span className="block text-sm font-black">회계 엑셀 선택</span><span className="block truncate text-xs text-ink/50">{accountingFile?.name ?? "XLSX 또는 XLS 파일을 올려주세요."}</span></span><span className="rounded bg-brass px-3 py-2 text-xs font-black text-ink">파일 찾기</span><input className="sr-only" type="file" accept=".xlsx,.xls" onChange={(event: ChangeEvent<HTMLInputElement>) => setAccountingFile(event.target.files?.[0] ?? null)} /></label> : <div className="grid gap-3 sm:grid-cols-[1fr_180px]"><label className="journal-label">회계 Google Sheet 링크<input className="journal-input" type="url" value={accountingSheetUrl} onChange={(event) => setAccountingSheetUrl(event.target.value)} placeholder="https://docs.google.com/spreadsheets/d/..." /></label><label className="journal-label">읽을 탭 이름 (선택)<input className="journal-input" value={accountingSheetTab} onChange={(event) => setAccountingSheetTab(event.target.value)} placeholder="비워두면 맨 오른쪽" /></label></div>}
+            <p className="mt-2 text-xs leading-5 text-ink/50">{accountingSourceType === "google-sheet" ? "탭 이름을 비워두면 가장 오른쪽 탭을 읽습니다. 다른 탭을 쓰려면 원본과 똑같이 입력한 뒤 다시 분석해 주세요." : "날짜와 관계없이 파일의 가장 오른쪽 탭을 읽습니다."} 분석 후 선택된 탭 이름을 확인할 수 있습니다.</p>
           </div></section>
 
           <section className="journal-input-card"><div className="journal-step">05</div><div className="min-w-0 flex-1">

@@ -122,10 +122,14 @@ function sheetRows(sheet: XLSX.WorkSheet) {
   return XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, raw: false, defval: "" });
 }
 
-function findLatestSheet(workbook: XLSX.WorkBook) {
-  const sheetName = workbook.SheetNames.at(-1);
+function findAccountingSheet(workbook: XLSX.WorkBook, requestedTab = "") {
+  const requested = requestedTab.trim();
+  const sheetName = requested || workbook.SheetNames.at(-1);
+  if (requested && !workbook.SheetNames.includes(requested)) {
+    throw new Error(`회계 파일에 '${requested}' 탭이 없습니다. 탭 이름을 정확히 확인해 주세요.`);
+  }
   const sheet = sheetName ? workbook.Sheets[sheetName] : undefined;
-  if (!sheetName || !sheet) throw new Error("회계 파일의 마지막 탭을 찾지 못했습니다.");
+  if (!sheetName || !sheet) throw new Error("회계 파일에서 선택한 탭을 찾지 못했습니다.");
   return { sheetName, rows: sheetRows(sheet) };
 }
 
@@ -167,7 +171,8 @@ function findSectionTotal(rows: unknown[][], label: string, offerings: Thanksgiv
 export function parseAccountingWorkbook(
   buffer: Buffer,
   date: string,
-  source: AccountingSourceMeta
+  source: AccountingSourceMeta,
+  requestedTab = ""
 ): JournalAccounting {
   let workbook: XLSX.WorkBook;
   try {
@@ -176,7 +181,7 @@ export function parseAccountingWorkbook(
     throw new Error("회계 엑셀 파일을 읽지 못했습니다. XLSX 또는 XLS 형식인지 확인해 주세요.");
   }
 
-  const selected = findLatestSheet(workbook);
+  const selected = findAccountingSheet(workbook, requestedTab);
   const sunday = parseOfferingSection(selected.rows, "주일헌금");
   const thanksgiving = parseOfferingSection(selected.rows, "감사헌금", true);
   const purpose = parseOfferingSection(selected.rows, "목적헌금");

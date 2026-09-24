@@ -108,6 +108,7 @@ export async function POST(request: NextRequest) {
     const action = String(form.get("action") ?? "preview").trim();
     const expectedReviewDigest = String(form.get("reviewDigest") ?? "").trim();
     const accountingSourceType = String(form.get("accountingSourceType") ?? "").trim();
+    const accountingSheetTab = String(form.get("accountingSheetTab") ?? "").trim();
     const bulletin = form.get("bulletin") ?? form.get("hwp");
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error("예배 날짜를 선택해 주세요.");
     if (!author) throw new Error("작성자를 입력해 주세요.");
@@ -130,7 +131,7 @@ export async function POST(request: NextRequest) {
         { sourceType: "excel", sourceName: accountingFile.name }
       );
     } else if (accountingSourceType === "google-sheet") {
-      accounting = await loadAccountingFromGoogleDrive(String(form.get("accountingSheetUrl") ?? "").trim(), date);
+      accounting = await loadAccountingFromGoogleDrive(String(form.get("accountingSheetUrl") ?? "").trim(), date, accountingSheetTab);
     } else {
       throw new Error("회계 자료는 엑셀 파일 또는 Google Sheet 중 하나를 선택해 주세요.");
     }
