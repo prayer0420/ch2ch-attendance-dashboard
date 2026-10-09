@@ -41,6 +41,7 @@ function journalFileStem(journal: WorshipJournal) {
 
 function worshipJournalBandText(journal: WorshipJournal) {
   const tabName = journal.outputSheet?.sheetTitle || journal.date.slice(5).replace("-", "");
+  const newFamilies = journal.newFamilies.filter((person) => person.name.trim());
   return [
     `#예배일지 #${tabName}`,
     "",
@@ -48,16 +49,13 @@ function worshipJournalBandText(journal: WorshipJournal) {
     `1~3부 ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명`,
     `4부 ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명`,
     `가족모임 ${journal.attendance.familyMeeting}명`,
-    "",
-    `새가족 (${journal.newFamilies.length}명)`,
-    ...journal.newFamilies.map((person) => [
+    ...(newFamilies.length ? ["", `새가족 (${newFamilies.length}명)`, ...newFamilies.map((person) => [
       `- ${person.name}`,
       person.generation,
       person.inviter ? `인도자 ${person.inviter}` : "",
       person.relationship ? `관계 ${person.relationship}` : "",
       person.note
-    ].filter(Boolean).join(" · ")),
-    ...(journal.newFamilies.length ? [] : ["없음"])
+    ].filter(Boolean).join(" · "))] : [])
   ].join("\n").trim();
 }
 
@@ -342,7 +340,7 @@ export function WorshipJournalBuilder() {
   const [exportBusy, setExportBusy] = useState<"png" | "pdf" | null>(null);
   const [exportNotice, setExportNotice] = useState("");
   const actionLock = useRef(false);
-  const exportRef = useRef<HTMLDivElement>(null);
+  const exportLock = useRef(false);
 
   useEffect(() => {
     fetchJson<{ journals: WorshipJournal[] }>("/api/worship-journals").then((response) => {
@@ -440,62 +438,42 @@ export function WorshipJournalBuilder() {
     await run("preview");
   }
 
-  async function renderExportCanvas() {
-    if (!exportRef.current) throw new Error("내보낼 예배일지를 찾지 못했습니다.");
-    await document.fonts.ready;
-    const { toCanvas } = await import("html-to-image");
-    return toCanvas(exportRef.current, {
-      backgroundColor: "#ffffff",
-      cacheBust: true,
-      pixelRatio: 2,
-      width: 1080,
-      style: { position: "static", left: "auto", top: "auto", zIndex: "auto", pointerEvents: "auto" }
-    });
-  }
-
   async function exportJournal(format: "png" | "pdf") {
-    if (!selected || exportBusy) return false;
+    if (!selected || exportLock.current) return false;
+    if (!selected.outputSheet) {
+      setExportNotice("먼저 Google Sheet에 최종 제출해 주세요. 저장된 실제 시트만 내보냅니다.");
+      return false;
+    }
+    exportLock.current = true;
     setExportBusy(format);
-    setExportNotice("");
+    setExportNotice("Google Sheet의 현재 내용과 양식을 가져오는 중입니다…");
     try {
-      const canvas = await renderExportCanvas();
+      const response = await fetch(`/api/worship-journals/export?id=${encodeURIComponent(selected.id)}`, {
+        cache: "no-store", signal: AbortSignal.timeout(90_000)
+      });
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.error || "시트 원본을 가져오지 못했습니다. 로그인 상태를 확인해 주세요.");
+      }
+      if (!response.headers.get("content-type")?.includes("application/pdf")) throw new Error("시트 PDF가 아닌 응답입니다. 다시 로그인해 주세요.");
+      const pdfData = await response.arrayBuffer();
       const stem = journalFileStem(selected);
       if (format === "png") {
-        const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob((value) => value ? resolve(value) : reject(new Error("PNG 변환에 실패했습니다.")), "image/png"));
+        setExportNotice("실제 시트 양식을 한 장의 PNG로 변환하는 중입니다…");
+        const { sheetPdfToPng } = await import("@/lib/worship-journal-png");
+        const blob = await sheetPdfToPng(pdfData);
         downloadBlob(blob, `${stem}.png`);
-        setExportNotice("밴드에 바로 첨부할 한 장 이미지가 저장되었습니다.");
+        setExportNotice(`${selected.outputSheet.sheetTitle} 탭의 실제 내용·양식을 PNG 한 장으로 저장했습니다. BAND에 첨부해 주세요.`);
         return true;
       }
-      const { jsPDF } = await import("jspdf");
-      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4", compress: true });
-      const margin = 8;
-      const usableWidth = 210 - margin * 2;
-      const usableHeight = 297 - margin * 2;
-      const sliceHeight = Math.floor(canvas.width * usableHeight / usableWidth);
-      let top = 0;
-      let pageIndex = 0;
-      while (top < canvas.height) {
-        const height = Math.min(sliceHeight, canvas.height - top);
-        const slice = document.createElement("canvas");
-        slice.width = canvas.width;
-        slice.height = height;
-        const context = slice.getContext("2d");
-        if (!context) throw new Error("PDF 변환 화면을 만들지 못했습니다.");
-        context.fillStyle = "#ffffff";
-        context.fillRect(0, 0, slice.width, slice.height);
-        context.drawImage(canvas, 0, top, canvas.width, height, 0, 0, canvas.width, height);
-        if (pageIndex > 0) pdf.addPage();
-        pdf.addImage(slice.toDataURL("image/jpeg", 0.94), "JPEG", margin, margin, usableWidth, height * usableWidth / canvas.width, undefined, "FAST");
-        top += height;
-        pageIndex += 1;
-      }
-      pdf.save(`${stem}.pdf`);
-      setExportNotice(`PDF ${pageIndex}쪽이 저장되었습니다.`);
+      downloadBlob(new Blob([pdfData], { type: "application/pdf" }), `${stem}.pdf`);
+      setExportNotice(`${selected.outputSheet.sheetTitle} 탭의 실제 Google Sheet PDF를 저장했습니다.`);
       return true;
     } catch (exportError) {
       setExportNotice(exportError instanceof Error ? exportError.message : "파일을 만들지 못했습니다.");
       return false;
     } finally {
+      exportLock.current = false;
       setExportBusy(null);
     }
   }
@@ -555,12 +533,12 @@ export function WorshipJournalBuilder() {
           <p className="mt-3 text-xs font-bold text-sea">제출 전 검증 {publishedValidation?.passed ?? 0}/{publishedValidation?.total ?? 0} 통과 · Google Sheet에 쓴 값을 다시 읽어 일치 여부까지 확인했습니다.</p>
         </section> : null}
         {!preview && selected ? <div className="grid gap-4"><section className="rounded-xl border border-line bg-white p-4 shadow-sm">
-          <div className="flex flex-wrap items-center justify-between gap-3"><div><h3 className="font-display text-lg font-black">PDF · 이미지</h3><p className="mt-1 text-xs leading-5 text-ink/55">PDF는 A4 여러 쪽으로, PNG는 BAND 첨부용 한 장으로 저장합니다.</p></div><div className="flex flex-wrap gap-2">
-            <button type="button" disabled={exportBusy !== null} onClick={() => exportJournal("pdf")} className="journal-small-button">{exportBusy === "pdf" ? <LoaderCircle size={14} className="animate-spin" /> : <Download size={14} />} PDF 저장</button>
-            <button type="button" disabled={exportBusy !== null} onClick={() => exportJournal("png")} className="journal-small-button">{exportBusy === "png" ? <LoaderCircle size={14} className="animate-spin" /> : <ImageIcon size={14} />} 한 장 이미지</button>
+          <div className="flex flex-wrap items-center justify-between gap-3"><div><h3 className="font-display text-lg font-black">실제 구글시트 · PDF / PNG</h3><p className="mt-1 text-xs leading-5 text-ink/55">저장된 예배일지 탭의 현재 내용과 병합·테두리를 그대로 가져옵니다. PNG는 바깥 여백을 정리한 한 장으로 저장합니다.</p>{!selected.outputSheet ? <p className="mt-1 text-xs text-brick">Google Sheet에 제출된 일지만 내보낼 수 있습니다.</p> : null}</div><div className="flex flex-wrap gap-2">
+            <button type="button" disabled={exportBusy !== null || !selected.outputSheet} onClick={() => exportJournal("pdf")} className="journal-small-button">{exportBusy === "pdf" ? <LoaderCircle size={14} className="animate-spin" /> : <Download size={14} />} PDF 저장</button>
+            <button type="button" disabled={exportBusy !== null || !selected.outputSheet} onClick={() => exportJournal("png")} className="journal-small-button">{exportBusy === "png" ? <LoaderCircle size={14} className="animate-spin" /> : <ImageIcon size={14} />} 시트 PNG 저장</button>
           </div></div>
           {exportNotice ? <p className="mt-3 rounded bg-paper/70 px-3 py-2 text-xs font-bold text-sea" aria-live="polite">{exportNotice}</p> : null}
-        </section><BandPublishCard content={worshipJournalBandText(selected)} onPrepareImage={async () => { const saved = await exportJournal("png"); if (!saved) throw new Error("한 장 이미지를 저장하지 못했습니다."); }} /></div> : null}
+        </section><BandPublishCard content={worshipJournalBandText(selected)} imageBusy={exportBusy !== null || !selected.outputSheet} onPrepareImage={async () => { const saved = await exportJournal("png"); if (!saved) throw new Error("시트 PNG를 저장하지 못했습니다. 위 내보내기 안내를 확인해 주세요."); }} /></div> : null}
         {preview ? <div className="grid gap-4">
           {previewSignature !== currentSignature ? <div className="rounded border border-brass/40 bg-brass/10 p-4 text-sm font-bold">입력값이 변경되었습니다. 다시 분석한 뒤 생성해 주세요.</div> : null}
           <div className="grid min-w-0 items-start gap-5 2xl:grid-cols-[minmax(360px,0.85fr)_minmax(580px,1.15fr)]"><WorshipJournalSources pdfUrl={bulletinPreviewUrl} bulletinName={bulletin?.name} evidence={preview.extraction?.evidenceLines} accountingFile={accountingSourceType === "excel" ? accountingFile : null} accountingUrl={accountingSheetUrl} attendanceUrl={attendanceSheetUrl} attendanceTab={attendanceSheetTab} accountingTab={preview.accounting?.sheetTab} /><WorshipJournalReviewEditor journal={preview} onChange={setPreview} /></div>
@@ -573,7 +551,6 @@ export function WorshipJournalBuilder() {
         <section className="overflow-hidden rounded border border-line bg-ink text-paper shadow-xl"><div className="border-b border-white/10 px-5 py-5"><div className="flex items-center gap-2 text-brass"><Sparkles size={17} /><p className="text-xs font-black tracking-[0.18em]">REVIEW FIRST JOURNAL</p></div><h2 className="mt-3 font-display text-2xl font-bold">원문을 확인한 뒤<br />예배일지 탭을 만듭니다.</h2></div><div className="grid gap-3 px-5 py-5 text-sm text-paper/70">{["HWP 또는 텍스트형 PDF 하나", "출석 시트 3종·가족별 자동 집계", "회계 파일 또는 Google Sheet 하나", "이름 자동 교정·유사 이름 추정 금지", "같은 날짜 탭 덮어쓰기 차단"].map((item) => <p key={item} className="flex items-center gap-2"><Check size={14} className="text-brass" />{item}</p>)}</div></section>
         <section className="rounded border border-line bg-white/75 p-4"><div className="mb-3 flex items-center justify-between"><h2 className="flex items-center gap-2 font-display text-lg font-bold"><History size={17} /> 저장된 일지</h2><span className="text-xs font-black text-ink/40">{journals.length}</span></div><div className="grid max-h-[430px] gap-2 overflow-y-auto pr-1">{journals.length ? journals.map((journal) => <button key={journal.id} type="button" onClick={() => setSelected(journal)} className={`group flex items-center justify-between gap-3 rounded border px-3 py-3 text-left transition ${selected?.id === journal.id ? "border-sea bg-sea/10" : "border-line bg-white hover:border-ink/30"}`}><span className="min-w-0"><span className="block truncate text-sm font-black">{displayDate(journal.date)}</span><span className="mt-1 block truncate text-xs text-ink/45">{journal.sermon.title || journal.source.bulletinFileName || journal.source.hwpFileName}</span></span><ChevronRight size={15} className="shrink-0 text-ink/30 transition group-hover:translate-x-0.5" /></button>) : <div className="rounded border border-dashed border-line p-5 text-center text-xs text-ink/45"><BookOpenCheck className="mx-auto mb-2" size={22} />아직 저장된 예배일지가 없습니다.</div>}</div></section>
       </div></aside>
-      {selected ? <div ref={exportRef} aria-hidden="true" style={{ position: "fixed", left: "-12000px", top: 0, width: 1080, zIndex: -1, pointerEvents: "none" }}><JournalPreview journal={selected} exportMode /></div> : null}
     </div>
   );
 }

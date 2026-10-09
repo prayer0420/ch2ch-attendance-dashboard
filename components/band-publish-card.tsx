@@ -18,9 +18,10 @@ type BandStatus = {
 type Props = {
   content: string;
   onPrepareImage?: () => Promise<void>;
+  imageBusy?: boolean;
 };
 
-export function BandPublishCard({ content, onPrepareImage }: Props) {
+export function BandPublishCard({ content, onPrepareImage, imageBusy = false }: Props) {
   const [accessToken, setAccessToken] = useState("");
   const [showToken, setShowToken] = useState(false);
   const [status, setStatus] = useState<BandStatus | null>(null);
@@ -77,11 +78,13 @@ export function BandPublishCard({ content, onPrepareImage }: Props) {
   }
 
   async function prepareManualPost() {
-    setNotice("");
+    if (imageBusy) return;
+    setNotice("시트 PNG 저장과 본문 복사를 준비하는 중입니다…");
     try {
+      // Clipboard access must begin in the click gesture, before the network export.
+      const copied = await navigator.clipboard.writeText(draft).then(() => true, () => false);
       if (onPrepareImage) await onPrepareImage();
-      await navigator.clipboard.writeText(draft);
-      setNotice("한 장 이미지를 저장하고 게시글을 복사했습니다. BAND에서 이미지 첨부 후 붙여넣으세요.");
+      setNotice(copied ? "실제 시트 PNG를 저장하고 게시글을 복사했습니다. BAND에서 이미지 첨부 후 붙여넣으세요." : "시트 PNG를 저장했습니다. 브라우저에서 복사를 허용하지 않아 본문은 위 입력창에서 직접 복사해 주세요.");
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "BAND 게시 준비를 완료하지 못했습니다.");
     }
@@ -158,7 +161,7 @@ export function BandPublishCard({ content, onPrepareImage }: Props) {
         </label>
 
         <div className="grid gap-3 lg:grid-cols-2">
-          <button type="button" className="flex min-h-14 items-center justify-center gap-2 rounded bg-sea px-4 font-black text-white disabled:opacity-40" disabled={!draft.trim()} onClick={prepareManualPost}><ImageIcon size={18} /> PNG 저장 + 글 복사</button>
+          <button type="button" className="flex min-h-14 items-center justify-center gap-2 rounded bg-sea px-4 font-black text-white disabled:opacity-40" disabled={!draft.trim() || imageBusy} onClick={prepareManualPost}>{imageBusy ? <LoaderCircle size={18} className="animate-spin" /> : <ImageIcon size={18} />} PNG 저장 + 글 복사</button>
           <button type="button" className="flex min-h-14 items-center justify-center gap-2 rounded border-2 border-ink px-4 font-black disabled:opacity-40" disabled={!status?.ready || !draft.trim()} onClick={() => setConfirmOpen(true)}><Send size={18} /> 본문만 자동 게시</button>
         </div>
         <p className="text-[11px] leading-5 text-ink/50">이미지까지 게시하려면 첫 번째 버튼을 사용하세요. BAND 공식 Open API는 이미지 첨부를 지원하지 않아 자동 게시 버튼은 본문만 전송합니다.</p>

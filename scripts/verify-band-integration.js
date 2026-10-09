@@ -47,6 +47,11 @@ assert.equal(context.worshipJournalBandText(journal), [
   "#예배일지 #0920", "", "출석", "1~3부 84(온라인2)명", "4부 197명", "가족모임 16명", "", "새가족 (1명)",
   "- 홍길동 · 26대 · 인도자 김교인 · 관계 친구 · 첫 방문"
 ].join("\n"));
-assert.match(context.worshipJournalBandText({ ...journal, outputSheet: undefined, newFamilies: [] }), /#예배일지 #0920[\s\S]*새가족 \(0명\)\n없음$/);
+const withoutNewFamilies = context.worshipJournalBandText({ ...journal, outputSheet: undefined, newFamilies: [] });
+assert.match(withoutNewFamilies, /^#예배일지 #0920/);
+assert.doesNotMatch(withoutNewFamilies, /새가족|없음/);
+assert.equal(context.worshipJournalBandText({ ...journal, newFamilies: [{ name: "  " }] }), withoutNewFamilies);
+assert.doesNotMatch(builder, /toCanvas|renderExportCanvas|import\("jspdf"\)/);
+assert.match(builder, /api\/worship-journals\/export\?id=/);
 
 console.log("BAND integration checks passed: target, permission, concise attendance/new-family text, and confirmed publishing");
