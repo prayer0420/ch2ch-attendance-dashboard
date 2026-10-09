@@ -45,10 +45,9 @@ function worshipJournalBandText(journal: WorshipJournal) {
   return [
     `#예배일지 #${tabName}`,
     "",
-    "출석",
-    `1~3부 ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명`,
-    `4부 ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명`,
-    `가족모임 ${journal.attendance.familyMeeting}명`,
+    `1~3부; ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명`,
+    `4부; ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명`,
+    `가족모임; ${journal.attendance.familyMeeting}명`,
     ...(newFamilies.length ? ["", `새가족 (${newFamilies.length}명)`, ...newFamilies.map((person) => [
       `- ${person.name}`,
       person.generation,
