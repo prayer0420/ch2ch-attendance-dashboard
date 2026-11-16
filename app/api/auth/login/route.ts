@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 import { createSession, safeNextPath, sameOriginMutation, securityConfigured, securityError, sessionLifetime, limitedText } from "@/lib/security";
-
-const attempts = { count: 0, expires: 0 };
+import { loginClient, loginRetryAfterMs, recordLoginFailure, recordLoginSuccess } from "@/lib/login-throttle";
 
 const COOKIE_NAME = "ch2ch_admin_session";
+
+function sameSecret(received: string, expected: string) {
+  // Compare fixed-length digests so neither content nor length leaks through timing.
+  const digest = (value: string) => createHash("sha256").update(value, "utf8").digest();
+  return timingSafeEqual(digest(received), digest(expected));
+}
 
 function wantsJson(request: NextRequest) {
   return request.headers.get("accept")?.includes("application/json") || request.headers.get("content-type")?.includes("application/json");
@@ -22,8 +27,7 @@ function redirectToLogin(request: NextRequest, params: Record<string, string>) {
 
 export async function POST(request: NextRequest) {
   if (!sameOriginMutation(request)) return securityError("허용되지 않은 요청 출처입니다.", 403);
-  if (Date.now() >= attempts.expires) { attempts.count = 0; attempts.expires = Date.now() + 600000; }
-  if (++attempts.count > 30) return securityError("로그인 요청이 많습니다. 10분 후 다시 시도해 주세요.", 429);
+  const client = loginClient(request.headers);
   let raw: string;
   try { raw = await limitedText(request, 4096); }
   catch { return securityError("로그인 요청이 너무 큽니다.", 413); }
@@ -49,12 +53,25 @@ export async function POST(request: NextRequest) {
     return redirectToLogin(request, { setup: "1", next: nextPath });
   }
 
-  const received = Buffer.from(password);
-  const expected = Buffer.from(accessPassword);
-  if (received.length !== expected.length || !timingSafeEqual(received, expected)) {
+  // Lock check, comparison and failure recording run without an await between
+  // them, so parallel requests cannot slip past the limit.
+  const retryAfterMs = loginRetryAfterMs(client);
+  if (retryAfterMs > 0) {
+    const minutes = Math.max(1, Math.ceil(retryAfterMs / 60_000));
+    if (jsonMode) {
+      return NextResponse.json({ error: `로그인 시도가 많아 ${minutes}분 뒤에 다시 시도해 주세요.` }, {
+        status: 429,
+        headers: { "Retry-After": String(Math.ceil(retryAfterMs / 1000)), "Cache-Control": "no-store" }
+      });
+    }
+    return redirectToLogin(request, { locked: String(minutes), next: nextPath });
+  }
+  if (!sameSecret(password, accessPassword)) {
+    recordLoginFailure(client);
     if (jsonMode) return NextResponse.json({ error: "접속 코드가 맞지 않습니다." }, { status: 401 });
     return redirectToLogin(request, { error: "1", next: nextPath });
   }
+  recordLoginSuccess(client);
 
   const response = jsonMode ? NextResponse.json({ ok: true }) : new NextResponse(null, { status: 303, headers: { Location: nextPath } });
   response.headers.set("Cache-Control", "no-store");

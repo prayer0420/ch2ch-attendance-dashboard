@@ -6,257 +6,90 @@ import { PageActions } from "@/components/page-actions";
 import { RunStopButton } from "@/components/run-stop-button";
 import { Badge, EmptyState, Panel, SectionTitle, StatCard } from "@/components/ui";
 import { getRunDetail } from "@/lib/data";
-import { nextActionForRun, resultStatusLabel, runStatusLabel, saveResultLabel, statusTone } from "@/lib/status";
-import { formatDateTime } from "@/lib/utils";
-
-type FamilySummary = {
-  family: string;
-  sunday: number;
-  department: number;
-  success: number;
-  failed: number;
-  saveSuccess: number;
-  saveFailed: number;
-  corrected: string[];
-  failedNames: string[];
-};
-
-function shortNameList(names: string[], limit = 5) {
-  if (!names.length) return "";
-  const visible = names.slice(0, limit).join(", ");
-  return names.length > limit ? `${visible} 외 ${names.length - limit}명` : visible;
-}
-
-function compactLogMessage(message: string) {
-  const text = String(message || "").replace(/\s+/g, " ").trim();
-  const familyResult = text.match(/^((?:가족 결과|가족 1차 처리)\s+[^:]+:.*?\/ 실패 \d+명)(?::.*)?( \/ 저장 실패)?$/);
-  if (familyResult) return `${familyResult[1]}${familyResult[2] ?? ""}`;
-  return text.length > 180 ? `${text.slice(0, 180)}...` : text;
-}
+import { summarizeRunResults } from "@/lib/run-summary";
+import { nextActionForRun, runStatusLabel, statusTone } from "@/lib/status";
 
 export default async function RunDetailPage({ params }: { params: Promise<{ id: string }> }) {
   await requirePageSession();
   const { id } = await params;
   const { run, results, events, demo } = await getRunDetail(id);
-
   if (!run) {
-    return (
-      <AppShell>
-        <PageActions />
-        <EmptyState>실행을 찾을 수 없습니다.</EmptyState>
-      </AppShell>
-    );
+    return <AppShell><PageActions /><EmptyState>실행을 찾을 수 없습니다.</EmptyState></AppShell>;
   }
-
-  const percent = run.total_count ? Math.round((run.processed_count / run.total_count) * 100) : 0;
-  const failures = results.filter((result) => ["final_fail", "save_failed"].includes(result.status));
-  const nextAction = nextActionForRun(run.status, events.length > 0);
+  const percent = run.total_count ? Math.min(100, Math.round((run.processed_count / run.total_count) * 100)) : 0;
   const isFinished = ["completed", "partial_success", "failed", "cancelled", "dry_run_completed"].includes(run.status);
-  const familySummary = Array.from(results.reduce<Map<string, FamilySummary>>((map, result) => {
-    const key = result.original_family || result.found_location || "미확인";
-    const current = map.get(key) ?? {
-      family: key,
-      sunday: 0,
-      department: 0,
-      success: 0,
-      failed: 0,
-      saveSuccess: 0,
-      saveFailed: 0,
-      corrected: [] as string[],
-      failedNames: [] as string[]
-    };
-
-    if (result.service_1_3_present) current.sunday += 1;
-    if (result.service_4_present) current.department += 1;
-    if (["primary_success", "second_pass_success", "dry_run"].includes(result.status)) current.success += 1;
-    if (["final_fail", "save_failed"].includes(result.status)) {
-      current.failed += 1;
-      current.failedNames.push(result.name);
-    }
-    if (result.save_result === "success") current.saveSuccess += 1;
-    if (result.save_result === "failed") current.saveFailed += 1;
-    if (result.status === "second_pass_success") current.corrected.push(result.name);
-    map.set(key, current);
-    return map;
-  }, new Map<string, FamilySummary>()).values());
-
-  const targetText = (result: typeof results[number]) => {
-    const targets = [];
-    if (result.service_1_3_present) targets.push("주일");
-    if (result.service_4_present) targets.push("부서");
-    return targets.length ? targets.join(", ") : "-";
-  };
+  const { families, totals } = summarizeRunResults(results, run.dry_run);
+  const failedFamilies = families.filter((family) => family.failed > 0);
+  const successLabel = run.dry_run ? "테스트 통과" : "성공";
 
   return (
     <AppShell>
       <PageActions />
-      <SectionTitle eyebrow={demo ? "데모 화면" : "실행 상세"} title={`${run.target_week_text ?? `${run.target_week}주`} 진행상황`}>
+      <SectionTitle eyebrow={demo ? "데모 화면" : "출석 실행"} title={`${run.target_week_text ?? `${run.target_week}주`} 진행상황`}>
         <div className="flex flex-wrap gap-2">
-          <AutoRefresh enabled={["queued", "picked_up", "running", "saving"].includes(run.status)} />
+          <AutoRefresh enabled={!isFinished} />
           {!isFinished ? <RunStopButton runId={id} /> : null}
-          <Link className="focus-ring rounded bg-ink px-4 py-2 text-sm font-bold text-paper" href={`/runs/${id}/results`}>결과 전체 보기</Link>
+          <Link className="focus-ring rounded bg-ink px-4 py-2 text-sm font-bold text-paper" href={`/runs/${id}/results`}>상세 결과 보기</Link>
         </div>
       </SectionTitle>
-
-      {run.dry_run ? (
-        <div className="mb-4 rounded border border-sea/35 bg-sea/10 p-3 text-sm font-bold text-sea">
-          테스트 실행입니다. CH2CH에 실제 저장하지 않습니다.
-        </div>
-      ) : null}
-
-      <div className="mb-4 rounded border border-brass/35 bg-brass/10 p-4 text-sm text-ink">
-        <p className="font-black">지금 상태: {runStatusLabel(run.status)}</p>
-        <p className="mt-1">{nextAction}</p>
-        {run.status === "queued" ? (
-          <p className="mt-2 text-brick">대기 중에서 계속 멈춰 있으면 프로젝트 폴더의 <strong>start-local.cmd</strong>를 실행하고 Runner 창의 오류를 확인하세요.</p>
-        ) : null}
-      </div>
-
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_460px]">
-        <div className="grid gap-4">
-          <Panel>
-            <div className="mb-3 flex items-center justify-between">
-              <Badge tone={statusTone(run.status)}>{runStatusLabel(run.status)}</Badge>
-              <span className="text-sm font-bold">{run.processed_count} / {run.total_count}명</span>
-            </div>
-            <div className="h-4 overflow-hidden rounded bg-ink/10">
-              <div className="h-full bg-sea transition-all" style={{ width: `${percent}%` }} />
-            </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              <StatCard label="현재 가족" value={run.current_family ?? "-"} tone="moss" />
-              <StatCard label="현재 이름" value={run.current_name ?? "-"} tone="sea" />
-              <StatCard label="현재 단계" value={run.current_step ?? "-"} tone="brass" />
-            </div>
-          </Panel>
-
-          <div className="grid gap-3 sm:grid-cols-5">
-            <StatCard label="1차 성공" value={run.primary_success_count} tone="moss" />
-            <StatCard label="2차 성공" value={run.second_pass_success_count} tone="brass" />
-            <StatCard label="최종 실패" value={run.final_fail_count} tone="brick" />
-            <StatCard label="저장 성공" value={run.save_success_count} tone="sea" />
-            <StatCard label="저장 실패" value={run.save_fail_count} tone="brick" />
+      {run.dry_run ? <p className="mb-4 rounded border border-sea/35 bg-sea/10 p-3 text-sm font-bold text-sea">테스트 실행입니다. CH2CH에 실제 저장하지 않습니다.</p> : null}
+      <div className="grid gap-4">
+        <Panel>
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+            <Badge tone={statusTone(run.status)}>{runStatusLabel(run.status)}</Badge>
+            <span className="text-sm font-bold">{run.processed_count} / {run.total_count}명 처리</span>
           </div>
-
-          <Panel>
-            <h2 className="mb-3 text-lg font-black">최종 가족별 결과</h2>
-            {familySummary.length ? (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[820px] text-sm">
-                  <thead className="border-b border-line text-left text-xs font-black text-ink/55">
-                    <tr>
-                      <th className="py-2">가족</th>
-                      <th>주일</th>
-                      <th>부서</th>
-                      <th>성공</th>
-                      <th>실패</th>
-                      <th>저장</th>
-                      <th>특이사항</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {familySummary.map((family) => (
-                      <tr key={family.family} className="border-b border-line/70 align-top">
-                        <td className="py-3 font-black">{family.family}</td>
-                        <td>{family.sunday}명</td>
-                        <td>{family.department}명</td>
-                        <td className="font-bold text-moss">{family.success}명</td>
-                        <td className={family.failed ? "font-bold text-brick" : "text-ink/60"}>{family.failed}명</td>
-                        <td>
-                          {family.saveFailed ? (
-                            <span className="font-bold text-brick">실패 {family.saveFailed}</span>
-                          ) : family.saveSuccess ? (
-                            <span className="font-bold text-sea">성공 {family.saveSuccess}</span>
-                          ) : "-"}
-                        </td>
-                        <td className="max-w-[320px] text-xs leading-5 text-ink/65">
-                          {family.corrected.length ? `보정 ${family.corrected.length}명: ${shortNameList(family.corrected)}` : null}
-                          {family.failedNames.length ? `${family.corrected.length ? " / " : ""}실패 ${family.failedNames.length}명: ${shortNameList(family.failedNames)}` : null}
-                          {!family.corrected.length && !family.failedNames.length ? "-" : null}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : <EmptyState>아직 결과가 없습니다. Runner가 실행을 시작하면 여기에 결과가 쌓입니다.</EmptyState>}
-          </Panel>
-
-          <Panel>
-            <h2 className="mb-3 text-lg font-black">최근 처리 내역</h2>
-            {results.length ? (
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-[760px] text-sm">
-                  <thead className="border-b border-line text-left text-xs uppercase tracking-[0.12em] text-ink/50">
-                    <tr><th className="py-2">상태</th><th>이름</th><th>원래 가족</th><th>처리 위치</th><th>주일</th><th>부서</th><th>저장</th></tr>
-                  </thead>
-                  <tbody>
-                    {results.slice(0, 8).map((result) => (
-                      <tr key={result.id} className="border-b border-line/70">
-                        <td className="py-3"><Badge tone={statusTone(result.status)}>{resultStatusLabel(result.status)}</Badge></td>
-                        <td className="font-bold">{result.name}</td>
-                        <td>{result.original_family ?? "-"}</td>
-                        <td>{result.found_location ?? "-"}</td>
-                        <td>{result.service_1_3_present ? "O" : "X"}</td>
-                        <td>{result.service_4_present ? "O" : "X"}</td>
-                        <td>{saveResultLabel(result.save_result)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : <EmptyState>아직 결과가 없습니다. Runner가 실행을 시작하면 여기에 결과가 쌓입니다.</EmptyState>}
-          </Panel>
+          <div className="h-3 overflow-hidden rounded bg-ink/10" role="progressbar" aria-label="출석 처리 진행률" aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}>
+            <div className="h-full bg-sea transition-all" style={{ width: `${percent}%` }} />
+          </div>
+          <p className="mt-3 text-sm font-bold">
+            {isFinished
+              ? `${runStatusLabel(run.status)} · ${successLabel} ${totals.success}명 / 실패 ${totals.failed}명`
+              : run.current_family ? `${run.current_family} 처리 중` : nextActionForRun(run.status, events.length > 0)}
+          </p>
+          {totals.unconfirmed > 0 ? <p className="mt-2 text-sm text-brick">저장 미확인 {totals.unconfirmed}명 — 성공 인원에 포함하지 않았습니다. 상세 결과를 확인해 주세요.</p> : null}
+          {totals.skipped > 0 ? <p className="mt-2 text-sm text-ink/60">건너뜀 {totals.skipped}명</p> : null}
+        </Panel>
+        <div className="grid grid-cols-2 gap-3">
+          <StatCard label={`${isFinished ? "최종" : "현재까지"} ${successLabel}`} value={`${totals.success}명`} tone="moss" />
+          <StatCard label={`${isFinished ? "최종" : "현재까지"} 실패`} value={`${totals.failed}명`} tone="brick" />
         </div>
-
-        <div className="grid content-start gap-4">
-          <Panel>
-            <div className="mb-3 flex items-center justify-between gap-2">
-              <h2 className="text-lg font-black">직접 확인이 필요한 사람</h2>
-              <Badge tone={failures.length ? "bad" : "good"}>{failures.length}명</Badge>
-            </div>
-            {failures.length ? (
-              <div className="overflow-x-auto">
-                <p className="mb-3 rounded border border-line bg-paper p-3 text-sm leading-6">
-                  찾지 못한 사람은 1회 확인 후 건너뛰며 자동으로 재검색하지 않습니다.
-                  아래 가족·이름을 시트와 웹교적에서 확인하고, 필요한 출석을 직접 반영해 주세요.
-                  1–3부 참석은 웹교적 ‘주일’, 4부 참석은 ‘부서’에 해당합니다.
-                </p>
-                <table className="w-full min-w-[420px] text-sm">
-                  <thead className="border-b border-line text-left text-xs font-black text-ink/55">
-                    <tr><th className="py-2">이름</th><th>가족</th><th>체크</th><th>원인</th></tr>
-                  </thead>
-                  <tbody>
-                    {failures.map((failure) => (
-                      <tr key={failure.id} className="border-b border-line/70 align-top">
-                        <td className="py-3 font-black">{failure.name}</td>
-                        <td>{failure.original_family || "-"}{failure.found_location && failure.found_location !== failure.original_family ? <span className="block text-xs text-ink/60">웹 확인: {failure.found_location}</span> : null}</td>
-                        <td>{targetText(failure)}</td>
-                        <td className="max-w-[180px] break-words text-brick">{failure.failure_reason ?? "사유 없음"}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            ) : (
-              <EmptyState>{isFinished ? "최종 실패자가 없습니다." : "실행이 끝나면 최종 실패자가 여기에 표시됩니다."}</EmptyState>
-            )}
-          </Panel>
-          <Panel>
-            <h2 className="mb-3 text-lg font-black">실시간 로그</h2>
-            {events.length ? (
-              <div className="grid gap-2">
-                {events.map((event) => (
-                  <div key={event.id} className="rounded border border-line bg-white/70 p-3 text-sm">
-                    <p className="break-words font-bold leading-5">{compactLogMessage(event.message)}</p>
-                    <p className="mt-1 text-xs font-bold text-ink/50">{formatDateTime(event.created_at)}</p>
-                  </div>
+        <Panel>
+          <h2 className="mb-3 text-lg font-black">{isFinished ? "최종 가족별 결과" : "가족별 진행 결과"}</h2>
+          {families.length ? (
+            <table className="w-full text-sm">
+              <thead className="border-b border-line text-left text-xs font-black text-ink/55">
+                <tr><th className="py-2">가족</th><th className="text-right">{successLabel}</th><th className="text-right">실패</th></tr>
+              </thead>
+              <tbody>
+                {families.map((family) => (
+                  <tr key={family.family} className="border-b border-line/70">
+                    <td className="py-3 pr-2 font-bold">
+                      {family.family}
+                      {family.unconfirmed > 0 ? <span className="mt-1 block text-xs font-normal text-brick">저장 미확인 {family.unconfirmed}명</span> : null}
+                      {family.skipped > 0 ? <span className="mt-1 block text-xs font-normal text-ink/60">건너뜀 {family.skipped}명</span> : null}
+                    </td>
+                    <td className="whitespace-nowrap text-right font-bold text-moss">{family.success}명</td>
+                    <td className={`whitespace-nowrap text-right ${family.failed ? "font-bold text-brick" : "text-ink/60"}`}>{family.failed}명</td>
+                  </tr>
                 ))}
-              </div>
-            ) : (
-              <EmptyState>아직 로그가 없습니다. Runner가 요청을 가져가면 첫 로그가 표시됩니다.</EmptyState>
-            )}
-          </Panel>
-        </div>
+              </tbody>
+            </table>
+          ) : <EmptyState>아직 처리 결과가 없습니다.</EmptyState>}
+        </Panel>
+        <Panel>
+          <h2 className="mb-3 text-lg font-black">실패자 명단 · {totals.failed}명</h2>
+          {failedFamilies.length ? (
+            <ul className="grid gap-3 text-sm">
+              {failedFamilies.map((family) => (
+                <li key={family.family} className="rounded border border-line p-3">
+                  <p className="font-bold">{family.family} · {family.failed}명</p>
+                  <p className="mt-1 break-words leading-6 text-brick">{family.failedNames.join(", ")}</p>
+                </li>
+              ))}
+            </ul>
+          ) : <EmptyState>{isFinished ? "기록된 실패자가 없습니다." : "현재까지 기록된 실패자가 없습니다."}</EmptyState>}
+        </Panel>
       </div>
     </AppShell>
   );

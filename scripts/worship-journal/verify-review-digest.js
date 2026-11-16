@@ -71,9 +71,18 @@ const reviewed = applyReviewedJournal(journal, {
 assert.equal(reviewed.date, "2026-09-13");
 assert.equal(reviewed.source.attendanceSheetUrl, "sheet");
 assert.deepEqual(reviewed.attendance.families[0], { family: "건우네", service13: 4, service4: 8, familyMeeting: 7 });
-assert.equal(reviewed.accounting.total, 600);
+assert.equal(reviewed.accounting.total, 300);
 assert.deepEqual(reviewed.accounting.thanksgiving.map((item) => item.name), ["가람", "양건우", "하늘"]);
 assert.deepEqual(reviewed.sermon, { title: "하나님의 선물", passage: "고린도전서 7:1~7", preacher: "전병인 목사" });
 assert.deepEqual(reviewed.announcements, ["첫 광고", "둘째 광고"]);
 
-console.log("worship journal review: digest safety and editable-field sanitization passed");
+const purpose = [{ name: "흘려보내는 기쁨", amount: 10000, note: "" }];
+const purposeReview = applyReviewedJournal(journal, { accounting: { purpose, purposeTotal: 10000 } });
+assert.deepEqual(purposeReview.accounting.purpose, purpose);
+assert.equal(purposeReview.accounting.total, 3, "목적헌금을 추가해도 총액은 주일+감사만");
+assert.notEqual(worshipJournalReviewDigest(purposeReview), original);
+assert.deepEqual(applyReviewedJournal(purposeReview, { accounting: { purpose: [], purposeTotal: 0 } }).accounting.purpose, []);
+for (const invalid of [[{ name: "", amount: 10000 }], [{ name: "항목", amount: -1 }], Array(11).fill(purpose[0])]) {
+  assert.throws(() => applyReviewedJournal(journal, { accounting: { purpose: invalid } }), /목적헌금/);
+}
+console.log("worship journal review: digest safety, manual purpose offering and sanitization passed");

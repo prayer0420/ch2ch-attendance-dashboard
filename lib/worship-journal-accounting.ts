@@ -198,7 +198,7 @@ export function parseAccountingWorkbook(
     sundayTotal,
     thanksgivingTotal,
     purposeTotal,
-    total: sundayTotal + thanksgivingTotal + purposeTotal,
+    total: sundayTotal + thanksgivingTotal,
     sunday,
     thanksgiving,
     purpose

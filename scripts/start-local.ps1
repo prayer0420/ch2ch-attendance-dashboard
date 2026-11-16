@@ -10,9 +10,11 @@ try {
   $state = Get-ServerState
   $listeners = @(Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction SilentlyContinue)
   if ($listeners.Count) {
-    if ((Test-ServerProcessOwned $state.dashboard) -and @($listeners | Where-Object OwningProcess -ne $state.dashboard.pid).Count -eq 0) {
-      Write-Host '[CH2CH] This server is already running at http://localhost:3000. No restart or duplicate Runner.'
-      Write-Host '[CH2CH] To change mode/configuration, stop-local.cmd first, then start-server.cmd.'
+    if ($listeners.Count -eq 1 -and (Test-ServerListenerOwned $state.dashboard $listeners[0])) {
+      if (-not $WebOnly -and $state.dashboard.mode -eq 'start' -and -not $state.dashboard.setupOnly) {
+        & (Join-Path $PSScriptRoot 'server\start-runner.ps1')
+      }
+      Write-Host '[CH2CH] Existing web server preserved; requested production Runner checked without duplicates.'
       return
     }
     throw 'Port 3000 belongs to another or unverified process. It was NOT stopped. Check the existing program first.'
@@ -22,20 +24,21 @@ try {
   }
   $checkArgs = @((Join-Path $PSScriptRoot 'server\preflight.js'))
   if ($Production) { $checkArgs += '--production' }
-  if ($WebOnly) { $checkArgs += '--web-only' }
+  # Production Runner has its own verified preflight and accepts queued user work.
+  if ($WebOnly -or $Production) { $checkArgs += '--web-only' }
   if ($SetupOnly) { $checkArgs += '--setup-only' }
   & $serverNode @checkArgs
   if ($LASTEXITCODE -ne 0) { throw 'Preflight failed. No services started.' }
   New-Item -ItemType Directory -Path $serverRuntime -Force | Out-Null
   $stamp = Get-Date -Format 'yyyyMMdd-HHmmss-fff'
-  $env:NEXT_BUILD_DIR = if ($Production) { '.local-runtime/server-build' } else { '.next' }
+  $env:NEXT_BUILD_DIR = if ($Production) { Get-ActiveBuildDir } else { '.next' }
   $env:NODE_ENV = if ($Production) { 'production' } else { 'development' }
   $env:CH2CH_STANDALONE = '0'
   $env:RUNNER_DASHBOARD_URL = 'http://localhost:3000'
   $webScript = Join-Path $serverProject 'node_modules\next\dist\bin\next'
   $mode = if ($Production) { 'start' } else { 'dev' }
   $web = Start-Process -FilePath $serverNode -ArgumentList @(('"' + $webScript + '"'), $mode, '--hostname', '127.0.0.1', '--port', '3000') -WorkingDirectory $serverProject -WindowStyle Hidden -RedirectStandardOutput (Join-Path $serverRuntime "dashboard-$stamp.out.log") -RedirectStandardError (Join-Path $serverRuntime "dashboard-$stamp.err.log") -PassThru
-  $state = @{ dashboard = @{ pid = $web.Id; startedAt = $web.StartTime.ToUniversalTime().ToString('O'); nodePath = $serverNode; scriptPath = $webScript; mode = $mode; setupOnly = [bool]$SetupOnly } }
+  $state = @{ dashboard = @{ pid = $web.Id; startedAt = $web.StartTime.ToUniversalTime().ToString('O'); nodePath = $serverNode; scriptPath = $webScript; mode = $mode; setupOnly = [bool]$SetupOnly; buildDir = $env:NEXT_BUILD_DIR } }
   Save-ServerState $state
   $ready = $false
   for ($attempt = 0; $attempt -lt 45; $attempt++) {
@@ -50,10 +53,12 @@ try {
     Start-Sleep -Milliseconds 500
   }
   if (-not $ready) {
-    if (Test-ServerProcessOwned $state.dashboard) { Stop-Process -Id $web.Id }
+    if (Test-ServerProcessOwned $state.dashboard) { & taskkill.exe /PID $web.Id /T /F | Out-Null }
     throw 'The login page did not become ready. Check the new timestamped dashboard log. No unrelated program was stopped.'
   }
-  if (-not $WebOnly) {
+  if (-not $WebOnly -and $Production) {
+    & (Join-Path $PSScriptRoot 'server\start-runner.ps1')
+  } elseif (-not $WebOnly) {
     $runnerScript = Join-Path $serverProject 'runner\src\runner.js'
     $runner = Start-Process -FilePath $serverNode -ArgumentList @(('"' + $runnerScript + '"')) -WorkingDirectory $serverProject -WindowStyle Hidden -RedirectStandardOutput (Join-Path $serverRuntime "runner-$stamp.out.log") -RedirectStandardError (Join-Path $serverRuntime "runner-$stamp.err.log") -PassThru
     $state.runner = @{ pid = $runner.Id; startedAt = $runner.StartTime.ToUniversalTime().ToString('O'); nodePath = $serverNode; scriptPath = $runnerScript }

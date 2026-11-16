@@ -18,6 +18,8 @@ import {
 import { attendanceTargetSatisfied, buildAttendanceActions } from './attendance-actions.js';
 import { verifyPreparedRowsWithFreshRows } from './attendance-verification.js';
 import { locateMemberRow, readMemberAffiliation } from './member-row.js';
+import { ensureFamilyReady } from './family-readiness.js';
+import { createDiagnostics } from './diagnostics.js';
 
 const CONFIG = {
   url: process.env.CH2CH_URL || 'https://ch2ch.or.kr/login.asp',
@@ -64,6 +66,9 @@ const RESULT_FILE = path.resolve('./logs/result.json');
 let activeBrowser = null;
 let activePage = null;
 let saveConfirmationCount = 0;
+const memberRowMisses = new Map();
+const diagnostics = createDiagnostics({ runId: process.env.CH2CH_RUN_ID,
+  target: { targetWeek: CONFIG.targetWeek, targetDate: CONFIG.targetDate } });
 
 function recordDialog(message) {
   const text = String(message || '');
@@ -310,14 +315,21 @@ async function firstVisibleLocatorInAnyFrame(page, selectors, timeoutMs = 600) {
 async function clickTextInAnyFrame(page, text, exact = false, timeoutMs = 1200, allowScrollRetry = true) {
   const target = normalizeText(text);
 
-  for (const ctx of allContexts(page)) {
-    try {
-      const locator = ctx.getByText(text, { exact }).first();
-      await locator.waitFor({ state: 'visible', timeout: timeoutMs });
-      await locator.click({ timeout: timeoutMs, noWaitAfter: true });
-      await shortDelay();
-      return true;
-    } catch (_) {}
+  // Poll every frame together. Waiting frame by frame cost a full timeout for
+  // each frame that does not contain the text before the right one was tried.
+  const deadline = Date.now() + timeoutMs;
+  while (true) {
+    for (const ctx of allContexts(page)) {
+      try {
+        const locator = ctx.getByText(text, { exact }).first();
+        if (!(await locator.isVisible())) continue;
+        await locator.click({ timeout: timeoutMs, noWaitAfter: true });
+        await shortDelay();
+        return true;
+      } catch (_) {}
+    }
+    if (Date.now() >= deadline) break;
+    await new Promise((resolve) => setTimeout(resolve, 150));
   }
 
   // getByText가 실패하면 DOM 텍스트를 직접 비교해서 클릭합니다. 구형 ASP 화면에서 더 안정적입니다.
@@ -728,6 +740,8 @@ function escapeRegExp(text) {
 async function findMemberRow(page, name, family = '') {
 
   // 셀에서 추출한 이름 텍스트를 정확히 비교합니다. 접두어 유사 매칭은 사용하지 않습니다.
+  const miss = { mode: 'not-found', near: [], rows: 0, frames: [], errors: [] };
+  const matches = [];
   for (const ctx of allContexts(page)) {
     try {
       const handle = await ctx.evaluateHandle(locateMemberRow, { name, family });
@@ -736,12 +750,61 @@ async function findMemberRow(page, name, family = '') {
       const mode = await properties.get('mode')?.jsonValue().catch(() => 'unknown');
       const matchedText = await properties.get('text')?.jsonValue().catch(() => '');
       if (rowHandle) {
-        return { rowHandle, ctx, matchMode: mode, matchedText };
+        matches.push({ rowHandle, ctx, matchMode: mode, matchedText });
       }
-      if (mode === 'ambiguous') log('이름 텍스트 후보가 여러 명이라 처리하지 않음', name);
+      const near = await properties.get('near')?.jsonValue().catch(() => []) || [];
+      const rows = Number(await properties.get('rows')?.jsonValue().catch(() => 0)) || 0;
+      if (mode === 'ambiguous') {
+        miss.mode = 'ambiguous';
+        log('이름 텍스트 후보가 여러 명이라 처리하지 않음', name);
+      }
+      const observedNames = await properties.get('observedNames')?.jsonValue().catch(() => []) || [];
+      const observedFamilies = await properties.get('observedFamilies')?.jsonValue().catch(() => []) || [];
+      miss.frames.push({ index: miss.frames.length, mode, rows, observedNames, observedFamilies });
+      miss.rows += rows;
+      for (const text of near) if (!miss.near.includes(text)) miss.near.push(text);
+    } catch (error) { miss.errors.push(error?.name || 'Error'); }
+  }
+  if (matches.length === 1 && miss.mode !== 'ambiguous' && !miss.errors.length) {
+    memberRowMisses.delete(name);
+    return matches[0];
+  }
+  if (matches.length > 1) miss.mode = 'ambiguous';
+  for (const found of matches) await found.rowHandle.dispose().catch(() => {});
+  memberRowMisses.set(name, miss);
+  return null;
+}
+
+function describeMemberRowMiss(name, familyName = '') {
+  const miss = memberRowMisses.get(name);
+  const where = familyName ? `이 주차 '${familyName}' 출석부` : '이 주차 출석부';
+  if (miss?.mode === 'ambiguous') return `${where}에 같은 이름의 행이 여러 개라 선택하지 않았습니다. 웹교적에서 직접 확인해 주세요.`;
+  if (miss?.near?.length) return `${where}에는 '${miss.near.slice(0, 3).join("', '")}'(으)로 표시됩니다. 시트 이름과 웹교적 이름을 맞춰 주세요.`;
+  return `${where}에서 이름 행을 확인하지 못했습니다. 실제 미등록인지 화면 읽기 실패인지는 상세 진단을 확인해 주세요.`;
+}
+
+async function countVisibleCheckboxRows(page) {
+  let total = 0;
+  for (const ctx of allContexts(page)) {
+    try {
+      total += await ctx.evaluate(() => Array.from(document.querySelectorAll('tr')).filter((tr) =>
+        tr.getClientRects().length > 0 && Array.from(tr.querySelectorAll('input[type="checkbox"]')).some((box) => box.closest('tr') === tr && box.getClientRects().length > 0)
+      ).length);
     } catch (_) {}
   }
-  return null;
+  return total;
+}
+
+async function waitForStableMemberRows(page, maxMs = 2000) {
+  const deadline = Date.now() + maxMs;
+  let previous = -1;
+  while (Date.now() < deadline) {
+    const current = await countVisibleCheckboxRows(page);
+    if (current > 0 && current === previous) return current;
+    previous = current;
+    await shortDelay(300);
+  }
+  return previous;
 }
 
 async function findMemberRowWithRetry(page, name, attempts = 2, family = '') {
@@ -749,56 +812,136 @@ async function findMemberRowWithRetry(page, name, attempts = 2, family = '') {
   return findMemberRow(page, name, family);
 }
 
-async function readVisibleMemberTexts(page, expected = []) {
-  const visible = new Set();
-  let matched = 0;
-  for (const ctx of allContexts(page)) {
+async function readVisibleMemberTexts(page, expected = [], family = '') {
+  const frames = []; const errors = [];
+  for (const [index, ctx] of allContexts(page).entries()) {
     try {
-      const result = await ctx.evaluate(({ expected }) => {
-        const normalize = (v) => String(v || '').replace(/\s+/g, '').trim().toLowerCase();
-        const base = (v) => normalize(v).replace(/[a-z]$/, '');
-        const expectedExact = new Set(expected.map(normalize));
-        const expectedBase = new Set(expected.map(base));
-        const names = [];
-        let count = 0;
-        const isVisible = (el) => {
-          if (!el || !el.getClientRects || el.getClientRects().length === 0) return false;
-          const style = window.getComputedStyle(el);
-          return style.visibility !== 'hidden' && style.display !== 'none' && Number(style.opacity || 1) !== 0;
-        };
-        for (const tr of document.querySelectorAll('tr')) {
-          if (!isVisible(tr) || !Array.from(tr.querySelectorAll('input[type="checkbox"]')).some(isVisible)) continue;
-          const tokens = Array.from(tr.querySelectorAll('td,th'))
-            .flatMap((cell) => String(cell.innerText || cell.textContent || '').match(/[가-힣]{2,5}[A-Za-z]?/g) || [])
-            .map(normalize);
-          names.push(...tokens);
-          if (tokens.some((token) => expectedExact.has(token) || expectedBase.has(base(token)))) count += 1;
-        }
-        return { names: Array.from(new Set(names)).slice(0, 60), matched: count };
-      }, { expected });
-      result.names.forEach((value) => visible.add(value));
-      matched += result.matched;
-    } catch (_) {}
+      const result = await ctx.evaluate(locateMemberRow, { expectedNames: expected, family });
+      frames.push({ index, rows: result.rows, matchedNames: result.matchedNames,
+        observedNames: result.observedNames, observedFamilies: result.observedFamilies, selectedWeeks: result.selectedWeeks });
+    } catch (error) { errors.push({ index, type: error?.name || 'Error' }); }
   }
-  return { names: Array.from(visible).slice(0, 60), matched };
+  const matchedNames = frames.flatMap(frame => frame.matchedNames);
+  const selectedWeeks = Array.from(new Set(frames.flatMap(frame => frame.selectedWeeks)));
+  const weekMismatch = selectedWeeks.some(text => {
+    const week = Number(text.match(/(?:^|\D)(\d{1,2})\s*주/)?.[1]);
+    const date = text.match(/(\d{4})[-./](\d{1,2})[-./](\d{1,2})/);
+    const selectedDate = date ? `${date[1]}-${date[2].padStart(2, '0')}-${date[3].padStart(2, '0')}` : '';
+    return (CONFIG.targetWeek && week !== Number(CONFIG.targetWeek)) || (selectedDate && CONFIG.targetDate && selectedDate !== CONFIG.targetDate);
+  });
+  return { frames, errors, matched: matchedNames.length, matchedNames,
+    ambiguous: new Set(matchedNames).size !== matchedNames.length,
+    rows: frames.reduce((sum, frame) => sum + frame.rows, 0), selectedWeeks, weekMismatch,
+    observedFamilies: Array.from(new Set(frames.flatMap(frame => frame.observedFamilies))) };
 }
 
-async function waitForFamilyMemberText(page, familyName, rows) {
-  const expected = Array.from(new Set(rows.flatMap((row) => memberNameVariants(row.name))));
-  const deadline = Date.now() + CONFIG.familyTextWaitMs;
-  while (true) {
-    const current = await readVisibleMemberTexts(page, expected);
-    if (current.matched > 0) return true;
-    const remaining = deadline - Date.now();
-    if (remaining <= 0) return false;
-    // Wait for the new family's table to render, not for each missing person.
-    await shortDelay(Math.min(200, remaining));
+async function clickFamilyNavigation(page, familyName, report = () => {}) {
+  // A locator re-resolves the button when the ASP frame replaces its DOM.
+  // Retaining an ElementHandle here made otherwise valid family tabs fail.
+  const escaped = Array.from(familyName.replace(/\s+/g, '')).map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('\\s*');
+  const exactName = new RegExp(`^\\s*${escaped}\\s*$`);
+  const deadline = Date.now() + 3000;
+  const errors = [];
+  let candidatesSeen = 0;
+  while (Date.now() < deadline) {
+    for (const [frameIndex, ctx] of allContexts(page).entries()) {
+      try {
+        // CH2CH's organ1_click only changes the search form and loads a family.
+        // Activate this narrowly validated query link without pointer/scroll
+        // actionability (which can time out in its nested, replacing ASP frame).
+        // Attendance controls and arbitrary onclick handlers are never invoked.
+        const menu = await ctx.evaluate(({ family, department, group }) => {
+          const norm = value => String(value || '').replace(/\s+/g, '').toLowerCase();
+          if (!department || !group) return { state: 'not-found', count: 0 };
+          const matches = Array.from(document.querySelectorAll('a[href]')).filter(el => {
+            if (norm(el.textContent) !== norm(family) || !el.getClientRects().length) return false;
+            const style = getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
+            const row = el.closest('tr');
+            if (row && Array.from(row.querySelectorAll('input[type="checkbox"]')).some(box => box.closest('tr') === row)) return false;
+            const href = el.getAttribute('href') || '';
+            const call = href.match(/^javascript:\s*organ1_click\(\s*(['"])([^'"]*)\1\s*,\s*(['"])([^'"]*)\3\s*,\s*(['"])([^'"]*)\5\s*\)\s*;?\s*$/i);
+            if (!call) return false;
+            try { return norm(decodeURIComponent(call[2])) === norm(department) &&
+              norm(decodeURIComponent(call[4])) === norm(group) && norm(decodeURIComponent(call[6])) === norm(family); }
+            catch { return false; }
+          });
+          if (matches.length !== 1) return { state: matches.length ? 'ambiguous' : 'not-found', count: matches.length };
+          matches[0].click();
+          return { state: 'activated', count: 1 };
+        }, { family: familyName, department: CONFIG.targetDeptText, group: CONFIG.targetGroupText });
+        if (menu.state === 'ambiguous') {
+          report({ clicked: false, frameIndex, candidatesSeen: menu.count, errors: [{ code: 'ambiguous-family-menu' }] });
+          return false;
+        }
+        if (menu.state === 'activated') {
+          report({ clicked: true, frameIndex, candidatesSeen: 1, method: 'exact-family-query-link', errors });
+          return true;
+        }
+        const candidates = ctx.locator('a,button,[role="tab"],[role="button"],[onclick]').filter({ hasText: exactName });
+        const count = await candidates.count();
+        for (let index = 0; index < count; index += 1) {
+          const candidate = candidates.nth(index);
+          if (!await candidate.isVisible()) continue;
+          const inAttendanceRow = await candidate.evaluate(el => Array.from(el.closest('tr')?.querySelectorAll('input[type="checkbox"]') || [])
+            .some(box => box.closest('tr') === el.closest('tr')));
+          if (inAttendanceRow) continue;
+          // Do not fall back to a text-only click for a mismatched organ link.
+          if (await candidate.evaluate(el => /organ1_click\s*\(/i.test(el.getAttribute('href') || ''))) continue;
+          candidatesSeen += 1;
+          await candidate.click({ timeout: Math.max(100, Math.min(1500, deadline - Date.now())), noWaitAfter: true });
+          report({ clicked: true, frameIndex, candidatesSeen, errors });
+          return true;
+        }
+      } catch (error) {
+        // A controlled reason code, never a URL, HTML dump or credential.
+        const message = String(error?.message || '');
+        errors.push({ frameIndex, type: error?.name || 'Error', code:
+          /detach|not attached|destroyed|navigat/i.test(message) ? 'dom-replaced'
+            : /intercept/i.test(message) ? 'pointer-intercepted'
+            : /timeout/i.test(message) ? 'click-timeout' : 'click-error' });
+      }
+    }
+    if (Date.now() < deadline) await shortDelay(100);
   }
+  report({ clicked: false, candidatesSeen, errors: errors.slice(-12) });
+  return false;
+}
+
+async function prepareFamilyPage(page, familyName, rows, clickFamilyTab = true) {
+  const expected = rows.map(row => ({ name: row.name, originalFamily: row.family, sunday: row.sunday, department: row.department }));
+  diagnostics.emit('family-start', `가족 화면 확인: ${familyName}`, { family: familyName, expected });
+  return ensureFamilyReady({
+    timeoutMs: CONFIG.familyTextWaitMs,
+    pause: shortDelay,
+    enter: async attempt => {
+      try {
+        if (attempt === 2) {
+          if (!clickFamilyTab) return await navigateToNewcomerAttendance(page, familyName);
+          if (!(await navigateToWeeklyAttendance(page)) || !(await selectAttendanceWeek(page))) return false;
+        }
+        if (clickFamilyTab && !(await clickFamilyNavigation(page, familyName, navigation =>
+          diagnostics.emit('family-navigation-result', `가족 버튼 이동: ${familyName}`, { family: familyName, attempt, navigation }, navigation.clicked ? 'info' : 'warn')))) return false;
+        await shortDelay(CONFIG.familyLoadWaitMs);
+        return true;
+      } catch (error) {
+        diagnostics.emit('family-navigation-error', `가족 이동 오류: ${familyName}`, { family: familyName, attempt, errorType: error?.name || 'Error' }, 'warn');
+        return false;
+      }
+    },
+    inspect: () => readVisibleMemberTexts(page, rows.map(row => row.name), familyName),
+    record: async detail => {
+      const screenshot = !detail.ready ? await diagnostics.capture(page) : undefined;
+      diagnostics.emit('family-readiness', `${familyName}: 화면 확인 ${detail.attempt}/2 ${detail.ready ? '성공' : '실패'}`,
+        { family: familyName, ...detail, screenshot }, detail.ready ? 'info' : 'warn');
+    }
+  });
 }
 
 async function accessCheckboxInRow(found, fieldName, desired = null, checkboxIndex = 0, shouldSet = false) {
   if (found.rowHandle) {
     const result = await found.rowHandle.evaluate((tr, args) => {
+      if (!tr.isConnected) return { ok: false, code: 'row-detached', count: 0 };
       const normalize = (v) => String(v || '').replace(/\s+/g, '').trim().toLowerCase();
       const aliases = args.fieldName === '주일'
         ? ['주일', '주일출석', '1-3부', '1~3부', '1부', '2부', '3부']
@@ -860,20 +1003,25 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
         : matched.length === 1
           ? matched[0]
           : fallback;
+      if (columnMatches.length > 1 || (columnMatches.length === 0 && matched.length > 1)) {
+        return { ok: false, code: 'ambiguous-checkbox', count: boxes.length,
+          matched: matched.length, columnMatches: columnMatches.length };
+      }
       if (!chosen) {
         return {
           ok: false,
+          code: 'checkbox-not-found',
           count: boxes.length,
           matched: matched.length,
           candidates: candidates.map((candidate) => `${candidate.index}:${candidate.text || '(텍스트없음)'}`).slice(0, 12)
         };
       }
       const box = chosen.box;
+      if (box.disabled && args.shouldSet) return { ok: false, code: 'checkbox-disabled', count: boxes.length, chosenIndex: chosen.index };
       const before = Boolean(box.checked);
       if (args.shouldSet && box.checked !== args.desired) {
         box.scrollIntoView({ block: 'center', inline: 'center' });
         box.click();
-        if (box.checked !== args.desired) box.checked = args.desired;
         box.dispatchEvent(new Event('input', { bubbles: true }));
         box.dispatchEvent(new Event('change', { bubbles: true }));
       }
@@ -889,7 +1037,7 @@ async function accessCheckboxInRow(found, fieldName, desired = null, checkboxInd
       };
     }, { fieldName, desired, shouldSet, checkboxIndex });
     if (!result.ok) {
-      const reason = `${fieldName} 체크박스 처리 실패`;
+      const reason = `${fieldName} 체크박스 처리 실패 (${result.code || 'state-not-applied'}, 감지 ${result.count ?? 0}개)`;
       return { ...result, ok: false, reason };
     }
     return result;
@@ -931,13 +1079,15 @@ async function readWebAttendanceState(found) {
   if (!sunday.ok || !department.ok) {
     return {
       ok: false,
-      reason: [sunday.reason, department.reason].filter(Boolean).join(' / ') || '웹교적 체크박스 상태 읽기 실패'
+      reason: [sunday.reason, department.reason].filter(Boolean).join(' / ') || '웹교적 체크박스 상태 읽기 실패',
+      fields: { sunday, department }
     };
   }
   return {
     ok: true,
     sunday: Boolean(sunday.actual),
-    department: Boolean(department.actual)
+    department: Boolean(department.actual),
+    fields: { sunday, department }
   };
 }
 
@@ -1431,24 +1581,9 @@ async function processFamily(page, familyName, rows, options = {}) {
   const expectedSunday = rows.filter(row => row.sunday === true).length;
   const expectedDepartment = rows.filter(row => row.department === true).length;
   const clickFamilyTab = options.clickFamilyTab !== false;
-  if (clickFamilyTab && !(await clickTextInAnyFrame(page, familyName, true, 1500))) {
-    const reason = `가족 탭 클릭 실패: CH2CH 화면에서 '${familyName}' 버튼/탭을 찾지 못했습니다. 시트 가족명과 CH2CH 탭 이름이 다르거나 해당 가족 탭이 현재 분류에 없을 수 있습니다.`;
-    return {
-      familyName,
-      expectedSunday,
-      expectedDepartment,
-      success: 0,
-      failed: rows.length,
-      saved: false,
-      saveVerified: false,
-      people: rows.map(row => ({ family: row.family, name: row.name, ok: false, reason }))
-    };
-  }
-
-  await shortDelay(CONFIG.familyLoadWaitMs);
-  const familyReady = await waitForFamilyMemberText(page, familyName, rows);
-  if (!familyReady) {
-    const reason = `가족 화면 준비 실패: '${familyName}'에서 시트 대상 이름이 보이지 않아 출석을 변경하지 않았습니다. 웹교적 주차와 가족 화면을 확인해 주세요.`;
+  const readiness = await prepareFamilyPage(page, familyName, rows, clickFamilyTab);
+  if (!readiness.ok) {
+    const reason = `가족 화면 준비 실패: '${familyName}' 한 번 재진입 후에도 출석표를 확인하지 못했습니다 (${readiness.attempts.at(-1)?.reason}). 출석은 변경하지 않았으며 화면과 상세 진단을 기록했습니다.`;
     log('가족 화면 대조 실패', reason);
     return {
       familyName,
@@ -1467,29 +1602,77 @@ async function processFamily(page, familyName, rows, options = {}) {
   const people = [];
   const preparedRows = [];
   let finalMismatchCount = 0;
+  const recordPerson = async (stage, rowInfo, detail, failure = false) => {
+    const screenshot = failure ? await diagnostics.capture(page) : undefined;
+    diagnostics.emit(stage, `${familyName} / ${rowInfo.name}: ${stage}`,
+      { family: familyName, name: rowInfo.name, originalFamily: rowInfo.family,
+        expected: { sunday: rowInfo.sunday, department: rowInfo.department }, ...detail, screenshot }, failure ? 'warn' : 'info');
+  };
 
+  const prepareRow = async (rowInfo, found) => {
+    let currentState;
+    try { currentState = await readWebAttendanceState(found); }
+    catch (error) { currentState = { ok: false, reason: '행 상태 읽기 오류', errorType: error?.name || 'Error' }; }
+    if (!currentState.ok) {
+      await recordPerson('member-read-retry', rowInfo, { attempt: 1, state: currentState });
+      await waitForStableMemberRows(page, 1000);
+      const refreshed = await findMemberRowWithRetry(page, rowInfo.name, 1, familyName);
+      if (refreshed) {
+        found = refreshed;
+        try { currentState = await readWebAttendanceState(found); }
+        catch (error) { currentState = { ok: false, reason: '행 상태 재확인 오류', errorType: error?.name || 'Error' }; }
+      } else currentState = { ok: false, reason: '화면 갱신 후 정확한 이름 행을 확인하지 못함', lookup: memberRowMisses.get(rowInfo.name) };
+    }
+    await recordPerson(currentState.ok ? 'member-read' : 'member-read-failed', rowInfo,
+      { state: currentState, matchMode: found.matchMode }, !currentState.ok);
+    if (!currentState.ok) {
+      failed += 1;
+      const reason = `1회 확인 후 건너뜀: ${currentState.reason}. ${targetActionText(rowInfo)}. 웹교적에서 직접 확인해 주세요.`;
+      people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+      return;
+    }
+    preparedRows.push({ rowInfo, found, before: currentState });
+  };
+  const missingRows = [];
   for (const rowInfo of rows) {
     try {
       const found = await findMemberRowWithRetry(page, rowInfo.name, 2, familyName);
       if (!found) {
-        failed += 1;
-        const reason = `1회 확인 후 건너뜀: '${familyName}'에서 '${rowInfo.name}'의 출석 행을 하나로 확인하지 못했습니다. 웹교적의 이름·소속과 시트 값을 직접 확인해 주세요.`;
-        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
-        log('시트 불일치 발견', `${familyName} / ${rowInfo.name} / 다음 가족 처리 계속`);
+        missingRows.push(rowInfo);
         continue;
       }
-      const currentState = await readWebAttendanceState(found);
-      if (!currentState.ok) {
-        failed += 1;
-        const reason = `1회 확인 후 건너뜀: ${currentState.reason}. ${targetActionText(rowInfo)}. 웹교적에서 직접 확인해 주세요.`;
-        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
-        continue;
-      }
-      preparedRows.push({ rowInfo, found, before: currentState });
+      await prepareRow(rowInfo, found);
     } catch (err) {
       failed += 1;
       const reason = err?.message || String(err);
       people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+      await recordPerson('member-action-error', rowInfo, { phase: 'prepare', errorType: err?.name || 'Error' }, true);
+    }
+  }
+  if (missingRows.length) {
+    // The first visible name proves the family page opened, not that every row
+    // finished rendering. Re-read only the missing names once after the table settles.
+    await waitForStableMemberRows(page);
+    for (const rowInfo of missingRows) {
+      try {
+        const found = await findMemberRowWithRetry(page, rowInfo.name, 2, familyName);
+        if (!found) {
+          failed += 1;
+          const detail = describeMemberRowMiss(rowInfo.name, familyName);
+          const reason = `1회 확인 후 건너뜀: '${familyName}'에서 '${rowInfo.name}'의 출석 행을 하나로 확인하지 못했습니다. ${detail}`;
+          people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+          await recordPerson('member-not-found', rowInfo, { lookup: memberRowMisses.get(rowInfo.name) }, true);
+          log('시트 불일치 발견', `${familyName} / ${rowInfo.name} / ${detail} / 다음 가족 처리 계속`);
+          continue;
+        }
+        log('늦게 표시된 행 확인', `${familyName} / ${rowInfo.name}`);
+        await prepareRow(rowInfo, found);
+      } catch (err) {
+        failed += 1;
+        const reason = err?.message || String(err);
+        people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+        await recordPerson('member-action-error', rowInfo, { phase: 'missing-row-recheck', errorType: err?.name || 'Error' }, true);
+      }
     }
   }
 
@@ -1518,9 +1701,11 @@ async function processFamily(page, familyName, rows, options = {}) {
         failed += 1;
         const reason = attendanceResults.map(result => result.reason).filter(Boolean).join(' / ') || '출석 체크박스 처리 실패';
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason: `${reason}. ${targetActionText(rowInfo)}` });
+        await recordPerson('member-checkbox-failed', rowInfo, { attendanceResults }, true);
         continue;
       }
       const finalState = await readWebAttendanceState(found);
+      await recordPerson('member-after-check', rowInfo, { before: item.before, after: finalState });
       if (!attendanceStateMatches(rowInfo, finalState)) {
         failed += 1;
         finalMismatchCount += 1;
@@ -1528,6 +1713,7 @@ async function processFamily(page, familyName, rows, options = {}) {
           ? attendanceMismatchReason(rowInfo, finalState, '저장 전 최종 대조 실패')
           : `저장 전 최종 대조 실패: ${finalState.reason}`;
         people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+        await recordPerson('member-verify-failed', rowInfo, { after: finalState }, true);
         continue;
       }
       await setNoteInRow(found, rowInfo);
@@ -1537,6 +1723,7 @@ async function processFamily(page, familyName, rows, options = {}) {
       failed += 1;
       const reason = err?.message || String(err);
       people.push({ family: rowInfo.family, name: rowInfo.name, ok: false, reason });
+      await recordPerson('member-action-error', rowInfo, { errorType: err?.name || 'Error' }, true);
     }
   }
 
@@ -1548,7 +1735,7 @@ async function processFamily(page, familyName, rows, options = {}) {
     saved = await saveCurrentPage(page, familyName);
     if (saved.attempted && !saved.verified && !CONFIG.dryRun) {
       const verification = await verifyPreparedRowsWithFreshRows(preparedRows, {
-        findRow: (name) => findMemberRowWithRetry(page, name, 2),
+        findRow: (name) => findMemberRowWithRetry(page, name, 2, familyName),
         readState: readWebAttendanceState,
         matches: attendanceStateMatches,
         mismatchReason: (rowInfo, state) => attendanceMismatchReason(rowInfo, state, '저장 후 상태 대조 불일치')
@@ -1559,11 +1746,13 @@ async function processFamily(page, familyName, rows, options = {}) {
       } else {
         log('저장 전 대조 경고', `${familyName}: ${verification.mismatches.length}명 상태를 다시 확인하지 못했습니다.`);
       }
+      diagnostics.emit('family-save-verification', `저장 후 상세 검증: ${familyName}`, { family: familyName, verification }, verification.ok ? 'info' : 'warn');
     }
   } else if (CONFIG.savePerFamily) {
     saved = { attempted: true, verified: CONFIG.dryRun };
   }
 
+  diagnostics.emit('family-complete', `가족 처리 완료: ${familyName}`, { family: familyName, success, failed, saved });
   return {
     familyName,
     expectedSunday,

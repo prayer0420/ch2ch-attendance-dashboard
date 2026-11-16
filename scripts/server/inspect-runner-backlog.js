@@ -1,12 +1,10 @@
 // Read-only operational check. Never prints attendance payloads or credentials.
 require("dotenv").config({ path: ".env.local", quiet: true });
 require("dotenv").config({ path: ".env", quiet: true });
-const { createClient } = require("@supabase/supabase-js");
+const { createDataClient } = require("../../lib/local-store/provider.cjs");
 
 async function main() {
-  const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false, autoRefreshToken: false }
-  });
+  const db = createDataClient();
   const { data, error } = await db
     .from("attendance_runs")
     .select("id,status,requested_at,started_at,finished_at,current_step,runner_id,runner_hostname")

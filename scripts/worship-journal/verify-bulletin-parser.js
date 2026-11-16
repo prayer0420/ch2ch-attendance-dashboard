@@ -127,6 +127,34 @@ assert.deepEqual(september13.service, expectedService);
 assert.equal(parsePdfWorshipText(september13Lines.join("\n"), "2026-09-01").service.guide, "", "9/1 must not match 9/13");
 assert.equal(parsePdfWorshipText(september13Lines.join("\n"), "2026-09-20").service.offeringMembers, "김종인, 이필홍");
 
+const currentDuties = ["현재대표", "현재헌금위원", "현재헌금기도", "현재안내네", "현재식당네", "현재기도네"];
+const nextDuties = ["다음대표", "다음헌금위원", "다음헌금기도", "다음안내네", "다음식당네", "다음기도네"];
+const expectedCurrent = {
+  representativePrayer: currentDuties[0], offeringMembers: currentDuties[1], offeringPrayer: currentDuties[2],
+  guide: currentDuties[3], cleanup: currentDuties[3], mealService: currentDuties[4], prayerMeeting: currentDuties[5]
+};
+const emptyService = Object.fromEntries(Object.keys(expectedCurrent).map((key) => [key, ""]));
+for (const [currentLabel, nextLabel] of [
+  ["10/18", "10월 25일"], ["10 / 18 (주일)", "10.25(일)"],
+  ["2026.10.18.", "2026-10-25"], ["금주: 10월 18일", "다음 주: 10월 25일"],
+  ["10/18", "다음 주"], ["10/18", "차주"]
+]) {
+  const lines = ["예배 섬김", currentLabel, ...currentDuties, nextLabel, ...nextDuties];
+  const result = parsePdfWorshipText(lines.join("\n"), "2026-10-18");
+  assert.deepEqual(result.service, expectedCurrent, `date isolation: ${currentLabel} -> ${nextLabel}`);
+}
+const strictCases = [
+  ["예배 섬김", "10/25", ...nextDuties],
+  ["예배 섬김", "10/18", "10/25", ...nextDuties], // Two column headers before any data: ambiguous.
+  ["예배 섬김", "10/18", ...currentDuties.slice(0, 4), "10월 25일", ...nextDuties],
+  ["예배 섬김", "10/18", ...currentDuties, "10/18", ...nextDuties],
+  ["예배 섬김", "2027-10-18", ...nextDuties],
+  ["예배 섬김", "광고", "10/18", ...nextDuties]
+];
+for (const lines of strictCases) assert.deepEqual(parsePdfWorshipText(lines.join("\n"), "2026-10-18").service, emptyService);
+assert.deepEqual(parsePdfWorshipText(["예배 섬김", "10/18", "10/25", ...currentDuties, ...nextDuties].join("\n"), "2026-10-25").service, emptyService, "The last column header must not inherit the first week's duties either");
+assert.deepEqual(parsePdfWorshipText(["예배 섬김", "12/27", ...nextDuties, "2027년 1월 3일", ...currentDuties].join("\n"), "2027-01-03").service, expectedCurrent);
+
 // Synthetic HWP control payload: these bytes must never become visible text.
 const control = Buffer.alloc(16);
 control.writeUInt16LE(2, 0);
@@ -152,6 +180,16 @@ for (const compressed of [false, true]) {
   const result = parseHwpWorshipInfo(CFB.write(file, { type: "buffer" }), "2026-09-13");
   assert.deepEqual(result.sermon, expectedSermon);
   assert.deepEqual(result.service, expectedService);
+  const dateBoundarySection = Buffer.concat(["예배 섬김", "10/18", ...currentDuties, "10월 25일", ...nextDuties].map((line) => {
+    const content = Buffer.from(`${line}\r`, "utf16le");
+    const record = Buffer.alloc(4);
+    record.writeUInt32LE((content.length << 20) | 67);
+    return Buffer.concat([record, content]);
+  }));
+  const boundaryFile = CFB.utils.cfb_new();
+  CFB.utils.cfb_add(boundaryFile, "FileHeader", header);
+  CFB.utils.cfb_add(boundaryFile, "BodyText/Section0", compressed ? require("node:zlib").deflateRawSync(dateBoundarySection) : dateBoundarySection);
+  assert.deepEqual(parseHwpWorshipInfo(CFB.write(boundaryFile, {type:"buffer"}), "2026-10-18").service, expectedCurrent);
 }
 if (process.argv[2]) {
   const actual = parseHwpWorshipInfo(fs.readFileSync(process.argv[2]), "2026-09-13");

@@ -5,6 +5,7 @@ const { chromium } = require('playwright');
 
 (async () => {
   const { locateMemberRow, readMemberAffiliation } = await import('../runner/legacy-ch2ch/src/member-row.js');
+  const { ensureFamilyReady } = await import('../runner/legacy-ch2ch/src/family-readiness.js');
   // Exercise the real checkbox accessor, including its Playwright argument bridge.
   const source = fs.readFileSync('runner/legacy-ch2ch/src/main.js', 'utf8');
   const start = source.indexOf('async function accessCheckboxInRow(');
@@ -42,6 +43,12 @@ const { chromium } = require('playwright');
       assert.equal(await found.rowHandle.$eval('input[name="select"]', box => box.checked), false);
     }
     assert.equal((await find('박선희B')).rowHandle, null, 'Suffix mismatch must not select another person');
+    assert.equal((await find('박선희E', '다른가족')).rowHandle, null, 'Explicit wrong family must not fall back');
+    const missing = await page.evaluate(locateMemberRow, { name: '박선희', family: '' });
+    assert.equal(missing.mode, 'exact');
+    const hinted = await page.evaluate(locateMemberRow, { name: '정지', family: '' });
+    assert.equal(hinted.mode, 'not-found');
+    assert.ok(hinted.near.includes('정지원'), 'A missing name must report how similar names are displayed');
     assert.equal(await page.locator('#sunhee-a input[aria-label="부서"]').isChecked(), false);
     await page.setContent(`<table>${row('links', '한신혜', '<a>새가족</a><a>새가족반</a>')}</table>`);
     assert.equal(await (await find('한신혜')).rowHandle.evaluate(readMemberAffiliation), '새가족반');
@@ -52,23 +59,43 @@ const { chromium } = require('playwright');
     assert.equal(sunday.chosenIndex, 1);
     assert.equal(department.chosenIndex, 2);
     assert.deepEqual(await page.locator('input').evaluateAll(boxes => boxes.map(box => box.checked)), [false, true, false]);
+    await page.locator('#plain').evaluate(row => row.remove());
+    const detached = await context.accessCheckboxInRow(plain, '부서', null, 1, false);
+    assert.equal(detached.ok, false);
+    assert.equal(detached.code, 'row-detached');
     const readiness = vm.createContext({
-      CONFIG: { familyTextWaitMs: 1500 },
+      CONFIG: { targetWeek: '40', targetDate: '2026-10-04' },
       allContexts: () => [page],
+      locateMemberRow,
       shortDelay: ms => new Promise(resolve => setTimeout(resolve, ms)),
       memberNameVariants: name => [name]
     });
     const readinessStart = source.indexOf('async function readVisibleMemberTexts(');
-    const readinessEnd = source.indexOf('\nasync function accessCheckboxInRow(', readinessStart);
+    const readinessEnd = source.indexOf('\nasync function clickFamilyNavigation(', readinessStart);
     vm.runInContext(source.slice(readinessStart, readinessEnd), readiness);
     await page.setContent(`<table>${row('previous-family', '다른사람', '다른가족')}</table>`);
     const pendingTable = setTimeout(() => {
       page.setContent(`<table>${row('new-family', '이새별', '재용이네')}</table>`).catch(() => {});
     }, 250);
     try {
-      assert.equal(await readiness.waitForFamilyMemberText(page, '재용이네', [{ name: '이새별' }]), true);
+      const result = await ensureFamilyReady({ enter: async () => true,
+        inspect: () => readiness.readVisibleMemberTexts(page, ['이새별'], '재용이네'),
+        record: async () => {}, pause: ms => new Promise(resolve => setTimeout(resolve, ms)), timeoutMs: 1500 });
+      assert.equal(result.ok, true);
+      assert.equal(result.attempts.length, 1);
       assert.equal((await find('이새별', '재용이네')).mode, 'exact');
     } finally { clearTimeout(pendingTable); }
+    await page.setContent(`<select><option selected>41주 (2026-10-11)</option></select><table>${row('sunhee-e', '박선희E', '새가족반')}</table>`);
+    assert.equal((await readiness.readVisibleMemberTexts(page, ['박선희E'], '새가족반')).weekMismatch, true);
+    assert.equal((await readiness.readVisibleMemberTexts(page, ['박선희A'], '새가족반')).matched, 0);
+    await page.setContent(`<table><tr><td>선택</td><td>성명</td><td>소속</td><td>주일</td><td>부서</td><td>비고</td></tr>${row('sunhee-split', '박<span>선</span>희<span>E</span>', '새가족반')}${row('note-only', '박선희A', '새가족반', '박선희E')}</table>`);
+    assert.equal(await (await find('박선희E', '새가족반')).rowHandle.getAttribute('id'), 'sunhee-split');
+    const navStart = source.indexOf('async function clickFamilyNavigation(');
+    const navEnd = source.indexOf('\nasync function prepareFamilyPage(', navStart);
+    vm.runInContext(source.slice(navStart, navEnd), readiness);
+    await page.setContent(`<table><tr><td><a href="#" onclick="window.familyOpened=true;return false">민석이네</a></td><td><table>${row('unrelated', '다른사람', '<a href="#">민석이네</a>')}</table></td></tr></table>`);
+    assert.equal(await readiness.clickFamilyNavigation(page, '민석이네'), true);
+    assert.equal(await page.evaluate(() => window.familyOpened), true, 'Nested layout tables must not hide real family navigation');
     console.log('Member DOM regression passed: exact names, suffixes, delayed family rendering, affiliations and checkbox access');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -1,8 +1,8 @@
 param(
   [Parameter(Mandatory=$true)][string]$ExecutablePath,
   [ValidateRange(0,60)][int]$DelaySeconds = 15,
-  [ValidateRange(1,12)][int]$MaxAttempts = 6,
-  [ValidateRange(1,30)][int]$RetrySeconds = 10
+  [ValidateRange(1,20)][int]$MaxAttempts = 15,
+  [ValidateRange(1,60)][int]$RetrySeconds = 30
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'common.ps1')
@@ -63,9 +63,6 @@ try {
       Import-Module (Join-Path $PSHOME 'Modules\Microsoft.PowerShell.Security\Microsoft.PowerShell.Security.psd1') -ErrorAction Stop
       # Windows PowerShell -File can preserve shortcut argument quotes in a
       # string parameter. Normalize those wrapper quotes before path lookup.
-      $executable = (Resolve-Path -LiteralPath $ExecutablePath.Trim().Trim('"')).Path
-      $origin = [string](Get-Content -LiteralPath (Join-Path $serverRuntime 'public-origin.json') -Raw -Encoding UTF8 | ConvertFrom-Json).origin
-      if ($origin -notmatch '^https://[a-z0-9-]+\.ngrok-free\.(app|dev)$') { throw 'Public origin is not configured.' }
       $bootTime = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
       Archive-PreviousBootRecords $bootTime
       $phase = 'web'
@@ -99,8 +96,13 @@ try {
       $runnerState = (Get-ServerState).runner
       if (-not (Test-ServerProcessOwned $runnerState)) { throw 'Runner ownership verification failed.' }
       $script:runnerStarted = $true
+      Write-StartupStatus 'local-ready' 'passed' $attempt
       $phase = 'tunnel'
       Write-StartupStatus $phase 'checking' $attempt
+      # Local web and Runner must not depend on ngrok being available at logon.
+      $executable = (Resolve-Path -LiteralPath $ExecutablePath.Trim().Trim('"') -ErrorAction Stop).Path
+      $origin = [string](Get-Content -LiteralPath (Join-Path $serverRuntime 'public-origin.json') -Raw -Encoding UTF8 | ConvertFrom-Json).origin
+      if ($origin -notmatch '^https://[a-z0-9-]+\.ngrok-free\.(app|dev)$') { throw 'Public origin is not configured.' }
       $tunnelState = Join-Path $serverRuntime 'ngrok-process.json'
       $tunnelAlive = $false
       if (Test-Path -LiteralPath $tunnelState) {
@@ -114,7 +116,15 @@ try {
       }
       if (-not $tunnelAlive) { & (Join-Path $PSScriptRoot 'start-tunnel.ps1') -ExecutablePath $executable *> $null }
       $phase = 'public-https'
-      if ((Get-StartupHttpStatus ($origin + '/login') -Public) -ne 200 -or (Get-StartupHttpStatus ($origin + '/api/app') -Public) -ne 401) { throw 'Public HTTPS is not ready.' }
+      $publicReady = $false
+      for ($probe = 0; $probe -lt 6; $probe++) {
+        if ((Get-StartupHttpStatus ($origin + '/login') -Public) -eq 200 -and (Get-StartupHttpStatus ($origin + '/api/app') -Public) -eq 401) {
+          $publicReady = $true
+          break
+        }
+        if ($probe -lt 5) { Start-Sleep -Seconds 5 }
+      }
+      if (-not $publicReady) { throw 'Public HTTPS is not ready.' }
       Write-StartupStatus 'ready' 'passed' $attempt
       Write-Output 'Web, Runner, and HTTPS tunnel ready. Existing non-queued records were preserved.'
       exit 0
@@ -129,6 +139,14 @@ try {
       Write-StartupStatus $phase 'retry' $attempt
       if ($attempt -lt $MaxAttempts) { Start-Sleep -Seconds $RetrySeconds }
     }
+  }
+  $finalState = Get-ServerState
+  if ($script:runnerStarted -and (Test-ServerProcessOwned $finalState.dashboard) -and
+    (Test-ServerProcessOwned $finalState.runner) -and
+    (Get-StartupHttpStatus 'http://127.0.0.1:3000/login') -eq 200) {
+    Write-StartupStatus 'local-ready' 'passed' $MaxAttempts
+    Write-Output 'Local web and Runner ready; external HTTPS tunnel is unavailable. Check autostart.log.'
+    exit 0
   }
   Write-StartupStatus $phase 'failed' $MaxAttempts
   Write-Output 'Autostart did not become ready. Check autostart-status.json; no unrelated process was stopped.'

@@ -72,7 +72,7 @@ assert.equal(result.sheetTab, "6월 마지막");
 assert.equal(result.sundayTotal, 150000);
 assert.equal(result.thanksgivingTotal, 610000);
 assert.equal(result.purposeTotal, 50000);
-assert.equal(result.total, 810000);
+assert.equal(result.total, 760000, "목적헌금 50,000원은 총액에서 제외");
 assert.equal(result.sunday.length, 4);
 assert.deepEqual(result.sunday.map(entry => entry.name), ["김건우", "김다정", "김대완", "김이레"]);
 assert.deepEqual(result.purpose, [{ name: "선교헌금", amount: 50000, note: "" }]);
@@ -171,7 +171,7 @@ async function verifyGoogleSheetFallback() {
   );
   assert.equal(requested.length, 2);
   assert.equal(loaded.sourceType, "google-sheet");
-  assert.equal(loaded.total, 810000);
+  assert.equal(loaded.total, 760000);
 
   await assert.rejects(
     () => loadAccountingFromGoogleSheet(

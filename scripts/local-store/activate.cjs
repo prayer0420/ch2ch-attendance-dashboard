@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path');
+const {privateRoot,configFile,openLocal}=require('../../lib/local-store/provider.cjs');
+const directory=path.join(privateRoot(),'data-v1');
+if(fs.existsSync(configFile()))throw new Error('Storage is already configured; refusing overwrite.');
+const ready=JSON.parse(fs.readFileSync(path.join(directory,'migration-ready.json'),'utf8'));
+if(!ready.verifiedAt)throw new Error('Migration has not been verified.');
+const db=openLocal(directory);
+if(db.prepare('PRAGMA integrity_check').get().integrity_check!=='ok')throw new Error('Database integrity failure.');
+fs.writeFileSync(configFile(),JSON.stringify({provider:'local',directory,activatedAt:new Date().toISOString()},null,2),{flag:'wx',mode:0o600});
+console.log('PC storage selected. Restart web and Runner together; original Supabase is unchanged.');

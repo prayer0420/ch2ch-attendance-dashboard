@@ -40,8 +40,12 @@ Module._resolveFilename = function(request, parent, ...args) {
   delete process.env.APP_ACCESS_PASSWORD;
   delete process.env.APP_SESSION_TOKEN;
   assert.equal((await s.checkRequestSecurity(new Request('https://app.test/api/runs'))).status, 503);
-  process.env.APP_ACCESS_PASSWORD = 'test-only-password-not-for-deployment';
+  process.env.APP_ACCESS_PASSWORD = 'x';
   process.env.APP_SESSION_TOKEN = 'test-only-signing-key-never-for-deployment-12345';
+  assert.equal(s.securityConfigured(), true, 'A non-empty access code must be accepted after reset');
+  process.env.APP_ACCESS_PASSWORD = '';
+  assert.equal(s.securityConfigured(), false, 'An empty access code must remain rejected');
+  process.env.APP_ACCESS_PASSWORD = 'test-only-password-not-for-deployment';
   const token = await s.createSession();
   assert.equal(await s.validSession(token), true);
   assert.equal(await s.validSession(process.env.APP_SESSION_TOKEN), false);
@@ -55,7 +59,12 @@ Module._resolveFilename = function(request, parent, ...args) {
   assert.equal((await s.checkRequestSecurity(new Request('https://app.test/api/runs', { method: 'POST', headers, body: 'x'.repeat(4 * 1024 * 1024 + 1) }))).status, 413);
   assert.equal((await s.checkRequestSecurity(new Request('http://localhost/api/qr-attendance/worker', { method: 'POST' }), true)).status, 401);
   process.env.QR_WORKER_TOKEN = 'test-only-worker-secret-never-for-deployment';
-  assert.equal(await s.checkRequestSecurity(new Request('http://localhost/api/qr-attendance/worker', { method: 'POST', headers: { 'x-qr-worker-token': process.env.QR_WORKER_TOKEN }, body: '{}' }), true), null);
+  const workerRequest = (extra = {}) => new Request('http://127.0.0.1:3000/api/qr-attendance/worker', { method: 'POST', headers: { host: '127.0.0.1:3000', 'x-qr-worker-token': process.env.QR_WORKER_TOKEN, ...extra }, body: '{}' });
+  assert.equal(await s.checkRequestSecurity(workerRequest(), true), null);
+  assert.equal((await s.checkRequestSecurity(workerRequest({ 'x-qr-worker-token': process.env.QR_WORKER_TOKEN + 'x' }), true)).status, 401);
+  // Any address may call the worker; the secret Runner token is the only gate.
+  assert.equal(await s.checkRequestSecurity(workerRequest({ host: 'bonanza.example.ngrok-free.dev', 'x-forwarded-for': '203.0.113.9' }), true), null);
+  assert.equal((await s.checkRequestSecurity(workerRequest({ host: 'bonanza.example.ngrok-free.dev', 'x-qr-worker-token': '' }), true)).status, 401);
   for (const value of ['//evil.test', '/\\evil.test', '/%5cevil.test', '/api/runs', 'https://evil.test']) assert.equal(s.safeNextPath(value), '/');
   assert.equal(s.safeNextPath('/runs/new'), '/runs/new');
   for (const url of ['https://docs.google.com.evil.test/a?format=csv', 'http://docs.google.com/spreadsheets/d/abc/edit', 'https://docs.google.com:8443/spreadsheets/d/abc/edit', 'https://docs.google.com@evil.test/spreadsheets/d/abc/edit', 'http://127.0.0.1/?format=csv']) assert.equal(googleCsvExportUrl(url, '가장체크'), null);
@@ -97,12 +106,28 @@ Module._resolveFilename = function(request, parent, ...args) {
   assert.equal((await middleware(new NextRequest('https://app.test/login'))).status, 200);
   assert.equal((await middleware(new NextRequest('https://app.test/search', { headers: { cookie: `${s.SESSION_COOKIE}=${token}` } }))).status, 200);
   const { POST: login } = require('../app/api/auth/login/route.ts');
-  const loginRequest = password => new NextRequest('https://app.test/api/auth/login', { method: 'POST', headers: { origin: 'https://app.test', 'content-type': 'application/json' }, body: JSON.stringify({ password }) });
+  const throttle = require('../lib/login-throttle.ts');
+  const loginRequest = (password, address = '198.51.100.7') => new NextRequest('https://app.test/api/auth/login', { method: 'POST', headers: { origin: 'https://app.test', host: 'app.test', 'x-forwarded-for': `10.0.0.1, ${address}`, 'content-type': 'application/json' }, body: JSON.stringify({ password }) });
   assert.equal((await login(loginRequest('wrong'))).status, 401);
   const success = await login(loginRequest(process.env.APP_ACCESS_PASSWORD));
   assert.equal(success.status, 200);
   assert.equal(await s.validSession(success.cookies.get(s.SESSION_COOKIE).value), true);
-  for (let i = 0; i < 29; i++) await login(loginRequest('wrong'));
-  assert.equal((await login(loginRequest('wrong'))).status, 429);
+  // Five failures per client, then a growing lock; the right answer is refused while locked.
+  for (let i = 0; i < 5; i++) assert.equal((await login(loginRequest('wrong'))).status, 401);
+  const locked = await login(loginRequest(process.env.APP_ACCESS_PASSWORD));
+  assert.equal(locked.status, 429);
+  assert.ok(Number(locked.headers.get('retry-after')) >= 30);
+  assert.equal((await login(loginRequest(process.env.APP_ACCESS_PASSWORD, '198.51.100.8'))).status, 200, 'Other clients are not locked by one client');
+  assert.deepEqual(throttle.loginClient(new Headers({ host: 'app.test', 'x-forwarded-for': 'spoofed, 203.0.113.5' })), { key: 'ip:203.0.113.5', local: false });
+  assert.equal(throttle.loginClient(new Headers({ host: 'localhost:3000' })).local, true);
+  assert.equal(throttle.loginClient(new Headers({ host: 'localhost:3000', 'x-forwarded-for': '203.0.113.5' })).local, false, 'The tunnel cannot pretend to be local');
+  // A shared external budget stops address rotation; this PC keeps working.
+  throttle.resetLoginThrottleForTests();
+  const now = Date.now();
+  for (let i = 0; i < 60; i++) throttle.recordLoginFailure({ key: `ip:192.0.2.${i}`, local: false }, now);
+  assert.ok(throttle.loginRetryAfterMs({ key: 'ip:192.0.2.200', local: false }, now) > 0);
+  assert.equal(throttle.loginRetryAfterMs({ key: 'local', local: true }, now), 0);
+  assert.equal(throttle.loginRetryAfterMs({ key: 'ip:192.0.2.200', local: false }, now + 24 * 3600_000 + 1), 0, 'The shared budget recovers after 24 hours');
+  throttle.resetLoginThrottleForTests();
   console.log(`Security regression passed: ${handlers} guarded API handlers, signed/expired sessions, CSRF, body limit, worker auth, URL allowlist, login throttling`);
 })().catch(error => { console.error(error); process.exitCode = 1; });

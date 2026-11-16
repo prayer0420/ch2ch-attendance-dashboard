@@ -8,6 +8,7 @@ import {
   qrAttendanceDefaults
 } from "@/lib/qr-attendance-sync";
 import { getServiceSupabase, hasSupabaseEnv } from "@/lib/supabase/server";
+import { assertQrSelectionMatches, readQrSelection } from "@/lib/qr-selection";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -21,25 +22,28 @@ function json(body: unknown, status = 200) {
 }
 
 function isLocalRequest(request: NextRequest) {
-  return ["localhost", "127.0.0.1", "::1"].includes(request.nextUrl.hostname);
+  // Next's URL can remain loopback behind ngrok. Routing is based on the browser
+  // Host after checkRequestSecurity has validated authentication and the origin.
+  const host = request.headers.get("host") || request.nextUrl.host;
+  return /^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i.test(host);
 }
 
 async function queueQrJob(body: Record<string, unknown>) {
-  if (!hasSupabaseEnv()) throw new Error("Vercel 환경변수에 Supabase 연결 정보를 설정해 주세요.");
+  if (!hasSupabaseEnv()) throw new Error("서버의 PC 저장소 연결을 확인해 주세요.");
   const supabase = getServiceSupabase();
   const action = String(body.action || "preview");
   const preview = action === "apply" ? body.preview : null;
   if (action === "apply" && (!preview || typeof preview !== "object")) {
     throw new Error("먼저 QR 명단 미리보기를 완료해 주세요.");
   }
-  const week = Number(body.week ?? (preview as { week?: number } | null)?.week);
-  if (!Number.isInteger(week) || week < 1 || week > 53) throw new Error("주차는 1주부터 53주 사이로 입력해 주세요.");
+  const selection = readQrSelection(body);
+  if (action === "apply") assertQrSelectionMatches(preview, selection);
   const { data, error } = await supabase.from("qr_sync_jobs").insert({
     action,
     status: "queued",
-    week,
-    sheet_url: String(body.sheetUrl || (preview as { sheetUrl?: string } | null)?.sheetUrl || qrAttendanceDefaults.sheetUrl),
-    sheet_tab: String(body.sheetTab || (preview as { sheetTab?: string } | null)?.sheetTab || qrAttendanceDefaults.sheetTab),
+    week: selection.week,
+    sheet_url: selection.sheetUrl,
+    sheet_tab: selection.sheetTab,
     department: qrAttendanceDefaults.department,
     preview
   }).select("id,status").single();
@@ -48,7 +52,7 @@ async function queueQrJob(body: Record<string, unknown>) {
 }
 
 async function readQrJob(jobId: string) {
-  if (!hasSupabaseEnv()) throw new Error("Vercel 환경변수에 Supabase 연결 정보를 설정해 주세요.");
+  if (!hasSupabaseEnv()) throw new Error("서버의 PC 저장소 연결을 확인해 주세요.");
   const { data, error } = await getServiceSupabase().from("qr_sync_jobs").select("id,status,result,error_message").eq("id", jobId).single();
   if (error) throw new Error(`QR 작업 상태를 읽지 못했습니다: ${error.message}`);
   return {
@@ -81,9 +85,11 @@ export async function POST(request: NextRequest) {
     if (!isLocalRequest(request)) return json({ data: await queueQrJob(body) }, 202);
 
     if (action === "apply") {
-      const previewId = String(body?.previewId || "").trim();
+      // Compatibility with already-open mobile clients behind a local tunnel.
+      // Resolve the server's cached preview; never hydrate client-supplied names here.
+      const previewId = String(body?.previewId || body?.preview?.id || "").trim();
       if (!previewId) return json({ error: "먼저 CH2CH 명단을 불러와 미리보기를 확인해 주세요." }, 400);
-      const result = await applyQrAttendancePreview(previewId);
+      const result = await applyQrAttendancePreview(previewId, readQrSelection(body));
       return json({ data: result });
     }
 
@@ -94,12 +100,8 @@ export async function POST(request: NextRequest) {
       return json({ data: result });
     }
 
-    const week = Number(body?.week);
-    if (!Number.isInteger(week) || week < 1 || week > 53) return json({ error: "주차는 1주부터 53주 사이로 입력해 주세요." }, 400);
     const preview = await createQrAttendancePreview({
-      week,
-      sheetUrl: String(body?.sheetUrl || qrAttendanceDefaults.sheetUrl).trim(),
-      sheetTab: String(body?.sheetTab || qrAttendanceDefaults.sheetTab).trim(),
+      ...readQrSelection(body),
       department: qrAttendanceDefaults.department
     });
     return json({ data: preview });

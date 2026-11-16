@@ -1,7 +1,6 @@
 import { checkRequestSecurity } from "@/lib/security";
 import { googleCsvExportUrl } from "@/lib/google-sheet-url";
-import fs from "node:fs/promises";
-import path from "node:path";
+import { readJournals, saveJournal } from "@/lib/local-store/provider.cjs";
 import { createHash } from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import {
@@ -22,10 +21,10 @@ import {
   parseAccountingWorkbook
 } from "@/lib/worship-journal-accounting";
 import { loadAccountingFromGoogleDrive } from "@/lib/worship-journal-accounting-google";
+import { addManualPurposeOfferings } from "@/lib/worship-journal-manual-purpose";
 
 export const runtime = "nodejs";
 
-const STORE_PATH = path.join(process.cwd(), ".local-runtime", "worship-journals.json");
 const MAX_BULLETIN_SIZE = 30 * 1024 * 1024;
 const processState = globalThis as typeof globalThis & { __worshipJournalPublishLocks?: Set<string> };
 const publishLocks = processState.__worshipJournalPublishLocks ??= new Set<string>();
@@ -65,19 +64,7 @@ function verifyAttendanceAudit(csv: string) {
 }
 
 async function readStore(): Promise<WorshipJournal[]> {
-  try {
-    return JSON.parse(await fs.readFile(STORE_PATH, "utf8")) as WorshipJournal[];
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
-    throw error;
-  }
-}
-
-async function writeStore(journals: WorshipJournal[]) {
-  await fs.mkdir(path.dirname(STORE_PATH), { recursive: true });
-  const temporary = `${STORE_PATH}.tmp`;
-  await fs.writeFile(temporary, JSON.stringify(journals, null, 2), "utf8");
-  await fs.rename(temporary, STORE_PATH);
+  return readJournals();
 }
 
 function parseEntries<T>(value: FormDataEntryValue | null): T[] {
@@ -135,6 +122,11 @@ export async function POST(request: NextRequest) {
     } else {
       throw new Error("회계 자료는 엑셀 파일 또는 Google Sheet 중 하나를 선택해 주세요.");
     }
+
+    let manualPurpose: unknown;
+    try { manualPurpose = JSON.parse(String(form.get("manualPurpose") ?? "[]")); }
+    catch { throw new Error("목적헌금 수기 입력 형식을 확인해 주세요."); }
+    accounting = addManualPurposeOfferings(accounting, manualPurpose);
 
     const csv = await fetchAttendanceCsv(attendanceSheetUrl, attendanceSheetTab);
     const attendanceVerification = verifyAttendanceAudit(csv);
@@ -220,9 +212,7 @@ export async function POST(request: NextRequest) {
         { label: "4차 Google Sheet 저장값 재검증", detail: `${outputSheet.verification.checkedCells}개 셀 일치` }
       ];
       const journal: WorshipJournal = { ...approvedJournal, outputSheet };
-      const journals = await readStore();
-      const next = [journal, ...journals.filter((item) => item.date !== date)].slice(0, 60);
-      await writeStore(next);
+      await saveJournal(journal);
       return NextResponse.json({ journal, validation, saved: true, published: true });
     } finally {
       publishLocks.delete(publishKey);

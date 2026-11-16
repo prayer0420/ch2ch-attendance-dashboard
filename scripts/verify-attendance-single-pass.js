@@ -12,24 +12,30 @@ function extract(start, end) {
     findMemberRow: async (_, name) => { calls.push(name); return name === '정상대상' ? {} : null; },
     clickTextInAnyFrame: async () => true,
     shortDelay: async () => {},
-    waitForFamilyMemberText: async () => true,
+    prepareFamilyPage: async () => ({ ok: true }),
+    diagnostics: { emit: () => {}, capture: async () => ({ status: 'test-only' }) },
+    waitForStableMemberRows: async () => 0,
+    memberRowMisses: new Map(),
     readWebAttendanceState: async () => ({ ok: true, sunday: true, department: false }),
     targetActionText: () => '필요 작업: 주일 체크',
     log: () => {}
   });
   vm.runInContext(extract('async function findMemberRowWithRetry(', 'async function readVisibleMemberTexts('), context);
+  vm.runInContext(extract('function describeMemberRowMiss(', 'async function countVisibleCheckboxRows('), context);
   vm.runInContext(extract('async function processFamily(', 'async function finalSave('), context);
   const result = await context.processFamily({}, '재용이네', ['정지원', '한신혜', '박선희E', '정상대상'].map(name => ({ family: '재용이네', name, sunday: true, department: false })));
   for (const name of ['정지원', '한신혜', '박선희E']) {
-    assert.equal(calls.filter(item => item === name).length, 1);
+    // One lookup, plus one re-read of the same page after the table settles. No global search.
+    assert.equal(calls.filter(item => item === name).length, 2);
     const person = result.people.find(item => item.name === name);
     assert.equal(person.ok, false);
     assert.equal(Boolean(person.deferredSearch), false);
     assert.match(person.reason, /1회 확인 후 건너뜀/);
+    assert.match(person.reason, /이름 행을 확인하지 못했습니다/);
   }
   assert.equal(result.success, 1, 'Continue processing the next person after missing rows');
   assert.equal(result.failed, 3);
   const main = source.slice(source.indexOf('async function main('));
   assert.doesNotMatch(main, /await (?:processSearchCorrectionWithRetry|runAffiliationAuditParallel|resolveMissingAffiliations)\(/, 'No post-run global search or affiliation crawl');
-  console.log('Attendance single pass passed: one lookup per missing person, continue next, no deferred/global retry');
+  console.log('Attendance single pass passed: same-page recheck only, clear missing reason, continue next, no deferred/global retry');
 })().catch(error => { console.error(error); process.exitCode = 1; });

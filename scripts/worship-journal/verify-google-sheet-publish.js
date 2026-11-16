@@ -60,15 +60,30 @@ const journal = {
   graduates: [],
   sermon: { title: "제목", passage: "본문", preacher: "설교자" },
   service: { representativePrayer: "", offeringMembers: "", offeringPrayer: "", guide: "", cleanup: "", mealService: "", prayerMeeting: "" },
-  announcements: []
+  announcements: [],
+  accounting: { sourceType: "excel", sourceName: "test", sheetTab: "0913", sundayTotal: 340000, thanksgivingTotal: 396000, purposeTotal: 123000, total: 736000, thanksgiving: [], purpose: [{name:"흘려보내는 기쁨",amount:123000,note:""}] }
 };
+
+// Model the real template merge H26:K26: only H26 retains a value.
+// The old H26:I35 mapping therefore loses its first amount on read-back.
+function mergedReadback(item) {
+  const start = /!([A-Z]+)(\d+)/.exec(item.range);
+  const column = [...start[1]].reduce((n, c) => n * 26 + c.charCodeAt(0) - 64, 0);
+  const row = Number(start[2]);
+  return { range: item.range, values: item.values.map((values, ri) => values.map((value, ci) =>
+    row + ri === 26 && column + ci >= 9 && column + ci <= 11 ? "" : value)) };
+}
+assert.deepEqual(mergedReadback({range:"'0913'!H26:I35",values:[["흘려보내는 기쁨",123000]]}).values, [["흘려보내는 기쁨", ""]]);
 
 async function run() {
   const calls = [];
   let writtenData = [];
+  const copiedRows = [["", "♥기타사항"], ...Array.from({ length: 11 }, (_, i) => ["", `${i + 1}. 이전 광고`]), ["", "[예배마침: 15:38]"]];
+  const guardValues = [["", "♥기타사항"], ...Array.from({ length: 9 }, () => []), ["", "[예배마침: 15:38]"]];
   const fetchImpl = async (url, init = {}) => {
     calls.push({ url: String(url), init });
-    if (String(url).includes("/values:batchGet")) return Response.json({ valueRanges: writtenData.map((item) => ({ range: item.range, values: item.values })) });
+    if (String(url).includes("/values:batchGet")) return Response.json({ valueRanges: [...writtenData.map(mergedReadback), { values: guardValues }] });
+    if (String(url).includes("/values/")) return Response.json({ values: copiedRows });
     if (!init.method) return Response.json({ sheets: [{ properties: { sheetId: 906, title: "0906", index: 0 } }] });
     if (calls.length === 2) return Response.json({ replies: [{ duplicateSheet: { properties: { sheetId: 913, title: "0913", index: 0 } } }] });
     if (String(url).includes("/values:batchUpdate")) writtenData = JSON.parse(init.body).data;
@@ -87,24 +102,29 @@ async function run() {
   assert.equal(output.url, "https://docs.google.com/spreadsheets/d/sheet-id/edit#gid=913");
   assert.equal(output.verification.passed, true);
   assert.ok(output.verification.checkedCells > 0);
-  assert.equal(calls.length, 5);
+  assert.equal(calls.length, 7);
   assert.match(calls[0].url, /fields=sheets\.properties/);
   assert.equal(calls[0].init.headers.Authorization, "Bearer test-token");
   const duplicateBody = JSON.parse(calls[1].init.body);
   assert.deepEqual(duplicateBody.requests, [{ duplicateSheet: { sourceSheetId: 906, insertSheetIndex: 0, newSheetName: "0913" } }]);
-  assert.match(calls[2].url, /values:batchUpdate/);
-  const valuesBody = JSON.parse(calls[2].init.body);
+  assert.match(decodeURIComponent(calls[2].url), /A43:Z200/);
+  assert.deepEqual(JSON.parse(calls[3].init.body).requests, [{ deleteDimension: { range: { sheetId: 913, dimension: "ROWS", startIndex: 52, endIndex: 54 } } }]);
+  assert.match(calls[4].url, /values:batchUpdate/);
+  const valuesBody = JSON.parse(calls[4].init.body);
   assert.equal(valuesBody.valueInputOption, "RAW");
   assert.ok(valuesBody.data.some((item) => item.range === "'0913'!C27" && item.values[0][0] === ""));
-  const postWriteBody = JSON.parse(calls[3].init.body);
+  assert.deepEqual(valuesBody.data.find((item) => item.range === "'0913'!H27:K36").values[0], ["흘려보내는 기쁨", "", 123000, ""]);
+  assert.deepEqual(valuesBody.data.find((item) => item.range === "'0913'!C37").values, [[736000]]);
+  const postWriteBody = JSON.parse(calls[5].init.body);
   assert.equal(postWriteBody.requests[0].repeatCell.cell.userEnteredFormat.wrapStrategy, "WRAP");
   assert.ok(postWriteBody.requests.some((request) => request.autoResizeDimensions));
-  assert.match(calls[4].url, /values:batchGet/);
+  assert.match(calls[6].url, /values:batchGet/);
 
   const mismatchCalls = [];
   const mismatchFetch = async (url, init = {}) => {
     mismatchCalls.push({ url: String(url), init });
     if (String(url).includes("/values:batchGet")) return Response.json({ valueRanges: [] });
+    if (String(url).includes("/values/")) return Response.json({ values: copiedRows });
     if (!init.method) return Response.json({ sheets: [{ properties: { sheetId: 906, title: "0906", index: 0 } }] });
     if (mismatchCalls.length === 2) return Response.json({ replies: [{ duplicateSheet: { properties: { sheetId: 913 } } }] });
     return Response.json({});
@@ -117,7 +137,27 @@ async function run() {
   const cleanup = JSON.parse(mismatchCalls.at(-1).init.body);
   assert.deepEqual(cleanup.requests, [{ deleteSheet: { sheetId: 913 } }]);
 
-  console.log("worship journal Google Sheet publishing: write, read-back verification, and cleanup passed");
+  // All submitted values match, but a stale ad in a blank slot or below the
+  // footer must still fail verification and roll back only the new tab.
+  for (const staleRow of [4, 11]) {
+    const staleFetch = async (url, init = {}) => {
+      if (String(url).includes("/values:batchGet")) {
+        const stale = structuredClone(guardValues);
+        stale[staleRow] = ["", "10. 코람데오 기도회"];
+        return Response.json({ valueRanges: [...writtenData.map(mergedReadback), { values: stale }] });
+      }
+      return fetchImpl(url, init);
+    };
+    // Use request contents for duplicate detection independently of call count.
+    const wrapped = async (url, init = {}) => {
+      if (init.body && JSON.parse(init.body).requests?.[0]?.duplicateSheet) return Response.json({ replies: [{ duplicateSheet: { properties: { sheetId: 913 } } }] });
+      return staleFetch(url, init);
+    };
+    await assert.rejects(() => publishWorshipJournalToGoogleSheet(journal, { config, fetchImpl: wrapped, getAccessToken: async () => "test-token" }), /저장 후 재검증에 실패/);
+    assert.deepEqual(JSON.parse(calls.at(-1).init.body).requests, [{ deleteSheet: { sheetId: 913 } }]);
+  }
+
+  console.log("worship journal Google Sheet publishing: merged purpose cells, amount read-back verification, separate totals and failure cleanup passed");
 }
 
 run().catch((error) => {

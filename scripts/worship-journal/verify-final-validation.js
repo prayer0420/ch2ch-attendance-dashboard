@@ -63,4 +63,12 @@ const visitorIncluded = validateWorshipJournalForPublish({
 assert.equal(visitorIncluded.ok, false);
 assert.equal(visitorIncluded.checks.find((check) => check.id === "visitor-exclusion").ok, false);
 
-console.log("worship journal final validation: date, totals, visitor exclusion, required fields, and output order passed");
+const purpose = { name: "흘려보내는 기쁨", amount: 10000, note: "" };
+const withPurpose = { ...journal, accounting: { ...journal.accounting, purpose: [purpose], purposeTotal: 10000, total: journal.accounting.total } };
+assert.equal(validateWorshipJournalForPublish(withPurpose).ok, true);
+assert.equal(validateWorshipJournalForPublish({ ...withPurpose, accounting: { ...withPurpose.accounting, total: journal.accounting.total + 10000 } }).checks.find((check) => check.id === "accounting-total").ok, false);
+assert.equal(validateWorshipJournalForPublish({ ...withPurpose, accounting: { ...withPurpose.accounting, purposeTotal: 0 } }).ok, false);
+for (const entries of [[{ ...purpose, name: "" }], [{ ...purpose, amount: 0 }], [{ ...purpose, amount: -10 }], Array(11).fill(purpose)]) {
+  assert.equal(validateWorshipJournalForPublish({ ...withPurpose, accounting: { ...withPurpose.accounting, purpose: entries } }).checks.find((check) => check.id === "purpose-entries").ok, false);
+}
+console.log("worship journal final validation: date, totals, purpose entries, visitor exclusion and required fields passed");

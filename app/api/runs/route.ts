@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
 
   if (!hasSupabaseEnv()) {
     return NextResponse.json({
-      error: "Supabase 연결이 필요합니다. Vercel과 로컬 .env.local에 Supabase 환경변수를 설정해 주세요."
+      error: "서버 저장소 연결이 필요합니다. PC 저장소 설정과 실행 상태를 확인해 주세요."
     }, { status: 503 });
   }
 

@@ -1,19 +1,21 @@
-param([switch]$Quiet)
+param([switch]$Quiet, [switch]$NoGuard)
 . (Join-Path $PSScriptRoot 'common.ps1')
 Import-ServerAuthentication
 $lifecycleMutex = New-Object Threading.Mutex($false, ('Local\CH2CH-Start-' + $serverProjectHash))
 $lifecycleLocked = $false
+$guardReady = $false
 try {
   try { $lifecycleLocked = $lifecycleMutex.WaitOne(0) } catch [Threading.AbandonedMutexException] { $lifecycleLocked = $true }
   if (-not $lifecycleLocked) { throw 'Another start/stop operation is in progress.' }
   $state = Get-ServerState
   if (-not (Test-ServerProcessOwned $state.dashboard) -or $state.dashboard.setupOnly -or $state.dashboard.mode -ne 'start') { throw 'An owned production web server must be running first.' }
   $listeners = @(Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction Stop)
-  if ($listeners.Count -ne 1 -or $listeners[0].LocalAddress -ne '127.0.0.1' -or $listeners[0].OwningProcess -ne $state.dashboard.pid) { throw 'Unexpected web listener. Runner was not started.' }
+  if ($listeners.Count -ne 1 -or -not (Test-ServerListenerOwned $state.dashboard $listeners[0])) { throw 'Unexpected web listener. Runner was not started.' }
   if ($state.runner) {
     $recorded = Get-Process -Id $state.runner.pid -ErrorAction SilentlyContinue
     if ($recorded) {
       if (-not (Test-ServerProcessOwned $state.runner)) { throw 'Recorded Runner identity mismatch. Nothing was stopped or started.' }
+      $guardReady = $true
       if (-not $Quiet) { Write-Output 'Runner is already running. No duplicate started.' }
       return
     }
@@ -36,9 +38,11 @@ try {
     if ($LASTEXITCODE -eq 0) { $heartbeatReady = $true; break }
     Start-Sleep -Seconds 1
   }
-  if (-not $heartbeatReady) { throw 'Runner process exists but a fresh idle heartbeat was not verified.' }
-  if (-not $Quiet) { Write-Output 'Runner online and idle. Existing non-queued records were preserved.' }
+  if (-not $heartbeatReady) { throw 'Runner process exists but a fresh online heartbeat was not verified.' }
+  $guardReady = $true
+  if (-not $Quiet) { Write-Output 'Runner online. Existing non-queued records were preserved.' }
 } finally {
   if ($lifecycleLocked) { $lifecycleMutex.ReleaseMutex() }
   $lifecycleMutex.Dispose()
+  if ($guardReady -and -not $NoGuard) { & (Join-Path $PSScriptRoot 'start-runner-guard.ps1') | Out-Null }
 }

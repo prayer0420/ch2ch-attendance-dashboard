@@ -1,5 +1,6 @@
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'autostart-policy.ps1')
+. (Join-Path $PSScriptRoot 'common.ps1')
 function Assert-True([bool]$Value, [string]$Label) { if (-not $Value) { throw $Label } }
 $boot = [DateTime]::Parse('2026-09-22T00:00:00Z').ToUniversalTime()
 $old = @{ startedAt='2026-09-21T23:59:59Z'; pid=123 }
@@ -38,6 +39,17 @@ Assert-True (-not (Test-TunnelIdentity $entry $process $details $exe $config $or
 $details.ExecutablePath = $exe
 $details.CommandLine = "$exe http http://127.0.0.1:9999"
 Assert-True (-not (Test-TunnelIdentity $entry $process $details $exe $config $origin)) 'Wrong tunnel target accepted.'
+$nodeEntry = @{ pid=123; nodePath='C:\fixture\node.exe' }
+$parentNode = [pscustomobject]@{ Id=123; StartTime=$boot }
+$childNode = [pscustomobject]@{ Id=124; StartTime=$boot.AddSeconds(1) }
+$nextScript = Join-Path $serverProject 'node_modules\next\dist\server\lib\start-server.js'
+$childDetails = [pscustomobject]@{ ProcessId=124; ParentProcessId=123; ExecutablePath=$nodeEntry.nodePath; CommandLine="node.exe $nextScript" }
+Assert-True (Test-NextListenerChild $nodeEntry $parentNode $childNode $childDetails) 'Owned Next listener child rejected.'
+$childDetails.ParentProcessId = 999
+Assert-True (-not (Test-NextListenerChild $nodeEntry $parentNode $childNode $childDetails)) 'Unrelated child accepted.'
+$childDetails.ParentProcessId = 123
+$childDetails.CommandLine = 'node.exe C:\unrelated\server.js'
+Assert-True (-not (Test-NextListenerChild $nodeEntry $parentNode $childNode $childDetails)) 'Wrong Next child script accepted.'
 $source = Get-Content -LiteralPath (Join-Path $PSScriptRoot 'autostart.ps1') -Raw
 Assert-True ($source.Contains("'-Production', '-WebOnly', '-NoPause'")) 'Web launcher must remain web-only so Runner attaches through its verified launcher.'
 Assert-True ($source.Contains("start-runner.ps1") -and $source.Contains('$script:runnerStarted = $true')) 'Autostart must verify and report Runner startup.'

@@ -311,9 +311,27 @@ export function extractHwpParagraphs(buffer: Buffer) {
   return paragraphs;
 }
 
-function findTargetDateLabel(date: string) {
-  const parsed = new Date(`${date}T00:00:00`);
-  return `${parsed.getMonth() + 1}/${parsed.getDate()}`;
+// Dates in the service table are row boundaries, including the next week's row.
+// Do not infer a column/row from proximity when text extraction loses the layout.
+function serviceDateLine(line: string) {
+  const normalized = line.replace(/\s+/g, "").replace(/^(?:이번주|금주|다음주|차주)[:：]?/, "");
+  const match = /^(?:(\d{4})[년./-])?(\d{1,2})[월./-](\d{1,2})(?:일|\.)?(?:\([일월화수목금토](?:요일|주일)?\)|\(주일\)|주일)?$/.exec(normalized);
+  if (!match) return null;
+  const year = match[1] ? Number(match[1]) : undefined;
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const parsed = new Date(Date.UTC(year ?? 2000, month - 1, day));
+  if (parsed.getUTCMonth() + 1 !== month || parsed.getUTCDate() !== day) return null;
+  return { year, month, day };
+}
+
+function serviceSectionEnd(line: string) {
+  return /^(?:(?:주보)?광고(?:사항)?|미리미리광고|예배순서|(?:4부)?청년예배말씀|.*월일정)$/.test(line.replace(/\s+/g, ""));
+}
+
+function serviceRowBoundary(line: string) {
+  return Boolean(serviceDateLine(line)) || /^(?:이번\s*주|금주|다음\s*주|차주)(?:\s|[:：]|$)/.test(line)
+    || /^(?:\d{4}\s*[년./-]\s*)?\d{1,2}\s*[월./-]\s*\d{1,2}(?:\D|$)/.test(line);
 }
 
 function extractSermon(paragraphs: string[]) {
@@ -355,17 +373,35 @@ function extractService(paragraphs: string[], date: string): WorshipService {
     mealService: "",
     prayerMeeting: ""
   };
-  const marker = paragraphs.findIndex((line) => line === "예배 섬김" || line.includes("예배 섬김"));
+  const marker = paragraphs.findIndex((line) => line.replace(/\s+/g, "").includes("예배섬김"));
   if (marker < 0) return empty;
-  const label = findTargetDateLabel(date);
-  const dateIndex = paragraphs.findIndex((line, index) => index > marker && index < marker + 60 && new RegExp(`^${label}(?:$|\\s|\\()`).test(line));
-  if (dateIndex < 0) return empty;
+  const target = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+  if (!target) return empty;
+  const section: string[] = [];
+  for (const line of paragraphs.slice(marker + 1, marker + 60)) {
+    if (serviceSectionEnd(line)) break;
+    section.push(line);
+  }
+  // If dates are adjacent column headers, even the last date cannot safely own
+  // the following text. Do not reinterpret that layout as sequential date rows.
+  if (section.some((line, index) => index > 0 && serviceDateLine(line) && serviceDateLine(section[index - 1]))) return empty;
+  const matches = section.flatMap((line, index) => {
+    const label = serviceDateLine(line);
+    return label && (label.year === undefined || label.year === Number(target[1]))
+      && label.month === Number(target[2]) && label.day === Number(target[3]) ? [index] : [];
+  });
+  // Missing or duplicated dates must be reviewed, never replaced with next week.
+  if (matches.length !== 1) return empty;
+  const dateIndex = matches[0];
 
   const cells: string[] = [];
-  for (const line of paragraphs.slice(dateIndex + 1, dateIndex + 12)) {
-    if (/^\d{1,2}\/\d{1,2}/.test(line)) break;
+  for (const line of section.slice(dateIndex + 1, dateIndex + 12)) {
+    if (serviceRowBoundary(line)) break;
     cells.push(line);
   }
+  // Adjacent date headers/column-major extraction cannot prove whose values follow.
+  // Keep the service fields empty so required-field validation blocks publishing.
+  if (cells.length < 6) return empty;
   const firstFamily = cells.findIndex((cell) => cell.replace(/\s+/g, "").endsWith("네"));
   if (firstFamily >= 0 && cells.length - firstFamily >= 3) {
     const dutyPeople = cells.slice(0, firstFamily);
@@ -415,7 +451,8 @@ function extractAnnouncements(paragraphs: string[]) {
   const pending: string[] = [];
   for (const line of section) {
     const cleanLine = line.trim();
-    if (!cleanLine || /^[-:,!·•]+$/.test(cleanLine) || /^\d+\s*$/.test(cleanLine)) continue;
+    // Same character set as before; ordered so Tailwind does not read it as a CSS class.
+    if (!cleanLine || /^[,!·•:-]+$/.test(cleanLine) || /^\d+\s*$/.test(cleanLine)) continue;
     const match = cleanLine.match(/^\s*(\d{1,2})\s*[.)]\s*(?:\d+\.\s*)?(.*)/);
     if (match) {
       let prefix = pending.splice(0).join(" ").trim();

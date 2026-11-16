@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { Badge, Panel } from "@/components/ui";
 import { DEFAULT_ATTENDANCE_SHEET_URL, readAttendanceSheetUrl, saveAttendanceSheetUrl } from "@/lib/attendance-sheet-preference";
+import { dateForSundayWeek, mostRecentSunday, weekOfSunday, weeksInSundayYear } from "@/lib/sunday-week";
+import { assertQrSelectionMatches, qrSelectionMatches, readQrSelection } from "@/lib/qr-selection";
 
 type Preview = {
   id: string;
@@ -38,6 +40,7 @@ type Preview = {
 
 type ApplyResult = {
   appliedAt: string;
+  writeMethod?: "api" | "browser";
   service13Written: number;
   service4Written: number;
   attendanceUpdated: number;
@@ -49,32 +52,6 @@ type ApplyResult = {
 };
 
 type QueuedJob = { queued: true; jobId: string; status: string };
-
-function isoWeek() {
-  const now = new Date();
-  const target = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
-  const day = target.getUTCDay() || 7;
-  target.setUTCDate(target.getUTCDate() + 4 - day);
-  const yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
-  return Math.ceil(((target.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
-}
-
-function isoWeekSunday(week: number) {
-  const now = new Date();
-  const januaryFourth = new Date(Date.UTC(now.getFullYear(), 0, 4));
-  const januaryFourthDay = januaryFourth.getUTCDay() || 7;
-  const monday = new Date(januaryFourth);
-  monday.setUTCDate(januaryFourth.getUTCDate() - januaryFourthDay + 1 + (week - 1) * 7);
-  const sunday = new Date(monday);
-  sunday.setUTCDate(monday.getUTCDate() + 6);
-  return new Intl.DateTimeFormat("ko-KR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    weekday: "short",
-    timeZone: "UTC"
-  }).format(sunday);
-}
 
 function NameList({ title, names, tone }: { title: string; names: string[]; tone: "sea" | "brass" }) {
   return (
@@ -95,7 +72,9 @@ function NameList({ title, names, tone }: { title: string; names: string[]; tone
 }
 
 export function QrAttendanceSync() {
-  const [week, setWeek] = useState(isoWeek());
+  const [weekYear, setWeekYear] = useState(() => weekOfSunday(mostRecentSunday()).year);
+  const [week, setWeek] = useState(() => weekOfSunday(mostRecentSunday()).week);
+  const [weekEdited, setWeekEdited] = useState(false);
   const [sheetUrl, setSheetUrl] = useState(DEFAULT_ATTENDANCE_SHEET_URL);
   const [sheetUrlReady, setSheetUrlReady] = useState(false);
   const [sheetTab, setSheetTab] = useState("가장체크");
@@ -113,11 +92,33 @@ export function QrAttendanceSync() {
     if (sheetUrlReady) saveAttendanceSheetUrl(sheetUrl);
   }, [sheetUrl, sheetUrlReady]);
 
+  useEffect(() => {
+    if (weekEdited || loading || preview) return;
+    const refreshWeek = () => {
+      const current = weekOfSunday(mostRecentSunday());
+      setWeekYear(current.year);
+      setWeek(current.week);
+    };
+    window.addEventListener("focus", refreshWeek);
+    const interval = window.setInterval(refreshWeek, 60 * 60 * 1000);
+    return () => { window.removeEventListener("focus", refreshWeek); window.clearInterval(interval); };
+  }, [weekEdited, loading, preview]);
+
+  useEffect(() => {
+    setPreview(null);
+    setResult(null);
+  }, [week, sheetUrl, sheetTab]);
+
+  const previewMatches = qrSelectionMatches(preview, { week, sheetUrl, sheetTab });
+
   const unmatched = useMemo(
     () => [...new Set([...(preview?.unmatched13Names ?? []), ...(preview?.unmatched4Names ?? [])])],
     [preview]
   );
-  const weekDate = useMemo(() => isoWeekSunday(week), [week]);
+  const weekDate = useMemo(() => {
+    const value = dateForSundayWeek(weekYear, week);
+    return value ? new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit", weekday: "short", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`)) : "유효하지 않은 주차";
+  }, [weekYear, week]);
 
   async function waitForJob(jobId: string) {
     for (let attempt = 0; attempt < 180; attempt += 1) {
@@ -134,21 +135,26 @@ export function QrAttendanceSync() {
 
   async function loadPreview(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (loading || !sheetUrlReady) return;
+    setWeekEdited(true);
     setLoading("preview");
     setError(null);
     setPreview(null);
     setResult(null);
     try {
+      const selection = readQrSelection({ week, sheetUrl, sheetTab });
       const response = await fetch("/api/qr-attendance", {
         method: "POST",
         cache: "no-store",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "preview", week, sheetUrl, sheetTab })
+        body: JSON.stringify({ action: "preview", ...selection })
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "CH2CH QR 명단을 불러오지 못했습니다.");
       const data = payload.data as Preview | QueuedJob;
-      setPreview("queued" in data ? await waitForJob(data.jobId) : data);
+      const loaded = "queued" in data ? await waitForJob(data.jobId) : data;
+      assertQrSelectionMatches(loaded, selection);
+      setPreview(loaded);
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : "CH2CH QR 명단을 불러오지 못했습니다.");
     } finally {
@@ -157,20 +163,20 @@ export function QrAttendanceSync() {
   }
 
   async function applyToSheet() {
-    if (!preview) return;
+    if (!preview || loading) return;
     setLoading("apply");
     setError(null);
     setResult(null);
     try {
+      const selection = readQrSelection({ week, sheetUrl, sheetTab });
+      assertQrSelectionMatches(preview, selection);
       const response = await fetch("/api/qr-attendance", {
         method: "POST",
         cache: "no-store",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-            ? { action: "apply", previewId: preview.id }
-            : { action: "apply", preview }
-        )
+        // A tunnel can expose a public browser URL while Next sees localhost.
+        // Send both forms; only the server decides direct versus queued execution.
+        body: JSON.stringify({ action: "apply", previewId: preview.id, preview, ...selection })
       });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "Google Sheet 반영에 실패했습니다.");
@@ -197,9 +203,9 @@ export function QrAttendanceSync() {
                 <input
                   type="number"
                   min={1}
-                  max={53}
+                  max={weeksInSundayYear(weekYear)}
                   value={week}
-                  onChange={(event) => setWeek(Number(event.target.value))}
+                  onChange={(event) => { setWeekEdited(true); setWeek(Number(event.target.value)); }}
                   disabled={Boolean(loading)}
                   className="h-12 rounded border border-line bg-white px-4 text-base font-black outline-none focus:border-sea focus:ring-2 focus:ring-sea/15"
                 />
@@ -230,7 +236,7 @@ export function QrAttendanceSync() {
               </label>
               <button
                 type="submit"
-                disabled={Boolean(loading)}
+                disabled={Boolean(loading) || !sheetUrlReady}
                 className="focus-ring mt-auto inline-flex h-12 items-center justify-center gap-2 rounded bg-ink px-5 text-sm font-black text-paper transition hover:bg-sea disabled:cursor-wait disabled:opacity-65"
               >
                 {loading === "preview" ? <LoaderCircle size={18} className="animate-spin" /> : <FileDown size={18} />}
@@ -245,7 +251,7 @@ export function QrAttendanceSync() {
           <Panel className="p-5 sm:p-6">
             <div className="flex flex-wrap items-start justify-between gap-4 border-b border-line pb-5">
               <div>
-                <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">{preview.weekLabel} 미리보기</p>
+                <p className="text-xs font-black uppercase tracking-[0.12em] text-sea">{preview.weekLabel} 미리보기 · 대상 탭: {preview.sheetTab}</p>
                 <h2 className="mt-1 text-xl font-black">2청년회 QR 출석 대상</h2>
                 <p className="mt-2 text-sm text-ink/60">CH2CH 출입명부 {preview.downloadedCount.toLocaleString()}명 중 기관 필터 결과 {preview.departmentCount}명</p>
               </div>
@@ -287,7 +293,10 @@ export function QrAttendanceSync() {
               {result.verificationFailures.length ? <AlertTriangle className="text-brick" /> : <CheckCircle2 className="text-moss" />}
               <div>
                 <h2 className="text-xl font-black">최종 재검사 결과</h2>
-                <p className="mt-1 text-xs font-bold text-ink/50">{new Date(result.appliedAt).toLocaleString("ko-KR")}</p>
+                <p className="mt-1 text-xs font-bold text-ink/50">
+                  {new Date(result.appliedAt).toLocaleString("ko-KR")}
+                  {result.writeMethod ? ` · ${result.writeMethod === "api" ? "Google Sheets API로 직접 기록" : "Google Sheet 편집 화면으로 기록"}` : ""}
+                </p>
               </div>
             </div>
             <div className="mt-4 overflow-x-auto">
@@ -316,7 +325,7 @@ export function QrAttendanceSync() {
           <ol className="mt-4 grid gap-4 text-sm">
             <li className="flex gap-3"><span className="grid size-7 shrink-0 place-items-center rounded bg-ink text-xs font-black text-paper">1</span><span><strong className="block">CH2CH 원본 수집</strong><span className="text-ink/60">선택한 주차의 출입명부 엑셀을 내려받습니다.</span></span></li>
             <li className="flex gap-3"><span className="grid size-7 shrink-0 place-items-center rounded bg-ink text-xs font-black text-paper">2</span><span><strong className="block">2청년회만 필터</strong><span className="text-ink/60">기관에 2청년회가 포함된 사람만 남깁니다.</span></span></li>
-            <li className="flex gap-3"><span className="grid size-7 shrink-0 place-items-center rounded bg-ink text-xs font-black text-paper">3</span><span><strong className="block">예배별 시트 기록</strong><span className="text-ink/60">1·2·3부는 DQ:DR, 4부는 DS:DT에 기록합니다.</span></span></li>
+            <li className="flex gap-3"><span className="grid size-7 shrink-0 place-items-center rounded bg-ink text-xs font-black text-paper">3</span><span><strong className="block">M열 출석시간으로만 분류</strong><span className="text-ink/60">13:00 미만은 1·2·3부, 13:00 이상은 4부로 반영합니다. 비고·세부항목은 사용하지 않습니다. 시간이 없거나 잘못된 행은 제외합니다.</span></span></li>
             <li className="flex gap-3"><span className="grid size-7 shrink-0 place-items-center rounded bg-ink text-xs font-black text-paper">4</span><span><strong className="block">QR와 참석 재검사</strong><span className="text-ink/60">QR 대상자의 참석만 켜고 방송·가족은 변경하지 않습니다.</span></span></li>
           </ol>
         </Panel>
@@ -327,7 +336,7 @@ export function QrAttendanceSync() {
           <button
             type="button"
             onClick={applyToSheet}
-            disabled={!preview || Boolean(loading) || Boolean(result)}
+            disabled={!previewMatches || Boolean(loading) || Boolean(result)}
             className="focus-ring mt-4 inline-flex w-full items-center justify-center gap-2 rounded bg-sea px-4 py-3 text-sm font-black text-white transition hover:bg-ink disabled:cursor-not-allowed disabled:bg-ink/35"
           >
             {loading === "apply" ? <LoaderCircle size={18} className="animate-spin" /> : <ClipboardCheck size={18} />}

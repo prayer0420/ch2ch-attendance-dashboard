@@ -54,6 +54,10 @@ export function validateWorshipJournalForPublish(
   const accounting = journal.accounting;
   add("accounting", "회계 자료", Boolean(accounting), accounting ? `${accounting.sheetTab} 탭 · 총 ${accounting.total.toLocaleString("ko-KR")}원` : "회계 자료가 없습니다.");
   if (accounting) {
+    const purposeOk = accounting.purpose.length <= 10 && accounting.purpose.every((entry) => Boolean(entry.name.trim()) && Number.isSafeInteger(entry.amount) && entry.amount > 0);
+    add("purpose-entries", "목적헌금 내역", purposeOk, purposeOk ? `${accounting.purpose.length}건 확인` : "목적헌금은 항목명과 1원 이상의 정수 금액을 입력해 주세요. 기존 양식에는 최대 10건까지 저장할 수 있습니다.");
+    const purposeSum = accounting.purpose.reduce((sum, entry) => sum + entry.amount, 0);
+    add("purpose-sum", "목적헌금 합계", purposeSum === accounting.purposeTotal, `내역 합계 ${purposeSum.toLocaleString("ko-KR")}원 · 표시 합계 ${accounting.purposeTotal.toLocaleString("ko-KR")}원`);
     const entriesOk = accounting.thanksgiving.every((entry) => Boolean(entry.name.trim()) && Number.isInteger(entry.amount) && entry.amount > 0);
     add("thanksgiving-entries", "감사헌금 명단", entriesOk, entriesOk ? `${accounting.thanksgiving.length}건의 이름과 금액 확인` : "이름이 없거나 금액이 0원 이하인 감사헌금이 있습니다.");
 
@@ -61,9 +65,9 @@ export function validateWorshipJournalForPublish(
     add("thanksgiving-sum", "감사헌금 합계", thanksgivingSum === accounting.thanksgivingTotal,
       `명단 합계 ${thanksgivingSum.toLocaleString("ko-KR")}원 · 표시 합계 ${accounting.thanksgivingTotal.toLocaleString("ko-KR")}원`);
 
-    const totalSum = accounting.sundayTotal + accounting.thanksgivingTotal + accounting.purposeTotal;
+    const totalSum = accounting.sundayTotal + accounting.thanksgivingTotal;
     add("accounting-total", "회계 총액", totalSum === accounting.total,
-      `항목 합계 ${totalSum.toLocaleString("ko-KR")}원 · 총액 ${accounting.total.toLocaleString("ko-KR")}원`);
+      `주일·감사헌금 합계 ${totalSum.toLocaleString("ko-KR")}원 · 총액 ${accounting.total.toLocaleString("ko-KR")}원 (목적헌금 별도)`);
 
     const outputOrder = [...accounting.thanksgiving].sort((left, right) =>
       Number(Boolean(right.note.trim())) - Number(Boolean(left.note.trim())) || left.name.localeCompare(right.name, "ko-KR"));

@@ -44,6 +44,12 @@ export function applyReviewedJournal(
   const service = record(reviewed.service);
   const accounting = record(reviewed.accounting);
   const baseAccounting = base.accounting;
+  if (Array.isArray(accounting.purpose) && (accounting.purpose.length > 10 || accounting.purpose.some((item) => {
+    const entry = record(item);
+    return !text(entry.name, "", 100) || !Number.isSafeInteger(entry.amount) || Number(entry.amount) <= 0;
+  }))) {
+    throw new Error("목적헌금은 항목명과 1원 이상의 정수 금액을 입력해 주세요. 최대 10건까지 추가할 수 있습니다.");
+  }
   const families = Array.isArray(attendance.families)
     ? attendance.families.slice(0, 30).flatMap((item) => {
       const family = record(item);
@@ -77,7 +83,7 @@ export function applyReviewedJournal(
       sundayTotal,
       thanksgivingTotal,
       purposeTotal,
-      total: sundayTotal + thanksgivingTotal + purposeTotal,
+      total: sundayTotal + thanksgivingTotal,
       sunday: reviewedOfferings(accounting.sunday, baseAccounting.sunday ?? []).sort((a, b) => a.name.localeCompare(b.name, "ko-KR")),
       thanksgiving: sortThanksgiving(reviewedOfferings(accounting.thanksgiving, baseAccounting.thanksgiving)),
       purpose: reviewedOfferings(accounting.purpose, baseAccounting.purpose)

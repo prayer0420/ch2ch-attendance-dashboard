@@ -16,16 +16,36 @@ export function WorshipAccountingReview({ accounting, onChange }: { accounting: 
     const updated = {...accounting, [section]:next};
     const totalKey = `${section}Total` as "sundayTotal" | "thanksgivingTotal" | "purposeTotal";
     updated[totalKey] = next.reduce((sum, entry) => sum + entry.amount, 0);
-    updated.total = updated.sundayTotal + updated.thanksgivingTotal + updated.purposeTotal;
+    updated.total = updated.sundayTotal + updated.thanksgivingTotal;
     onChange(updated);
   }
+  function updatePurpose(purpose: ThanksgivingOffering[]) {
+    const purposeTotal = purpose.reduce((sum, entry) => sum + entry.amount, 0);
+    onChange({ ...accounting, purpose, purposeTotal, total: accounting.sundayTotal + accounting.thanksgivingTotal });
+  }
   return <div className="space-y-4">
-    <p className="rounded-lg border border-sea/20 bg-sea/5 px-3 py-2 text-sm text-sea">읽은 회계 탭: <strong>{accounting.sheetTab}</strong> · 파일의 가장 오른쪽 탭</p>
-    <div className="grid gap-2 sm:grid-cols-3">
-      <label className="rounded-lg border border-line bg-white p-3 text-xs font-bold">주일헌금액 (원)<input aria-label="주일헌금액" className="journal-input mt-2 tabular-nums" type="number" min={0} value={accounting.sundayTotal} onChange={event=>{const sundayTotal=Math.max(0,Number(event.target.value)||0);onChange({...accounting,sundayTotal,total:sundayTotal+accounting.thanksgivingTotal+accounting.purposeTotal});}} /></label>
+    <p className="rounded-lg border border-sea/20 bg-sea/5 px-3 py-2 text-sm text-sea">읽은 회계 탭: <strong>{accounting.sheetTab}</strong></p>
+    <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+      <label className="rounded-lg border border-line bg-white p-3 text-xs font-bold">주일헌금액 (원)<input aria-label="주일헌금액" className="journal-input mt-2 tabular-nums" type="number" min={0} value={accounting.sundayTotal} onChange={event=>{const sundayTotal=Math.max(0,Number(event.target.value)||0);onChange({...accounting,sundayTotal,total:sundayTotal+accounting.thanksgivingTotal});}} /></label>
       <div className="rounded-lg border border-line bg-white p-3"><span className="text-xs font-bold">감사헌금액</span><strong className="mt-3 block tabular-nums">{accounting.thanksgivingTotal.toLocaleString("ko-KR")}원</strong></div>
-      <div className="rounded-lg border border-sea/30 bg-sea/10 p-3"><span className="text-xs font-bold">총액</span><strong className="mt-3 block tabular-nums">{accounting.total.toLocaleString("ko-KR")}원</strong></div>
+      <div className="rounded-lg border border-line bg-white p-3"><span className="text-xs font-bold">목적헌금액 (별도)</span><strong className="mt-3 block tabular-nums">{accounting.purposeTotal.toLocaleString("ko-KR")}원</strong></div>
+      <div className="rounded-lg border border-sea/30 bg-sea/10 p-3"><span className="text-xs font-bold">총액 (주일 + 감사)</span><strong className="mt-3 block tabular-nums">{(accounting.sundayTotal + accounting.thanksgivingTotal).toLocaleString("ko-KR")}원</strong></div>
     </div>
+    <section className="rounded-lg border border-brass/40 bg-brass/5 p-3" aria-labelledby="purpose-offerings-title">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h4 id="purpose-offerings-title" className="text-sm font-bold">목적헌금 · 흘려보내는 기쁨</h4>
+        <button type="button" className="journal-small-button" disabled={accounting.purpose.length >= 10} onClick={() => updatePurpose([...accounting.purpose, { name: "흘려보내는 기쁨", amount: 0, note: "" }])}><Plus size={14} /> 목적헌금 추가</button>
+      </div>
+      <p className="mt-2 text-xs leading-5 text-ink/60">원본에서 읽은 목적헌금을 확인하고, 없는 항목만 추가해 주세요. 목적헌금은 별도 합계로 표시하며 총액에는 포함하지 않습니다. 기존 양식에 최대 10건까지 입력합니다.</p>
+      <div className="mt-3 grid gap-2">
+        {accounting.purpose.map((offering, index) => <div key={index} className="grid items-end gap-2 rounded border border-line bg-white p-3 sm:grid-cols-[1fr_150px_auto]">
+          <label className="journal-label">항목명 / 이름<input className="journal-input" aria-label={`${index + 1}번째 목적헌금 항목명`} placeholder="흘려보내는 기쁨" value={offering.name} onChange={(event) => updatePurpose(accounting.purpose.map((entry, i) => i === index ? { ...entry, name: event.target.value } : entry))} /></label>
+          <label className="journal-label">금액 (원)<input className="journal-input tabular-nums" aria-label={`${index + 1}번째 목적헌금 금액`} type="number" min={0} step={1} value={offering.amount} onChange={(event) => updatePurpose(accounting.purpose.map((entry, i) => i === index ? { ...entry, amount: Math.max(0, Math.round(Number(event.target.value) || 0)) } : entry))} /></label>
+          <button type="button" className="grid size-10 place-items-center rounded border border-line text-brick" aria-label={`${index + 1}번째 목적헌금 삭제`} onClick={() => updatePurpose(accounting.purpose.filter((_, i) => i !== index))}><Trash2 size={14} /></button>
+        </div>)}
+        {!accounting.purpose.length ? <p className="py-3 text-sm text-ink/60">목적헌금이 없으면 추가하지 않아도 됩니다.</p> : null}
+      </div>
+    </section>
     <h4 className="text-sm font-bold">감사헌금 명단</h4>
     <div className="flex flex-wrap items-center justify-between gap-2"><label className="min-w-40 flex-1"><span className="sr-only">헌금 명단 검색</span><input className="journal-input" value={query} onChange={event=>setQuery(event.target.value)} placeholder="이름·감사내용 검색" /></label><button type="button" className="journal-small-button" onClick={()=>{setQuery("");update([...entries,{name:"",amount:0,note:""}]);}}><Plus size={14}/> 명단 추가</button></div>
     <p className="text-xs text-ink/60">{section === "thanksgiving" ? "온라인·현장 통합 · 감사내용 있는 분 먼저, 각 그룹 가나다순" : "온라인·현장 통합 · 가나다순"} · {visible.length}/{entries.length}건</p>

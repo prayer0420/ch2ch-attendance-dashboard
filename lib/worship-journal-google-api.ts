@@ -4,6 +4,7 @@ import {
   buildSheetStructureRequests,
   buildSheetPostWriteRequests,
   buildSheetValueUpdates,
+  inspectAnnouncementSlots,
   journalTabName,
   selectTemplateSheet,
   type SpreadsheetSheet
@@ -154,10 +155,12 @@ async function verifyWrittenValues(
   fetchImpl: typeof fetch,
   spreadsheetUrl: string,
   token: string,
-  updates: ReturnType<typeof buildSheetValueUpdates>
+  updates: ReturnType<typeof buildSheetValueUpdates>,
+  announcementGuard: { range: string; values: unknown[][] }
 ) {
+  const checks = [...updates, announcementGuard];
   const query = new URLSearchParams({ valueRenderOption: "UNFORMATTED_VALUE" });
-  updates.forEach((update) => query.append("ranges", update.range));
+  checks.forEach((update) => query.append("ranges", update.range));
   const result = await requestJson<{ valueRanges?: Array<{ range?: string; values?: unknown[][] }> }>(
     fetchImpl,
     `${spreadsheetUrl}/values:batchGet?${query.toString()}`,
@@ -166,10 +169,10 @@ async function verifyWrittenValues(
   const valueRanges = result.valueRanges ?? [];
   let checkedCells = 0;
   const mismatches: string[] = [];
-  updates.forEach((update, rangeIndex) => {
+  checks.forEach((update, rangeIndex) => {
     const actualRows = valueRanges[rangeIndex]?.values ?? [];
     update.values.forEach((row, rowIndex) => row.forEach((expected, columnIndex) => {
-      if (expected === "") return;
+      if (expected === "" && rangeIndex < updates.length) return;
       checkedCells += 1;
       const actual = actualRows[rowIndex]?.[columnIndex];
       if (comparableCell(actual) !== comparableCell(expected)) {
@@ -188,6 +191,8 @@ export async function publishWorshipJournalToGoogleSheet(
   journal: Pick<WorshipJournal, "date" | "author" | "attendance" | "newFamilies" | "graduates" | "sermon" | "service" | "announcements" | "accounting">,
   dependencies: PublishDependencies = {}
 ): Promise<WorshipJournalSheetOutput> {
+  const sheetTitle = journalTabName(journal.date);
+  const valueUpdates = buildSheetValueUpdates(sheetTitle, journal);
   const config = dependencies.config ?? readGoogleSheetConfig();
   const fetchImpl = dependencies.fetchImpl ?? fetch;
   const token = await (dependencies.getAccessToken ?? googleAccessToken)(config);
@@ -197,7 +202,6 @@ export async function publishWorshipJournalToGoogleSheet(
     `${spreadsheetUrl}?fields=sheets.properties`,
     token
   );
-  const sheetTitle = journalTabName(journal.date);
   const template = selectTemplateSheet(metadata.sheets ?? [], sheetTitle);
   const duplicate = await requestJson<{
     replies?: Array<{ duplicateSheet?: { properties?: { sheetId?: number } } }>;
@@ -217,14 +221,32 @@ export async function publishWorshipJournalToGoogleSheet(
   if (typeof sheetId !== "number") throw new Error("복제된 예배일지 탭의 ID를 확인하지 못했습니다.");
 
   try {
-    const structureRequests = buildSheetStructureRequests(sheetId, journal.announcements.length);
+    // Inspect the duplicate, not the source: a prior journal may already have
+    // expanded slots. Adding count - 9 again leaves old ads below the new ones.
+    const copiedRange = `'${sheetTitle}'!A43:Z200`;
+    const copied = await requestJson<{ values?: unknown[][] }>(fetchImpl,
+      `${spreadsheetUrl}/values/${encodeURIComponent(copiedRange)}?valueRenderOption=UNFORMATTED_VALUE`, token);
+    const copiedRows = copied.values ?? [];
+    const existingSlots = inspectAnnouncementSlots(copiedRows);
+    const targetSlots = Math.max(9, journal.announcements.length);
+    if (targetSlots > 150) throw new Error("광고가 150개를 넘습니다. 내용을 확인해 주세요.");
+    const structureRequests = buildSheetStructureRequests(sheetId, journal.announcements.length, existingSlots);
     if (structureRequests.length) {
       await requestJson(fetchImpl, `${spreadsheetUrl}:batchUpdate`, token, {
         method: "POST",
         body: JSON.stringify({ requests: structureRequests })
       });
     }
-    const valueUpdates = buildSheetValueUpdates(sheetTitle, journal);
+    const announcementValues = valueUpdates.at(-1)!.values;
+    // Check the whole announcement block AND its inherited tail, including
+    // empty cells. This catches stale ads even when every new value was saved.
+    const tail = copiedRows.slice(1 + existingSlots);
+    const guardRows = [copiedRows[0], ...announcementValues.map(([value]) => ["", value]), ...tail];
+    const announcementGuard = {
+      range: `'${sheetTitle}'!A43:Z${42 + Math.max(guardRows.length + 1, 1 + targetSlots)}`,
+      values: Array.from({ length: Math.max(guardRows.length + 1, 1 + targetSlots) }, (_, row) =>
+        Array.from({ length: 26 }, (_, column) => guardRows[row]?.[column] ?? ""))
+    };
     await requestJson(fetchImpl, `${spreadsheetUrl}/values:batchUpdate`, token, {
       method: "POST",
       body: JSON.stringify({
@@ -236,7 +258,7 @@ export async function publishWorshipJournalToGoogleSheet(
       method: "POST",
       body: JSON.stringify({ requests: buildSheetPostWriteRequests(sheetId, journal.announcements.length) })
     });
-    const checkedCells = await verifyWrittenValues(fetchImpl, spreadsheetUrl, token, valueUpdates);
+    const checkedCells = await verifyWrittenValues(fetchImpl, spreadsheetUrl, token, valueUpdates, announcementGuard);
     return {
       spreadsheetId: config.spreadsheetId,
       sheetId,

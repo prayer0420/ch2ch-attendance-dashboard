@@ -3,7 +3,7 @@ param([Parameter(Mandatory=$true)][string]$ExecutablePath)
 $executable = (Resolve-Path -LiteralPath $ExecutablePath).Path
 $signature = Get-AuthenticodeSignature -LiteralPath $executable
 if ($signature.Status -ne 'Valid' -or $signature.SignerCertificate.Subject -notmatch 'O="ngrok, Inc\."') { throw 'Official ngrok signature required.' }
-foreach ($file in @($serverAuthFile, (Join-Path $serverPrivateDirectory 'ngrok.dpapi'), (Join-Path $serverRuntime 'public-origin.json'), (Join-Path $serverRuntime 'server-build\BUILD_ID'))) {
+foreach ($file in @($serverAuthFile, (Join-Path $serverPrivateDirectory 'ngrok.dpapi'), (Join-Path $serverRuntime 'public-origin.json'), (Join-Path $serverProject ((Get-ActiveBuildDir) + '/BUILD_ID')))) {
   if (-not (Test-Path -LiteralPath $file)) { throw 'Existing authenticated server setup is incomplete.' }
 }
 $startupFolder = [Environment]::GetFolderPath('Startup')
@@ -16,6 +16,8 @@ $shell = New-Object -ComObject WScript.Shell
 $shortcut = $shell.CreateShortcut($shortcutPath)
 if (Test-Path -LiteralPath $shortcutPath) {
   if ($shortcut.TargetPath -ine $target -or $shortcut.Arguments -cne $arguments -or $shortcut.WorkingDirectory -ine $serverProject) { throw 'A different shortcut already exists. Nothing overwritten.' }
+  $shortcut.Description = 'CH2CH web, Runner with automatic recovery, and HTTPS tunnel at Windows sign-in.'
+  $shortcut.Save()
   Write-Output "Already registered: $shortcutPath"
   exit 0
 }
@@ -23,7 +25,7 @@ $shortcut.TargetPath = $target
 $shortcut.Arguments = $arguments
 $shortcut.WorkingDirectory = $serverProject
 $shortcut.WindowStyle = 7
-$shortcut.Description = 'CH2CH web and HTTPS tunnel at Windows sign-in; no attendance Runner.'
+$shortcut.Description = 'CH2CH web, Runner with automatic recovery, and HTTPS tunnel at Windows sign-in.'
 $shortcut.Save()
 $verify = $shell.CreateShortcut($shortcutPath)
 if ($verify.TargetPath -ine $target -or $verify.Arguments -cne $arguments) { throw 'Shortcut verification failed.' }

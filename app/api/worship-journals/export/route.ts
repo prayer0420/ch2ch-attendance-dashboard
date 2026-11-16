@@ -1,5 +1,4 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import { readJournals } from "@/lib/local-store/provider.cjs";
 import { checkRequestSecurity } from "@/lib/security";
 import type { WorshipJournal } from "@/lib/worship-journal";
 import { exportWorshipJournalSheetPdf } from "@/lib/worship-journal-google-api";
@@ -12,7 +11,7 @@ export async function GET(request: Request) {
   const id = new URL(request.url).searchParams.get("id");
   if (!id || id.length > 120) return Response.json({ error: "저장된 예배일지를 선택해 주세요." }, { status: 400 });
   try {
-    const journals = JSON.parse(await fs.readFile(path.join(process.cwd(), ".local-runtime", "worship-journals.json"), "utf8")) as WorshipJournal[];
+    const journals = readJournals() as WorshipJournal[];
     const journal = journals.find((item) => item.id === id);
     if (!journal?.outputSheet) return Response.json({ error: "먼저 Google Sheet에 최종 제출한 예배일지를 선택해 주세요." }, { status: 404 });
     const pdf = await exportWorshipJournalSheetPdf(journal.outputSheet);

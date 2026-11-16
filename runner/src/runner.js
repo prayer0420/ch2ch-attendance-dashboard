@@ -4,7 +4,7 @@ dotenv.config({ path: ".env.local" });
 dotenv.config({ path: ".env" });
 
 const os = require("node:os");
-const { createClient } = require("@supabase/supabase-js");
+const { createDataClient } = require("../../lib/local-store/provider.cjs");
 const { getRunnerConfig } = require("./env");
 const { runAttendanceAutomation, isVerifiedAttendanceResult } = require("./automation-adapter");
 const { buildQrWorkerPayload } = require("./qr-sync-job");
@@ -21,28 +21,46 @@ class RunCancelledError extends Error {
 class Runner {
   constructor(config) {
     this.config = config;
-    this.supabase = createClient(config.supabaseUrl, config.serviceRoleKey, {
-      auth: { autoRefreshToken: false, persistSession: false }
-    });
+    this.supabase = createDataClient();
     this.currentRunId = null;
   }
 
   async start() {
     console.log(`[Runner] 시작: ${this.config.runnerId}`);
-    await this.heartbeat("online", "대기 중");
+    let queueReadFailed = false;
+    try { await this.heartbeat("online", "대기 중"); }
+    catch (error) {
+      queueReadFailed = true;
+      console.error("[Runner] 초기 연결 실패: 연결 복구 후 요청 조회를 다시 시도합니다.");
+    }
 
-    setInterval(() => {
-      this.heartbeat("online", this.currentRunId ? "실행 중" : "대기 중").catch((error) => {
+    const heartbeatTimer = setInterval(() => {
+      this.heartbeat("online", this.currentRunId ? "실행 중" : queueReadFailed ? "요청 조회 연결 재시도 중" : "대기 중").catch((error) => {
         console.error("[Runner] heartbeat 실패:", error.message);
       });
     }, this.config.heartbeatIntervalMs);
 
+    try {
     do {
-      const run = await this.pickQueuedRun();
+      let run = null;
+      let qrJob = null;
+      try {
+        run = await this.pickQueuedRun();
+        if (!run) qrJob = await this.pickQueuedQrJob();
+        if (queueReadFailed) console.log("[Runner] 연결 복구: 대기 요청 조회를 재개했습니다.");
+        queueReadFailed = false;
+      } catch (error) {
+        queueReadFailed = true;
+        console.error("[Runner] 요청 조회 실패: 다음 주기에 다시 조회합니다.");
+        if (this.config.once) throw error;
+        // Retry queue lookup only. Never reset/replay a claimed or running job:
+        // a claim response can be lost after the DB has accepted it.
+        await sleep(Math.max(1000, this.config.pollIntervalMs));
+        continue;
+      }
       if (run) {
         await this.processRun(run);
       } else {
-        const qrJob = await this.pickQueuedQrJob();
         if (qrJob) await this.processQrJob(qrJob);
         else console.log("[Runner] 대기 중인 실행 요청 없음");
       }
@@ -50,6 +68,10 @@ class Runner {
       if (this.config.once) break;
       await sleep(this.config.pollIntervalMs);
     } while (true);
+    } finally {
+      // A dead polling loop must not leave an "online" heartbeat-only process.
+      clearInterval(heartbeatTimer);
+    }
   }
 
   async heartbeat(status, step) {
@@ -64,7 +86,8 @@ class Runner {
 
     const { error } = await this.supabase
       .from("runner_heartbeats")
-      .upsert(payload, { onConflict: "runner_id" });
+      .upsert(payload, { onConflict: "runner_id" })
+      .abortSignal(AbortSignal.timeout(15000));
     if (error) throw error;
   }
 
@@ -75,7 +98,8 @@ class Runner {
       .eq("status", "queued")
       .order("requested_at", { ascending: true })
       .limit(1)
-      .maybeSingle();
+      .maybeSingle()
+      .abortSignal(AbortSignal.timeout(15000));
 
     if (error) throw error;
     if (!run) return null;
@@ -94,7 +118,8 @@ class Runner {
       .eq("id", run.id)
       .eq("status", "queued")
       .select("*")
-      .maybeSingle();
+      .maybeSingle()
+      .abortSignal(AbortSignal.timeout(15000));
 
     if (updateError) throw updateError;
     return picked;
@@ -107,7 +132,8 @@ class Runner {
       .eq("status", "queued")
       .order("requested_at", { ascending: true })
       .limit(1)
-      .maybeSingle();
+      .maybeSingle()
+      .abortSignal(AbortSignal.timeout(15000));
     if (error) {
       if (/qr_sync_jobs|schema cache|relation .* does not exist/i.test(error.message || "")) return null;
       throw error;
@@ -119,7 +145,8 @@ class Runner {
       .eq("id", job.id)
       .eq("status", "queued")
       .select("*")
-      .maybeSingle();
+      .maybeSingle()
+      .abortSignal(AbortSignal.timeout(15000));
     if (updateError) throw updateError;
     return picked;
   }

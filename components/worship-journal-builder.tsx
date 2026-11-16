@@ -10,16 +10,11 @@ import { WorshipJournalSources } from "@/components/worship-journal-sources";
 import { validateWorshipJournalForPublish, type WorshipJournalValidationReport } from "@/lib/worship-journal-validation";
 import { DEFAULT_ATTENDANCE_SHEET_URL, readAttendanceSheetUrl, saveAttendanceSheetUrl } from "@/lib/attendance-sheet-preference";
 import { BandPublishCard } from "@/components/band-publish-card";
+import { mostRecentSunday } from "@/lib/sunday-week";
 
 const ACCOUNTING_SHEET = "https://docs.google.com/spreadsheets/d/1SCmg4YEDBLre3fgWCRfUS1gGL4WW1MnZ/edit?gid=1816474511#gid=1816474511";
 const blankNewFamily = (): NewFamilyEntry => ({ name: "", generation: "", inviter: "", relationship: "", note: "" });
 const blankGraduate = (): GraduateEntry => ({ name: "", generation: "", family: "" });
-
-function upcomingSunday() {
-  const date = new Date();
-  date.setDate(date.getDate() + ((7 - date.getDay()) % 7));
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-}
 
 function displayDate(value: string) {
   const date = new Date(`${value}T00:00:00`);
@@ -45,9 +40,9 @@ function worshipJournalBandText(journal: WorshipJournal) {
   return [
     `#예배일지 #${tabName}`,
     "",
-    `1~3부; ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명`,
-    `4부; ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명`,
-    `가족모임; ${journal.attendance.familyMeeting}명`,
+    `1~3부: ${attendanceText(journal.attendance.service13, journal.attendance.service13Online)}명`,
+    `4부: ${attendanceText(journal.attendance.service4, journal.attendance.service4Online)}명`,
+    `가족모임: ${journal.attendance.familyMeeting}명`,
     ...(newFamilies.length ? ["", `새가족 (${newFamilies.length}명)`, ...newFamilies.map((person) => [
       `- ${person.name}`,
       person.generation,
@@ -314,7 +309,7 @@ function WorshipJournalReviewEditor({ journal, onChange }: { journal: WorshipJou
 }
 
 export function WorshipJournalBuilder() {
-  const [date, setDate] = useState(upcomingSunday);
+  const [date, setDate] = useState(() => mostRecentSunday());
   const [author, setAuthor] = useState("박기도");
   const [attendanceSheetUrl, setAttendanceSheetUrl] = useState(DEFAULT_ATTENDANCE_SHEET_URL);
   const [attendanceSheetReady, setAttendanceSheetReady] = useState(false);
@@ -324,6 +319,7 @@ export function WorshipJournalBuilder() {
   const [accountingFile, setAccountingFile] = useState<File | null>(null);
   const [accountingSheetUrl, setAccountingSheetUrl] = useState(ACCOUNTING_SHEET);
   const [accountingSheetTab, setAccountingSheetTab] = useState("");
+  const [manualPurpose, setManualPurpose] = useState<Array<{ name: string; amount: string }>>([{ name: "", amount: "" }]);
   const [newFamilies, setNewFamilies] = useState<NewFamilyEntry[]>([blankNewFamily()]);
   const [graduates, setGraduates] = useState<GraduateEntry[]>([blankGraduate()]);
   const [journals, setJournals] = useState<WorshipJournal[]>([]);
@@ -382,9 +378,10 @@ export function WorshipJournalBuilder() {
     accountingFile: accountingFile ? [accountingFile.name, accountingFile.size, accountingFile.lastModified] : null,
     accountingSheetUrl,
     accountingSheetTab,
+    manualPurpose,
     newFamilies,
     graduates
-  }), [accountingFile, accountingSheetTab, accountingSheetUrl, accountingSourceType, attendanceSheetTab, attendanceSheetUrl, author, bulletin, date, graduates, newFamilies]);
+  }), [accountingFile, accountingSheetTab, accountingSheetUrl, accountingSourceType, attendanceSheetTab, attendanceSheetUrl, author, bulletin, date, graduates, newFamilies, manualPurpose]);
   const validation = useMemo(() => preview ? validateWorshipJournalForPublish(preview, date) : null, [date, preview]);
 
   function updateNewFamily(index: number, key: keyof NewFamilyEntry, value: string) {
@@ -413,6 +410,7 @@ export function WorshipJournalBuilder() {
         body.set("accountingSheetTab", accountingSheetTab.trim());
       }
       body.set("newFamilies", JSON.stringify(newFamilies)); body.set("graduates", JSON.stringify(graduates));
+      body.set("manualPurpose", JSON.stringify(manualPurpose));
       const response = await fetchJson<{ journal: WorshipJournal; reviewDigest?: string; validation?: WorshipJournalValidationReport; saved: boolean; published?: boolean }>("/api/worship-journals", { method: "POST", body });
       if (action === "preview") {
         setPreview(response.journal);
@@ -509,13 +507,23 @@ export function WorshipJournalBuilder() {
           </div></section>
 
           <section className="journal-input-card"><div className="journal-step">05</div><div className="min-w-0 flex-1">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-2"><FileSpreadsheet size={18} className="text-brass" /><h2 className="font-display text-xl font-bold">목적헌금 수기 입력</h2></div><button type="button" className="journal-small-button" disabled={manualPurpose.length >= 10} onClick={() => setManualPurpose((current) => [...current, { name: "흘려보내는 기쁨", amount: "" }])}><Plus size={14} /> 추가</button></div>
+            <p className="mb-3 text-xs leading-5 text-ink/60">흘려보내는 기쁨 등 회계 자료에 없는 목적헌금을 입력해 주세요. 없으면 비워두세요. 목적헌금은 총액(주일헌금 + 감사헌금)에 포함하지 않습니다.</p>
+            <div className="grid gap-2">{manualPurpose.map((entry, index) => <div key={index} className="grid items-end gap-2 rounded border border-line bg-paper/45 p-3 sm:grid-cols-[1fr_160px_auto]">
+              <label className="journal-label">항목명 / 이름<input className="journal-input" aria-label={`${index + 1}번째 수기 목적헌금 항목명`} placeholder="흘려보내는 기쁨" maxLength={100} value={entry.name} onChange={(event) => setManualPurpose((current) => current.map((item, i) => i === index ? { ...item, name: event.target.value } : item))} /></label>
+              <label className="journal-label">금액 (원)<input className="journal-input" aria-label={`${index + 1}번째 수기 목적헌금 금액`} type="number" min={1} max={1000000000000} step={1} placeholder="금액 입력" value={entry.amount} onChange={(event) => setManualPurpose((current) => current.map((item, i) => i === index ? { ...item, amount: event.target.value } : item))} /></label>
+              <button type="button" className="grid size-10 place-items-center rounded border border-line text-brick" aria-label={`${index + 1}번째 수기 목적헌금 삭제`} onClick={() => setManualPurpose((current) => current.length === 1 ? [{ name: "", amount: "" }] : current.filter((_, i) => i !== index))}><Trash2 size={15} /></button>
+            </div>)}</div>
+          </div></section>
+
+          <section className="journal-input-card"><div className="journal-step">06</div><div className="min-w-0 flex-1">
             <div className="mb-4 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><UserPlus size={18} className="text-brick" /><h2 className="font-display text-xl font-bold">새가족 수기 입력</h2></div><button type="button" className="journal-small-button" onClick={() => setNewFamilies((current) => [...current, blankNewFamily()])}><Plus size={14} /> 추가</button></div>
             <div className="grid gap-2">{newFamilies.map((entry, index) => <div key={index} className="grid gap-2 rounded border border-line bg-paper/45 p-3 sm:grid-cols-[1fr_85px_1fr_1fr_1fr_auto]">
               <input className="journal-input" placeholder="이름" value={entry.name} onChange={(event) => updateNewFamily(index, "name", event.target.value)} /><input className="journal-input" placeholder="대수" value={entry.generation} onChange={(event) => updateNewFamily(index, "generation", event.target.value)} /><input className="journal-input" placeholder="인도자" value={entry.inviter} onChange={(event) => updateNewFamily(index, "inviter", event.target.value)} /><input className="journal-input" placeholder="관계" value={entry.relationship} onChange={(event) => updateNewFamily(index, "relationship", event.target.value)} /><input className="journal-input" placeholder="기타" value={entry.note} onChange={(event) => updateNewFamily(index, "note", event.target.value)} /><button type="button" className="grid size-10 place-items-center rounded border border-line text-ink/45 hover:border-brick hover:text-brick" aria-label="새가족 행 삭제" onClick={() => setNewFamilies((current) => current.length === 1 ? [blankNewFamily()] : current.filter((_, itemIndex) => itemIndex !== index))}><Trash2 size={15} /></button>
             </div>)}</div>
           </div></section>
 
-          <section className="journal-input-card"><div className="journal-step">06</div><div className="min-w-0 flex-1">
+          <section className="journal-input-card"><div className="journal-step">07</div><div className="min-w-0 flex-1">
             <div className="mb-4 flex items-center justify-between gap-3"><div className="flex items-center gap-2"><Users size={18} className="text-moss" /><h2 className="font-display text-xl font-bold">수료자(등반)</h2></div><button type="button" className="journal-small-button" onClick={() => setGraduates((current) => [...current, blankGraduate()])}><Plus size={14} /> 추가</button></div>
             <div className="grid gap-2">{graduates.map((entry, index) => <div key={index} className="grid gap-2 rounded border border-line bg-paper/45 p-3 sm:grid-cols-[1fr_100px_1fr_auto]">
               <input className="journal-input" placeholder="이름" value={entry.name} onChange={(event) => updateGraduate(index, "name", event.target.value)} /><input className="journal-input" placeholder="대수" value={entry.generation} onChange={(event) => updateGraduate(index, "generation", event.target.value)} /><input className="journal-input" placeholder="등반 가족" value={entry.family} onChange={(event) => updateGraduate(index, "family", event.target.value)} /><button type="button" className="grid size-10 place-items-center rounded border border-line text-ink/45 hover:border-brick hover:text-brick" aria-label="수료자 행 삭제" onClick={() => setGraduates((current) => current.length === 1 ? [blankGraduate()] : current.filter((_, itemIndex) => itemIndex !== index))}><Trash2 size={15} /></button>

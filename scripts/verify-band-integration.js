@@ -44,7 +44,7 @@ const journal = {
   author: "작성자 제외"
 };
 assert.equal(context.worshipJournalBandText(journal), [
-  "#예배일지 #0920", "", "1~3부; 84(온라인2)명", "4부; 197명", "가족모임; 16명", "", "새가족 (1명)",
+  "#예배일지 #0920", "", "1~3부: 84(온라인2)명", "4부: 197명", "가족모임: 16명", "", "새가족 (1명)",
   "- 홍길동 · 26대 · 인도자 김교인 · 관계 친구 · 첫 방문"
 ].join("\n"));
 const withoutNewFamilies = context.worshipJournalBandText({ ...journal, outputSheet: undefined, newFamilies: [] });
@@ -57,7 +57,7 @@ assert.equal(context.worshipJournalBandText({
   outputSheet: { sheetTitle: "1004" },
   attendance: { service13: 99, service13Online: 2, service4: 182, service4Online: 3, familyMeeting: 152 },
   newFamilies: []
-}), "#예배일지 #1004\n\n1~3부; 99(온라인2)명\n4부; 182(온라인3)명\n가족모임; 152명");
+}), "#예배일지 #1004\n\n1~3부: 99(온라인2)명\n4부: 182(온라인3)명\n가족모임: 152명");
 assert.doesNotMatch(builder, /toCanvas|renderExportCanvas|import\("jspdf"\)/);
 assert.match(builder, /api\/worship-journals\/export\?id=/);
 

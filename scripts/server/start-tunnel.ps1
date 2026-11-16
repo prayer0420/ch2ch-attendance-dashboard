@@ -13,7 +13,7 @@ try {
   $webState = Get-ServerState
   if (-not (Test-ServerProcessOwned $webState.dashboard) -or $webState.dashboard.setupOnly) { throw 'The configured, owned web server must already be running.' }
   $listeners = @(Get-NetTCPConnection -LocalPort 3000 -State Listen -ErrorAction Stop)
-  if ($listeners.Count -ne 1 -or $listeners[0].LocalAddress -ne '127.0.0.1' -or $listeners[0].OwningProcess -ne $webState.dashboard.pid) { throw 'Unexpected web listener. Refusing to publish.' }
+  if ($listeners.Count -ne 1 -or -not (Test-ServerListenerOwned $webState.dashboard $listeners[0])) { throw 'Unexpected web listener. Refusing to publish.' }
   $originConfig = Get-Content -LiteralPath (Join-Path $serverRuntime 'public-origin.json') -Raw | ConvertFrom-Json
   $publicOrigin = [string]$originConfig.origin
   if ($publicOrigin -notmatch '^https://[a-z0-9-]+\.ngrok-free\.(app|dev)$') { throw 'An approved ngrok free HTTPS origin is required.' }

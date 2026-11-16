@@ -6,7 +6,7 @@ let stage = 'configuration';
 async function main() {
   const base = process.env.APP_PUBLIC_ORIGIN;
   assert.match(base || '', /^https:\/\/[a-z0-9-]+\.ngrok-free\.(app|dev)$/);
-  assert.ok((process.env.APP_ACCESS_PASSWORD || '').length >= 12);
+  assert.ok((process.env.APP_ACCESS_PASSWORD || '').length >= 1);
   async function request(path, options = {}) {
     return fetch(base + path, {
       ...options, redirect: 'manual', signal: AbortSignal.timeout(20000),

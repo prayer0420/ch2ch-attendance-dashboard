@@ -7,6 +7,8 @@ import { chromium, type BrowserContext, type Page } from "playwright";
 import * as XLSX from "xlsx";
 
 import { DEFAULT_ATTENDANCE_SHEET_URL } from "./attendance-sheet-preference";
+import { assertQrSelectionMatches, assertQrSourceWeek, exactQrTabPattern, readQrSelection, type QrSelection } from "./qr-selection";
+import { quoteSheetTitle, readSheetRowCount, readSheetsServiceAccount, writeSheetValues } from "./google-sheets-values";
 const DEFAULT_SHEET_TAB = "가장체크";
 const SOURCE_COLUMN_LIMIT = 120; // A through DP
 const PREVIEW_TTL_MS = 15 * 60 * 1000;
@@ -14,7 +16,7 @@ const PREVIEW_TTL_MS = 15 * 60 * 1000;
 type QrRosterRow = {
   name: string;
   institution: string;
-  service: string;
+  attendanceMinute: number | null;
 };
 
 type SheetCell = XLSX.CellObject | undefined;
@@ -45,6 +47,7 @@ export type QrAttendancePreview = {
 
 export type QrAttendanceApplyResult = {
   appliedAt: string;
+  writeMethod?: "api" | "browser";
   service13Written: number;
   service4Written: number;
   attendanceUpdated: number;
@@ -178,10 +181,12 @@ async function downloadQrRosterHtml(week: number) {
     const weekSelect = page.locator("#week_count");
     if (!(await weekSelect.count())) throw new Error("CH2CH QR출석체크의 주차 선택칸을 찾지 못했습니다.");
     await weekSelect.selectOption(weekValue(week));
-    await page.waitForLoadState("domcontentloaded").catch(() => undefined);
-    await page.waitForTimeout(350);
+    // Do not read the ledger while the week-change request is still in flight.
+    // Fail closed on timeout instead of continuing with the previous screen.
+    await page.waitForLoadState("networkidle", { timeout: 15000 });
 
-    const selectedWeek = await weekSelect.locator("option:checked").textContent().catch(() => null);
+    const selectedWeek = assertQrSourceWeek(week, await weekSelect.inputValue(),
+      await weekSelect.locator("option:checked").textContent());
     const ledgerLink = page.locator('a[href*="open_comming_list"]');
     const ledgerCount = await ledgerLink.count();
     if (!ledgerCount) throw new Error("CH2CH QR출석체크 화면에서 출입명부 버튼을 찾지 못했습니다.");
@@ -190,6 +195,8 @@ async function downloadQrRosterHtml(week: number) {
     await ledgerLink.first().click();
     const popup = await popupPromise;
     await popup.waitForLoadState("domcontentloaded");
+    assertQrSourceWeek(week, await weekSelect.inputValue(),
+      await weekSelect.locator("option:checked").textContent());
 
     const excelButton = popup.locator('a[href*="excel_click"]');
     if (!(await excelButton.count())) throw new Error("CH2CH 출입명부에서 엑셀저장 버튼을 찾지 못했습니다.");
@@ -198,12 +205,29 @@ async function downloadQrRosterHtml(week: number) {
     const download = await downloadPromise;
     await download.saveAs(tempFile);
     const html = await fs.readFile(tempFile, "utf8");
-    return { html, weekLabel: clean(selectedWeek) || `${week}주` };
+    return { html, weekLabel: clean(selectedWeek) };
   } finally {
     await fs.rm(tempFile, { force: true }).catch(() => undefined);
     await context.close().catch(() => undefined);
     await browser.close().catch(() => undefined);
   }
+}
+
+export function parseQrAttendanceMinute(value: unknown): number | null {
+  const text = clean(value);
+  // Read the exported local wall-clock time, never the PC timezone or a guessed time.
+  const match = text.match(/^(?:\d{4}[-/.]\d{1,2}[-/.]\d{1,2}[ T])?(?:(오전|오후|AM|PM)\s*)?(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s*(AM|PM))?$/i);
+  if (!match) return null;
+  let hour = Number(match[2]);
+  const minute = Number(match[3]);
+  const second = Number(match[4] ?? 0);
+  if (minute > 59 || second > 59 || (match[1] && match[5])) return null;
+  const period = (match[1] || match[5] || "").toUpperCase();
+  if (period) {
+    if (hour < 1 || hour > 12) return null;
+    hour = hour % 12 + (["오후", "PM"].includes(period) ? 12 : 0);
+  } else if (hour > 23) return null;
+  return hour * 60 + minute;
 }
 
 export function parseCh2chQrRosterHtml(html: string) {
@@ -212,22 +236,26 @@ export function parseCh2chQrRosterHtml(html: string) {
   );
   if (!tables.length) throw new Error("CH2CH 출입명부 엑셀에서 표를 찾지 못했습니다.");
 
-  const workbook = XLSX.read(tables[0], { type: "string" });
+  const workbook = XLSX.read(tables[0], { type: "string", raw: true });
   const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = XLSX.utils.sheet_to_json<Record<string, unknown>>(worksheet, { defval: "", raw: false });
+  const grid = XLSX.utils.sheet_to_json<unknown[]>(worksheet, { header: 1, defval: "", raw: true });
+  const headers = (grid[0] ?? []).map(clean);
+  const rows = grid.slice(1);
   const parsed: QrRosterRow[] = rows.map((row) => ({
-    name: clean(row["이름"]),
-    institution: clean(row["기관"]),
-    service: clean(row["세부항목"])
+    name: clean(row[headers.indexOf("이름")]),
+    institution: clean(row[headers.indexOf("기관")]),
+    attendanceMinute: parseQrAttendanceMinute(row[12]) // M열: 출석시간
   })).filter((row) => row.name);
   if (!parsed.length) throw new Error("CH2CH 출입명부에서 이름 열을 읽지 못했습니다.");
   return parsed;
 }
 
-function filterRoster(rows: QrRosterRow[], department: string) {
+export function filterRoster(rows: QrRosterRow[], department: string) {
   const departmentRows = rows.filter((row) => normalize(row.institution).includes(normalize(department)));
-  const raw13 = departmentRows.filter((row) => ["1부", "2부", "3부"].includes(normalize(row.service))).map((row) => row.name);
-  const raw4 = departmentRows.filter((row) => normalize(row.service) === "4부").map((row) => row.name);
+  const raw13 = departmentRows.filter((row) => row.attendanceMinute !== null
+    && row.attendanceMinute >= 0 && row.attendanceMinute < 13 * 60).map((row) => row.name);
+  const raw4 = departmentRows.filter((row) => row.attendanceMinute !== null
+    && row.attendanceMinute >= 13 * 60 && row.attendanceMinute < 24 * 60).map((row) => row.name);
   return {
     departmentRows,
     service13Names: uniqueNames(raw13),
@@ -336,8 +364,7 @@ export async function createQrAttendancePreview(input: {
 }) {
   return runQueued(async () => {
     prunePreviewCache();
-    const sheetUrl = input.sheetUrl || DEFAULT_ATTENDANCE_SHEET_URL;
-    const sheetTab = input.sheetTab || DEFAULT_SHEET_TAB;
+    const { sheetUrl, sheetTab } = readQrSelection(input);
     const department = input.department || "2청년회";
     spreadsheetIdFromUrl(sheetUrl);
 
@@ -419,15 +446,20 @@ function packRosterNames(names: string[], rowCount: number) {
   return rows.map((row) => row.join(" · "));
 }
 
-function buildRosterTsv(service13Names: string[], service4Names: string[], rowCount: number) {
+function buildRosterRows(service13Names: string[], service4Names: string[], rowCount: number) {
   if (rowCount < 1) throw new Error("Google Sheet 명단 영역에 사용할 행이 없습니다.");
   const packed13 = packRosterNames(service13Names, rowCount);
   const packed4 = packRosterNames(service4Names, rowCount);
-  const rows = Array.from({ length: rowCount }, (_, index) => {
+  return Array.from({ length: rowCount }, (_, index) => {
     const service13 = packed13[index] || "";
     const service4 = packed4[index] || "";
-    return [service13, service13 ? "TRUE" : "", service4, service4 ? "TRUE" : ""].join("\t");
+    return [service13, service13 ? true : "", service4, service4 ? true : ""];
   });
+}
+
+function buildRosterTsv(service13Names: string[], service4Names: string[], rowCount: number) {
+  const rows = buildRosterRows(service13Names, service4Names, rowCount)
+    .map((row) => row.map((value) => value === true ? "TRUE" : String(value)).join("\t"));
   return { rowCount, tsv: rows.join("\n") };
 }
 
@@ -535,9 +567,9 @@ async function writeSheetWithBrowser(input: {
     const title = await page.title();
     if (!title.includes("Google Sheets")) throw new Error("Google Sheet 편집 화면을 열지 못했습니다.");
 
-    const tab = page.locator(".docs-sheet-tab-name").filter({ hasText: input.sheetTab });
+    const tab = page.locator(".docs-sheet-tab-name").filter({ hasText: exactQrTabPattern(input.sheetTab) });
     const tabCount = await tab.count();
-    if (!tabCount) throw new Error(`Google Sheet에서 '${input.sheetTab}' 탭을 찾지 못했습니다.`);
+    if (tabCount !== 1) throw new Error(`Google Sheet에서 '${input.sheetTab}' 탭을 하나로 확인하지 못했습니다.`);
     await tab.first().click();
     await page.waitForTimeout(300);
 
@@ -563,8 +595,8 @@ async function openGoogleSheetTabForQr(page: Page, sheetUrl: string, sheetTab: s
   await page.goto(sheetUrl, { waitUntil: "domcontentloaded" });
   await page.locator("#t-name-box").waitFor({ state: "visible", timeout: 30000 });
   await dismissGoogleSheetDialogs(page);
-  const tab = page.locator(".docs-sheet-tab-name").filter({ hasText: sheetTab });
-  if (!(await tab.count())) throw new Error(`Google Sheet tab not found: ${sheetTab}`);
+  const tab = page.locator(".docs-sheet-tab-name").filter({ hasText: exactQrTabPattern(sheetTab) });
+  if (await tab.count() !== 1) throw new Error(`Google Sheet tab not uniquely found: ${sheetTab}`);
   await tab.first().click().catch(async () => {
     await dismissGoogleSheetDialogs(page);
     await tab.first().click({ force: true });
@@ -715,102 +747,154 @@ export async function verifyQrAttendancePreview(previewId: string) {
   });
 }
 
-export async function applyQrAttendancePreview(previewId: string): Promise<QrAttendanceApplyResult> {
+type QrApplyOutcome = {
+  attendanceUpdated: number;
+  verification: {
+    verified13: number;
+    verified4: number;
+    list13Size: number;
+    list4Size: number;
+    failures: QrAttendanceApplyResult["verificationFailures"];
+  };
+};
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function rosterSavedFor(preview: QrAttendancePreview, verification: QrApplyOutcome["verification"]) {
+  return verification.list13Size >= preview.service13Names.length && verification.list4Size >= preview.service4Names.length;
+}
+
+async function verifyUntil(
+  preview: QrAttendancePreview,
+  done: (verification: QrApplyOutcome["verification"]) => boolean,
+  attempts = 4,
+  waitMs = 1500
+) {
+  let verification = verifyAppliedWorkbook(await downloadGoogleSheetWorkbook(preview.sheetUrl), preview);
+  for (let attempt = 1; attempt < attempts && !done(verification); attempt += 1) {
+    await delay(waitMs);
+    verification = verifyAppliedWorkbook(await downloadGoogleSheetWorkbook(preview.sheetUrl), preview);
+  }
+  return verification;
+}
+
+function assertAttendanceProgress(verification: QrApplyOutcome["verification"], verifiedBefore: number) {
+  const verifiedAfter = verification.verified13 + verification.verified4;
+  if (verification.failures.length && verifiedAfter <= verifiedBefore) {
+    throw new Error(
+      `QR 명단은 저장됐지만 참석 셀 ${verification.failures.length}개 변경이 거부됐습니다. Google 계정 로그인 또는 '가장체크' 참석 셀 보호 범위를 확인해 주세요.`
+    );
+  }
+}
+
+async function applyWithSheetsApi(
+  preview: QrAttendancePreview,
+  account: NonNullable<ReturnType<typeof readSheetsServiceAccount>>
+): Promise<QrApplyOutcome> {
+  const spreadsheetId = spreadsheetIdFromUrl(preview.sheetUrl);
+  const tab = quoteSheetTitle(preview.sheetTab);
+  const rowCount = await readSheetRowCount(account, spreadsheetId, preview.sheetTab);
+  await writeSheetValues(account, spreadsheetId, [{
+    range: `${tab}!DQ2:DT${rowCount}`,
+    values: buildRosterRows(preview.service13Names, preview.service4Names, rowCount - 1)
+  }]);
+  let verification = await verifyUntil(preview, (current) => rosterSavedFor(preview, current));
+  if (!rosterSavedFor(preview, verification)) {
+    throw new Error("Google Sheet 명단 저장 확인에 실패했습니다. DQ:DT 편집 권한과 시트 보호 설정을 확인해 주세요.");
+  }
+
+  let attendanceUpdated = 0;
+  // Names missing from A~DP cannot be fixed by writing cells; only retry the rest.
+  const retryable = (current: QrApplyOutcome["verification"]) =>
+    current.failures.some((failure) => failure.reason !== "A~DP 이름 칸에서 찾지 못함");
+  for (let attempt = 0; attempt < 2 && retryable(verification); attempt += 1) {
+    // QR flags are sheet formulas over DQ/DS and were recalculated by the verified export above.
+    const worksheet = getWorksheet(await downloadGoogleSheetWorkbook(preview.sheetUrl), preview.sheetTab);
+    const attendance = buildAttendancePatches(worksheet, preview.service13Names, preview.service4Names);
+    if (!attendance.patches.length) break;
+    const verifiedBefore = verification.verified13 + verification.verified4;
+    await writeSheetValues(account, spreadsheetId, attendance.patches.map((patch) => ({ range: `${tab}!${patch.range}`, values: [[true]] })));
+    attendanceUpdated += attendance.updateCount;
+    verification = await verifyUntil(preview, (current) => !retryable(current), 3, 1200);
+    assertAttendanceProgress(verification, verifiedBefore);
+  }
+  return { attendanceUpdated, verification };
+}
+
+async function applyWithBrowser(preview: QrAttendancePreview): Promise<QrApplyOutcome> {
+  let attendanceUpdated = 0;
+  let verification: QrApplyOutcome["verification"] = { verified13: 0, verified4: 0, list13Size: 0, list4Size: 0, failures: [] };
+  let rosterSaved = false;
+
+  for (let rosterAttempt = 0; rosterAttempt < 3 && !rosterSaved; rosterAttempt += 1) {
+    if (rosterAttempt) await delay(1800);
+    const worksheet = getWorksheet(await downloadGoogleSheetWorkbook(preview.sheetUrl), preview.sheetTab);
+    const currentRows = worksheetActualRowCount(worksheet);
+    const roster = buildRosterTsv(preview.service13Names, preview.service4Names, currentRows - 1);
+    await writeRosterOnlyWithBrowser({
+      sheetUrl: preview.sheetUrl,
+      sheetTab: preview.sheetTab,
+      rosterRange: `DQ2:DT${currentRows}`,
+      rosterTsv: roster.tsv
+    });
+    verification = await verifyUntil(preview, (current) => rosterSavedFor(preview, current), 4, 2200);
+    rosterSaved = rosterSavedFor(preview, verification);
+  }
+  if (!rosterSaved) {
+    throw new Error("Google Sheet 명단 저장 확인에 실패했습니다. DQ:DT 편집 권한과 시트 보호 설정을 확인해 주세요.");
+  }
+
+  for (let attendanceAttempt = 0; attendanceAttempt < 2; attendanceAttempt += 1) {
+    if (attendanceAttempt) await delay(1800);
+    const worksheet = getWorksheet(await downloadGoogleSheetWorkbook(preview.sheetUrl), preview.sheetTab);
+    const attendance = buildAttendancePatches(worksheet, preview.service13Names, preview.service4Names);
+    attendanceUpdated = attendance.updateCount;
+    const verifiedBefore = verification.verified13 + verification.verified4;
+    await writeAttendanceOnlyWithBrowser({
+      sheetUrl: preview.sheetUrl,
+      sheetTab: preview.sheetTab,
+      attendancePatches: attendance.patches
+    });
+    verification = await verifyUntil(preview, (current) => !current.failures.length, 4, 2200);
+    assertAttendanceProgress(verification, verifiedBefore);
+    if (!verification.failures.length) break;
+  }
+  return { attendanceUpdated, verification };
+}
+
+export async function applyQrAttendancePreview(previewId: string, selection: QrSelection): Promise<QrAttendanceApplyResult> {
   return runQueued(async () => {
     prunePreviewCache();
     const entry = previewCache.get(previewId);
     if (!entry) throw new Error("미리보기 유효시간이 지났습니다. CH2CH 명단을 다시 불러와 주세요.");
     const { preview } = entry;
-    let attendanceUpdated = 0;
-    let verification = {
-      verified13: 0,
-      verified4: 0,
-      list13Size: 0,
-      list4Size: 0,
-      failures: [] as QrAttendanceApplyResult["verificationFailures"]
-    };
-    let rosterSaved = false;
-
-    for (let rosterAttempt = 0; rosterAttempt < 3; rosterAttempt += 1) {
-      if (rosterAttempt) await new Promise((resolve) => setTimeout(resolve, 1800));
-      const workbook = await downloadGoogleSheetWorkbook(preview.sheetUrl);
-      const worksheet = getWorksheet(workbook, preview.sheetTab);
-      const currentRows = worksheetActualRowCount(worksheet);
-      const roster = buildRosterTsv(preview.service13Names, preview.service4Names, currentRows - 1);
-
-      await writeRosterOnlyWithBrowser({
-        sheetUrl: preview.sheetUrl,
-        sheetTab: preview.sheetTab,
-        rosterRange: `DQ2:DT${currentRows}`,
-        rosterTsv: roster.tsv
-      });
-
-      for (let verifyAttempt = 0; verifyAttempt < 4; verifyAttempt += 1) {
-        if (verifyAttempt) await new Promise((resolve) => setTimeout(resolve, 2200));
-        const verifiedWorkbook = await downloadGoogleSheetWorkbook(preview.sheetUrl);
-        verification = verifyAppliedWorkbook(verifiedWorkbook, preview);
-        rosterSaved =
-          verification.list13Size >= preview.service13Names.length &&
-          verification.list4Size >= preview.service4Names.length;
-        if (rosterSaved) break;
+    assertQrSelectionMatches(preview, selection);
+    const account = readSheetsServiceAccount();
+    let outcome: QrApplyOutcome | null = null;
+    let writeMethod: QrAttendanceApplyResult["writeMethod"] = "browser";
+    if (account) {
+      try {
+        outcome = await applyWithSheetsApi(preview, account);
+        writeMethod = "api";
+      } catch (error) {
+        // Permission or API outages fall back to the previous browser editor path.
+        console.warn("[QR] Sheets API write failed; using browser editor:", error instanceof Error ? error.message : error);
       }
-
-      rosterSaved =
-        verification.list13Size >= preview.service13Names.length &&
-        verification.list4Size >= preview.service4Names.length;
-      if (rosterSaved) break;
     }
-
-    if (!rosterSaved) {
-      throw new Error("Google Sheet 명단 저장 확인에 실패했습니다. DQ:DT 편집 권한과 시트 보호 설정을 확인해 주세요.");
-    }
-
-    try {
-        for (let attendanceAttempt = 0; attendanceAttempt < 2; attendanceAttempt += 1) {
-          if (attendanceAttempt) await new Promise((resolve) => setTimeout(resolve, 1800));
-          const workbook = await downloadGoogleSheetWorkbook(preview.sheetUrl);
-          const worksheet = getWorksheet(workbook, preview.sheetTab);
-          const attendance = buildAttendancePatches(worksheet, preview.service13Names, preview.service4Names);
-          attendanceUpdated = attendance.updateCount;
-          const verifiedBefore = verification.verified13 + verification.verified4;
-
-          await writeAttendanceOnlyWithBrowser({
-            sheetUrl: preview.sheetUrl,
-            sheetTab: preview.sheetTab,
-            attendancePatches: attendance.patches
-          });
-
-          for (let verifyAttempt = 0; verifyAttempt < 4; verifyAttempt += 1) {
-            if (verifyAttempt) await new Promise((resolve) => setTimeout(resolve, 2200));
-            const verifiedWorkbook = await downloadGoogleSheetWorkbook(preview.sheetUrl);
-            verification = verifyAppliedWorkbook(verifiedWorkbook, preview);
-            if (!verification.failures.length) break;
-          }
-
-          const verifiedAfter = verification.verified13 + verification.verified4;
-          if (verification.failures.length && verifiedAfter <= verifiedBefore) {
-            throw new Error(
-              `QR 명단은 저장됐지만 참석 셀 ${verification.failures.length}개 변경이 거부됐습니다. Google 계정 로그인 또는 '가장체크' 참석 셀 보호 범위를 확인해 주세요.`
-            );
-          }
-
-          if (!verification.failures.length) break;
-        }
-    } catch (error) {
-      throw error instanceof Error ? error : new Error("참석 체크 단계에서 오류가 발생했습니다.");
-    }
+    outcome ??= await applyWithBrowser(preview);
 
     previewCache.delete(previewId);
     return {
       appliedAt: new Date().toISOString(),
+      writeMethod,
       service13Written: preview.service13Names.length,
       service4Written: preview.service4Names.length,
-      attendanceUpdated,
-      verified13: verification.verified13,
-      verified4: verification.verified4,
+      attendanceUpdated: outcome.attendanceUpdated,
+      verified13: outcome.verification.verified13,
+      verified4: outcome.verification.verified4,
       unmatched13Names: preview.unmatched13Names,
       unmatched4Names: preview.unmatched4Names,
-      verificationFailures: verification.failures
+      verificationFailures: outcome.verification.failures
     };
   });
 }

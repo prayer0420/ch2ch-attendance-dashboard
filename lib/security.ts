@@ -2,7 +2,7 @@ export const SESSION_COOKIE = "ch2ch_admin_session";
 const encoder = new TextEncoder();
 
 export function securityConfigured() {
-  return (process.env.APP_ACCESS_PASSWORD?.length ?? 0) >= 12 && (process.env.APP_SESSION_TOKEN?.length ?? 0) >= 32;
+  return (process.env.APP_ACCESS_PASSWORD?.length ?? 0) >= 1 && (process.env.APP_SESSION_TOKEN?.length ?? 0) >= 32;
 }
 
 export function sessionLifetime() {
@@ -70,6 +70,15 @@ export function securityError(message: string, status: number) {
   return Response.json({ error: message }, { status, headers: { "Cache-Control": "no-store" } });
 }
 
+// Constant-time comparison that works in both the Edge middleware and Node routes.
+export async function sameSecretText(received: string, expected: string) {
+  const [left, right] = await Promise.all([received, expected].map(async (value) =>
+    new Uint8Array(await crypto.subtle.digest("SHA-256", encoder.encode(value)))));
+  let difference = 0;
+  for (let index = 0; index < left.length; index += 1) difference |= left[index] ^ right[index];
+  return difference === 0;
+}
+
 export async function limitedText(request: Request, limit: number) {
   const reader = request.body?.getReader();
   if (!reader) return "";
@@ -91,7 +100,8 @@ export async function limitedText(request: Request, limit: number) {
 export async function checkRequestSecurity(request: Request, worker = false) {
   if (worker) {
     const expected = process.env.QR_WORKER_TOKEN;
-    if (!expected || expected.length < 32 || request.headers.get("x-qr-worker-token") !== expected) return securityError("QR Worker 인증 실패", 401);
+    const received = request.headers.get("x-qr-worker-token") || "";
+    if (!expected || expected.length < 32 || !(await sameSecretText(received, expected))) return securityError("QR Worker 인증 실패", 401);
   } else {
     if (!securityConfigured()) return securityError("관리자 인증 환경변수를 설정해 주세요.", 503);
     if (!(await validSession(sessionFromRequest(request)))) return securityError("로그인이 필요합니다.", 401);

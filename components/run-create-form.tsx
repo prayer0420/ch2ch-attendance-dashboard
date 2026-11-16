@@ -18,6 +18,7 @@ import {
 import { fetchJson } from "@/lib/utils";
 import { applyAttendanceMode, buildAttendanceRunRows } from "@/lib/attendance-run-selection";
 import { DEFAULT_ATTENDANCE_SHEET_URL, readAttendanceSheetUrl, saveAttendanceSheetUrl } from "@/lib/attendance-sheet-preference";
+import { dateForSundayWeek, mostRecentSunday, sundayOnOrBefore, weekOfSunday, weeksInSundayYear } from "@/lib/sunday-week";
 
 type RunResponse = {
   runId: string;
@@ -86,23 +87,6 @@ function countLabel(count: number) {
 
 const SETTINGS_KEY = "ch2ch-run-settings-v4";
 
-function mostRecentSunday() {
-  const date = new Date();
-  date.setHours(12, 0, 0, 0);
-  date.setDate(date.getDate() - date.getDay());
-  return date.toISOString().slice(0, 10);
-}
-
-function weekOfSunday(value: string) {
-  const sunday = new Date(`${value}T12:00:00`);
-  const firstSunday = new Date(sunday.getFullYear(), 0, 1, 12);
-  firstSunday.setDate(firstSunday.getDate() + ((7 - firstSunday.getDay()) % 7));
-  const elapsedWeeks = sunday < firstSunday
-    ? 0
-    : Math.floor((sunday.getTime() - firstSunday.getTime()) / (7 * 86400000));
-  return { year: sunday.getFullYear(), week: elapsedWeeks + 1 };
-}
-
 function countPeople(people: SourcePerson[], modes: FamilyMode) {
   return people.reduce(
     (acc, person) => {
@@ -131,6 +115,7 @@ export function RunCreateForm() {
     targetWeek: 1
   });
   const [ready, setReady] = useState(false);
+  const [dateEdited, setDateEdited] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoadingSource, setIsLoadingSource] = useState(false);
@@ -149,17 +134,21 @@ export function RunCreateForm() {
       const saved = localStorage.getItem(SETTINGS_KEY);
       if (saved) {
         const parsed = JSON.parse(saved) as Partial<typeof form>;
-        const { targetDate: savedTargetDate, ...savedSettings } = parsed;
-        const restoredTargetDate = typeof savedTargetDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(savedTargetDate)
-          ? savedTargetDate
-          : currentSunday;
-        setForm((current) => ({ ...current, ...savedSettings, googleSheetUrl: preferredSheetUrl, targetDate: restoredTargetDate }));
+        setForm((current) => ({ ...current, ...parsed, googleSheetUrl: preferredSheetUrl, targetDate: currentSunday }));
       } else {
         setForm((current) => ({ ...current, googleSheetUrl: preferredSheetUrl, targetDate: currentSunday }));
       }
     } catch {}
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (dateEdited) return;
+    const refreshSunday = () => setForm((current) => ({ ...current, targetDate: mostRecentSunday() }));
+    window.addEventListener("focus", refreshSunday);
+    const interval = window.setInterval(refreshSunday, 60 * 60 * 1000);
+    return () => { window.removeEventListener("focus", refreshSunday); window.clearInterval(interval); };
+  }, [dateEdited]);
 
   useEffect(() => {
     if (ready) {
@@ -430,7 +419,7 @@ export function RunCreateForm() {
               </label>
             )}
 
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-3 sm:grid-cols-3">
               <label className="grid gap-2 text-sm font-bold">
                 탭 이름
                 <input
@@ -440,12 +429,30 @@ export function RunCreateForm() {
                 />
               </label>
               <label className="grid gap-2 text-sm font-bold">
+                실행 주차 ({calculatedWeek.year}년)
+                <select
+                  className="focus-ring rounded border border-line bg-white px-3 py-2"
+                  value={calculatedWeek.week}
+                  onChange={(event) => {
+                    const sunday = dateForSundayWeek(calculatedWeek.year, Number(event.target.value));
+                    if (sunday) { setDateEdited(true); update("targetDate", sunday); }
+                  }}
+                >
+                  {Array.from({ length: weeksInSundayYear(calculatedWeek.year) }, (_, index) => index + 1).map((week) => (
+                    <option key={week} value={week}>{week}주차</option>
+                  ))}
+                </select>
+              </label>
+              <label className="grid gap-2 text-sm font-bold">
                 실행 날짜 (일요일)
                 <input
                   className="focus-ring rounded border border-line bg-white px-3 py-2"
                   type="date"
                   value={form.targetDate}
-                  onChange={(event) => update("targetDate", event.target.value)}
+                  onChange={(event) => {
+                    const sunday = sundayOnOrBefore(event.target.value);
+                    if (sunday) { setDateEdited(true); update("targetDate", sunday); }
+                  }}
                 />
               </label>
             </div>

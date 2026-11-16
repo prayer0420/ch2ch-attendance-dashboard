@@ -8,12 +8,14 @@ type LoginPageProps = {
     error?: string;
     setup?: string;
     logout?: string;
+    locked?: string;
   }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
   const params = await searchParams;
   const nextPath = safeNextPath(params.next);
+  const lockedMinutes = Math.min(1440, Math.max(1, Number.parseInt(params.locked || "", 10) || 0));
 
   return (
     <main className="grid min-h-screen place-items-center px-4 py-10">
@@ -30,12 +32,17 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
 
         {params.setup || !securityConfigured() ? (
           <div className="mb-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
-            서버 환경변수에 APP_ACCESS_PASSWORD(12자 이상)와 APP_SESSION_TOKEN(32자 이상)을 먼저 설정해야 합니다. 인증 설정 전에는 관리 데이터에 접근할 수 없습니다.
+            서버 접속 코드와 APP_SESSION_TOKEN(32자 이상)을 먼저 설정해야 합니다. 인증 설정 전에는 관리 데이터에 접근할 수 없습니다.
           </div>
         ) : null}
         {params.error ? (
           <div className="mb-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
             접속 코드가 맞지 않습니다.
+          </div>
+        ) : null}
+        {params.locked ? (
+          <div className="mb-4 rounded border border-brick/30 bg-brick/10 p-3 text-sm font-bold text-brick">
+            로그인 시도가 많아 잠시 막아 두었습니다. {lockedMinutes}분 뒤에 다시 시도해 주세요. 이 PC에서는 http://localhost:3000 으로 접속할 수 있습니다.
           </div>
         ) : null}
         {params.logout ? (

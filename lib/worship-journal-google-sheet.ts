@@ -63,21 +63,50 @@ export function selectTemplateSheet(sheets: SpreadsheetSheet[], targetTitle: str
   return template;
 }
 
-export function buildSheetStructureRequests(sheetId: number, announcementCount = 0) {
+/** Input is A43:Z200 of the copied tab, including the 기타사항 heading. */
+export function inspectAnnouncementSlots(rows: unknown[][]) {
+  if (!String(rows[0]?.[1] ?? "").includes("기타사항")) {
+    throw new Error("예배일지 기타사항 위치(B43)를 확인하지 못했습니다. 양식을 확인해 주세요.");
+  }
+  let slots = 0;
+  for (let index = 1; index < rows.length; index += 1) {
+    const row = rows[index] ?? [];
+    const text = String(row[1] ?? "").trim();
+    if (row.some((value, column) => column !== 1 && String(value ?? "").trim())) {
+      throw new Error(`예배일지 ${43 + index}행에 광고 외의 값이 있어 자동 행 변경을 중단했습니다.`);
+    }
+    if (text && !/^\d{1,3}\s*[.)]/.test(text)) {
+      // Preserve the footer and everything below it, never treat it as an ad.
+      if (/^\[?\s*예배\s*마침/.test(text) && slots >= 9) return slots;
+      throw new Error(`예배일지 ${43 + index}행의 광고 경계를 확인하지 못했습니다.`);
+    }
+    slots += 1;
+  }
+  if (rows.length >= 158) throw new Error("예배일지 광고가 확인 범위를 넘어갑니다. 양식을 확인해 주세요.");
+  return Math.max(9, slots);
+}
+
+export function buildSheetStructureRequests(sheetId: number, announcementCount = 0, existingSlots = 9) {
+  if (!Number.isSafeInteger(existingSlots) || existingSlots < 9) throw new Error("기존 광고 칸 수가 올바르지 않습니다.");
   const requests: Array<Record<string, unknown>> = [];
-  const extraAnnouncements = Math.max(0, announcementCount - 9);
-  if (extraAnnouncements) {
+  const targetSlots = Math.max(9, announcementCount);
+  const extraAnnouncements = targetSlots - existingSlots;
+  const insertAt = 43 + existingSlots;
+  if (extraAnnouncements < 0) {
+    requests.push({ deleteDimension: { range: { sheetId, dimension: "ROWS", startIndex: 43 + targetSlots, endIndex: insertAt } } });
+  }
+  if (extraAnnouncements > 0) {
     requests.push(
-      { insertDimension: { range: { sheetId, dimension: "ROWS", startIndex: 52, endIndex: 52 + extraAnnouncements }, inheritFromBefore: true } },
+      { insertDimension: { range: { sheetId, dimension: "ROWS", startIndex: insertAt, endIndex: insertAt + extraAnnouncements }, inheritFromBefore: true } },
       {
         copyPaste: {
-          source: { sheetId, startRowIndex: 51, endRowIndex: 52, startColumnIndex: 0, endColumnIndex: 11 },
-          destination: { sheetId, startRowIndex: 52, endRowIndex: 52 + extraAnnouncements, startColumnIndex: 0, endColumnIndex: 11 },
+          source: { sheetId, startRowIndex: 50, endRowIndex: 51, startColumnIndex: 0, endColumnIndex: 11 },
+          destination: { sheetId, startRowIndex: insertAt, endRowIndex: insertAt + extraAnnouncements, startColumnIndex: 0, endColumnIndex: 11 },
           pasteType: "PASTE_FORMAT"
         }
       }
     );
-    for (let row = 52; row < 52 + extraAnnouncements; row += 1) {
+    for (let row = insertAt; row < insertAt + extraAnnouncements; row += 1) {
       requests.push({ mergeCells: { range: { sheetId, startRowIndex: row, endRowIndex: row + 1, startColumnIndex: 1, endColumnIndex: 11 }, mergeType: "MERGE_ALL" } });
     }
   }
@@ -86,6 +115,7 @@ export function buildSheetStructureRequests(sheetId: number, announcementCount =
 
 export function buildSheetPostWriteRequests(sheetId: number, announcementCount = 0) {
   const endRowIndex = 43 + Math.max(9, announcementCount);
+  const continuation = { sheetId, startRowIndex: 51, endRowIndex, startColumnIndex: 1, endColumnIndex: 11 };
   return [
     {
       repeatCell: {
@@ -94,6 +124,21 @@ export function buildSheetPostWriteRequests(sheetId: number, announcementCount =
         fields: "userEnteredFormat.wrapStrategy,userEnteredFormat.verticalAlignment"
       }
     },
+    // The template's ninth slot has a different bold font and top border.
+    // Reuse the eighth slot (row 51), including for newly inserted rows.
+    { unmergeCells: { range: continuation } },
+    { mergeCells: { range: continuation, mergeType: "MERGE_ROWS" } },
+    { copyPaste: {
+      source: { sheetId, startRowIndex: 50, endRowIndex: 51, startColumnIndex: 1, endColumnIndex: 11 },
+      destination: continuation,
+      pasteType: "PASTE_FORMAT"
+    } },
+    { repeatCell: { range: continuation, cell: { textFormatRuns: [] }, fields: "textFormatRuns" } },
+    // Only the outside bottom edge remains; no divider before item 9 or later.
+    { updateBorders: {
+      range: { ...continuation, startRowIndex: endRowIndex - 1 },
+      bottom: { style: "SOLID_MEDIUM", color: { red: 0, green: 0, blue: 0 } }
+    } },
     { autoResizeDimensions: { dimensions: { sheetId, dimension: "ROWS", startIndex: 43, endIndex: endRowIndex } } }
   ];
 }
@@ -128,6 +173,16 @@ function quotedSheetTitle(title: string) {
 
 export function buildSheetValueUpdates(sheetTitle: string, journal: JournalOutput): SheetValueUpdate[] {
   const { year, month, day } = parseJournalDate(journal.date);
+  const seenAnnouncements = new Map<string, number>();
+  journal.announcements.forEach((text, index) => {
+    // Compare the whole body, not just the title: separate meetings with the
+    // same title but different times must remain separate.
+    const key = text.replace(/^\s*\d{1,3}\s*[.)]\s*/, "").replace(/\s/g, "");
+    if (!key) return;
+    const earlier = seenAnnouncements.get(key);
+    if (earlier !== undefined) throw new Error(`동일한 광고가 ${earlier + 1}번과 ${index + 1}번에 중복되어 있습니다. 미리보기에서 중복 항목을 제거해 주세요.`);
+    seenAnnouncements.set(key, index);
+  });
   const sheet = quotedSheetTitle(sheetTitle);
   const newFamilies = padRows(
     journal.newFamilies.slice(0, 8).map((entry) => [entry.name, entry.generation, entry.inviter, entry.relationship, entry.note]),
@@ -146,6 +201,7 @@ export function buildSheetValueUpdates(sheetTitle: string, journal: JournalOutpu
     1
   );
   const accounting = journal.accounting;
+  if ((accounting?.purpose.length ?? 0) > 10) throw new Error("목적헌금은 기존 양식에 최대 10건까지 입력할 수 있습니다. 내역을 누락하지 않도록 제출을 중단했습니다.");
   const thanksgivingText = sortThanksgivingOfferings(accounting?.thanksgiving ?? [])
     .map((offering) => {
       const base = `${offering.name} (${offering.amount.toLocaleString("ko-KR")}원)`;
@@ -153,9 +209,11 @@ export function buildSheetValueUpdates(sheetTitle: string, journal: JournalOutpu
     })
     .join("\n");
   const purposeRows = padRows(
-    (accounting?.purpose ?? []).slice(0, 10).map((offering) => [offering.name, offering.amount]),
+    // H26:K26 is one merged header. The existing detail area is below it:
+    // H/I = name, J/K = amount. Never place a value inside the header merge.
+    (accounting?.purpose ?? []).slice(0, 10).map((offering) => [offering.name, "", offering.amount, ""]),
     10,
-    2
+    4
   );
 
   const cell = (address: string, value: string | number): SheetValueUpdate => ({
@@ -182,8 +240,9 @@ export function buildSheetValueUpdates(sheetTitle: string, journal: JournalOutpu
     cell("H25", accounting?.purposeTotal ?? 0),
     cell("C27", thanksgivingText),
     cell("G26", "목적헌금 내역"),
-    { range: `${sheet}!H26:I35`, values: purposeRows },
-    cell("C37", accounting?.total ?? 0),
+    cell("H26", ""),
+    { range: `${sheet}!H27:K36`, values: purposeRows },
+    cell("C37", (accounting?.sundayTotal ?? 0) + (accounting?.thanksgivingTotal ?? 0)),
     cell("G37", ""),
     cell("H37", ""),
     cell("B39", "예배안내"),

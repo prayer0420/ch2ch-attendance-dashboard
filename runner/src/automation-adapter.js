@@ -1,7 +1,8 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { spawn } = require("node:child_process");
-const { createClient } = require("@supabase/supabase-js");
+const { decodeDiagnostic, readLines } = require('./legacy-diagnostics');
+const { createDataClient } = require("../../lib/local-store/provider.cjs");
 const XLSX = require("xlsx");
 
 const ROOT_DIR = path.resolve(__dirname, "..", "..");
@@ -142,14 +143,7 @@ function toCsv(rows) {
 }
 
 function getServiceSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    throw new Error("Supabase 환경변수 NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY가 필요합니다.");
-  }
-  return createClient(url, key, {
-    auth: { autoRefreshToken: false, persistSession: false }
-  });
+  return createDataClient();
 }
 
 function findHeaderIndex(headers, candidates, fallback) {
@@ -639,6 +633,13 @@ function isVerifiedAttendanceResult(result) {
   );
 }
 
+function webRouteFamilyKey(family) {
+  const normalized = normalizeName(family);
+  if (normalized.startsWith("새가족반")) return normalizeName("새가족반");
+  if (normalized.startsWith("새가족팀")) return normalizeName("새가족팀");
+  return normalized;
+}
+
 function readLegacyResult() {
   if (!fs.existsSync(LEGACY_RESULT_FILE)) {
     throw new Error("기존 자동화 결과 파일이 생성되지 않았습니다.");
@@ -653,15 +654,21 @@ function readLegacyResult() {
 function applyLegacyResult(results, legacyResult, dryRun) {
   const people = new Map();
   const familySave = new Map();
+  const personSave = new Map();
   const affiliationCorrections = new Map();
 
   for (const family of legacyResult.families || []) {
-    familySave.set(normalizeName(family.familyName), {
+    const save = {
       attempted: Boolean(family.saved),
       verified: Boolean(family.saveVerified)
-    });
+    };
+    familySave.set(normalizeName(family.familyName), save);
     for (const person of family.people || []) {
-      people.set(`${normalizeName(person.family)}::${normalizeName(person.name)}`, person);
+      const personKey = `${normalizeName(person.family)}::${normalizeName(person.name)}`;
+      people.set(personKey, person);
+      // A sheet label such as "새가족반 결석중" is saved on the web page "새가족반".
+      // Keep the save result of the page that actually processed this person.
+      personSave.set(personKey, save);
     }
   }
 
@@ -720,7 +727,7 @@ function applyLegacyResult(results, legacyResult, dryRun) {
       };
     }
 
-    const familyResult = familySave.get(normalizeName(result.original_family)) || {
+    const familyResult = personSave.get(key) || familySave.get(normalizeName(result.original_family)) || familySave.get(webRouteFamilyKey(result.original_family)) || {
       attempted: legacyResult.finalSaved !== false,
       verified: Boolean(legacyResult.finalSaveVerified)
     };
@@ -749,6 +756,7 @@ async function runLegacyProcess(run, reporter, people) {
 
   const env = {
     ...process.env,
+    CH2CH_RUN_ID: run.id,
     CH2CH_ID: process.env.CH2CH_ID || process.env.CH2CH_USER || "",
     CH2CH_PW: process.env.CH2CH_PW || process.env.CH2CH_PASSWORD || "",
     DRY_RUN: run.dry_run ? "true" : "false",
@@ -812,6 +820,7 @@ async function runLegacyProcess(run, reporter, people) {
     }, 1500);
 
     let pending = Promise.resolve();
+    let logWriteFailures = 0;
 
     const isVisibleLegacyLog = (text, level) => {
       if (level === "error") return true;
@@ -835,6 +844,11 @@ async function runLegacyProcess(run, reporter, people) {
       if (!text) return;
       logLines.push(text);
       pending = pending.then(async () => {
+        const diagnostic = decodeDiagnostic(text, run.id);
+        if (diagnostic) {
+          await reporter.event('attendance_diagnostic', diagnostic.message, diagnostic, diagnostic.level);
+          return;
+        }
         const message = text.replace(/^\[[^\]]+\]\s*/, "");
         if (isVisibleLegacyLog(text, level)) {
           await reporter.event("legacy_log", message, null, level);
@@ -852,13 +866,18 @@ async function runLegacyProcess(run, reporter, people) {
         } else if (message.startsWith("저장 결과")) {
           await reporter.updateRun({ current_step: "다음 가족 처리 준비" });
         }
-      }).catch(() => {});
+      }).catch(() => {
+        logWriteFailures += 1;
+        // The child has already persisted diagnostic events per run. Do not
+        // hide a DB error or abort halfway through real attendance writes.
+        console.error(`[Runner] Run ${run.id}: event persistence failed. Check per-run diagnostics and Runner logs.`);
+      });
     };
 
     child.stdout.setEncoding("utf8");
     child.stderr.setEncoding("utf8");
-    child.stdout.on("data", (chunk) => String(chunk).split(/\r?\n/).forEach((line) => handleLine(line, "info")));
-    child.stderr.on("data", (chunk) => String(chunk).split(/\r?\n/).forEach((line) => handleLine(line, "error")));
+    readLines(child.stdout, line => handleLine(line, 'info'));
+    readLines(child.stderr, line => handleLine(line, 'error'));
     child.on("error", (error) => {
       clearTimeout(timeout);
       if (cancellationTimer) clearInterval(cancellationTimer);
@@ -867,7 +886,12 @@ async function runLegacyProcess(run, reporter, people) {
     child.on("close", (code) => {
       clearTimeout(timeout);
       if (cancellationTimer) clearInterval(cancellationTimer);
-      pending.finally(() => {
+      pending.then(async () => {
+        if (logWriteFailures) {
+          await reporter.event('diagnostic_persistence_warning', '일부 DB 로그 저장 실패: 이 PC의 실행별 진단 파일을 확인해 주세요.',
+            { failures: logWriteFailures, runId: run.id, relativePath: `logs/diagnostics/${run.id}/events.jsonl` }, 'warn').catch(() => {});
+        }
+      }).finally(() => {
         if (timedOut) reject(new Error(`자동화가 ${Math.round(timeoutMs / 60000)}분 제한 시간을 초과해 중단되었습니다.`));
         else if (cancellationRequested) {
           const error = new Error("RUN_CANCELLED");

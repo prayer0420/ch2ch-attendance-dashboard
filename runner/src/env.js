@@ -8,8 +8,7 @@ function requireEnv(name) {
 
 function getRunnerConfig() {
   return {
-    supabaseUrl: requireEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    serviceRoleKey: requireEnv("SUPABASE_SERVICE_ROLE_KEY"),
+    // The shared provider validates either the PC database or legacy cloud settings.
     runnerId: process.env.RUNNER_ID || "main-office-pc",
     dashboardUrl: process.env.RUNNER_DASHBOARD_URL || "http://localhost:3000",
     pollIntervalMs: Number(process.env.RUNNER_POLL_INTERVAL_MS || 3000),
