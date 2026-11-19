@@ -25,5 +25,5 @@ This directory is the maintained source for verifying the user-facing behavior o
 - [Login guard](./login.md): anonymous redirect, wrong-code rejection, login.
 - [Attendance run from a file](./attendance-run.md): upload a CSV, load families, queue a run, view run detail.
 - [Main screens](./screens.md): the eight main pages render while logged in.
-- [QR attendance queue](./qr-attendance.md): API-level only so far, no UI journey yet.
+- [QR attendance](./qr-attendance.md): phone path that queues the preview, renders the result and queues the apply step.
 - [Worship journal](./worship-journal.md): page renders and lists journals. Publishing to Google or BAND is out of scope.

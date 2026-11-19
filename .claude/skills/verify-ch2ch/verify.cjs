@@ -149,11 +149,18 @@ function db(id) {
   log(`saved ${path.relative(root, file)}`);
 }
 
-async function withBrowser(s, fn) {
+// Phone path: any Host other than localhost/127.0.0.1 makes /api/qr-attendance queue the job
+// for the Runner instead of running it here. The browser resolves this name to 127.0.0.1.
+const MOBILE_HOST = 'qr-mobile.verify.test';
+const MOBILE_BASE = `http://${MOBILE_HOST}:${PORT}`;
+
+async function withBrowser(s, fn, { args = [], prepare } = {}) {
   const { chromium } = require(path.join(root, 'node_modules/playwright'));
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: true, args });
   try {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 }, locale: 'ko-KR' });
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, locale: 'ko-KR' });
+    if (prepare) await prepare(context);
+    const page = await context.newPage();
     page.on('dialog', (d) => d.accept()); // the "실제 저장할까요?" confirm; isolated instance, no Runner
     await fn(page);
   } finally { await browser.close(); }
@@ -214,6 +221,49 @@ const JOURNEYS = {
     fs.writeFileSync(evidencePath(s, 'attendance-3-db-row.json'), JSON.stringify(run, null, 2));
     return `run ${runId} queued (week ${run.target_week}), snapshot ${run.source_file_path} stored; no Runner attached, nothing sent to CH2CH`;
   },
+  // Feature: QR attendance from a phone (features/qr-attendance.md). Runs via MOBILE_BASE, see journey().
+  async 'qr-mobile-queue'(page, s) {
+    const d = openDb(s);
+    const sheetUrl = `https://docs.google.com/spreadsheets/d/verify-fixture-${crypto.randomBytes(4).toString('hex')}/edit`;
+    const job = (where) => {
+      const row = d.prepare(`SELECT id, data FROM qr_sync_jobs WHERE json_extract(data,'$.sheet_url')=? AND ${where} ORDER BY rowid DESC LIMIT 1`).get(sheetUrl);
+      return row ? { id: row.id, ...JSON.parse(row.data) } : null;
+    };
+    const waitJob = async (where, what) => {
+      for (let i = 0; i < 40; i++) { const j = job(where); if (j) return j; await new Promise((r) => setTimeout(r, 250)); }
+      throw new Error(`no ${what} job in throwaway DB`);
+    };
+
+    await page.goto(MOBILE_BASE + '/qr-attendance', { waitUntil: 'networkidle' });
+    if (new URL(page.url()).pathname.startsWith('/login')) throw new Error('phone-host session cookie was not accepted');
+    await page.getByLabel('Google Sheet URL').fill(sheetUrl);
+    await page.getByLabel('시트 탭').fill('가장체크');
+    const week = Number(await page.locator('input[type="number"]').inputValue());
+    await page.getByRole('button', { name: 'QR 명단 불러오기' }).click();
+    await page.getByRole('button', { name: '명단 읽는 중' }).waitFor({ timeout: 10000 });
+    const queued = await waitJob(`json_extract(data,'$.action')='preview' AND json_extract(data,'$.status')='queued'`, 'queued preview');
+    if (queued.week !== week || queued.sheet_tab !== '가장체크') throw new Error(`queued job selection mismatch: ${JSON.stringify(queued)}`);
+    await page.screenshot({ path: evidencePath(s, 'qr-1-preview-queued.png'), fullPage: true });
+
+    // Stand in for the Runner at its real boundary (the job row): complete it with a fixture preview.
+    const preview = { id: 'verify-preview-' + crypto.randomBytes(3).toString('hex'), createdAt: new Date().toISOString(), week, weekLabel: `${week}주`,
+      sheetUrl, sheetTab: '가장체크', department: '2청년회', downloadedCount: 3, departmentCount: 2,
+      service13Names: ['가상검증A'], service4Names: ['가상검증B'], duplicate13Count: 0, duplicate4Count: 0,
+      unmatched13Names: [], unmatched4Names: ['가상검증B'], duplicateSheetNames: [] };
+    d.prepare(`UPDATE qr_sync_jobs SET data=json_set(data,'$.status','completed','$.result',json(?)) WHERE id=?`).run(JSON.stringify(preview), queued.id);
+    await page.getByRole('heading', { name: '2청년회 QR 출석 대상' }).waitFor({ timeout: 15000 }); // UI polls every 2s
+    await page.getByText('가상검증A').first().waitFor();
+    await page.getByText('시트 미일치 1명').waitFor();
+    await page.screenshot({ path: evidencePath(s, 'qr-2-preview-shown.png'), fullPage: true });
+
+    await page.getByRole('button', { name: 'Google Sheet에 반영' }).click();
+    await page.getByRole('button', { name: '시트 반영·재검사 중' }).waitFor({ timeout: 10000 });
+    const apply = await waitJob(`json_extract(data,'$.action')='apply' AND json_extract(data,'$.status')='queued'`, 'queued apply');
+    if (apply.preview?.id !== preview.id) throw new Error('apply job does not carry the shown preview');
+    await page.screenshot({ path: evidencePath(s, 'qr-3-apply-queued.png'), fullPage: true });
+    fs.writeFileSync(evidencePath(s, 'qr-4-db-jobs.json'), JSON.stringify({ preview: job(`id='${queued.id}'`), apply }, null, 2));
+    return `phone path queued preview job ${queued.id} (week ${week}); fixture Runner result rendered; apply job ${apply.id} queued with that preview. No Runner, nothing sent to CH2CH or Google`;
+  },
   // Feature: main screens render (features/screens.md)
   async screens(page, s) {
     await uiLogin(page, s);
@@ -234,10 +284,21 @@ async function journey(name, id) {
   const fn = JOURNEYS[name];
   if (!fn) die(`unknown journey "${name}". Known: ${Object.keys(JOURNEYS).join(', ')}`);
   let result;
+  let opts = {};
+  if (name === 'qr-mobile-queue') {
+    // Production sets the session cookie Secure, which a browser drops on plain http for a
+    // non-localhost name. Log in over the real API and hand the same session to the phone host.
+    const cookie = await login(s);
+    const [cname, ...rest] = cookie.split('=');
+    opts = {
+      args: [`--host-resolver-rules=MAP ${MOBILE_HOST} 127.0.0.1`],
+      prepare: (ctx) => ctx.addCookies([{ name: cname, value: rest.join('='), domain: MOBILE_HOST, path: '/', httpOnly: true, secure: false, sameSite: 'Lax' }]),
+    };
+  }
   await withBrowser(s, async (page) => {
     try { result = await fn(page, s); }
     catch (e) { await page.screenshot({ path: evidencePath(s, `${name}-FAILED.png`), fullPage: true }).catch(() => {}); throw e; }
-  });
+  }, opts);
   fs.appendFileSync(evidencePath(s, 'journeys.log'), `${new Date().toISOString()} PASS ${name}: ${result}\n`);
   log(`PASS ${name}: ${result}`);
 }
@@ -267,5 +328,5 @@ const runs = {
   journey: () => journey(args[0], args[1]),
   cleanup: () => cleanup(args[0]),
 };
-if (!runs[cmd]) { console.log('usage: verify.cjs launch | doctor [run] | journey <login|attendance-file-run|screens> [run] | shot <path> [run] | api <METHOD> <path> [json] [run] | db [run] | cleanup [run]'); process.exit(cmd ? 1 : 0); }
+if (!runs[cmd]) { console.log('usage: verify.cjs launch | doctor [run] | journey <login|attendance-file-run|qr-mobile-queue|screens> [run] | shot <path> [run] | api <METHOD> <path> [json] [run] | db [run] | cleanup [run]'); process.exit(cmd ? 1 : 0); }
 Promise.resolve(runs[cmd]()).catch((e) => die(e.message));

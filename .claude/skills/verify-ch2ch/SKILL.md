@@ -45,6 +45,7 @@ Built-in Playwright journeys use real handles from the app: the label `접속 �
 ```
 node .claude/skills/verify-ch2ch/verify.cjs journey login
 node .claude/skills/verify-ch2ch/verify.cjs journey attendance-file-run
+node .claude/skills/verify-ch2ch/verify.cjs journey qr-mobile-queue
 node .claude/skills/verify-ch2ch/verify.cjs journey screens
 ```
 
