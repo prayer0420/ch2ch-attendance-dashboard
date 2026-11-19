@@ -254,6 +254,10 @@ const JOURNEYS = {
     await page.getByRole('heading', { name: '2청년회 QR 출석 대상' }).waitFor({ timeout: 15000 }); // UI polls every 2s
     await page.getByText('가상검증A').first().waitFor();
     await page.getByText('시트 미일치 1명').waitFor();
+    // Names in the 1·2·3부 / 4부 lists must be readable in full (they were cut to "가상…" once).
+    const clipped = await page.locator('span[title="가상검증A"], span[title="가상검증B"]').evaluateAll((els) =>
+      els.filter((el) => el.scrollWidth > el.clientWidth + 1).map((el) => el.getAttribute('title')));
+    if (clipped.length) throw new Error(`name list truncates: ${clipped.join(', ')}`);
     await page.screenshot({ path: evidencePath(s, 'qr-2-preview-shown.png'), fullPage: true });
 
     await page.getByRole('button', { name: 'Google Sheet에 반영' }).click();

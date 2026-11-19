@@ -36,4 +36,4 @@ Preconditions: baseline state. The journey picks a unique fixture sheet URL, `ht
 - The fixture preview stands in for the Runner. It proves the queue, polling and rendering contract, not the Runner's CH2CH download or the Sheet write.
 - After the apply job is queued, the page keeps polling for up to 6 minutes. The journey ends without completing it, so that is expected.
 - With `APP_PUBLIC_ORIGIN` set, as in production, the phone path additionally requires that exact HTTPS origin. This instance leaves it empty, so any non-localhost Host counts as remote. `scripts/server/smoke-build.js` covers the pinned-origin variant at the API level.
-- Observed 2026-11-19: in the 1·2·3부 and 4부 name lists, a 5-character name (`가상검증A`) renders truncated as `가상…`. This is a product layout issue, recorded here and not changed by this skill.
+- Fixed 2026-11-19: the 1·2·3부 and 4부 name lists used viewport-based grid columns inside a half-width panel, so a 5-character name rendered as `가상…`. They now use wrapping chips, and the journey fails if a fixture name is clipped.

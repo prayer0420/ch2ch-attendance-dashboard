@@ -60,10 +60,11 @@ function NameList({ title, names, tone }: { title: string; names: string[]; tone
         <h3 className="font-black">{title}</h3>
         <Badge tone={tone === "sea" ? "good" : "warn"}>{names.length}명</Badge>
       </div>
-      <div className="max-h-72 overflow-y-auto rounded border border-line bg-white">
-        <div className="grid grid-cols-2 gap-px bg-line sm:grid-cols-3 lg:grid-cols-4">
+      <div className="max-h-72 overflow-y-auto rounded border border-line bg-white p-2">
+        {/* Chips size to the name; columns tied to the viewport were too narrow inside this half-width panel. */}
+        <div className="flex flex-wrap gap-1.5">
           {names.map((name) => (
-            <span key={name} className="min-w-0 truncate bg-white px-3 py-2 text-sm font-bold" title={name}>{name}</span>
+            <span key={name} className="max-w-full truncate whitespace-nowrap rounded border border-line bg-paper/60 px-2.5 py-1 text-sm font-bold" title={name}>{name}</span>
           ))}
         </div>
       </div>
